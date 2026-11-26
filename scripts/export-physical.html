@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Export Physical view</title>
+    <style>html,body{margin:0;padding:0;background:#fff;}</style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import { params } from '../src/content';
+      import { buildBucket } from '../src/model/bucket';
+      import { renderPhysical } from '../src/ui/bucketview';
+      import { physicalLayout } from '../src/ui/physicallayout';
+      import '../src/style.css';
+      const b = buildBucket(params);
+      const lay = physicalLayout(b, true);
+      const svg = renderPhysical(b, { doorOpen: true, onTerminal: () => {} });
+      svg.style.width = '100%';
+      svg.style.height = 'auto';
+      svg.style.display = 'block';
+      document.getElementById('root').append(svg);
+      document.documentElement.dataset.viewBox = `${lay.viewBox.w} ${lay.viewBox.h}`;
+      document.documentElement.dataset.ready = '1';
+    </script>
+  </body>
+</html>

@@ -78,3 +78,23 @@ svg .foreign { fill:#e87d00 } .tap { cursor:pointer }
   .desk-main .screen { max-width:var(--measure); }
   .tab { min-width:8rem; padding:10px 16px; }
 }
+
+.phys-stage { position:relative; }
+.phys-stage svg.phys { position:relative; z-index:1; width:100%; height:auto; display:block; }
+.phys-photo { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:fill; pointer-events:none; z-index:0; user-select:none; }
+.photo-opacity { width:180px; min-height:44px; }
+/* Photo mode: hide the drawn chrome; leave terminal markers and hit targets on top so metering still works. */
+svg.phys.photo-mode .door-frame,
+svg.phys.photo-mode .warn-banner,
+svg.phys.photo-mode .devbox,
+svg.phys.photo-mode .ch2box,
+svg.phys.photo-mode .door,
+svg.phys.photo-mode > text,
+svg.phys.photo-mode .dev > text,
+svg.phys.photo-mode .ch2 text,
+svg.phys.photo-mode .term text { display:none; }
+svg.phys.photo-mode .pin { fill:rgba(255,255,255,.2); stroke:var(--pri); stroke-width:2; }
+svg.phys.photo-mode .term.red .pin { fill:#d62828; stroke:#fff; }
+svg.phys.photo-mode .term.black .pin { fill:#111; stroke:#fff; }
+svg.phys.photo-mode .tbbox { fill:transparent; stroke:var(--pri); stroke-width:1.6; }
+svg.phys.photo-mode .tb.foreign .tbbox { stroke:#e87d00; stroke-width:2.2; }

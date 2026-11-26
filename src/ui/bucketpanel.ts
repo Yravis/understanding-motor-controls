@@ -8,6 +8,8 @@ import { FaultDef, applyPartFix, behaviorMatches, buildFaulted, faultDefs } from
 import { LotoEvent, checkLoto, REQUIRED_PAIRS } from '../model/safety';
 import { scoreAttempt, Score } from '../model/scoring';
 import { params } from '../content';
+import { BASE } from '../config';
+import { PHOTO_FILE } from './physicallayout';
 
 export interface PanelOpts {
   fault?: FaultDef | null; minMeasurements?: number; showLoto?: boolean; troubleshoot?: boolean; title: string;
@@ -21,6 +23,16 @@ export function mountBucket(root: HTMLElement, o: PanelOpts): void {
   let b: Bucket = o.fault ? buildFaulted(params, o.fault) : buildBucket(params);
   const undo: Bucket[] = [];
   let view: 'physical' | 'schematic' = 'physical';
+  let photoOn = false, photoOpacity = 100, photoAvailable = false, photoProbed = false;
+  const photoSrc = BASE + PHOTO_FILE;
+  const probePhoto = () => {
+    if (photoProbed) return;
+    photoProbed = true;
+    const im = new Image();
+    im.onload = () => { photoAvailable = true; render(); };
+    im.onerror = () => { photoAvailable = false; };
+    im.src = photoSrc;
+  };
   let red: string | null = null, black: string | null = null, mode: MeterMode = 'VAC';
   let reading: Reading | null = null;
   let hl: string | null = null;
@@ -148,12 +160,38 @@ export function mountBucket(root: HTMLElement, o: PanelOpts): void {
   function render(): void {
     root.replaceChildren();
     const wrap = h('div', { class: 'bucket-screen' });
+    probePhoto();
     wrap.append(h('h2', {}, o.title));
-    wrap.append(h('div', { class: 'row' }, btn('Physical', () => { view = 'physical'; render(); }, 'small' + (view === 'physical' ? ' active' : '')), btn('Schematic', () => { view = 'schematic'; render(); }, 'small' + (view === 'schematic' ? ' active' : ''))));
+    const tabs = [btn('Physical', () => { view = 'physical'; photoOn = false; render(); }, 'small' + (view === 'physical' && !photoOn ? ' active' : '')), btn('Schematic', () => { view = 'schematic'; photoOn = false; render(); }, 'small' + (view === 'schematic' ? ' active' : ''))];
+    if (photoAvailable) tabs.push(btn('Photo', () => { view = 'physical'; photoOn = true; render(); }, 'small' + (view === 'physical' && photoOn ? ' active' : '')));
+    wrap.append(h('div', { class: 'row' }, ...tabs));
+    if (view === 'physical' && photoOn && photoAvailable) {
+      const sl = h('input', { type: 'range', min: '0', max: '100', value: String(photoOpacity), class: 'photo-opacity', 'aria-label': 'Photo opacity' }) as HTMLInputElement;
+      const pct = h('span', { class: 'small photo-opacity-label' }, `${photoOpacity}%`);
+      sl.addEventListener('input', () => {
+        photoOpacity = Number(sl.value);
+        pct.textContent = `${photoOpacity}%`;
+        const img = root.querySelector('.phys-photo') as HTMLImageElement | null;
+        if (img) img.style.opacity = String(photoOpacity / 100);
+      });
+      wrap.append(h('div', { class: 'row photo-opacity-row' }, h('span', { class: 'small' }, 'Photo opacity'), sl, pct));
+    }
     if (msg) wrap.append(h('div', { class: 'msg', role: 'status' }, msg));
     const phys = renderPhysical(b, { red, black, highlightNet: hl, onTerminal: terminal, doorOpen: door, onDevice: (t) => { msg = t.startsWith('ch2:') ? 'Coming in Chapter 2' : `${t}: ${b.layout.devices.find((d) => d.tag === t)?.title ?? ''}`; render(); } });
     const sch = renderSchematic(b, { highlightNet: hl, onNet: (n) => { hl = hl === n ? null : n; render(); }, onTap: (id) => { const e = b.world.el<any>(id); msg = `${id}: ${e.kind}${e.kind === 'contact' ? ' is ' + (b.world.contactClosed(e) ? 'CLOSED' : 'OPEN') : ''}. Tap a wire number to highlight it in both views.`; render(); } });
-    wrap.append(view === 'physical' ? zoomable(phys) : h('div', { class: 'schem-wrap' }, sch));
+    if (view === 'physical') {
+      const stage = h('div', { class: 'phys-stage' + (photoOn && photoAvailable ? ' photo-on' : '') });
+      if (photoOn && photoAvailable) {
+        phys.classList.add('photo-mode');
+        const img = h('img', { class: 'phys-photo', src: photoSrc, alt: 'Photo of Bucket 1A, door open', draggable: 'false' }) as HTMLImageElement;
+        img.style.opacity = String(photoOpacity / 100);
+        stage.append(img);
+      }
+      stage.append(phys);
+      wrap.append(zoomable(stage));
+    } else {
+      wrap.append(h('div', { class: 'schem-wrap' }, sch));
+    }
     wrap.append(lamps(), controls());
     if (o.showLoto || o.troubleshoot) wrap.append(lotoSheet());
     wrap.append(repairSheet());

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { wrapLines, lineWidth, WARN_TEXT, WARN_MAX_WIDTH, WARN_FONT, warningBannerLayout } from '../src/ui/svgtext';
 import { STATE_LABEL_DY } from '../src/ui/schematic';
 import { SYMBOL_KEYS, symbolTopExtent } from '../src/ui/symbols';
-import { physicalLayout, PHYS, deviceTitleLines } from '../src/ui/physicallayout';
+import { physicalLayout, PHYS, PHOTO_FILE, deviceTitleLines } from '../src/ui/physicallayout';
 import { bucket } from './helpers';
 
 describe('physical-view warning banner wraps instead of clipping', () => {
@@ -39,7 +39,7 @@ describe('schematic OPEN/CLOSED labels sit clear of the symbol, including the mu
 });
 
 
-describe('physical view layout', () => {
+describe('physical view layout (photo overlay)', () => {
   const lay = physicalLayout(bucket(), true);
 
   it('keeps a stable viewBox and lists devices left-to-right, top-to-bottom', () => {
@@ -52,9 +52,12 @@ describe('physical view layout', () => {
     const plf = lay.devices.find((d) => d.tag === 'PLF')!;
     expect(plf.foreign).toBe(true);
     expect(lay.terminalStrip.terminals.filter((t) => t.foreign).map((t) => t.net)).toEqual(['91', '92']);
-    expect(lay.aspect.ratio).toBeCloseTo(lay.viewBox.w / lay.viewBox.h, 6);
   });
 
+  it('places the photo file at a public path the overlay can request', () => {
+    expect(PHOTO_FILE).toBe('img/bucket-1a-photo.jpg');
+    expect(lay.aspect.ratio).toBeCloseTo(lay.viewBox.w / lay.viewBox.h, 6);
+  });
 });
 
 

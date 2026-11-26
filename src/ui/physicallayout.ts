@@ -1,4 +1,5 @@
-// Geometry of the Physical bucket view, shared by the SVG renderer.
+// Geometry of the Physical bucket view, shared by the SVG renderer, the photo overlay, and the
+// reference-layout export so a photo-real image can be aligned to the same viewBox.
 import type { Bucket, DeviceView, PinView } from '../model/bucket';
 import { warningBannerLayout, WARN_TEXT, wrapLines } from './svgtext';
 
@@ -105,3 +106,4 @@ export function physicalLayout(b: Bucket, doorOpen = true): PhysicalLayout {
   };
 }
 
+export const PHOTO_FILE = 'img/bucket-1a-photo.jpg';
