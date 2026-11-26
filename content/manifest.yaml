@@ -1,0 +1,52 @@
+# Acts / units / days. Chapter 1 = Act 1. Book titles/pages are TOC-derived (pageStatus: toc-unverified).
+acts:
+  - id: act1
+    chapter: 1
+    title: "Introduction to Motor Controls"
+    bucket: "1A"
+    units:
+      - { unit: 1, title: "Basic Principles of Motor Controls", page: 3, rankOnComplete: apprentice-2 }
+      - { unit: 2, title: "Definitions, Abbreviations, and Symbols", page: 11, rankOnComplete: apprentice-3 }
+      - { unit: 3, title: "Common Control Equipment, Devices, and Symbols", page: 23, rankOnComplete: apprentice-4 }
+    commissioning: { day: 10, randomFaults: 3, rankOnPass: journeyman-ready }
+ranks:
+  - { id: apprentice-1, title: "Apprentice, 1st year", needs: "start" }
+  - { id: apprentice-2, title: "Apprentice, 2nd year", needs: "Unit 1 complete (Days 1-2)" }
+  - { id: apprentice-3, title: "Apprentice, 3rd year", needs: "Unit 2 complete (Days 3-4)" }
+  - { id: apprentice-4, title: "Apprentice, 4th year", needs: "Unit 3 complete (Days 5-9)" }
+  - { id: journeyman-ready, title: "Journeyman-ready", needs: "Commissioning check passed (Day 10)" }
+sections:
+  "1.1": { title: "Motor Control Language", page: 4, unit: 1 }
+  "1.2": { title: "Motor Control Basics", page: 8, unit: 1 }
+  "2.1": { title: "Definitions of Control Terminology", page: 11, unit: 2 }
+  "2.2": { title: "Common Abbreviations Used for Electrical Terms and Devices", page: 18, unit: 2 }
+  "2.3": { title: "Standard Symbols", page: 19, unit: 2 }
+  "3.1": { title: "Auxiliary Contacts", page: 23, unit: 3 }
+  "3.2": { title: "Relays", page: 24, unit: 3 }
+  "3.3": { title: "Drum Switch", page: 25, unit: 3 }
+  "3.4": { title: "Float Switch", page: 26, unit: 3 }
+  "3.5": { title: "Flow Switch", page: 26, unit: 3 }
+  "3.6": { title: "Limit Switch, Mechanical", page: 27, unit: 3 }
+  "3.7": { title: "Limit Switch, Proximity", page: 28, unit: 3 }
+  "3.8": { title: "Limit Switch, Optical", page: 28, unit: 3 }
+  "3.9": { title: "Pressure Switch", page: 28, unit: 3 }
+  "3.10": { title: "Pushbutton Switch", page: 29, unit: 3 }
+  "3.11": { title: "Solenoid", page: 31, unit: 3 }
+  "3.12": { title: "Switch Operations", page: 31, unit: 3 }
+  "3.13": { title: "Temperature Switch", page: 34, unit: 3 }
+  "3.14": { title: "Timing Relay, Pneumatic", page: 35, unit: 3 }
+  "3.15": { title: "Timing Relay with Instantaneous Contacts", page: 35, unit: 3 }
+  "3.16": { title: "Timing Relay, Solid-State", page: 36, unit: 3 }
+  "3.17": { title: "Timing Relay Terminology", page: 36, unit: 3 }
+  "3.18": { title: "Reading a Motor Control Schematic", page: 37, unit: 3 }
+days:
+  - { day: 1, unit: 1, sections: ["1.1"], pages: "3-7", focus: "What motor control means; control vs power circuit; the language", activity: ch01.u1.s1-1.activity.bucket-tour }
+  - { day: 2, unit: 1, sections: ["1.2", "2.1"], pages: "8-11", focus: "Motor control basics; first definitions; lockout/tagout drill", activity: ch01.u1.s1-2.activity.loto-drill }
+  - { day: 3, unit: 2, sections: ["2.1"], pages: "11-17", focus: "Control terminology", activity: ch01.u2.s2-1.activity.device-bench }
+  - { day: 4, unit: 2, sections: ["2.2", "2.3"], pages: "18-22", focus: "Abbreviations and NEMA symbols", activity: ch01.u2.s2-3.activity.tag-the-bucket }
+  - { day: 5, unit: 3, sections: ["3.1", "3.2"], pages: "23-25", focus: "Auxiliary contacts and control relays", activity: ch01.u3.s3-2.activity.relay-bench }
+  - { day: 6, unit: 3, sections: ["3.3", "3.4", "3.5", "3.6", "3.7", "3.8", "3.9"], pages: "25-29", focus: "Sensing switches; normal state vs installed state", activity: ch01.u3.s3-4.activity.sensor-loop }
+  - { day: 7, unit: 3, sections: ["3.10", "3.11", "3.12", "3.13"], pages: "29-35", focus: "Pushbuttons, solenoids, switch operations, temperature switches", activity: ch01.u3.s3-10.activity.pushbutton-solenoid }
+  - { day: 8, unit: 3, sections: ["3.14", "3.15", "3.16", "3.17"], pages: "35-37", focus: "Timing relays", activity: ch01.u3.s3-14.activity.timer-bench }
+  - { day: 9, unit: 3, sections: ["3.18"], pages: "37-41", focus: "Reading a motor control schematic", activity: ch01.u3.s3-18.activity.trace-and-troubleshoot }
+  - { day: 10, unit: 3, sections: [], pages: "chapter review", focus: "Mixed review of weakest cards; commissioning check", activity: ch01.u3.s3-18.activity.commissioning-check }

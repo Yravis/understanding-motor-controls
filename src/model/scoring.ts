@@ -30,10 +30,12 @@ export function minimalMeasurements(p: Params, f: FaultDef, all: FaultDef[], cac
   };
   const mine = obs(f);
   const others = [null, ...all.filter((x) => x.id !== f.id)];
-  let remaining = others.map((o) => distinguishes(mine, obs(o)));
-  if (remaining.some((r) => r.length === 0)) return Infinity;
+  // Lamp states, hum and the fuse are free observations; only meter readings count as measurements.
+  const isFree = (k: string) => /:(lit|hum|fuse)$/.test(k);
+  const diffs = others.map((o) => distinguishes(mine, obs(o)));
+  if (diffs.some((r) => r.length === 0)) return Infinity;
   let count = 0;
-  let left = remaining.map((keys) => new Set(keys));
+  let left = diffs.filter((keys) => !keys.some(isFree)).map((keys) => new Set(keys));
   while (left.some((s) => s.size)) {
     const tally = new Map<string, number>();
     for (const s of left) for (const k of s) tally.set(k, (tally.get(k) ?? 0) + 1);
@@ -42,7 +44,7 @@ export function minimalMeasurements(p: Params, f: FaultDef, all: FaultDef[], cac
     left = left.filter((s) => !s.has(best));
     count++;
   }
-  return count;
+  return Math.max(1, count);
 }
 
 export function scoreAttempt(f: FaultDef, a: Attempt, minMeas: number): Score {
@@ -53,7 +55,8 @@ export function scoreAttempt(f: FaultDef, a: Attempt, minMeas: number): Score {
   const goodParts = a.replaced.filter((r) => !f.fixActions.some((x) => x.target === r));
   const partsPenalty = goodParts.length * 15;
   const safety = Math.max(0, 100 - violations.length * 25);
-  const extra = Math.max(0, a.measurementCount - Math.max(minMeas, 1));
+  // The model minimum is an omniscient lower bound (one well-chosen reading), so a practical allowance of 4 extra readings is free.
+  const extra = Math.max(0, a.measurementCount - (Math.max(minMeas, 1) + 4));
   const efficiency = Math.max(0, 100 - extra * 8);
   const total = rootCause ? Math.max(0, Math.round(0.5 * 100 + 0.3 * safety + 0.2 * efficiency - partsPenalty)) : 0;
   const xp = rootCause ? Math.max(0, Math.round(total / 2) - violations.length * 10) : 0;

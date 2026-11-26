@@ -302,3 +302,20 @@ export function distinguishes(a: Map<string, string>, c: Map<string, string>): s
   return keys;
 }
 export type { Reading };
+
+/** Apply a single fix action by restoring that target from a fresh reference bucket. Returns true if it was one of the fault's real fixes. */
+export function applyPartFix(p: Params, b: Bucket, f: FaultDef | null, target: string, opt?: BucketOptions): boolean {
+  const real = !!f && f.fixActions.some((x) => x.target === target);
+  const ref = buildBucket(p, opt);
+  const w = b.world;
+  if (real && f!.fixActions.find((x) => x.target === target)!.kind === 'remove') { w.els = w.els.filter((e) => e.id !== target); }
+  else {
+    if (target in w.devs) w.devs[target] = structuredClone(ref.world.devs[target]);
+    const members = target in ref.world.devs || target === 'CR1.coil' ? ref.world.els.filter((e) => 'dev' in e && (e as { dev: string }).dev === (target === 'CR1.coil' ? 'CR1' : target)) : ref.world.els.filter((e) => e.id === target);
+    for (const e of members) { const j = w.els.findIndex((x) => x.id === e.id); if (j >= 0) w.els[j] = structuredClone(e); }
+  }
+  if (target === 'F1' || real) { /* fuse replacement restores a fresh fuse via members above */ }
+  for (const k of Object.keys(w.coilOn)) w.coilOn[k] = false;
+  w.settle();
+  return real;
+}

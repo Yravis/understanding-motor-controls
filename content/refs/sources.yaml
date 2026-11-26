@@ -1,0 +1,10 @@
+items:
+  - { id: book-holt-basic-motor-controls, cite: "Mike Holt, Understanding Basic Motor Controls, Revised Edition, ISBN 978-0-9992038-4-2 (2017). Not available to the builder; summaries are original and keyed to section titles from the publisher TOC.", url: "https://www.mikeholt.com/productitem.php?id=1364", status: toc-only }
+  - { id: toc-MCMB2-1364, cite: "Publisher table of contents, product code MCMB2", url: "https://www.mikeholt.com/instructor2/img/product/pdf/MCMB2-1364-toc.pdf", status: opened-by-design-phase }
+  - { id: nec-2026, cite: "NFPA 70 National Electrical Code, 2026 edition (user's copy; needs user photos of cited pages)", url: null, status: blocked-on-source }
+  - { id: nema-ics, cite: "NEMA ICS standards (ICS 1, 2, 5, 19); text not available to the builder", url: null, status: blocked-on-source }
+  - { id: ieee-315, cite: "IEEE Std 315 Graphic Symbols for Electrical and Electronics Diagrams; text not available to the builder", url: null, status: blocked-on-source }
+  - { id: osha-1910-147, cite: "29 CFR 1910.147 The control of hazardous energy (lockout/tagout), paragraph (d)(1)-(6)", url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", status: not-yet-excerpted }
+  - { id: osha-1910-333, cite: "29 CFR 1910.333 Selection and use of work practices", url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333", status: not-yet-excerpted }
+  - { id: nfpa-70e-2024, cite: "NFPA 70E Standard for Electrical Safety in the Workplace, 2024 edition (test for absence of voltage; section number to be confirmed)", url: null, status: blocked-on-source }
+  - { id: datasheet-TBD, cite: "Placeholder: no real device datasheet has been supplied. All device parameters are typical/illustrative until one is.", url: null, status: blocked-on-source }
