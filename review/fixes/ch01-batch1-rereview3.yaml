@@ -1,0 +1,20 @@
+# Cody's fix notes for Eli's re-review 2 (ch01-batch1-rereview2). Read by scripts/review-rereview.ts.
+changed:
+  ch01.u3.s3-18.device.control-supply: >-
+    Added to the device note (hash now changes): 'Turning the handle off opens the transformer primary, but the
+    secondary still connects X1 to X2 through a fraction of an ohm. Before an ohms or insulation check, pull the
+    control fuse or lift the lead.' Model numbers are unchanged from 523b84f (you already verified them).
+  ch01.u1.s1-2.card.ohmmeter-only-dead: >-
+    Card text now says that turning the handle off opens the CPT primary but the secondary still connects X1 to
+    X2, so isolate the conductor (pull F1 or lift the lead) before ohms. fieldNote keeps the dial-setting tip and
+    adds: 'A reading of about 0.4 Ω from X1 to X2, or from wire 7 to ground, with F1 still in is the transformer
+    winding, not a dead short. Before an ohms or insulation check, pull the control fuse or lift the lead; a
+    high-impedance ground fault only shows up after you pull F1.'
+  ch01.u3.s3-18.fault.x1-ground-fault-high-impedance: >-
+    Work-order symptom now leads the learner to Pull F1 first: after the existing 'found by measurement' line,
+    'After lockout, pull F1 or lift the lead before an ohms check; with F1 in, the transformer winding reads
+    about 0.4 Ω from the X1-side wiring to ground and will hide a high-impedance path.' This fault can appear
+    in the Day 10 commissioning check.
+  ch01.u3.s3-18.fault.contact-on-x2-side: >-
+    Optional polish you offered: 'while START is released' -> 'while START is released with the E-stop reset'
+    in the claim, cause, and symptom. (This changes the hash of an approved-pending-book item.)

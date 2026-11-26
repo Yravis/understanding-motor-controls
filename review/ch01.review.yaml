@@ -1,15 +1,21 @@
 # Review ledger. Eli writes verdicts here; the seed script only adds missing entries and flags stale hashes.
 entries:
   - id: ch01.u3.s3-18.device.control-supply
-    hash: 4add40c523bf183c9107ea8e1d315be60d77ff00f5a217875c191a38cdb25c9c
-    status: needs-fix
-    severity: minor
+    hash: 02cdc936b5f7ff838139f939f075fb4f8e1b8480a8f8806bb6948a8fa4a8d9bf
+    status: pending
+    severity: null
     checkedAgainst: []
     basis: general-knowledge
     notes: "Re-review 2 (2026-11-26, commit 523b84f). MODEL flag RESOLVED and numbers verified: the CPT secondary (zsR 0.35 ohm) now stays in the AC and ohms solves with the handle off. I re-ran the model: handle off, F1 in: w7-G 0.4 ohm healthy and 0.4 ohm with the hi-Z X1 ground fault (0.35 winding + F1 0.02 + PB2/wire/bond about 0.03); START released 100.4 ohm (CR1 dcR 100 + about 0.4 back through the winding); CR1 coil 100.0 ohm; X1-X2 0.3 ohm. F1 pulled: w7-G 146.4 healthy / 59.4 hi-Z (100 ohm fault in parallel), START 246.4. Physically right: with the primary open, an ohmmeter from any X1-side point to X2/ground reads the secondary winding (a fraction of an ohm), so an X1 ground fault can't be found until the conductor is isolated. REMAINING (content gap, minor): no lesson, card or note tells the learner this. The model and sheets now depend on it (the hi-Z fault only shows on ohms after 'Pull F1'), but nothing in content/ch01 mentions pulling F1, lifting a lead, or the transformer winding reading near 0 ohm; the ohmmeter cards only say 'de-energized and isolated'. A learner who reads 0.4 ohm w7-to-ground may decide it's a dead short. FIX: add a short explanation, e.g. a fieldNote on ch01.u1.s1-2.card.ohmmeter-only-dead or a card on Day 9 (and a sentence in this device note so its hash changes): 'Turning the handle off opens the transformer primary, but the secondary winding still connects X1 to X2 through a fraction of an ohm. Before an ohms or insulation check on a control conductor, isolate it: pull the control fuse or lift the lead, or the winding will make every X1-side point read near 0 ohm to ground.' General knowledge only, no datasheet opened."
     reviewer: Eli
     date: 2026-11-26
     history:
+      - hash: 4add40c523bf183c9107ea8e1d315be60d77ff00f5a217875c191a38cdb25c9c
+        status: needs-fix
+        severity: minor
+        reviewer: Eli
+        date: 2026-11-26
+        staledOn: 2026-11-26
       - hash: 4add40c523bf183c9107ea8e1d315be60d77ff00f5a217875c191a38cdb25c9c
         status: needs-fix
         severity: minor
@@ -282,8 +288,8 @@ entries:
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u3.s3-18.fault.contact-on-x2-side
-    hash: 89809eab2286f2416cca50c42301af68f72525d03304f83cae9a733f380c2efe
-    status: approved-pending-book
+    hash: 0940f93ffdba76882de74bce0ee32cb981ff5a7e46de7dec8e7d6c3ca1a87ada
+    status: pending
     severity: null
     checkedAgainst:
       - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
@@ -301,6 +307,12 @@ entries:
       - hash: e6944a06112f34550a64f78faea3c1a4f70c41505e6a7a7c923790e99a636f55
         status: needs-fix
         severity: minor
+        reviewer: Eli
+        date: 2026-11-26
+        staledOn: 2026-11-26
+      - hash: 89809eab2286f2416cca50c42301af68f72525d03304f83cae9a733f380c2efe
+        status: approved-pending-book
+        severity: null
         reviewer: Eli
         date: 2026-11-26
         staledOn: 2026-11-26
@@ -351,8 +363,8 @@ entries:
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u3.s3-18.fault.x1-ground-fault-high-impedance
-    hash: 62c3096d8024920374d1b34cd207ee54349eb1a5cf5d20ab6558fe453d7c2ed8
-    status: blocked-on-source
+    hash: 26aea0ae84bee9c5d5e2b68086c7d3587d146859c19a226ad6e0f14db891130f
+    status: pending
     severity: null
     checkedAgainst:
       - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
@@ -360,6 +372,13 @@ entries:
     notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Physics hand-checked: 120 V / 100 ohm is about 1.2 A, below the 1.35 x 5 A = 6.75 A minimum melt, so it never clears; about 144 W in the fault path. Model shows w7-G 79.5 ohm (100 in parallel with 387) vs 387 ohm healthy when de-energized. That's the 'found by measurement' clue, and in the field an insulation-resistance test is the usual tool. 430.74 photo opened and consistent; illustrative values, so unapproved."
     reviewer: Eli
     date: 2026-11-26
+    history:
+      - hash: 62c3096d8024920374d1b34cd207ee54349eb1a5cf5d20ab6558fe453d7c2ed8
+        status: blocked-on-source
+        severity: null
+        reviewer: Eli
+        date: 2026-11-26
+        staledOn: 2026-11-26
   - id: ch01.u1.s1-1.fault.foreign-voltage-bucket-off
     hash: 00c2b0bdb467bec182fd3e436eb660b5dcce3a98ce52d4ce88c2b622417965f6
     status: blocked-on-source
@@ -583,8 +602,8 @@ entries:
         date: 2026-11-26
         staledOn: 2026-11-26
   - id: ch01.u1.s1-2.card.ohmmeter-only-dead
-    hash: 13ddd53440b13caea191151731e60fc873ba872e959b79ee362c97db8a91f966
-    status: blocked-on-source
+    hash: 585d0bc1636c32556522ae0f5a818bf561c846290dc3086db2db1f368c023ed6
+    status: pending
     severity: null
     checkedAgainst:
       - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
@@ -593,6 +612,13 @@ entries:
     notes: "Still blocked-on-source: needs the NFPA 70E 2024 text (test for absence of voltage, 120.6 per the process doc; confirm the number against the text). Checked what I could against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(B) (both opened 2026-11-26): no error found. OSHA requires checking the meter before and after only over 600 V; the app follows 70E (all voltages), which is the stricter and correct choice for this course."
     reviewer: Eli
     date: 2026-11-26
+    history:
+      - hash: 13ddd53440b13caea191151731e60fc873ba872e959b79ee362c97db8a91f966
+        status: blocked-on-source
+        severity: null
+        reviewer: Eli
+        date: 2026-11-26
+        staledOn: 2026-11-26
   - id: ch01.u1.s1-1.question.control-vs-power
     hash: 67fd37e36c27a9f7e56e2ef26c46f5eb9dee72903e6f67f91120802410730842
     status: blocked-on-source

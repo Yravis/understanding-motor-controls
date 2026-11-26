@@ -113,8 +113,8 @@ export function faultDefs(p: Params): FaultDef[] {
     },
     {
       id: 'contact-on-x2-side', title: 'START pushbutton wired on the X2 side of CR1', rootCause: 'W:PB1:2',
-      cause: 'START pushbutton PB1 was wired between the CR1 coil and X2 instead of between the E-stop and the coil. The circuit still works, but while START is released, both CR1 coil terminals sit at X1 potential, so a ground fault on the field wire between CR1 and PB1 would energize CR1 without pressing START (the arrangement NEC 2026 430.74 prohibits in a motor control circuit).',
-      symptom: 'Operator: "Everything works." (Behavior is unchanged: a hazard found by measurement. While START is released, both CR1 coil terminals read 120 V to ground instead of 0 V.)',
+      cause: 'START pushbutton PB1 was wired between the CR1 coil and X2 instead of between the E-stop and the coil. The circuit still works, but while START is released with the E-stop reset, both CR1 coil terminals sit at X1 potential, so a ground fault on the field wire between CR1 and PB1 would energize CR1 without pressing START (the arrangement NEC 2026 430.74 prohibits in a motor control circuit).',
+      symptom: 'Operator: "Everything works." (Behavior is unchanged: a hazard found by measurement. While START is released with the E-stop reset, both CR1 coil terminals read 120 V to ground instead of 0 V.)',
       behaviorSame: true,
       apply: (b) => {
         // X1 -- PB3 -- CR1 -- PB1 -- X2  (START landed on the grounded side of the coil)
@@ -167,7 +167,7 @@ export function faultDefs(p: Params): FaultDef[] {
     {
       id: 'x1-ground-fault-high-impedance', title: 'X1 high-impedance ground fault (does NOT clear)', rootCause: 'GF',
       cause: 'The same X1 conductor touches the enclosure through a high-impedance path (damp, damaged insulation). Current is too small to open the fuse: a hazard.',
-      symptom: 'Operator: "No problem, everything runs." (A hazard: the fault does not open the fuse and is found by measurement.)',
+      symptom: 'Operator: "No problem, everything runs." (A hazard: the fault does not open the fuse and is found by measurement. After lockout, pull F1 or lift the lead before an ohms check; with F1 in, the transformer winding reads about 0.4 Ω from the X1-side wiring to ground and will hide a high-impedance path.)',
       behaviorSame: true,
       apply: (b) => { b.world.els.push({ kind: 'res', id: 'GF', a: 'w7', b: 'G', r: P(p, 'WIRE', 'groundFaultHighZR'), label: 'ground fault path' }); b.world.settle(); },
       fixActions: [{ kind: 'remove', target: 'GF', note: 'Repair the damaged conductor.' }],

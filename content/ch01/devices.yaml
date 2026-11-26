@@ -26,7 +26,7 @@ items:
         volts: { qty: 120, unit: V, tol: "±0" }
         zsR: { qty: 0.35, unit: ohm, tol: "illustrative" }
         zsX: { qty: 0.35, unit: ohm, tol: "illustrative" }
-      note: "Internal impedance |Zs| about 0.5 ohm is an illustrative value; real control transformers range from tenths of an ohm to several ohms depending on VA rating."
+      note: "Internal impedance |Zs| about 0.5 ohm is an illustrative value; real control transformers range from tenths of an ohm to several ohms depending on VA rating. Turning the handle off opens the transformer primary, but the secondary still connects X1 to X2 through a fraction of an ohm. Before an ohms or insulation check, pull the control fuse or lift the lead."
   - <<: *d
     id: ch01.u3.s3-18.device.supply-fuse
     book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
