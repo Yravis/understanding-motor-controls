@@ -32,9 +32,25 @@ h1 { font-size:1.75rem; line-height:1.25; margin:.5em 0 } h2 { font-size:1.4rem;
 .sel, .paste, .num { min-height:44px; font:inherit; max-width:100%; background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:6px 8px } .num { width:80px } .paste { width:100% }
 .msg { background:var(--warn); padding:10px 14px; border-radius:8px; margin:8px 0; font-size:1.05rem } .warn-txt { color:var(--bad); font-weight:700 }
 .lamplist { display:flex; flex-direction:column; gap:4px; margin:8px 0; font-size:1.05rem } .lamp.on { font-weight:700; color:var(--ok) }
-.desk-bucket .card, .desk-bucket .small, .desk-bucket .plabel, .desk-bucket summary, .desk-bucket .result { font-size:1.05rem }
-.desk-bucket .small { font-size:1rem }
-.plabel { font-size:1.05rem }
+/* Bucket pane is compact (13–14px) so more of the board fits; lesson column stays 18px. */
+.desk-bucket { font-size:14px; line-height:1.35; }
+.desk-bucket h2 { font-size:1.15rem; margin:.3em 0; }
+.desk-bucket .card { padding:8px 10px; margin:8px 0; }
+.desk-bucket .small, .desk-bucket .plabel, .desk-bucket summary, .desk-bucket .result, .desk-bucket .lamplist { font-size:13px; }
+.desk-bucket .btn { min-height:32px; min-width:32px; padding:4px 8px; font-size:13px; }
+.desk-bucket .btn.small { min-height:28px; padding:3px 7px; font-size:13px; }
+.desk-bucket .btn.ctl { flex:1 1 120px; }
+.desk-bucket .sel { min-height:32px; font-size:13px; }
+.desk-bucket .meter { padding:6px 10px; }
+.desk-bucket .meter .readout { font-size:1.35rem; }
+.desk-bucket .meter .small, .desk-bucket .meter .probes { font-size:13px; }
+.desk-bucket .meter .btn { min-height:28px; padding:3px 8px; font-size:13px; }
+.desk-bucket .modes { gap:6px; }
+.desk-bucket .row { gap:6px; margin:6px 0; }
+.desk-bucket .banner { padding:6px 8px; font-size:13px; }
+.desk-bucket .zoombar { margin:4px 0; gap:4px; }
+.desk-bucket svg.phys, .desk-bucket svg.schem, .desk-bucket .schem-wrap svg { width:100%; max-width:500px; height:auto; }
+.plabel { font-size:13px; }
 .meter { position:sticky; bottom:0; left:0; right:0; background:#101820; color:#e6ffe6; padding:10px 14px; z-index:6; border-top:2px solid var(--pri) }
 .meter .readout { font:700 2.2rem/1.1 ui-monospace, monospace; text-align:right } .meter .small, .meter .probes { color:#c5d3dc; font-size:1.05rem }
 .modes { display:flex; flex-wrap:wrap; gap:8px } .meter .btn { background:#1e2b36; color:#fff; border-color:#44566a; font-size:1rem }

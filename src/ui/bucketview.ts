@@ -2,50 +2,43 @@
 // Tap a terminal to place the red probe, then another for the black probe. Pinch-zoom / pan on the wrapper.
 import { s, h } from './dom';
 import type { Bucket } from '../model/bucket';
-import { WARN_TEXT, WARN_X, WARN_Y, WARN_RECT_W, WARN_LINE, warningBannerLayout } from './svgtext';
+import { WARN_TEXT, WARN_X, WARN_Y, WARN_LINE } from './svgtext';
+import { PHYS, physicalLayout, deviceHeaderH } from './physicallayout';
 
 export interface PhysOpts { red?: string | null; black?: string | null; highlightNet?: string | null; onTerminal: (nodeId: string) => void; onDevice?: (tag: string) => void; doorOpen: boolean }
 // Terminal hit areas are >= 47 x 47 SVG units so they stay >= 44 CSS px at a 360 px wide phone (scale ~0.95).
-const COLS = 3, CW = 112, CH_BASE = 48, PIN_DY = 48, HIT = 47;
 
 export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
   const w = b.world;
-  const devs = b.layout.devices;
-  const cellH = (d: { pins: unknown[] }) => CH_BASE + Math.ceil(d.pins.length / 2) * PIN_DY;
-  const rows: typeof devs[] = [];
-  for (let i = 0; i < devs.length; i += COLS) rows.push(devs.slice(i, i + COLS));
-  const rowH = rows.map((r) => Math.max(...r.map(cellH)) + 12);
-  const panelH = rowH.reduce((a, v) => a + v, 0) + 16;
-  const warn = warningBannerLayout();
-  const tbRows = Math.ceil(b.layout.tbNets.length / 6);
-  const tbY = warn.panelTop + panelH + 20, ch2Y = tbY + tbRows * 54 + 30;
-  const H = ch2Y + 70;
-  const svg = s('svg', { viewBox: `0 0 360 ${H}`, class: 'phys', role: 'img', 'aria-label': 'Physical bucket' });
+  const lay = physicalLayout(b, o.doorOpen);
+  const { HIT, PIN_DY } = PHYS;
+  const H = lay.viewBox.h;
+  const svg = s('svg', { viewBox: `0 0 ${lay.viewBox.w} ${H}`, class: 'phys', role: 'img', 'aria-label': 'Physical bucket' });
   svg.append(s('rect', { x: 4, y: 4, width: 352, height: H - 8, rx: 8, class: 'door-frame' }));
   svg.append(s('text', { x: 14, y: 24, class: 'lbl' }, 'BUCKET 1A · control section · door ' + (o.doorOpen ? 'OPEN' : 'CLOSED')));
   const banner = s('g', { class: 'warn-banner', 'data-warning': WARN_TEXT });
-  banner.append(s('rect', { x: WARN_X, y: WARN_Y, width: WARN_RECT_W, height: warn.height, rx: 4, class: 'warn' }));
+  banner.append(s('rect', { x: lay.warning.box.x, y: lay.warning.box.y, width: lay.warning.box.w, height: lay.warning.box.h, rx: 4, class: 'warn' }));
   const wt = s('text', { x: WARN_X + 6, y: WARN_Y + 14, class: 'warn-label' });
-  warn.lines.forEach((line, i) => wt.append(s('tspan', { x: WARN_X + 6, dy: i === 0 ? 0 : WARN_LINE }, line)));
+  lay.warning.lines.forEach((line, i) => wt.append(s('tspan', { x: WARN_X + 6, dy: i === 0 ? 0 : WARN_LINE }, line)));
   banner.append(wt);
   svg.append(banner);
   if (!o.doorOpen) {
-    svg.append(s('rect', { x: 10, y: warn.panelTop - 4, width: 340, height: panelH + 120, rx: 6, class: 'door' }));
-    svg.append(s('text', { x: 180, y: warn.panelTop + 60, 'text-anchor': 'middle', class: 'lbl' }, 'Door closed. Turn the handle OFF, then open the door.'));
+    svg.append(s('rect', { x: 10, y: lay.panelTop - 4, width: 340, height: H - lay.panelTop - 80, rx: 6, class: 'door' }));
+    svg.append(s('text', { x: 180, y: lay.panelTop + 60, 'text-anchor': 'middle', class: 'lbl' }, 'Door closed. Turn the handle OFF, then open the door.'));
     return svg;
   }
-  let y = warn.panelTop;
-  rows.forEach((row, ri) => {
-    row.forEach((d, ci) => {
-      const x = 12 + ci * (CW + 4);
-      const hgt = rowH[ri] - 8;
+  for (const d of lay.devices) {
+      const { x, y, w: width, h: hgt } = d.box;
       const lit = d.kind === 'lamp' && w.lit(d.tag);
       const g = s('g', { class: 'dev' + (lit ? ' on' : '') + (d.foreign ? ' foreign' : '') });
-      g.append(s('rect', { x, y, width: CW, height: hgt, rx: 5, class: 'devbox', onclick: () => o.onDevice?.(d.tag) }));
+      g.append(s('rect', { x, y, width, height: hgt, rx: 5, class: 'devbox', onclick: () => o.onDevice?.(d.tag) }));
       g.append(s('text', { x: x + 6, y: y + 15, class: 'lbl' }, d.designation + (lit ? ' · LIT' : '')));
-      g.append(s('text', { x: x + 6, y: y + 28, class: 'tiny' }, short(d.title)));
+      const title = s('text', { x: x + 6, y: y + PHYS.TITLE_Y, class: 'tiny device-title' });
+      d.titleLines.forEach((line, i) => title.append(s('tspan', { x: x + 6, dy: i === 0 ? 0 : PHYS.TITLE_LINE }, line)));
+      g.append(title);
+      const pinOrigin = y + deviceHeaderH(d.title);
       d.pins.forEach((p, i) => {
-        const px = x + 28 + (i % 2) * 56, py = y + CH_BASE + Math.floor(i / 2) * PIN_DY + 8;
+        const px = x + 28 + (i % 2) * 56, py = pinOrigin + Math.floor(i / 2) * PIN_DY + 8;
         const sel = o.red === p.id ? 'red' : o.black === p.id ? 'black' : '';
         const hl = o.highlightNet && p.net === o.highlightNet;
         const t = s('g', { class: 'term ' + sel + (hl ? ' hl' : ''), onclick: () => o.onTerminal(p.id) });
@@ -55,32 +48,26 @@ export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
         g.append(t);
       });
       svg.append(g);
-    });
-    y += rowH[ri];
-  });
+  }
   // terminal strip
-  svg.append(s('text', { x: 14, y: tbY - 6, class: 'lbl' }, 'TERMINAL STRIP (wire numbers)'));
-  b.layout.tbNets.forEach((n, i) => {
-    const per = 6, x = 10 + (i % per) * 57, yy = tbY + Math.floor(i / per) * 54;
-    const id = n === 'X1' || n === 'X2' || n === 'G' ? n : 'w' + n;
-    const sel = o.red === id ? 'red' : o.black === id ? 'black' : '';
-    const t = s('g', { class: 'term tb ' + sel + (o.highlightNet === id ? ' hl' : '') + (n === '91' || n === '92' ? ' foreign' : ''), onclick: () => o.onTerminal(id) });
-    t.append(s('rect', { x, y: yy, width: 52, height: HIT + 1, rx: 3, class: 'tbbox hit' }), s('text', { x: x + 26, y: yy + 29, 'text-anchor': 'middle', class: 'pinlbl' }, n));
+  svg.append(s('text', { x: 14, y: lay.terminalStrip.y - 6, class: 'lbl' }, lay.terminalStrip.label));
+  for (const tm of lay.terminalStrip.terminals) {
+    const sel = o.red === tm.id ? 'red' : o.black === tm.id ? 'black' : '';
+    const t = s('g', { class: 'term tb ' + sel + (o.highlightNet === tm.id ? ' hl' : '') + (tm.foreign ? ' foreign' : ''), onclick: () => o.onTerminal(tm.id) });
+    t.append(s('rect', { x: tm.box.x, y: tm.box.y, width: tm.box.w, height: tm.box.h, rx: 3, class: 'tbbox hit' }), s('text', { x: tm.box.x + 26, y: tm.box.y + 29, 'text-anchor': 'middle', class: 'pinlbl' }, tm.net));
     svg.append(t);
-  });
+  }
   // chapter 2 preview, greyed out
-  svg.append(s('text', { x: 14, y: ch2Y - 4, class: 'lbl' }, 'CHAPTER 2 PREVIEW (inspect only)'));
-  b.layout.ch2Preview.forEach((c, i) => {
+  svg.append(s('text', { x: 14, y: lay.ch2Preview.y - 4, class: 'lbl' }, lay.ch2Preview.label));
+  for (const c of lay.ch2Preview.items) {
     const g = s('g', { class: 'ch2', onclick: () => o.onDevice?.('ch2:' + c.tag) });
-    g.append(s('rect', { x: 12 + i * 68, y: ch2Y, width: 64, height: 44, rx: 4, class: 'ch2box' }), s('text', { x: 12 + i * 68 + 32, y: ch2Y + 17, 'text-anchor': 'middle', class: 'tiny' }, c.tag), s('text', { x: 12 + i * 68 + 32, y: ch2Y + 33, 'text-anchor': 'middle', class: 'tiny' }, 'Ch 2'));
+    g.append(s('rect', { x: c.box.x, y: c.box.y, width: c.box.w, height: c.box.h, rx: 4, class: 'ch2box' }), s('text', { x: c.box.x + c.box.w / 2, y: c.box.y + 17, 'text-anchor': 'middle', class: 'tiny' }, c.tag), s('text', { x: c.box.x + c.box.w / 2, y: c.box.y + 33, 'text-anchor': 'middle', class: 'tiny' }, 'Ch 2'));
     svg.append(g);
-  });
+  }
   return svg;
 }
-const short = (t: string) => (t.length > 20 ? t.slice(0, 19) + '…' : t);
-
 /** Pinch-zoom + pan wrapper for an SVG. Touch only needs two fingers; buttons also provided. */
-export function zoomable(child: SVGElement): HTMLElement {
+export function zoomable(child: SVGElement | HTMLElement): HTMLElement {
   const wrap = h('div', { class: 'zoom' });
   const inner = h('div', { class: 'zoom-inner' });
   inner.append(child);
