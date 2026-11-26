@@ -84,6 +84,32 @@ for (const [w, h] of [[390, 844], [360, 740]]) {
   if (errors.length) fail('page errors: ' + errors.join(' | '));
   await ctx.close();
 }
+// Symbol figures (lesson cards / identify-symbol questions): every drawing's real bounding box must sit inside its figure.
+{
+  console.log('symbol figures');
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+  const page = await ctx.newPage();
+  await page.goto(URL_ + '#symbols');
+  await page.waitForSelector('svg.symfig');
+  const r = await page.evaluate(() => {
+    const out = []; let n = 0;
+    for (const svg of document.querySelectorAll('svg.symfig')) {
+      const g = svg.querySelector('g.nema-sym'); if (!g) continue; n++;
+      const sb = svg.getBoundingClientRect();
+      // each primitive, including text, must be inside the figure with a 1 px margin
+      for (const el of g.querySelectorAll('line, circle, path, text')) {
+        const b = el.getBoundingClientRect();
+        if (b.left < sb.left + 1 || b.right > sb.right - 1 || b.top < sb.top + 1 || b.bottom > sb.bottom - 1)
+          out.push(`${g.getAttribute('data-symbol')} ${el.tagName} [${Math.round(b.top - sb.top)}..${Math.round(b.bottom - sb.top)} of ${Math.round(sb.height)}]`);
+      }
+    }
+    return { n, out };
+  });
+  console.log(`  symbol figures checked: ${r.n}`);
+  if (r.n < 22) fail(`expected 22 symbol figures, found ${r.n}`);
+  for (const b of r.out) fail('symbol clipped: ' + b);
+  await ctx.close();
+}
 await browser.close();
 server.kill();
 console.log(failures ? `${failures} problem(s)` : 'phone checks passed');

@@ -95,7 +95,8 @@ export class World {
           out.push({ id: e.id, a: e.a, b: e.b, y: inv(z) });
           break;
         }
-        case 'led': if (this.ledOn[e.id]) out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.rLamp) }); break;
+        // off is high but finite: a real 120 V LED unit still passes microamps, so a 10 Mohm meter reads near line voltage across an open contact feeding it
+        case 'led': out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / (this.ledOn[e.id] ? e.rLamp : e.rOff)) }); break;
         case 'lamp': out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.hotR) }); break;
         case 'contact': if (this.contactClosed(e)) out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / (e.rClosed + (e.extraR ?? 0))) }); break;
         case 'fuse': if (!e.blown) out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.r) }); break;

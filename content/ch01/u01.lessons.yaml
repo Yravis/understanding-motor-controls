@@ -132,15 +132,15 @@ items:
   - <<: *d
     id: ch01.u1.s1-2.card.loto-live-dead-live
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
-    claim: "Verification for electrical energy uses live-dead-live: prove the meter on a known live source, test for absence of voltage on every combination including foreign circuit terminals, then prove the meter again."
+    claim: "Verification starts by operating the controls to confirm the equipment cannot restart (OSHA 1910.333(b)(2)(iv)(A)); for electrical energy it then uses live-dead-live: prove the meter on a known live source, test for absence of voltage on every combination including foreign circuit terminals, then prove the meter again."
     userSignoff: approved
     userSignoffDate: "2026-11-26"
-    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    other: [{ src: "osha:1910.147(d)" }, { src: "osha:1910.333(b)(2)(iv)(A)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }, { ref: "29 CFR 1910.333(b)(2)(iv)(A)", covers: ["osha:1910.333"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333", summary: "Verification of deenergized condition: a qualified person shall operate the equipment operating controls or otherwise verify that the equipment cannot be restarted. (iv)(B) then requires the test equipment check." }]
     reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure. Claim also rests on NFPA 70E 2024 (test for absence / live-dead-live, 120.6): blocked until that excerpt is attached."
     body:
       title: "LOTO example: live-dead-live"
-      text: "The last step is to verify, and for electrical energy this follows the live-dead-live method used in NFPA 70E. First, check your meter on a known live source. Second, test for absence of voltage on every combination: X1 to X2, X1 to ground, X2 to ground, and the terminals of any foreign circuit to each other and to ground. Third, check the meter again on the known source to show it still works. If any reading shows voltage, stop and go back to find the source you missed."
+      text: "The last step is to verify. Start by operating the equipment controls: press START and confirm nothing operates (OSHA 1910.333(b)(2)(iv)(A) requires a qualified person to operate the controls or otherwise verify the equipment cannot be restarted). Then, for electrical energy, follow the live-dead-live method used in NFPA 70E. First, check your meter on a known live source. Second, test for absence of voltage on every combination: X1 to X2, X1 to ground, X2 to ground, and the terminals of any foreign circuit to each other and to ground. Third, check the meter again on the known source to show it still works. If any reading shows voltage, stop and go back to find the source you missed."
       fieldNote: "Only the final live check proves that the zero you saw came from a working meter."
       terms: ["live-dead-live", "test for absence of voltage", "ground"]
       day: 2

@@ -83,7 +83,7 @@ items:
         inrushPF: { qty: 0.6, unit: pf, tol: "typical 0.4-0.8" }
         sealedVA: { qty: 10, unit: VA, tol: "typical 4-15" }
         sealedPF: { qty: 0.3, unit: pf, tol: "typical 0.25-0.5" }
-        dcR: { qty: 350, unit: ohm, tol: "typical 100-700" }
+        dcR: { qty: 100, unit: ohm, tol: "illustrative; must stay below the inrush AC resistance, 14400/70 x 0.6 = 123 ohm" }
         guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
         guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
         simPickupPct: { qty: 75, unit: pct, tol: "typical 60-85" }
@@ -103,7 +103,7 @@ items:
         inrushPF: { qty: 0.6, unit: pf, tol: "typical" }
         sealedVA: { qty: 7, unit: VA, tol: "typical 3-10" }
         sealedPF: { qty: 0.3, unit: pf, tol: "typical" }
-        dcR: { qty: 500, unit: ohm, tol: "typical 200-900" }
+        dcR: { qty: 250, unit: ohm, tol: "illustrative; must stay below the inrush AC resistance, 14400/30 x 0.6 = 288 ohm" }
         guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
         guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
         simPickupPct: { qty: 75, unit: pct, tol: "typical" }
@@ -124,7 +124,7 @@ items:
         inrushPF: { qty: 0.6, unit: pf, tol: "typical" }
         sealedVA: { qty: 7, unit: VA, tol: "typical 3-10" }
         sealedPF: { qty: 0.3, unit: pf, tol: "typical" }
-        dcR: { qty: 500, unit: ohm, tol: "typical 200-900" }
+        dcR: { qty: 250, unit: ohm, tol: "illustrative; must stay below the inrush AC resistance, 14400/30 x 0.6 = 288 ohm" }
         guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
         guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
         simPickupPct: { qty: 75, unit: pct, tol: "typical" }
@@ -145,7 +145,7 @@ items:
         inrushPF: { qty: 0.7, unit: pf, tol: "typical" }
         sealedVA: { qty: 1.5, unit: VA, tol: "typical 0.5-3" }
         sealedPF: { qty: 0.7, unit: pf, tol: "typical" }
-        dcR: { qty: 12000, unit: ohm, tol: "typical 5k-30k" }
+        dcR: { qty: 6000, unit: ohm, tol: "illustrative equivalent; must stay below 14400/1.5 x 0.7 = 6720 ohm" }
         guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
         guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
         simPickupPct: { qty: 70, unit: pct, tol: "typical" }
@@ -155,7 +155,7 @@ items:
   - <<: *d
     id: ch01.u3.s3-16.device.td4
     book: { chapter: 1, unit: 3, section: "3.16", page: 36, pageStatus: toc-unverified, figure: null }
-    claim: "A solid-state off-delay timer needs a constant supply plus a separate trigger input. Timing starts when the trigger is removed; if the supply is lost the output drops immediately."
+    claim: "TD4 is a trigger-type (control-signal) solid-state off-delay timer: it needs a constant supply plus a separate trigger input. Timing starts when the trigger is removed; if the supply is lost the output drops immediately. (True off-delay models that time out after power is removed, with no trigger, also exist.)"
     body:
       tag: TD4
       kind: timer
@@ -166,7 +166,7 @@ items:
         inrushPF: { qty: 0.7, unit: pf, tol: "typical" }
         sealedVA: { qty: 1.5, unit: VA, tol: "typical 0.5-3" }
         sealedPF: { qty: 0.7, unit: pf, tol: "typical" }
-        dcR: { qty: 12000, unit: ohm, tol: "typical 5k-30k" }
+        dcR: { qty: 6000, unit: ohm, tol: "illustrative equivalent; must stay below 14400/1.5 x 0.7 = 6720 ohm" }
         guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
         guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
         simPickupPct: { qty: 70, unit: pct, tol: "typical" }
@@ -187,7 +187,7 @@ items:
         inrushPF: { qty: 0.5, unit: pf, tol: "typical" }
         sealedVA: { qty: 8, unit: VA, tol: "typical 4-15" }
         sealedPF: { qty: 0.3, unit: pf, tol: "typical" }
-        dcR: { qty: 400, unit: ohm, tol: "typical 150-900" }
+        dcR: { qty: 150, unit: ohm, tol: "illustrative; must stay below the inrush AC resistance, 14400/40 x 0.5 = 180 ohm" }
         guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
         guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
         simPickupPct: { qty: 75, unit: pct, tol: "typical" }
@@ -195,7 +195,7 @@ items:
   - <<: *d
     id: ch01.u3.s3-10.device.led-pilot
     book: { chapter: 1, unit: 3, section: "3.10", page: 29, pageStatus: toc-unverified, figure: null }
-    claim: "LED pilot lights are the default in new installations. They draw only a few milliamps and are nonlinear: they conduct only above a small threshold voltage and read differently with the ohmmeter probes reversed."
+    claim: "LED pilot lights are now the most common choice. A typical 120 V unit draws on the order of 10 mA when lit. They are nonlinear: they conduct well only above a small threshold voltage, and with an ohmmeter they may read differently with the probes reversed, or OL both ways, depending on the internal circuit."
     body:
       tag: LED
       kind: led
@@ -204,8 +204,9 @@ items:
         rLamp: { qty: 12000, unit: ohm, tol: "typical 8k-20k" }
         vOnRms: { qty: 3, unit: V, tol: "illustrative" }
         vf: { qty: 1.8, unit: V, tol: "illustrative" }
-        litI: { qty: 0.002, unit: A, tol: "illustrative" }
-      note: "About 10 mA at 120 V. Real LED pilot lights vary by manufacturer; some read OL both ways on an ohmmeter."
+        litI: { qty: 0.002, unit: A, tol: "illustrative; visibly lit threshold, well below the 10 mA running current" }
+        rOff: { qty: 470000, unit: ohm, tol: "illustrative; off-state AC impedance" }
+      note: "Lit: 120 V / 12 kohm = 10 mA. Off: still a high but finite impedance (470 kohm in this model), so a 10 Mohm meter across an open contact feeding the lamp reads about 115 V (near line), while a 3 kohm LoZ meter draws enough current to turn the LED on and reads about 24 V (120 x 3k / 15k). The ohmmeter model conducts forward only (diode); real LED pilot lights vary by manufacturer, and many with a bridge rectifier or driver read OL both ways."
   - <<: *d
     id: ch01.u3.s3-10.device.incandescent-pilot
     book: { chapter: 1, unit: 3, section: "3.10", page: 29, pageStatus: toc-unverified, figure: null }

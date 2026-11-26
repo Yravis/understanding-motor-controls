@@ -1,7 +1,6 @@
 import { itemHash, Item } from './content';
 
 export interface LedgerEntry { id: string; hash: string; status: string; severity: string | null; checkedAgainst: string[]; basis: string | null; notes: string; reviewer: string | null; date: string | null }
-const VERDICTS = new Set(['approved', 'approved-pending-book', 'needs-fix', 'question', 'blocked-on-book', 'rejected']);
 
 /** Source keys an item rests on: every NEC/NEMA/IEEE ref, OSHA/NFPA 70E citation, and symbol identification. */
 export function sourceKeys(it: Item): string[] {
@@ -23,26 +22,35 @@ export function missingSources(it: Item): string[] {
 }
 /** Items whose source text is not yet available to the reviewer cannot be reviewed. */
 export function needsSource(it: Item): boolean { return missingSources(it).length > 0; }
-const UNREVIEWED = new Set(['pending', 'blocked-on-source']);
 const initialStatus = (it: Item) => (needsSource(it) ? 'blocked-on-source' : 'pending');
 const initialNote = (it: Item) => (needsSource(it) ? `needs source text before review: ${missingSources(it).join(', ')}` : '');
 
 export interface SeedResult { ledger: LedgerEntry[]; added: string[]; stale: string[]; removed: string[] }
-/** Adds missing entries (never overwrites existing verdicts); flags verdicts whose hash no longer matches as `stale`. */
-export function seedLedger(items: Item[], existing: LedgerEntry[]): SeedResult {
+export interface HistoryEntry { hash: string; status: string; severity: string | null; reviewer: string | null; date: string | null; staledOn: string }
+/**
+ * Reviewer-safe seeding. The reviewer owns every existing entry:
+ *  - unchanged hash  -> entry kept exactly as written (status, notes, everything)
+ *  - changed hash    -> back to `pending` with the new hash; notes, checkedAgainst, basis, reviewer and date are KEPT,
+ *                       and the previous verdict is appended to `history`
+ *  - new item        -> added (`pending`, or `blocked-on-source` when its source text is missing)
+ *  - removed item    -> reported as orphaned (dropped from the ledger)
+ */
+export function seedLedger(items: Item[], existing: LedgerEntry[], today = new Date().toISOString().slice(0, 10)): SeedResult {
   const byId = new Map(existing.map((e) => [e.id, e]));
   const out: LedgerEntry[] = [];
   const added: string[] = [], stale: string[] = [];
   for (const it of items) {
     const hash = itemHash(it);
-    const e = byId.get(it.id);
+    const e = byId.get(it.id) as (LedgerEntry & { history?: HistoryEntry[] }) | undefined;
     if (!e) {
       out.push({ id: it.id, hash, status: initialStatus(it), severity: null, checkedAgainst: [], basis: null, notes: initialNote(it), reviewer: null, date: null });
       added.push(it.id);
     } else if (e.hash !== hash) {
-      if (VERDICTS.has(e.status)) { out.push({ ...e, status: 'stale' }); stale.push(it.id); }
-      else out.push({ ...e, hash, ...(UNREVIEWED.has(e.status) ? { status: initialStatus(it), notes: initialNote(it) } : {}) }); // never reviewed: track hash + source status
-    } else out.push(UNREVIEWED.has(e.status) ? { ...e, status: initialStatus(it), notes: initialNote(it) } : e);
+      // already pending (no verdict since the last change): just track the new hash, don't stack history
+      const history = e.status === 'pending' ? e.history : [...(e.history ?? []), { hash: e.hash, status: e.status, severity: e.severity, reviewer: e.reviewer, date: e.date, staledOn: today }];
+      out.push({ ...e, hash, status: 'pending', severity: null, ...(history ? { history } : {}) } as LedgerEntry);
+      stale.push(it.id);
+    } else out.push(e);
   }
   const ids = new Set(items.map((i) => i.id));
   const removed = existing.filter((e) => !ids.has(e.id)).map((e) => e.id);

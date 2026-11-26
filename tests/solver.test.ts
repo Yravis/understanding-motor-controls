@@ -99,7 +99,8 @@ describe('meter as a circuit element', () => {
   it('coil resistance is measured de-energized (DC resistance) and continuity beeps on a closed contact', () => {
     const w = bucket().world;
     w.setSource('SRC', false);
-    expect(measure(w, 'OHMS', 'CR1:C1', 'CR1:C2').value!).toBeGreaterThan(300);
+    const rdc = measure(w, 'OHMS', 'CR1:C1', 'CR1:C2').value!; // DC winding resistance (devices.yaml CR1 dcR = 100 ohm), not the 1440 ohm sealed |Z|
+    expect(rdc).toBeGreaterThan(95); expect(rdc).toBeLessThan(105);
     w.press('PB1'); // contacts operate mechanically even de-energized
     expect(measure(w, 'CONT', 'PB1:1', 'PB1:2').beep).toBe(true);
   });
@@ -114,6 +115,18 @@ describe('meter as a circuit element', () => {
   it('unconnected spare terminal is flagged floating', () => {
     const w = bucket().world;
     expect(measure(w, 'VAC', 'CR1:7', 'G').floating).toBe(true);
+  });
+  it('open contact feeding an unlit LED pilot reads near source on 10 Mohm, collapses on LoZ (finite LED off-impedance)', () => {
+    const w = bucket().world;
+    const rOff = params.LED.rOff, Vs = 120, Rm = 10e6;
+    for (const [r, k] of [['CR1:1', 'CR1:2'], ['FS1:1', 'FS1:2']]) {
+      const hi = measure(w, 'VAC', r, k).value!;
+      expect(hi, r).toBeCloseTo((Vs * Rm) / (Rm + rOff), 0); // hand divider: 120 x 10M / (10M + 470k) = 114.6 V
+      expect(hi, r).toBeGreaterThan(100);
+      // LoZ (3 kohm) passes enough current to turn the LED on (12 kohm lit): 120 x 3k / 15k = 24 V, far below the 10 Mohm reading
+      expect(measure(w, 'LOZ', r, k).value!, r).toBeCloseTo((Vs * 3e3) / (3e3 + params.LED.rLamp), 0);
+    }
+    expect(w.lit('PL1')).toBe(false);
   });
   it('ghost voltage via coupling capacitance: high on 10 Mohm, low on LoZ (hand-worked divider)', () => {
     const b = bucket({ coupling: [['91', '3']] });

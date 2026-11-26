@@ -12,7 +12,8 @@
     "icons": "node scripts/gen-icons.mjs",
     "review:seed": "tsx scripts/review-seed.ts",
     "review:sheets": "tsx scripts/review-sheets.ts",
-    "review:queue": "tsx scripts/review-queue.ts"
+    "review:queue": "tsx scripts/review-queue.ts",
+    "review:rereview": "tsx scripts/review-rereview.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.11",

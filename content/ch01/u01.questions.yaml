@@ -203,11 +203,11 @@ items:
   - <<: *d
     id: ch01.u1.s1-2.question.loto-order
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
-    claim: "The example lockout/tagout order is prepare and identify all sources, normal shutdown, isolate, lock and tag, relieve stored energy, then verify."
+    claim: "The example lockout/tagout order is prepare and identify all sources, normal shutdown, isolate, lock and tag, relieve stored energy, try the start controls to verify the equipment cannot restart, then verify absence of voltage."
     userSignoff: approved
     userSignoffDate: "2026-11-26"
-    other: [{ src: "osha:1910.147(d)" }]
-    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    other: [{ src: "osha:1910.147(d)" }, { src: "osha:1910.333(b)(2)(iv)(A)" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }, { ref: "29 CFR 1910.333(b)(2)(iv)(A)", covers: ["osha:1910.333"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333", summary: "Verification of deenergized condition: a qualified person shall operate the equipment operating controls or otherwise verify that the equipment cannot be restarted. (iv)(B) then requires the test equipment check." }]
     reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure."
     body:
       format: order-steps
@@ -219,8 +219,9 @@ items:
         - "Isolate every energy source, including the foreign source"
         - "Apply a lock and tag at each isolation point"
         - "Relieve or restrain stored energy"
+        - "Operate the start controls to verify the equipment cannot restart"
         - "Verify absence of voltage with live-dead-live"
-      explanation: "You must know every source before isolating, stop the equipment in an orderly way, isolate and lock, deal with stored energy, and only then prove the circuit dead."
+      explanation: "You must know every source before isolating, stop the equipment in an orderly way, isolate and lock, and deal with stored energy. Then OSHA 1910.333(b)(2)(iv)(A) has you operate the controls (try START) to verify the equipment cannot restart, and only then prove the circuit dead with the meter."
       dependsOn: []
   - <<: *d
     id: ch01.u1.s1-2.question.identify-sources-multi

@@ -74,12 +74,17 @@ export function drawSymbol(key: string, x: number, y: number, designation = ''):
   return g;
 }
 
+/** Symbol drawings reach about 25 units above/below their centre (mushroom cap, timer arrows, NOTC labels, float)
+ *  and 18 units left/right (leads). The figure scale and viewBox leave room for all of it plus padding;
+ *  tests/e2e/phone.mjs checks every symbol's real bounding box fits inside the figure. */
+export const FIG = { w: 120, h: 84, scale: 1.45 } as const;
 /** Stand-alone symbol picture for lesson cards and identify-symbol questions. */
 export function symbolFigure(key: string, designation = ''): SVGSVGElement {
-  const svg = s('svg', { viewBox: '0 0 120 60', class: 'symfig', role: 'img', 'aria-label': `Symbol ${key}` });
-  svg.append(L(4, 30, 26, 30, 'wire'), L(94, 30, 116, 30, 'wire'));
-  const g = drawSymbol(key, 60, 30, designation);
-  g.setAttribute('transform', 'translate(60 30) scale(1.9) translate(-60 -30)');
+  const cx = FIG.w / 2, cy = FIG.h / 2;
+  const svg = s('svg', { viewBox: `0 0 ${FIG.w} ${FIG.h}`, class: 'symfig', role: 'img', 'aria-label': `Symbol ${key}`, 'data-symbol-figure': key });
+  svg.append(L(4, cy, cx - 18 * FIG.scale, cy, 'wire'), L(cx + 18 * FIG.scale, cy, FIG.w - 4, cy, 'wire'));
+  const g = drawSymbol(key, cx, cy, designation);
+  g.setAttribute('transform', `translate(${cx} ${cy}) scale(${FIG.scale}) translate(${-cx} ${-cy})`);
   svg.append(g);
   return svg;
 }

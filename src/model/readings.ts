@@ -19,6 +19,10 @@ export const KEY_POINTS: { mode: 'VAC' | 'OHMS'; red: string; black: string; wha
   { mode: 'VAC', red: 'TR1:A1', black: 'TR1:A2', what: 'across TR1 coil' },
   { mode: 'VAC', red: 'w91', black: 'w92', what: 'foreign circuit' },
   { mode: 'VAC', red: 'w7', black: 'G', what: 'wire 7 to ground' },
+  { mode: 'VAC', red: 'PL1:1', black: 'G', what: 'PL1 feed terminal to ground' },
+  { mode: 'VAC', red: 'SOL1:C1', black: 'G', what: 'SOL1 terminal C1 to ground' },
+  { mode: 'VAC', red: 'SOL1:C2', black: 'G', what: 'SOL1 terminal C2 to ground' },
+  { mode: 'VAC', red: 'LS1:2', black: 'G', what: 'LS1 output terminal to ground' },
   { mode: 'OHMS', red: 'CR1:C1', black: 'CR1:C2', what: 'CR1 coil resistance' },
   { mode: 'OHMS', red: 'PB1:1', black: 'PB1:2', what: 'START contact (released)' },
   { mode: 'OHMS', red: 'CR1:1', black: 'CR1:2', what: 'CR1 NO contact' },
@@ -27,8 +31,10 @@ export const KEY_POINTS: { mode: 'VAC' | 'OHMS'; red: string; black: string; wha
 ];
 
 export const STATES: { id: string; label: string; run: (b: Bucket) => void }[] = [
-  { id: 'idle', label: 'Bucket ON, idle (nothing pressed)', run: () => {} },
-  { id: 'start', label: 'Bucket ON, START held 1 s', run: (b) => { b.world.press('PB1'); b.world.advance(1); } },
+  // every state runs simulated time, so time-dependent faults (fuse I2t on a bolted ground fault) have acted
+  { id: 'idle', label: 'Bucket ON, idle (nothing pressed), after 1 s', run: (b) => { b.world.advance(1); } },
+  { id: 'ls1-open', label: 'Bucket ON, LS1 operated (open), after 1 s', run: (b) => { b.world.advance(1); b.world.toggleSwitch('LS1'); b.world.advance(1); } },
+  { id: 'start', label: 'Bucket ON, START held 1 s', run: (b) => { b.world.advance(1); b.world.press('PB1'); b.world.advance(1); } },
   { id: 'dead', label: 'Bucket supply OFF and remote source OFF (de-energized, for ohms)', run: (b) => { b.world.setSource('SRC', false); b.world.setSource('FSRC', false); } },
   { id: 'bucket-off-foreign-live', label: 'Bucket supply OFF, remote source still ON', run: (b) => { b.world.setSource('SRC', false); } },
 ];
@@ -38,16 +44,23 @@ export function readingsFor(b0: Bucket): Row[] {
   const rows: Row[] = [];
   for (const st of STATES) {
     const b = structuredCloneBucket(b0);
+    b.world.settle(); // the cloned bucket's lamp/coil state is recomputed before anything is read
     st.run(b);
+    const lit = Object.keys(b.world.ledOn).filter((id) => b.world.lit(id)).join(' ') || 'none'; // before the meter touches the model
     for (const k of KEY_POINTS) {
       if (st.id === 'dead' && k.mode === 'VAC') continue;
       if (st.id === 'bucket-off-foreign-live' && k.mode === 'OHMS') continue;
-      if ((st.id === 'idle' || st.id === 'start') && k.mode === 'OHMS') continue;
+      if ((st.id === 'idle' || st.id === 'start' || st.id === 'ls1-open') && k.mode === 'OHMS') continue;
+      if (st.id === 'ls1-open' && !/SOL1|LS1/.test(k.red + k.black)) continue;
       const r = measure(b.world, k.mode, k.red, k.black);
       rows.push({ state: st.label, mode: k.mode, what: k.what, points: `${k.red} → ${k.black}`, display: r.display + (r.floating ? ' (floating)' : ''), note: r.strike ? 'safety strike' : '' });
     }
-    if (st.id === 'start') rows.push({ state: st.label, mode: 'state', what: 'lit lamps', points: '', display: Object.keys(b.world.ledOn).filter((id) => b.world.lit(id)).join(' ') || 'none', note: '' });
-    if (st.id === 'idle') rows.push({ state: st.label, mode: 'state', what: 'lit lamps', points: '', display: Object.keys(b.world.ledOn).filter((id) => b.world.lit(id)).join(' ') || 'none', note: '' });
+    if (st.id === 'idle' || st.id === 'start' || st.id === 'ls1-open') {
+      rows.push({ state: st.label, mode: 'state', what: 'lit lamps', points: '', display: lit, note: '' });
+      const blown = b.world.els.filter((e) => e.kind === 'fuse' && e.blown).map((e) => e.id).join(' ');
+      rows.push({ state: st.label, mode: 'state', what: 'blown fuses', points: '', display: blown || 'none', note: '' });
+      if (st.id === 'ls1-open') rows.push({ state: st.label, mode: 'state', what: 'SOL1 energized', points: '', display: b.world.devActuated('SOL1', 'main') ? 'yes' : 'no', note: '' });
+    }
   }
   return rows;
 }

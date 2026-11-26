@@ -1,0 +1,58 @@
+# Cody's fix notes for Eli's batch 1 verdicts (one entry per edited item). Read by scripts/review-rereview.ts.
+changed:
+  ch01.u3.s3-10.device.led-pilot: >-
+    MAJOR fixed. Off-state LED is now a high but finite AC impedance (new param rOff = 470 kohm) instead of an open
+    (src/model/world.ts acBranches). Idle sheet now: across CR1 NO1 = 114.6 V and across FS1 = 114.6 V on the 10 Mohm
+    VAC range (was 0.0 floating); hand divider 120 x 10M / 10.47M = 114.6 V. On LoZ (3 kohm) the
+    meter current turns the LED on, so it reads 24.0 V (120 x 3k / 15k), not near 0; noted in the device entry, and
+    new solver test checks both readings against the hand dividers. Current figures agree: claim says "on the order of
+    10 mA when lit" = note (120 V / 12 kohm); litI 2 mA is labelled as the visibly-lit threshold. "default in new
+    installations" -> "now the most common choice"; lead-reversal hedged to "may read differently ... or OL both
+    ways, depending on the internal circuit". The DC ohmmeter model stays forward-conducting only (noted).
+  ch01.u3.s3-2.device.cr1: "dcR 350 -> 100 ohm (inrush R_ac = 14400/70 x 0.6 = 123 ohm; sealed 432 ohm). Sheet ohms reading now 100.0 ohm. New test: R_dc <= Z*PF for inrush and sealed on every coil."
+  ch01.u3.s3-14.device.tr1: "dcR 500 -> 250 ohm (inrush R_ac 288 ohm, sealed 617 ohm). Covered by the new R_dc <= Z*PF test."
+  ch01.u3.s3-14.device.tr2: "dcR 500 -> 250 ohm (same as TR1). Covered by the new R_dc <= Z*PF test."
+  ch01.u3.s3-11.device.sol1: "dcR 400 -> 150 ohm (inrush R_ac = 14400/40 x 0.5 = 180 ohm; sealed 540 ohm). Healthy wire-7-to-ground ohms now 146.4 ohm (was 387)."
+  ch01.u3.s3-16.device.td3: "Found by the new R_dc <= Z*PF test (not in your list): 1.5 VA at PF 0.7 gives R_ac 6720 ohm, below the old dcR 12 kohm. dcR 12000 -> 6000 ohm (illustrative equivalent of the electronic input)."
+  ch01.u3.s3-16.device.td4: "Claim scoped to the trigger type: 'TD4 is a trigger-type (control-signal) solid-state off-delay timer ... (True off-delay models that time out after power is removed, with no trigger, also exist.)'. Also dcR 12000 -> 6000 ohm (same R_dc <= Z*PF finding as TD3)."
+  ch01.u3.s3-16.card.solid-state-timer: "Claim and text scoped to 'the common trigger-type (control-signal) solid-state off-delay timer, like TD4'; added your sentence about true off-delay models ('check the wiring diagram on the timer'). fieldNote scoped to trigger-type."
+  ch01.u2.s2-1.card.pilot-device-intro: "'carries only the small control current needed to operate a coil, not the load current' -> 'carries only control-circuit current, such as the current for a coil or a pilot lamp, never the motor's power-circuit current.' Claim reworded to match."
+  ch01.u2.s2-1.question.pilot-device-meaning: "Claim reworded the same way (your note on pilot-device-intro flagged it). Answers unchanged."
+  ch01.u3.s3-18.card.contacts-left-loads-right: "'Never place a contact between a coil and X2' -> your wording: 'keep stop, start and other switching devices on the X1 side, and connect the coil directly to X2. (The overload-relay contact inside a starter is a common exception you'll meet in Chapter 2.)'. fieldNote -> your wording ('in field wiring ... Treat that as a defect'). Claim reworded to match."
+  ch01.u3.s3-18.card.nec-430-74-ground-fault-arrangement: "fieldNote -> 'look for stop, start or safety contacts wired between a coil and the grounded conductor in the remote wiring. That's the arrangement 430.74 is written to prevent.'"
+  ch01.u3.s3-18.fault.contact-on-x2-side: >-
+    Miswire moved to a coil rung (your option b): limit switch LS1 (safety stop for SOL1) is now wired between the
+    SOL1 coil and X2 (SOL1:C1 on wire 1, SOL1:C2 + LS1:1 on wire 11, LS1:2 on X2). A ground fault on the field
+    wire between SOL1 and LS1 would energize SOL1 and bypass LS1, a real 430.74 hazard; the 430.74 cite stays.
+    Behavior unchanged. Sheets gained probes PL1:1-G, SOL1:C1-G, SOL1:C2-G, LS1:2-G and a new "LS1 operated"
+    state: idle LS1:2-G 120 -> 0 V; LS1 open SOL1:C1-G and SOL1:C2-G 0 -> 120 V (the hazard is visible).
+  ch01.u1.s1-2.question.loto-order: "Added step 'Operate the start controls to verify the equipment cannot restart' between stored energy and live-dead-live (1910.333(b)(2)(iv)(A), then (iv)(B)); claim and explanation updated; 1910.333 cited with the osha.gov URL excerpt."
+  ch01.u1.s1-2.activity.loto-drill: "Added drill step 'Try START to verify the bucket cannot restart (OSHA 1910.333(b)(2)(iv)(A))'. The LOTO sheet in the bucket has a new '6 Try START' button (presses PB1 and reports whether CR1 picked up); checkLoto now requires it after every lock. Meter steps renumbered 7a-7c. 1910.333 excerpt added."
+  ch01.u1.s1-2.card.loto-live-dead-live: "Verification now opens with operating the controls (1910.333(b)(2)(iv)(A)) before live-dead-live; claim updated; 1910.333 excerpt added. Still also rests on NFPA 70E (not yet opened)."
+  ch01.u2.s2-3.symbol.pilot-light: "Card now says the rays are the tell ('a circle without rays is a coil, a circle with rays is a lamp'), color letter is common but optional (several bucket lamps have none). Figure designation PL1 -> G. nemaNote updated."
+  ch01.u2.s2-3.question.identify-nc-contact: "Distractor 'A pilot light that shows a color letter inside a circle' / why 'a circle with a letter' -> 'A pilot light that shows its lens color' / why 'a circle with radiating lines', to match the rays fix."
+  ch01.u2.s2-3.symbol.solenoid: "Your IEC note: 'tagged with a Y letter for valves' -> 'Older IEC/DIN drawings often tag valve solenoids with the letter Y; current IEC 81346-2 drawings tend to use M-class codes such as MB.'"
+renderOnly:
+  # Content unchanged (hash unchanged, your status kept); the renderer was fixed. Please re-check the picture in #symbols.
+  note: >-
+    symbolFigure() viewBox 120x60 at 1.9x -> 120x84 at 1.45x, centred. New e2e check (e2e/phone.mjs) measures every
+    primitive's real bounding box in all 22 gallery figures and fails on any clipping; it fails on the old renderer
+    (pb caps, mushroom cap, pilot rays, timer arrows/labels) and passes now. Timer-arrow direction stays blocked-on-source.
+  ids:
+    - ch01.u2.s2-3.symbol.pb-no
+    - ch01.u2.s2-3.symbol.pb-nc
+    - ch01.u2.s2-3.symbol.pb-nc-mushroom
+    - ch01.u2.s2-3.symbol.float-no
+    - ch01.u2.s2-3.symbol.timer-on-notc
+    - ch01.u2.s2-3.symbol.timer-off-noto
+    - ch01.u2.s2-3.question.identify-mushroom
+    - ch01.u2.s2-3.question.identify-notc
+    - ch01.u3.s3-10.question.mushroom-stop-symbol
+    - ch01.u3.s3-17.question.timer-symbol-off-delay
+tooling: >-
+  (1) review:seed edits the YAML in place: unchanged entries are byte-identical (verified: a no-op seed leaves 0 diff lines);
+  changed-hash entries go to pending with notes kept and the old verdict appended to `history`; new ids are appended.
+  (2) tests/ledger.test.ts validates structure only (fields, known statuses, needs-fix has severity, no approval on an item
+  with missing source text) plus seedLedger unit tests; no status expectations. (3) Sheets settle the cloned bucket and
+  read lit lamps before any meter reading: idle now shows PL2 PL3 PLF. (4) Every sheet state runs simulated time (1 s);
+  bolted X1 ground fault now shows F1 blown, rails 0 V, 'blown fuses: F1' (was a sustained 21.9 V).

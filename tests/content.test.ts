@@ -113,3 +113,18 @@ describe('symbols', () => {
     for (const d of bucket().layout.devices) expect(keys.has(d.symbol), d.tag).toBe(true);
   });
 });
+
+describe('coil parameters are physically consistent', () => {
+  // The AC resistance of a coil (R = |Z| x PF, with |Z| = V^2 / VA) can never be below its DC winding resistance.
+  const devs = items.filter((i) => i.type === 'deviceSpec' && i.body?.params?.dcR);
+  it('there are coil devices to check', () => expect(devs.length).toBeGreaterThanOrEqual(6));
+  for (const d of devs) {
+    it(`${d.body.tag}: R_dc <= Z*PF for inrush and sealed`, () => {
+      const p = d.body.params, V = p.rated.qty;
+      for (const [va, pf] of [[p.inrushVA.qty, p.inrushPF.qty], [p.sealedVA.qty, p.sealedPF.qty]]) {
+        const rAC = ((V * V) / va) * pf;
+        expect(p.dcR.qty, `${d.id}: dcR ${p.dcR.qty} vs R_ac ${rAC.toFixed(1)} at ${va} VA, PF ${pf}`).toBeLessThanOrEqual(rAC);
+      }
+    });
+  }
+});

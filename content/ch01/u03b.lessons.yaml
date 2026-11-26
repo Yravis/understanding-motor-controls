@@ -103,11 +103,11 @@ items:
     id: ch01.u3.s3-16.card.solid-state-timer
     type: lessonCard
     book: { chapter: 1, unit: 3, section: "3.16", page: 36, pageStatus: toc-unverified, figure: null }
-    claim: "A solid-state off-delay timer needs a constant supply plus a separate trigger, and losing supply drops the output immediately."
+    claim: "The common trigger-type (control-signal) solid-state off-delay timer, like TD4, needs a constant supply plus a separate trigger, and losing supply drops the output immediately."
     body:
       title: "Solid-state timing relays"
-      text: "A solid-state timing relay uses electronics to time the delay, with an adjustable setting and generally better repeatability than a pneumatic timer. An on-delay solid-state timer can time from the moment its supply is applied. An off-delay solid-state timer works differently: it needs constant supply power to stay alive, plus a separate trigger input. The trigger energizing makes the output transfer immediately, and removing the trigger starts the delay. If the constant supply is lost, the output drops at once, with no timing. In the reference bucket, TD4 has its supply on wire 1 and its trigger on wire 13."
-      fieldNote: "A solid-state off-delay wired without a constant supply will not time out; it just drops out when the supply is gone."
+      text: "A solid-state timing relay uses electronics to time the delay, with an adjustable setting and generally better repeatability than a pneumatic timer. An on-delay solid-state timer can time from the moment its supply is applied. The common solid-state off-delay timer (the trigger or control-signal type, like TD4) works differently: it needs constant supply power to stay alive, plus a separate trigger input. The trigger energizing makes the output transfer immediately, and removing the trigger starts the delay. If the constant supply is lost, the output drops at once, with no timing. Some models, sold as true off-delay timers, time out after power is removed with no separate trigger; check the wiring diagram on the timer. In the reference bucket, TD4 has its supply on wire 1 and its trigger on wire 13."
+      fieldNote: "A trigger-type solid-state off-delay wired without a constant supply will not time out; it just drops out when the supply is gone."
       terms: ["solid-state timer", "constant supply", "trigger"]
       day: 8
   - <<: *d
@@ -147,15 +147,15 @@ items:
     id: ch01.u3.s3-18.card.contacts-left-loads-right
     type: lessonCard
     book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
-    claim: "Switching devices belong on the ungrounded X1 side and loads connect directly to the grounded X2 side."
+    claim: "Stop, start and other switching devices belong on the ungrounded X1 side, and coils connect directly to the grounded X2 side (the overload contact inside a starter is a common exception)."
     nec: [{ edition: 2026, ref: "430.74", kind: rule, editionCheck: "confirmed in NEC 2026 photo (p. 70-400)" }]
     excerpts: [{ ref: "NEC 2026 430.74", covers: ["nec2026:430.74"], photo: "review/source-photos/nec2026-p70-400-430.72-430.75.jpg", summary: "430.74 Electrical Arrangement of Control Circuits: where one conductor of the motor control circuit is grounded, the circuit is arranged so a ground fault in the control circuit remote from the motor controller will (1) not start the motor and (2) not bypass manually operated shutdown devices or automatic safety shutdown devices." }]
     basis: standard
     reviewerNotes: "Rule confirmed from the user's NEC 2026 photo (p. 70-400). NEC 2026 430.74 states the performance requirement; contacts-on-X1 / coil-on-X2 is the common way to meet it in a grounded control circuit (the code does not prescribe the layout in those words)."
     body:
       title: "Why contacts sit on the X1 side and loads on the X2 side"
-      text: "In a grounded control circuit, the X2 side is bonded to ground. Placing every switching device on the X1 side and connecting loads directly to X2 means an accidental ground in the wiring downstream of a contact cannot energize the load, because the load is already at ground potential on that side. It also keeps a stop device from being bypassed by a ground fault. The layout rule is simple to read: contacts on the left, coils and lamps on the right, directly on X2. Never place a contact between a coil and X2."
-      fieldNote: "A coil switched on its X2 leg can be energized by a ground fault, so treat that wiring as a defect."
+      text: "In a grounded control circuit, the X2 side is bonded to ground. Placing every switching device on the X1 side and connecting loads directly to X2 means an accidental ground in the wiring downstream of a contact cannot energize the load, because the load is already at ground potential on that side. It also keeps a stop device from being bypassed by a ground fault. The layout rule is simple to read: keep stop, start and other switching devices on the X1 side, and connect the coil directly to X2. (The overload-relay contact inside a starter is a common exception you'll meet in Chapter 2.)"
+      fieldNote: "A coil whose switching contacts are on its X2 leg in field wiring can be energized, or have its stop bypassed, by a ground fault. Treat that as a defect."
       terms: ["grounded conductor", "X1", "X2", "load"]
       day: 9
   - <<: *d
@@ -170,7 +170,7 @@ items:
     body:
       title: "The code behind the X1/X2 rule: NEC 430.74"
       text: "The habit of putting contacts on X1 and coils on X2 isn't just tradition. NEC 2026 section 430.74 says that when one conductor of a motor control circuit is grounded, the circuit has to be arranged so that a ground fault out in the remote control wiring will not start the motor and will not bypass a manual stop or an automatic safety shutdown device. In Bucket 1A, X2 is the grounded conductor and the enclosure is bonded to it. If a wire on the X1 side makes a solid (low-impedance) contact with the enclosure, the fault current returns through the bonding path and the control fuse opens. The coil is never energized by the fault. That is the arrangement 430.74 is asking for."
-      fieldNote: "When you inspect a control circuit, look for any contact between a coil and the grounded conductor. That's a 430.74 problem waiting to happen."
+      fieldNote: "When you inspect a control circuit, look for stop, start or safety contacts wired between a coil and the grounded conductor in the remote wiring. That's the arrangement 430.74 is written to prevent."
       terms: ["430.74", "grounded conductor", "ground fault", "bonding"]
       day: 9
   - <<: *d

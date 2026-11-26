@@ -63,7 +63,7 @@ export function buildBucket(p: Params, opt: BucketOptions = {}): Bucket {
     const a = `${tag}:1`, b = `${tag}:2`;
     if (opt.led === false) w.els.push({ kind: 'lamp', id: tag, dev: tag, a, b, hotR: P(p, 'LAMP', 'hotR'), coldFactor: P(p, 'LAMP', 'coldFactor'), ratedV: P(p, 'LAMP', 'ratedV'), label });
     else {
-      const l: Led = { kind: 'led', id: tag, dev: tag, a, b, rLamp: P(p, 'LED', 'rLamp'), vOnRms: P(p, 'LED', 'vOnRms'), vf: P(p, 'LED', 'vf'), litI: P(p, 'LED', 'litI'), label };
+      const l: Led = { kind: 'led', id: tag, dev: tag, a, b, rLamp: P(p, 'LED', 'rLamp'), rOff: P(p, 'LED', 'rOff'), vOnRms: P(p, 'LED', 'vOnRms'), vf: P(p, 'LED', 'vf'), litI: P(p, 'LED', 'litI'), label };
       w.els.push(l);
       w.ledOn[tag] = false;
     }
@@ -154,7 +154,7 @@ export function buildBucket(p: Params, opt: BucketOptions = {}): Bucket {
   w.els.push({ kind: 'wire', id: 'W:RS1', a: 'RS1', b: net('91'), r: wireR });
   w.els.push({ kind: 'wire', id: 'W:RS2', a: 'RS2', b: net('92'), r: wireR });
   w.els.push({ kind: 'wire', id: 'BOND:RS2-G', a: 'RS2', b: 'G', r: P(p, 'WIRE', 'bondR') });
-  w.els.push({ kind: 'led', id: 'PLF', dev: 'PLF', a: 'PLF:1', b: 'PLF:2', rLamp: P(p, 'LED', 'rLamp'), vOnRms: P(p, 'LED', 'vOnRms'), vf: P(p, 'LED', 'vf'), litI: P(p, 'LED', 'litI'), label: 'PLF "REMOTE INTERLOCK"' });
+  w.els.push({ kind: 'led', id: 'PLF', dev: 'PLF', a: 'PLF:1', b: 'PLF:2', rLamp: P(p, 'LED', 'rLamp'), rOff: P(p, 'LED', 'rOff'), vOnRms: P(p, 'LED', 'vOnRms'), vf: P(p, 'LED', 'vf'), litI: P(p, 'LED', 'litI'), label: 'PLF "REMOTE INTERLOCK"' });
   w.ledOn.PLF = false;
   addDev({ tag: 'PLF', kind: 'lamp', title: 'PLF "REMOTE INTERLOCK" (orange circuit, remote source)', designation: 'PLF', symbol: 'pilot-light', foreign: true, pins: [pinTo('PLF', '1', '91'), pinTo('PLF', '2', '92')] });
 

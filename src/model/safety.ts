@@ -2,7 +2,7 @@
 // always follow your employer's procedure. User approved this standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26.
 export type LotoStep =
   | 'identify' | 'notify' | 'shutdown' | 'isolate' | 'lock' | 'tag' | 'release-stored'
-  | 'meter-known-before' | 'test-absence' | 'meter-known-after';
+  | 'try-start' | 'meter-known-before' | 'test-absence' | 'meter-known-after';
 export interface LotoEvent { step: LotoStep; source?: 'bucket' | 'foreign'; pair?: [string, string] }
 
 export const REQUIRED_SOURCES: ('bucket' | 'foreign')[] = ['bucket', 'foreign'];
@@ -28,6 +28,12 @@ export function checkLoto(ev: LotoEvent[]): LotoCheck {
   }
   const iStored = idx('release-stored');
   if (iStored < 0) v.push('stored energy not relieved, disconnected or restrained');
+  // OSHA 1910.333(b)(2)(iv)(A): operate the equipment controls (or otherwise verify) that it cannot be restarted,
+  // after every lock is on and before the meter test of (iv)(B).
+  const iTry = idx('try-start');
+  const lastLockT = Math.max(...REQUIRED_SOURCES.map((s) => idx('lock', s)));
+  if (iTry < 0) v.push('did not operate the start controls to verify the equipment cannot restart');
+  else if (iTry < lastLockT) v.push('tried the start controls before every lock was applied');
   const before = idx('meter-known-before');
   if (before < 0) v.push('did not verify the meter on a known live source first (live-dead-live)');
   const tests = ev.map((e, i) => ({ e, i })).filter((x) => x.e.step === 'test-absence');
@@ -46,7 +52,7 @@ export function checkLoto(ev: LotoEvent[]): LotoCheck {
 export function perfectLoto(): LotoEvent[] {
   const ev: LotoEvent[] = [{ step: 'identify', source: 'bucket' }, { step: 'identify', source: 'foreign' }, { step: 'notify' }, { step: 'shutdown' }];
   for (const s of REQUIRED_SOURCES) ev.push({ step: 'isolate', source: s }, { step: 'lock', source: s }, { step: 'tag', source: s });
-  ev.push({ step: 'release-stored' }, { step: 'meter-known-before' });
+  ev.push({ step: 'release-stored' }, { step: 'try-start' }, { step: 'meter-known-before' });
   for (const p of REQUIRED_PAIRS) ev.push({ step: 'test-absence', pair: p });
   ev.push({ step: 'meter-known-after' });
   return ev;

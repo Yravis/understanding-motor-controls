@@ -105,9 +105,14 @@ export function mountBucket(root: HTMLElement, o: PanelOpts): void {
       h('div', { class: 'row' }, ev({ step: 'isolate', source: 'bucket' }, '3 Isolate bucket'), ev({ step: 'isolate', source: 'foreign' }, '3 Isolate remote source')),
       h('div', { class: 'row' }, ev({ step: 'lock', source: 'bucket' }, '4 Lock bucket'), ev({ step: 'tag', source: 'bucket' }, '4 Tag bucket'), ev({ step: 'lock', source: 'foreign' }, '4 Lock remote'), ev({ step: 'tag', source: 'foreign' }, '4 Tag remote')),
       h('div', { class: 'row' }, ev({ step: 'release-stored' }, '5 Relieve stored energy')),
-      h('div', { class: 'row' }, ev({ step: 'meter-known-before' }, '6a Prove meter on known source')),
-      h('div', { class: 'row' }, pair, btn('6b Test absence', () => act(() => { const [a, c] = (document.getElementById('pairsel') as HTMLSelectElement).value.split('|'); const r = measure(b.world, 'VAC', a, c); count++; reading = r; red = a; black = c; loto.push({ step: 'test-absence', pair: [a, c] }); msg = `${a}–${c}: ${r.display} V${(r.value ?? 0) > 5 ? ' — VOLTAGE PRESENT. Stop.' : ' — no voltage'}`; }), 'small')),
-      h('div', { class: 'row' }, ev({ step: 'meter-known-after' }, '6c Re-verify meter on known source')),
+      h('div', { class: 'row' }, btn('6 Try START (verify it cannot restart)', () => act(() => {
+        // OSHA 1910.333(b)(2)(iv)(A): operate the controls to verify the equipment cannot be restarted
+        const was = b.world.devActuated('CR1', 'main'); b.world.press('PB1'); const ran = b.world.devActuated('CR1', 'main') && !was; b.world.release('PB1');
+        loto.push({ step: 'try-start' }); msg = ran ? 'Pressed START: CR1 PICKED UP. The equipment is NOT isolated. Stop.' : 'Pressed START: nothing operated. Equipment will not restart.';
+      }), 'small')),
+      h('div', { class: 'row' }, ev({ step: 'meter-known-before' }, '7a Prove meter on known source')),
+      h('div', { class: 'row' }, pair, btn('7b Test absence', () => act(() => { const [a, c] = (document.getElementById('pairsel') as HTMLSelectElement).value.split('|'); const r = measure(b.world, 'VAC', a, c); count++; reading = r; red = a; black = c; loto.push({ step: 'test-absence', pair: [a, c] }); msg = `${a}–${c}: ${r.display} V${(r.value ?? 0) > 5 ? ' — VOLTAGE PRESENT. Stop.' : ' — no voltage'}`; }), 'small')),
+      h('div', { class: 'row' }, ev({ step: 'meter-known-after' }, '7c Re-verify meter on known source')),
       h('div', { class: 'small' }, chk.ok ? '✔ Sequence complete and in order.' : 'Not yet complete / issues: ' + chk.violations.join('; ')));
   }
 

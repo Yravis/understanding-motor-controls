@@ -41,10 +41,10 @@ items:
   - <<: *d
     id: ch01.u2.s2-1.card.pilot-device-intro
     book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
-    claim: "A pilot device is a control-circuit device, such as a pushbutton or a float switch, that signals a controller; it does not carry the load current."
+    claim: "A pilot device is a control-circuit device, such as a pushbutton or a float switch, that signals a controller; it carries only control-circuit current, never motor power current."
     body:
       title: "Pilot device: the signal giver"
-      text: "A pilot device sits in the control circuit and tells the controller what is wanted. Pushbuttons, selector switches, limit switches, float switches, pressure switches, and temperature switches are all examples. Each one opens or closes a small contact in response to a hand, a position, a level, or a process condition. The pilot device is a messenger: it carries only the small control current needed to operate a coil, not the load current. Because it is the part people touch and the part the process acts on, it is also the part that most often wears out or is miswired."
+      text: "A pilot device sits in the control circuit and tells the controller what is wanted. Pushbuttons, selector switches, limit switches, float switches, pressure switches, and temperature switches are all examples. Each one opens or closes a small contact in response to a hand, a position, a level, or a process condition. The pilot device is a messenger: it carries only control-circuit current, such as the current for a coil or a pilot lamp, never the motor's power-circuit current. Because it is the part people touch and the part the process acts on, it is also the part that most often wears out or is miswired."
       fieldNote: "Pilot devices take the daily abuse. Suspect them early when a control circuit misbehaves, then confirm with a measurement."
       terms: [pilot device, pushbutton, float switch]
       day: 2
@@ -274,17 +274,17 @@ items:
   - <<: [*s, *d]
     id: ch01.u2.s2-3.symbol.pilot-light
     book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
-    claim: "A pilot light is drawn as a circle with a letter inside giving its color, such as R for red or G for green."
+    claim: "A pilot light is drawn as a circle with short lines radiating from it (rays); a letter inside often gives its color, such as R for red or G for green."
     body:
       title: "Pilot light"
-      text: "A pilot light looks like a circle, much like a coil, but a letter inside the circle gives the lens color: R for red, G for green, A for amber, and so on. It is an indicating load, so it connects to the X2 side like any other load. In the bucket, PL1 is the green lamp that shows CR1 is picked up and PL2 is the red lamp that shows it is dropped out. Always check the letter in the circle: a plain circle with a tag could be a coil, while a circle with a color letter is a lamp."
-      fieldNote: "Color letters and tags beat guessing: always read what is inside the circle."
+      text: "A pilot light is a circle, much like a coil, but with short lines radiating out from it like rays of light. The rays are the tell: a circle without rays is a coil, a circle with rays is a lamp. A letter inside often gives the lens color: R for red, G for green, A for amber, and so on, but not every drawing includes one (several lamps in the bucket have none). It is an indicating load, so it connects to the X2 side like any other load. In the bucket, PL1 is the green lamp that shows CR1 is picked up and PL2 is the red lamp that shows it is dropped out."
+      fieldNote: "Look for the rays first, then read the tag and color letter; never guess a circle is a coil."
       terms: [pilot light, indicator]
       day: 4
       symbol:
         key: pilot-light
-        designation: "PL1"
-        nemaNote: "A circle with a color letter (R, G, A, and so on) inside."
+        designation: "G"
+        nemaNote: "A circle with radiating lines (rays); a color letter (R, G, A, and so on) inside is common but optional."
         iecNote: "IEC: you may also see an indicating lamp drawn as a circle with a cross, usually tagged with the letter H."
   - <<: [*s, *d]
     id: ch01.u2.s2-3.symbol.float-no
@@ -333,7 +333,7 @@ items:
         key: solenoid
         designation: "SOL1"
         nemaNote: "A coil-type load symbol labeled SOL at the load end of its rung."
-        iecNote: "IEC: you may also see the operating coil drawn as a rectangle, often tagged with a Y letter for valves."
+        iecNote: "IEC: you may also see the operating coil drawn as a rectangle. Older IEC/DIN drawings often tag valve solenoids with the letter Y; current IEC 81346-2 drawings tend to use M-class codes such as MB."
     reviewerNotes: "NEMA ladder symbols and IEC notes from general knowledge only. Exact NEMA solenoid shape is not described on purpose (drawings vary); reviewer should confirm NEMA ICS 19. IEC tag letter Y for valve operators is from general knowledge; confirm or remove."
   - <<: [*s, *d]
     id: ch01.u2.s2-3.symbol.timer-on-notc

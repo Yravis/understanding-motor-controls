@@ -72,7 +72,7 @@ items:
   - <<: *d
     id: ch01.u2.s2-1.question.pilot-device-meaning
     book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
-    claim: "A pilot device is a control-circuit device, such as a pushbutton or float switch, that signals a controller and does not carry the load current."
+    claim: "A pilot device is a control-circuit device, such as a pushbutton or float switch, that signals a controller; it carries only control-circuit current, never motor power current."
     body:
       format: mcq
       day: 3
@@ -185,7 +185,7 @@ items:
       answers:
         - { text: "A contact that is closed on the shelf and opens when its device operates", correct: true }
         - { text: "A contact that is open on the shelf and closes when its device operates", distractorWhy: "That is the NO contact, drawn without the slash." }
-        - { text: "A pilot light that shows a color letter inside a circle", distractorWhy: "A pilot light is a circle with a letter, not parallel lines." }
+        - { text: "A pilot light that shows its lens color", distractorWhy: "A pilot light is a circle with radiating lines, not parallel lines." }
         - { text: "A relay coil that moves its armature when voltage is applied", distractorWhy: "A coil is drawn as a circle with a tag, not as a contact." }
       explanation: "The slash across the two lines marks the contact as normally closed, which is its shelf state. Without the slash the same pair of lines is a normally open contact."
   - <<: *d

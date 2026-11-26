@@ -112,15 +112,15 @@ export function faultDefs(p: Params): FaultDef[] {
       sequence: [{ do: 'mode', dev: 'TANK', arg: 'fill' }, { do: 'advance', arg: 60 }],
     },
     {
-      id: 'contact-on-x2-side', title: 'Contact wired on the X2 side', rootCause: 'W:CR1:1',
-      cause: 'The CR1 NO contact for PL1 was wired between the lamp and X2, so the lamp terminal stays at X1 potential when the contact is open.',
-      symptom: 'Operator: "Everything works." (Behavior is unchanged: a hazard found by measurement, a miswire that breaks the contacts-on-X1 rule.)',
+      id: 'contact-on-x2-side', title: 'Limit switch wired on the X2 side of SOL1', rootCause: 'W:LS1:2',
+      cause: 'Limit switch LS1 (the safety stop for SOL1) was wired between the SOL1 coil and X2 instead of between X1 and the coil. The valve still works, but the SOL1 coil terminals now sit at X1 potential, so a ground fault on the field wire between SOL1 and LS1 would energize SOL1 and bypass LS1 (the arrangement NEC 2026 430.74 prohibits).',
+      symptom: 'Operator: "Everything works." (Behavior is unchanged: a hazard found by measurement. With LS1 closed, LS1\'s far terminal reads 0 V to ground instead of 120 V; with LS1 open, SOL1 still has 120 V to ground on both terminals.)',
       behaviorSame: true,
       apply: (b) => {
-        W(b, 'W:PL1:1').b = 'w1'; W(b, 'W:PL1:2').b = 'w5'; W(b, 'W:CR1:1').b = 'w5'; W(b, 'W:CR1:2').b = 'w2'; b.world.settle();
+        W(b, 'W:SOL1:C1').b = 'w1'; W(b, 'W:SOL1:C2').b = 'w11'; W(b, 'W:LS1:1').b = 'w11'; W(b, 'W:LS1:2').b = 'w2'; b.world.settle();
       },
-      fixActions: [{ kind: 'reland', target: 'W:CR1:1', note: 'Land the contact on the X1 side (wire 1).' }, { kind: 'reland', target: 'W:CR1:2', note: 'Land the contact output on wire 5.' }, { kind: 'reland', target: 'W:PL1:1', note: 'Land the lamp feed on wire 5.' }, { kind: 'reland', target: 'W:PL1:2', note: 'Land the lamp directly on X2 (wire 2).' }],
-      sequence: [{ do: 'press', dev: 'PB1' }, { do: 'advance', arg: 1 }],
+      fixActions: [{ kind: 'reland', target: 'W:LS1:1', note: 'Land LS1 on the X1 side (wire 1).' }, { kind: 'reland', target: 'W:LS1:2', note: 'Land the LS1 output on wire 11.' }, { kind: 'reland', target: 'W:SOL1:C1', note: 'Land the SOL1 feed on wire 11.' }, { kind: 'reland', target: 'W:SOL1:C2', note: 'Land SOL1 directly on X2 (wire 2).' }],
+      sequence: [{ do: 'toggle', dev: 'LS1' }, { do: 'advance', arg: 1 }, { do: 'toggle', dev: 'LS1' }, { do: 'advance', arg: 1 }],
     },
     {
       id: 'wrong-timer-type', title: 'Wrong timer type installed', rootCause: 'TR1',

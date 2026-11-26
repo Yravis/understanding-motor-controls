@@ -39,12 +39,13 @@ describe('hashing and ledger seeding', () => {
     expect(r.ledger.map((l) => l.status)).toEqual(['pending', 'blocked-on-source']);
     expect(needsSource(mk({ other: [{ src: 'osha:1910.147(d)' }] }) as any)).toBe(true);
   });
-  it('never overwrites a verdict; flags a changed item stale', () => {
+  it('never overwrites a verdict; sends a changed item back to pending with its history', () => {
     const a = mk();
     const approved = { id: 'x', hash: itemHash(a), status: 'approved', severity: null, checkedAgainst: ['src'], basis: 'source', notes: 'ok', reviewer: 'Eli', date: '2026-12-02' };
     expect(seedLedger([a] as any, [approved]).ledger[0]).toEqual(approved);
     const r = seedLedger([mk({ claim: 'changed' })] as any, [approved]);
-    expect(r.ledger[0].status).toBe('stale');
+    expect(r.ledger[0].status).toBe('pending');
+    expect((r.ledger[0] as any).history[0].status).toBe('approved');
     expect(r.ledger[0].notes).toBe('ok');
     expect(r.stale).toEqual(['x']);
   });

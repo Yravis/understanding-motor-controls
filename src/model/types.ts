@@ -12,7 +12,7 @@ export interface Coil extends Base {
   guaranteedOperatePct: [number, number]; simPickupPct: number; simDropoutPct: number;
   open?: boolean; shorted?: boolean; shadingRingBroken?: boolean;
 }
-export interface Led extends Base { kind: 'led'; dev: string; rLamp: number; vOnRms: number; vf: number; litI: number } // a = anode
+export interface Led extends Base { kind: 'led'; dev: string; rLamp: number; rOff: number; vOnRms: number; vf: number; litI: number } // a = anode
 export interface Lamp extends Base { kind: 'lamp'; dev: string; hotR: number; coldFactor: number; ratedV: number }
 export type Pole = 'main' | 'inst' | 'timed';
 export interface Contact extends Base {
