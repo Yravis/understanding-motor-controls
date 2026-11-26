@@ -2,1918 +2,1958 @@
 entries:
   - id: ch01.u3.s3-18.device.control-supply
     hash: 4add40c523bf183c9107ea8e1d315be60d77ff00f5a217875c191a38cdb25c9c
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). Check: |Zs| = 0.495 ohm; CR1 inrush 0.58 A sags the terminal by about 0.1-0.3 V (sheet shows 119.9 V). Plausible."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.device.supply-fuse
     hash: d2aab7cf3e20997d862dede42547672d33afc5a528670f087d5d9a462f461078
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). Check: 10 A gives 1000/100 = 10 s as the note says; no heating below 6.75 A. Plausible simplified model."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.device.wire-and-bond
     hash: c52f335212c91fe9739dee284fad652b65076024882f097e3af339e607dc65ec
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). Check: bolted fault about 207 A (clears in about 23 ms); 100 ohm fault 1.2 A (never clears)."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-1.device.contact-block
     hash: 28d544f19a3f114e9ba84ccc769a8575b70e1b6a95a66460e3818dd3586948d4
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source)."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.device.cr1
     hash: 424676c94dc00e1db71691a1f1a597f8719398f8bf3cce98be0383acc5058f6a
-    status: pending
-    severity: null
+    status: needs-fix
+    severity: minor
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "PARAMETER INCONSISTENCY (physics): inrush 70 VA at PF 0.6 on 120 V gives |Z| = 14400/70 = 205.7 ohm and R = 205.7 x 0.6 = 123 ohm. That is smaller than dcR = 350 ohm, which is impossible: the AC resistance of a coil can't be below its DC winding resistance. Check by power: I_inrush = 70/120 = 0.583 A, and copper loss alone I2 x Rdc = 0.34 x 350 = 119 W, more than the 42 W real power and even the 70 VA apparent power. With Rdc = 350 ohm the most a 120 V coil can draw is 120/350 = 0.343 A (41 VA). Sealed is fine (|Z| = 1440 ohm, R = 432 ohm >= 350). FIX: set dcR to 120 ohm or less (e.g. 90-100 ohm; then I2R = 0.34 x 100 = 34 W <= 42 W), or reduce inrushVA to about 24 VA (14400 x 0.6 / 350 = 24.7 VA). The sheet's 'CR1 coil resistance 350.0 ohm' reading changes with it. Nothing is graded on it, but learners do see the number. Typical values, so it stays unapproved after the fix too."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-14.device.tr1
     hash: 411a5f2b65288671bd480dbc7adc12a876c393ea5e83e998ec66541e23da85b7
-    status: pending
-    severity: null
+    status: needs-fix
+    severity: minor
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "PARAMETER INCONSISTENCY (physics, same as CR1): inrush 30 VA at PF 0.6 gives |Z| = 480 ohm and R = 288 ohm, below dcR = 500 ohm (I = 0.25 A, so I2Rdc = 31 W, more than 30 VA). Impossible. FIX: dcR 250 ohm or less, or inrushVA 17 VA or less (14400 x 0.6 / 500 = 17.3 VA). Sealed (7 VA: R = 617 ohm) is fine."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-14.device.tr2
     hash: fec5618b8334969089d90b3a09af30cef752134e9b9cc9ab8564ade0bfcce93b
-    status: pending
-    severity: null
+    status: needs-fix
+    severity: minor
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "PARAMETER INCONSISTENCY (physics, same values as TR1): inrush 30 VA at PF 0.6 gives R = 288 ohm, below dcR = 500 ohm. Impossible. FIX: dcR 250 ohm or less, or inrushVA 17 VA or less."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-16.device.td3
     hash: 7690dbd3e92482d22b584427b808b41d9a781eb67a499513bd675bfd9de347a7
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). Electronic input: dcR vs inrush VA isn't a physical constraint here."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-16.device.td4
     hash: f75d0126b14677d49455967d75d9aaf42f1058902eaf635a551505407e2b4c75
-    status: pending
-    severity: null
+    status: needs-fix
+    severity: minor
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Claim overgeneralizes: 'A solid-state off-delay timer needs a constant supply plus a separate trigger input'. Scope it to this device: 'TD4 is a trigger-type solid-state off-delay timer: it needs...'. True off-delay solid-state timers exist that time after power removal with no trigger (see ch01.u3.s3-16.card.solid-state-timer). Typical values otherwise unremarkable for simulation (an electronic input isn't a coil, so dcR vs inrush VA isn't a physical constraint here)."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-11.device.sol1
     hash: 53e404ef29ef049885fab80915a092b65d8799f701736322e831fbb44a2ebfce
-    status: pending
-    severity: null
+    status: needs-fix
+    severity: minor
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "PARAMETER INCONSISTENCY (physics): inrush 40 VA at PF 0.5 gives |Z| = 360 ohm and R = 180 ohm, below dcR = 400 ohm (I = 0.333 A, so I2Rdc = 44 W, more than 40 VA). Impossible. FIX: dcR 170 ohm or less, or inrushVA 18 VA or less (14400 x 0.5 / 400 = 18 VA). Sealed (8 VA: R = 540 ohm) is fine. This also changes the healthy wire7-to-ground ohms reading (387 ohm today is mostly SOL1's 400 ohm in parallel with TD4's 12 kohm)."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-10.device.led-pilot
     hash: 8aed06ea6a1bb728d7ef973af0affb029083c3cec6e1b5fa2b951b0fcd49fd80
-    status: pending
-    severity: null
+    status: needs-fix
+    severity: major
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "MODEL ERROR (major): the engine treats an LED pilot that is off as a perfect open circuit (world.ts acBranches only adds the LED branch while ledOn). So on the default 10 Mohm VAC range, an open contact in series with an LED pilot reads 0.0 V 'floating' instead of about source voltage. Model output: idle CR1:1-CR1:2 (CR1 NO1 feeding PL1) = 0.0 (floating) and FS1:1-FS1:2 = 0.0 (floating); LoZ reads 24.0 V on the same points. The same points read 119.9 V with incandescent lamps (led:false), which is correct. A real 120 V LED pilot (series resistor/rectifier/driver) still conducts a little through a 10 Mohm meter, so the meter reads close to line voltage across the open contact. This contradicts what Day 3 teaches (ch01.u3.s3-1.card.voltage-across-contacts / question.voltage-across-open-contact) and the device-bench and relay-bench activities, and it shows up in every fault sheet (e.g. open-coil, high-resistance-contact and open-wire all show 'across CR1 NO contact 0.0 (floating)'). FIX: give the off-state LED a high but finite impedance (e.g. a few hundred kohm to a few Mohm, or the off-branch of a diode+resistor model) so a 10 Mohm meter reads near source voltage and LoZ (3 kohm) collapses it, then regenerate the sheets. Also fix these minor inconsistencies in this entry: (1) note says 'About 10 mA at 120 V' (120 V / 12 kohm = 10 mA) but the claim says 'only a few milliamps' and litI = 2 mA; make them agree (10 mA and up is typical of many 22 mm 120 V LED units; check a datasheet). (2) 'LED pilot lights are the default in new installations' overreaches; say 'are now the most common choice'. (3) 'read differently with the ohmmeter probes reversed' is stated as fact, but many 120 V LED units have bridge rectifiers or drivers and read OL both ways (the note itself says so). Hedge the claim to match: 'may read differently, or OL both ways, depending on the internal circuit'."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-10.device.incandescent-pilot
     hash: bcd73bbea0e14514252fa903d901c432f190df51e8b5ce86b28d7e157b36638a
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). Check: 2400 ohm hot is 6 W at 120 V; cold about 240 ohm (tungsten cold/hot is roughly 1/10 to 1/15). Plausible."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-7.device.px1
     hash: 4987909adff26aaadf8cdb2aa17866bb93024ab92992833a6a7adafd50abc1fe
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). Check: 120 V / 70 kohm = 1.7 mA leakage, inside the stated 1-3 mA."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-4.device.process-tank
     hash: a82870166a2e96dd9dd4ae05adefc5ec15edeef53ab40c15ba6d566b2d0eb265
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). First-order process model; settings plausible (tank: 60 s of fill reaches about 82%, above the 60% actuate point)."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-9.device.process-air
     hash: 11723e36e560aed740f85c44edfcf8b60fbc283cd7ff11e957916e5f2a216ca0
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). First-order process model; settings plausible (tank: 60 s of fill reaches about 82%, above the 60% actuate point)."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-13.device.process-heat
     hash: 0f4360f5a4227b0e5b022bb98e70923cd3c8ba0ed6abe3f290ea4c43943da421
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). First-order process model; settings plausible (tank: 60 s of fill reaches about 82%, above the 60% actuate point)."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.device.coupling
     hash: 7f422adb590a31782c55071ac4ea6f55a650b49ce6227763b071cc2a3eb38035
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). Check: 30 pF/ft x 100 ft = 3 nF, Xc = 884 kohm at 60 Hz; a 10 Mohm meter reads about 119.5 V ghost and a 3 kohm LoZ reads about 0.4 V. Consistent with the claim."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.device.meter
     hash: 15417b9fba6e2e596e122f50eb1d8a55d5c05720c6ac1046e97d3e0976fd3e66
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source)."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.fault.open-coil
     hash: 1899846e37deddd3e97d478440129853922a6f1f0752f9f6918fa269f2a863ff
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Model readings match the card: 120 V across the open coil with START held; coil OL de-energized."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.fault.shorted-coil
     hash: 76a93117da9c62bf08fbf0b8e168d6c8163798e9b3e28eaf08a44d90b8173bc2
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.fault.welded-contact
     hash: f1310368fd4fd03b7ec3b29bfde3ad61b68e5d1c5ec1da0b2ced8130623c576f
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Optional realism note: on relays with mechanically linked contacts, a welded NO can keep the NC contacts from reclosing (PL2 would stay dark). The model keeps NC1 closed. Fine for a generic relay, but say 'on many relays'."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-10.fault.high-resistance-contact
     hash: ff18b927657ee25d97649d4e02cf025d33bdfb21b304be4bf8462b4e8eccf0ba
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Model: 112.6 V across the 2 kohm START contact and 11.6 V across the coil, so CR1 doesn't pull in. Consistent with the symptom ('or does not pull in'); 'buzzes' only happens at marginal resistance."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-10.fault.loose-terminal
     hash: dd22c83af6256303b9bdc46571bae63b9b38cca49093bf9c69862210b9ef6585
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.fault.open-wire
     hash: 4bfcf06ca999176b2cb58b8179f7f49d2b279006e1d601ba33bc73021ea00894
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-4.fault.float-no-nc-miswire
     hash: ece0602dc744d90bc86ba9c847ca0c48441d63d2fcd01299f916c7af9c07f48b
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.fault.contact-on-x2-side
     hash: 08f960230e81e89aa0bfcc35eb58072df96a780c497cc9fe9c8f4c2cf4f4ab16
-    status: pending
-    severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    status: needs-fix
+    severity: minor
+    checkedAgainst:
+      - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
+    basis: source
+    notes: "Physics is right: with CR1 NO1 moved to the X2 side of PL1, the PL1 terminals and the contact's line side sit at X1 potential while the contact is open, and behavior is unchanged (behaviorSame true). CITATION ISSUE: this item cites NEC 430.74 as the reason it's a defect, but 430.74 is about a ground fault starting the motor or bypassing shutdown devices. Here the load is an indicating lamp, so a ground fault between PL1 and the contact would only light PL1 falsely. That's a wiring-practice and false-indication problem, not a 430.74 violation as written. SUGGESTED FIX: either (a) keep the lamp fault but describe it as breaking the shop's contacts-on-X1 practice (false 'CR1 PICKED UP' indication on a ground fault) and drop or soften the 430.74 cite, or (b) put the miswire on a coil rung (for example a timer coil or CR1 coil with its switching on the X2 leg) so it really is a 430.74 hazard. Also: the KEY_POINTS table in the sheet shows no differences for this fault, so add a probe (PL1:1 to G: 0 V healthy vs 120 V faulted) so the reviewer can see the expected finding."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-14.fault.wrong-timer-type
     hash: 18a005c9efd7e82afc37747131b144902fd1c780c5721112b8e063df340dd2b7
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-16.fault.ss-offdelay-no-constant-supply
     hash: 6f64f8f9913549ac70db25367be68496a5ab7d442c7c52083d3848a388d2a713
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-6.fault.stuck-limit-switch
     hash: 49b1cdaf73ef44962cee4b5cfff7170c9cc646854b0b5a5973dcdfa6d2df5e3f
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.fault.broken-shading-ring
     hash: ccbe7d66ad9c1f8f93abc9c59581061414e936d901b8ace7dcfc0757f9b76475
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.fault.x1-ground-fault-clears-fuse
     hash: b3bbae6e22c4ddb7efacf87d5fb5c5aecb7d8b5902666145015abecbbac0690f
-    status: pending
+    status: blocked-on-source
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Physics hand-checked: R about 0.35 (source) + 0.02 (fuse) + 0.05 (fault) + 0.01 (bond) + wires, about 0.46 ohm, and X = 0.35 ohm, so |Z| is about 0.58 ohm and I about 207 A; I2t 1000 A2s gives about 23 ms to clear. Fix actions (repair conductor, then same-rating fuse) are right. 430.74 photo opened and consistent, but the claim rests on illustrative device values, so it stays unapproved. TOOLING: the sheet's idle rows show a sustained 210 A fault (source 21.9 V, 4.2 V across F1, 2.1 V X2-to-G) because readingsFor() doesn't run the fault's 'sequence' (advance 1 s). The fuse should already be open, as the symptom says. Regenerate with the sequence applied."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.fault.x1-ground-fault-high-impedance
     hash: 62c3096d8024920374d1b34cd207ee54349eb1a5cf5d20ab6558fe453d7c2ed8
-    status: pending
+    status: blocked-on-source
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Physics hand-checked: 120 V / 100 ohm is about 1.2 A, below the 1.35 x 5 A = 6.75 A minimum melt, so it never clears; about 144 W in the fault path. Model shows w7-G 79.5 ohm (100 in parallel with 387) vs 387 ohm healthy when de-energized. That's the 'found by measurement' clue, and in the field an insulation-resistance test is the usual tool. 430.74 photo opened and consistent; illustrative values, so unapproved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.fault.foreign-voltage-bucket-off
     hash: 00c2b0bdb467bec182fd3e436eb660b5dcce3a98ce52d4ce88c2b622417965f6
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.activity.bucket-tour
     hash: 34eeee3ddbd0c58f02c99f648e8d5bd79b4bdd538d28e6cf5f35b02cf2b0f628
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.activity.loto-drill
     hash: dc3b95f8180dacefe60379bdeefe54f7ef0df02116171265b146acc7f83276a2
     status: blocked-on-source
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nfpa70e-2024"
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: general-knowledge
+    notes: "Still blocked-on-source: needs the NFPA 70E 2024 text (test for absence of voltage, 120.6 per the process doc; confirm the number against the text). Checked what I could against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(B) (both opened 2026-11-26): no error found. OSHA requires checking the meter before and after only over 600 V; the app follows 70E (all voltages), which is the stricter and correct choice for this course. Suggestion (not an error): 1910.333(b)(2)(iv)(A) also requires a qualified person to operate the equipment controls or otherwise verify the equipment cannot be restarted (the 'try' step). Consider adding it to the verification step of the example sequence in a later revision. Sequence and the absence-of-voltage combinations (X1-X2, X1-G, X2-G, 91-92, 91-G, 92-G, meter re-verified) are right; continuity only on the de-energized bench is right."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.activity.device-bench
     hash: 1d12b8243fa1fa893d60c8f05171de550152f477fd1b3b5c3885195d04b6c9a4
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Re-review after the LED fix: metering CR1 NO (dropped out) and CR1 NC (picked up) currently gives 0.0 V 'floating' across those open contacts because PL1/PL2 are LED loads, so the truth table would teach the wrong reading. See ch01.u3.s3-10.device.led-pilot."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.activity.tag-the-bucket
     hash: 76f1ea191b98b54d74502c1984810c2ec4a4dede4718309a682a6ea11702b7b2
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.activity.relay-bench
     hash: 7c993692759169e5de480513d3654e02b2e1d6712139050c989fd48536194f5f
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Re-review after the LED fix: 'meter across CR1 NO contact' with CR1 dropped out reads 0.0 V (floating) in the model instead of about 120 V. See ch01.u3.s3-10.device.led-pilot."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-4.activity.sensor-loop
     hash: 4365a11580d1a082ac0d0f38f189567f7508cfa44a4ee523d1cd7c9ed911bf96
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-10.activity.pushbutton-solenoid
     hash: b284319ac870261583ee7986f9435309464daab34b885df190191e28066b4a4a
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-14.activity.timer-bench
     hash: cd280866efa121697e2e5c6d92d570c4b7b3d4fbc5c5f2758a24082ccb3f901b
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.activity.trace-and-troubleshoot
     hash: e3dee32facef5fce1f51f59805383947006df1d73f97c30ba5cb7dbdb30fc3b2
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.activity.commissioning-check
     hash: 93ef0faf2147ea6c1e7330a929d0c5719388ff40697db4111c6e1164b0750a2d
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.card.what-motor-control-means
     hash: fb3780fa1daf0f7612c8793a3cbe4d8d098ba07c1e8af0ab409c7d531631eb15
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.card.control-vs-power-circuit
     hash: f919a196f50c44d0c1c9cd7db55f94243a1960e50c3ad04c44d85163d6ba5382
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.card.pilot-devices-and-loads
     hash: a9bafb99b530be258f3d4b4d2ae1c3a6d96b238bebca262109b20299019b4c31
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.card.contact-coil-normal
     hash: 05c6a0c69441a8bf0c43046098614be42fa6e07f91aebf271a7cd254551bc16b
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.card.identify-all-energy-sources
     hash: ad6b61938f8f7da13dc8d35141de6174d165f388af6e40946ea755b034ceaf76
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.card.meter-basics
     hash: 737ede4cda1f3bfa4a532472af2d99cdc19c4264a8497f03e6baffe519831ea4
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.card.motor-control-basics
     hash: b2d0e14464ddd5b98fd9f52d4d2b96540af1e6d0ed92d30d75b035640748a636
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.card.loto-prepare-shutdown
     hash: b799ec7f707a1ef5fcb426a242f3e7601f48c592bce9dac9444d0ab591dfc629
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: source
+    notes: "Verified: 1910.147(d)(1) preparation for shutdown (knowledge of the type and magnitude of the energy and how to control it), (d)(2) orderly shutdown using the equipment's normal procedure, (c)(9) notification of affected employees before the controls are applied, and the (b) definition of energy source. 1910.333(b)(2)(ii)(B) says to disconnect from all electric energy sources, which supports including the foreign source. 'Example procedure; follow your employer's' framing is consistent with (c)(4). Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.card.loto-isolate-lock-tag
     hash: 381fc8b02434f7e88291c91625384a048e7287cfd02ff72c22ca89105f47a743
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: source
+    notes: "Verified: 1910.147(d)(3) all energy isolating devices located and operated to isolate from the energy source(s); (d)(4)(i)-(iii) lockout/tagout devices on each energy isolating device; (c)(3) tag-only only where a lock can't be used or equivalent safety is shown (matches 'use the lock whenever the device can be locked'); (f)(3)(ii)(D) personal device per authorized employee. 1910.333(b)(2)(iii)(A) requires a lock AND a tag on each disconnecting means, which matches the card. The remote source being isolated at its own origin follows from (d)(3). Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.card.loto-stored-energy
     hash: eb1769efec71157822e6dfad2ee77fac4e26feaaca4ab83eb98f2223ed5b4d17
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: source
+    notes: "Verified: 1910.147(d)(5)(i) stored or residual energy 'relieved, disconnected, restrained, and otherwise rendered safe' after the locks/tags are applied; (d)(5)(ii) continued verification if it can reaccumulate. 1910.333(b)(2)(ii)(C) capacitors discharged, (D) stored non-electrical energy blocked or relieved. Card wording matches. Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.card.loto-live-dead-live
     hash: 72f25fd076d9c7d46a4d67695bfcb86baaeddf0ec42e38338415d9b4d4d1c342
     status: blocked-on-source
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nfpa70e-2024"
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: general-knowledge
+    notes: "Still blocked-on-source: needs the NFPA 70E 2024 text (test for absence of voltage, 120.6 per the process doc; confirm the number against the text). Checked what I could against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(B) (both opened 2026-11-26): no error found. OSHA requires checking the meter before and after only over 600 V; the app follows 70E (all voltages), which is the stricter and correct choice for this course. Suggestion (not an error): 1910.333(b)(2)(iv)(A) also requires a qualified person to operate the equipment controls or otherwise verify the equipment cannot be restarted (the 'try' step). Consider adding it to the verification step of the example sequence in a later revision. 1910.333(b)(2)(iv)(B) also requires the test to look for induced voltage or unrelated backfeed. Consistent with testing the foreign-circuit terminals."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.card.ohmmeter-only-dead
     hash: 13ddd53440b13caea191151731e60fc873ba872e959b79ee362c97db8a91f966
     status: blocked-on-source
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nfpa70e-2024"
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: general-knowledge
+    notes: "Still blocked-on-source: needs the NFPA 70E 2024 text (test for absence of voltage, 120.6 per the process doc; confirm the number against the text). Checked what I could against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(B) (both opened 2026-11-26): no error found. OSHA requires checking the meter before and after only over 600 V; the app follows 70E (all voltages), which is the stricter and correct choice for this course."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.question.control-vs-power
     hash: 67fd37e36c27a9f7e56e2ef26c46f5eb9dee72903e6f67f91120802410730842
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.question.pilot-device
     hash: ee79c439c8553db44302a341f0812685f5a78f69c6dc68fc77167e8b40942b8a
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.question.normal-state
     hash: 8061f3b08dbfeb33396f3cd614a1d04e605cf0d3f247f3acff91971b58e740fd
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.question.foreign-voltage-live
     hash: 52e314f8c06f1209d8d4326149e3c0022c86910607f3ffb663ada0b814922f19
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.question.meter-function
     hash: 89baedab90a7a8ead637b42942e0c3c8f903786dde0434851356bfc3e1e87a86
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.question.verify-meter-first
     hash: 26c280782ba3b98dbf1584ce2507018bb8dc5f3d2cdb81ff4a9da1e78d31f7bd
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.question.pb1-predict
     hash: 119a07e327b2a4b1d6fd29f17410938b0198a61cacb1aa58745ce0638def15a2
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.question.shelf-state-predict
     hash: d05448e425769ae0162afccd7d219c56b67313ce9eb8240e6e68f76b144ab9e8
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.question.interlock-lamp-predict
     hash: 30785e0964745cd77bd7dc0ce07b1ddeadfb608c6faa7679281d13c255d5107b
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-1.question.energy-sources-multi
     hash: 6be097a8d660f93adc9c453f90549e20cd99d29c0cc39c6174e6c13e48f76db8
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.question.employer-procedure
     hash: cb2475e2ad29cc9b777b2fceade0fe808eb0ce0fc5d04a8e8faef13be629bcc2
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+    basis: source
+    notes: "Verified: 1910.147(c)(4)(i) requires the employer's procedures to be developed, documented and used. The correct answer and all three distractor explanations are sound; there is one defensible answer. Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.question.loto-order
     hash: 8e91885a37226a134ca5baa3b66e222e88158a91f31027f8bd3641a3522941bf
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: source
+    notes: "Verified: 1910.147(d) says the procedure 'shall be done in the following sequence': (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation. The six steps match that order exactly. The last step's label names live-dead-live (a 70E method whose text I have not opened), but the graded thing here is the order, which OSHA fully supports. Suggestion (not an error): 1910.333(b)(2)(iv)(A) also requires a qualified person to operate the equipment controls or otherwise verify the equipment cannot be restarted (the 'try' step). Consider adding it to the verification step of the example sequence in a later revision. Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.question.identify-sources-multi
     hash: bc1e0c00a3371993e8703f00abfff7f1aa45564b17c07973edd3b1afffbe79b9
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: source
+    notes: "Verified: 1910.147(b) defines energy source as electrical, mechanical, hydraulic, pneumatic, chemical, thermal or other, and 'energized' as including residual or stored energy; (d)(1) and (d)(5). 1910.333(b)(2)(ii)(B) says disconnect from all electric energy sources. The 3 correct options and 2 distractors are right. Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.question.normal-shutdown
     hash: 334795e79affb4db3f409dd3a8c6d3da2fa78146638c007676e80b0af05d0231
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: source
+    notes: "Verified: 1910.147(d)(2) says an orderly shutdown must be used to avoid additional or increased hazards. The distractors are backed by the 1910.147(b) definition ('Push buttons, selector switches and other control circuit type devices are not energy isolating devices') and 1910.333(b)(2)(ii)(B) (control circuit devices may not be the sole means of de-energizing). Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.question.isolate-foreign
     hash: a74671fcd1767493d8d943ccfea1640e9cf946d760cddf1a1e4f407dce035da9
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: source
+    notes: "Verified: 1910.147(d)(3) all energy isolating devices needed to isolate from the energy source(s); 1910.333(b)(2)(iii)(A) a lock and tag on each disconnecting means used. Isolating at the remote panel with its own lock and tag is correct. Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.question.lock-versus-tag
     hash: 467d436f9722f351f70dad627cfb9dc8c162ec4580fa83e5db76ab932ddd1946
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: source
+    notes: "Verified: 1910.147(b) definitions (a lockout device holds the isolating device in a safe position by a positive means; a tagout device is a prominent warning device); (c)(5)(ii)(D) devices indicate the identity of the employee applying them; (c)(5)(iii) tag legend; 1910.333(b)(2)(iii)(B) the tag prohibits operation and removal. Note: OSHA requires the lock to identify the employee too. The correct answer doesn't say otherwise, so it's fine. Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.question.recheck-meter
     hash: d8441dd1b83421b60e22e66def0a2f7b07a7360891256ea50512e5b585802514
     status: blocked-on-source
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nfpa70e-2024"
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: general-knowledge
+    notes: "Still blocked-on-source: needs the NFPA 70E 2024 text (test for absence of voltage, 120.6 per the process doc; confirm the number against the text). Checked what I could against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(B) (both opened 2026-11-26): no error found. OSHA requires checking the meter before and after only over 600 V; the app follows 70E (all voltages), which is the stricter and correct choice for this course."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.question.absence-combinations
     hash: 2ac5021685f5160781f6706bace38353a53c1a092de8ea7ccad9ae5c2bede747
     status: blocked-on-source
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nfpa70e-2024"
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: general-knowledge
+    notes: "Still blocked-on-source: needs the NFPA 70E 2024 text (test for absence of voltage, 120.6 per the process doc; confirm the number against the text). Checked what I could against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(B) (both opened 2026-11-26): no error found. OSHA requires checking the meter before and after only over 600 V; the app follows 70E (all voltages), which is the stricter and correct choice for this course."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.question.ohmmeter-rule
     hash: 59ecca545eaea7baf5ce48a0b7c1ac52213d71025b9aabec7e59884a50965143
     status: blocked-on-source
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nfpa70e-2024"
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+      - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+    basis: general-knowledge
+    notes: "Still blocked-on-source: needs the NFPA 70E 2024 text (test for absence of voltage, 120.6 per the process doc; confirm the number against the text). Checked what I could against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(B) (both opened 2026-11-26): no error found. OSHA requires checking the meter before and after only over 600 V; the app follows 70E (all voltages), which is the stricter and correct choice for this course."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u1.s1-2.question.supply-off-predict
     hash: 87afa00a362717a48f7d11ea444031d0ad0e7ded4a9a51d91d814a34b4508ae2
-    status: pending
+    status: blocked-on-source
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. OSHA pages were opened for the LOTO set, but this item's claim is simulator behavior (CR1 drops, bucket lamps dark, PLF lit). That isn't something OSHA text verifies, so it stays unapproved. Behavior checked: correct."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.card.control-defined
     hash: 1d78da2bacbb5e99c94d9295030cb67992221913d23e10d8f82ba342edce1894
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.card.controller-defined
     hash: 16ce06631b21d107cab2591134bab1b02d94a5e5c87d53c767a660276862ce72
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.card.pilot-device-intro
     hash: 2dd7c8aeb83c8fb1bd4c8a4420f9a2af9ecc9fc535d3ee067edf7421acd86421
-    status: pending
-    severity: null
+    status: needs-fix
+    severity: minor
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "OVERREACH / internal contradiction: 'it carries only the small control current needed to operate a coil, not the load current'. In this same bucket PB2 feeds PL3 directly and FS1/PS1/TS1/FLS1 feed lamps directly, so the pilot device carries the full current of that load. Pilot-duty float and pressure switches also commonly switch small loads directly (two-wire control). Day 1's card (ch01.u1.s1-1.card.pilot-devices-and-loads) correctly says 'pilot devices sit in the path and the load ends the path'. SUGGESTED FIX: 'The pilot device is a messenger: it carries only control-circuit current, such as a coil or a pilot lamp, never the motor's power-circuit current.' Same overreach in the claim of ch01.u2.s2-1.question.pilot-device-meaning (its answers are fine)."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.card.maintained-vs-momentary
     hash: 9070d27f9d036371bb6db72b198352ca0ffaa8761efd425e2be4b5bda9c7054c
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.card.normal-state
     hash: 511415b472ad41afdc06b05cf0dc7880f7f076ebc509d23757cdf6cb20fbb102
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.card.coil-contacts-relay
     hash: ac778428a23513c8ddf39f94d0090b4c0ddab56d44c2311cfe89746d64627c01
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.card.pickup-dropout
     hash: a8f9bc241d4cb7be6956c4c43cd6f8719ebd04da80211aa4581c26e02e21ab0d
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.card.seal-in-vocabulary
     hash: 9982a0c2e02daef75d547e84d27a80e277c94495501029381d95b79617968b0b
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.card.control-vs-power-load
     hash: ba7db36a1c2a0a9ada601475664e610808d324a561a51697dacc638b07faae35
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.card.contactor-starter-overload
     hash: 0d81350e961b397f76f398e6828d9f5a4e5b72be3272504c3a52e0139f01c0fa
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-2.card.device-letters
     hash: 922109d8854a099a8865c9484f858767eac79d200137eaf62e4d486eaaaa2e94
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-2.card.sensing-switch-letters
     hash: a98e6521ee851d67cd71c832fabd3c45c6f2b2acc136b55fa785e113d0f185a6
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-2.card.timing-and-solenoid
     hash: 047f14280751b16653ad5e3086eaee378632cad01c351f47e9517e4b21a87372
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-2.card.starter-overload-mcc
     hash: 8815555b01751ec87936d315be0edf8a42322cf378c373005e0726c42e4494b3
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-2.card.contact-timing-letters
     hash: 9b05deffafd5176d5fd8b1fb1f4d7eee2ad2e623b74c167645f908c79126a864
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-2.card.tags-and-legends
     hash: 234c3d64db9245dd5f7151a6d2a3f1a7d8b821f5c44209324993f787308e34b0
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.contact-no
     hash: 4f8f9987e93b9fd57ff08dc3129b5d10cafd2cd5d98a9e9355aa27c1fb53bcd5
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. No error found. Renderer draws two parallel bars with a gap (common NEMA/US practice). IEC note (13-14 NO terminals) is consistent with common IEC practice."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.contact-nc
     hash: f1dd2b4d2a541b3e470c1397fd3976b0dda0553f1cc115fb10f315d6a54537b4
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. No error found. Renderer draws parallel bars with a diagonal slash (common NEMA/US practice). IEC 21-22 NC terminal numbering is consistent with common IEC practice."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.pb-no
     hash: 0f75dc1f61da63cc9fd5dac7fbda435bac95219d4b8610938c0c85035744ed1b
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. Shape is right (terminal circles with the bridging bar above, not touching). RENDER BUG (cosmetic here): in the card figure (symbolFigure, viewBox 120x60, scale 1.9) the operator's top cap line at y-17 is clipped off the top. See pb-nc-mushroom for the serious case."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.pb-nc
     hash: c19dd36c46d277ebc2251c8636c6ace9de11676f67c9b64d5fa9d6385e41596e
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. Shape is right (bridging bar under the terminals, touching). Same clipping of the operator top in the card figure as pb-no (cosmetic)."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.pb-nc-mushroom
     hash: aefb4832b7f2b81d411f46454dcd9e6b399b4a0557876b64f69494583fa3432e
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. RENDER BUG (flag, major for learning): in the card figure and in identify-symbol questions (symbolFigure scales 1.9x about the centre of a 120x60 viewBox), the mushroom cap arc drawn above y-17 falls outside the viewBox and is clipped completely. The picture is then identical to the plain NC pushbutton, so the card's 'wide cap' description and the identify questions can't be answered from what is shown. Fix: enlarge or offset the viewBox (e.g. viewBox '0 -10 120 80') or reduce the scale, then re-check every symbol. Text content: no error found."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.relay-coil
     hash: e8cf94ad039aff3f2b1f93b66c247cbc6ebc55f69200a3ac2285b85630e5a02c
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. No error in the symbol (circle with tag; IEC rectangle with A1/A2 and letter K is consistent with common IEC practice). Note for Chapter 2: overload-relay contacts in a starter are commonly wired between the coil and X2. They are inside the controller, not 'remote', so they don't conflict with 430.74. Avoid wording that says a coil must never have anything between it and X2. Here: 'connected directly to the X2 side' is fine for the bucket; consider adding 'usually'."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.pilot-light
     hash: c9fd499adf420f15fcd4a9665ad1396ee1e86fb644a8004e3ffd324c53eaea38
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. FLAG (misleading): the card says the color letter is what tells a lamp from a coil ('a plain circle with a tag could be a coil, while a circle with a color letter is a lamp'). The app's own renderer correctly draws the common NEMA/US pilot-light symbol with radiating lines (sunburst) around the circle, and that is the distinguishing mark. Several bucket lamps (PL4-PL11) have no color letter at all in the schematic. Also, the card figure passes designation 'PL1', so the circle shows 'PL1' inside it, not 'G', which contradicts the card text. FIX: mention the rays, and render the card figure with 'G'. IEC note: H is the older IEC letter for indicator lamps; current IEC 81346-2 practice uses P. 'You may also see' is acceptable but consider 'H (or P)'. Confirm against ICS 19 / IEEE 315."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.float-no
     hash: 1ffaff5388a042d47ea8db30c3df24265ac4b56b60abed3aa43c716b95fe971a
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. RENDER BUG (minor): the float circle below the blade is cut in half by the viewBox in the card figure. Shape otherwise follows common NEMA liquid-level practice. Text: no error found."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.limit-nc
     hash: 7aebb0c339b3a270afacd6c2a49c657273eee0070a04404ac9ab9375c23819c0
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. No error found; wedge actuator on the blade renders fully. Shape follows common NEMA limit-switch practice."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.solenoid
     hash: f2213a0386f9bb651f6da5a651920b10dc0f7140158741de8cf2799a779a4210
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. No technical error. IEC note 'Y for valves': Y is older DIN/IEC practice; current IEC 81346-2 tends to use M-class letters (e.g. MB) for solenoids/actuators. Keep it as 'you may also see' or drop the letter."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.timer-on-notc
     hash: aed443baab3bb35e72962aea73f9800d24deb167d7eb86f338923ca41c8d90ea
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. RENDER BUG (flag, major for learning): for NOTC (and NCTC) the renderer draws an UP arrow above the contact at y-21, which is outside the card viewBox after the 1.9x scale. Only a small stub shows, and the NOTC text label under the contact is clipped too. The figure then reads as a plain NO contact, so the card and ch01.u2.s2-3.question.identify-notc can't be answered from the picture. Arrow-direction convention in symbols.ts (up = timed closing, down = timed opening) is one common textbook convention. I can't confirm it without ICS 19 / IEEE 315, so keep it pending. Text content: no error found."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.timer-off-noto
     hash: 8017f73d556e58382195dd45702390dc1954df78f80fd550825633719cdce13c
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. Down arrow renders. The 'NOTO' text label under the contact is clipped in the card figure (minor). Arrow convention unverified (see timer-on-notc). Text content: no error found."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.question.normally-closed-meaning
     hash: 6825a1d7cfeb1ce9722d1118d91ff6627579c3b2639b5fb18b1f1a5d76dad12e
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.question.maintained-operator
     hash: e37598d6c2e50dcb77e8c9838c87a401a3b19c00d52571ffe4198d97e5e8011b
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.question.pickup-event
     hash: b2c2267cb8dd4502b99c27b31d153a793adbceb7d1173155f6d8070c02732d23
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.question.seal-in-term
     hash: 65b3429a7edb2026f3f3d80351c771d5059470c65b16b517160533a12c6f8bc6
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.question.pilot-device-meaning
     hash: c31986525a71540d9208190dc00a52a2000d64a6abedf39f6d8584854a472a2d
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Answers are fine. The claim text repeats the overreach 'does not carry the load current'; align it with the fix on ch01.u2.s2-1.card.pilot-device-intro."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.question.pilot-devices-select
     hash: ee9a77c3532b688780d988732799aaa4a7c3d3ad016071f9c23023199222a8e7
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.question.control-vs-power
     hash: f2e85e4a88e2adc15a599ed78e7627512fb4c7dacc88acf927e775c2abf793ac
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.question.relay-sequence
     hash: 96b27915e630bd85a2113328c0054ddba3722211df9b6b6b85734d14f896dfb7
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.question.maintained-estop-predict
     hash: b95a6358cd6e073747b3f311dda1330ee6617dc4a76eef6764f97975da11e91c
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-1.question.momentary-start-predict
     hash: 3849681beb66229ea3d94f511b41498f0f6543ae5d63a4724ad0ca5374e80573
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.question.identify-nc-contact
     hash: e6eb6bcbf6212f54e943b928c4d6b7b98d0b50285df1476c86bdafdd0080da02
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: symbols:nema-ics19"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. No error found; symbol renders fully; one defensible answer."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.question.identify-mushroom
     hash: ff89a6c0507386825db1d7113bce4f58ada8923be91311dc195a2ab6e8f4120b
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: symbols:nema-ics19"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. FLAG: as rendered, the mushroom cap is clipped off (see ch01.u2.s2-3.symbol.pb-nc-mushroom). The learner sees a plain NC pushbutton, so the correct answer can't be told from the picture. Fix the viewBox. Wording: no error."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.question.identify-notc
     hash: 1109a077451c0db99ba4a22e77cd73a1d079e2daeb9088ba3f90c682e7dc8057
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: symbols:nema-ics19"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. FLAG: as rendered, the NOTC timing arrow and label are clipped (see ch01.u2.s2-3.symbol.timer-on-notc). The figure is indistinguishable from a plain NO contact, which is one of the distractors. Fix the viewBox. Wording: no error."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.question.tap-start-button
     hash: e5c12fd7a2fc9c31bcf756007cdc64f788524ef75fa5632a0c1a8b87f9605171
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.question.tap-coil-and-contact
     hash: e63830397b48ec9d9eaff88747cf797d18b246500998f91cf582cb1daf1c094a
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-2.question.float-vs-flow
     hash: 420174b99b1cfe154445310e9d9abc6f5ea368990e59b22579a99b2aff7f36fd
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-2.question.timing-relay-tag
     hash: 5c61846fea1916b26fba09250c345463ed362d4b5bf7cd56953d3dc26f127e12
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-2.question.notc-code
     hash: 181f8485e72c59d5d7fce912b1a4712d934861b77f1c8540d0d2f7c2d53cade3
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-2.question.abbreviations-select
     hash: 9f60cfdb8c610534351685081b39464a0fceced7a71868dc552ce4401f057259
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u2.s2-3.question.nc-pushbutton-predict
     hash: e78d129b40636cb6aabfbdd406a4fa28149addfb13692ec55d4562c645ea07ef
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-1.card.auxiliary-contacts
     hash: 7807e44f454ff3f140a331d8bbe2e0471a563c5e34e37900e6096a4e64435e53
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-1.card.no-nc-state-change
     hash: 6ba3b8279184df401aa0a432a4f01e4238b35b822e997ceaa7c3284ae543aca1
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-1.card.voltage-across-contacts
     hash: c6b8909d6b81ec3678c1e366076d44edc2b45baba531cb22d98240965d7536dc
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Note: the simulator currently contradicts this rule for contacts feeding LED pilot lights (open CR1 NO1 and open FS1 read 0.0 V 'floating' on the default 10 Mohm VAC range instead of about 120 V). See the needs-fix on ch01.u3.s3-10.device.led-pilot."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.card.relay-coil-vs-contacts
     hash: 5e334e199f0bc53dc923d34683b3f05133cc1d217f197d8beaeb70c23092c379
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.card.relay-inrush
     hash: bc9621fe247aa68f69e49a90b041f8fbe3dc04919e72751ae0ffa4e84feb8d42
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.card.open-coil-ohmmeter
     hash: 7f9320a901d2936ef9e52f21139acc411f7523a56d803ac5f07bf3b4f0c9ece2
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-3.card.drum-switch
     hash: ce7ba754da79ee0ee16952b4de3aa066267d829ebd9be1fd81e19b47d0a9c390
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-4.card.float-normal-state
     hash: 34fe190e477a171d60e5a0285b92e4120ee8593b591ea42da051f9a2eb46c1a7
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-4.card.normal-versus-installed
     hash: 3d03fa795342a9971f3f6ba91c914ce93701dcfd299143930bf5b482119f28a2
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-5.card.flow-switch
     hash: 0ce41fd51aee1f6e522b433e496f735cac500251f2a549a8ab21417e52f72562
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-6.card.limit-switch-mechanical
     hash: 502cd75b4b80e70d1b8d82ac46cf865bd4d3e4cf80a2d7d0537e30d12bbf61c7
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-7.card.limit-switch-proximity
     hash: 6f737965d1ba500491f56b5c17581623352f757abc97cc7fab236dced1d243e8
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-8.card.limit-switch-optical
     hash: cee9620410cdc6cec925e56d4c0b4b4d24c7b5724498df1c0d6cd20dd9c09690
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-9.card.pressure-switch
     hash: 87b1045c3c66e5d954454f63fc564277c3a6cf021590156e5724d59d9e698ebb
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.question.coil-moves-contacts
     hash: 54236d062060a798584dae8558f0108c32bb74df7080a9354563fb6575575083
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-1.question.voltage-across-open-contact
     hash: 5f5c17d6c4d54ac37abdbb1a77bf55e6c62ca3448d77c195640ffe912d2e27c9
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Note: the simulator currently contradicts this rule for contacts feeding LED pilot lights (open CR1 NO1 and open FS1 read 0.0 V 'floating' on the default 10 Mohm VAC range instead of about 120 V). See the needs-fix on ch01.u3.s3-10.device.led-pilot."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-1.question.voltage-across-closed-contact
     hash: e47e3e9e93283f7a04dd0230f2f3068816af6785d344d81832be9f027b2d7d9a
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.question.ohmmeter-on-coil
     hash: c23e15360f441ee9ff0f9f5b1e26dd1fdab1e1961d7a3a5a4131b28815ea513f
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.question.inrush-reason
     hash: 019d42712c7c3482c66c4e34c0b4751c45e54ece5087a9b61e68c452b6e9e270
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.question.open-coil-symptom
     hash: 89e1ee787095be5b6f91cecebb2a87d583dba90a429469404fbf9e7c737fe273
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-1.question.relay-statements
     hash: cfa59808363d8effa94f8c65b18cecaa1fd0e73feca1dc1bde11cd5959bd92e9
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.question.press-start
     hash: b34dbc9051ab095766104705625b46f8de6d73251035f76ac01b3ea7c6de0b8d
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.question.tap-nc-contact
     hash: 4937f71b80748767d49d1ab9a200c617300dc10ebcaf2050871f0d46169809fa
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-2.question.order-start-sequence
     hash: 8202f430c3b7f834113d677b27a3edc7ce7edf46f7e7647164366bcee925f881
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-4.question.float-normal-state
     hash: 6db18e530e1ef2efe6865ee07cfbc2f2be0f15aff7089549e928c320dc31c294
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-4.question.installed-actuated
     hash: 58cba2cde725e3bc274f7443ee422dbcd55b0cccef0b1058ef57d32ec69e82ab
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-3.question.drum-switch
     hash: bffd8d47d7340f19c78d1bd725756256896ed411686831d78bf6eb30ccda1aed
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-5.question.flow-switch
     hash: 2191127581271f273db21f19d742f1f7827da9b38a0188621cef17bbcc8fcb8e
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-7.question.proximity-leakage
     hash: 1e83bd8ac6bbc337ec5c76eb311d63f92a97eeb5e887339997c591614de10c5a
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-8.question.noncontact-sensors
     hash: 1eec33aed20f6131787695e50bfe10ec1326d542aa16b4450849ca3a2f22ecbc
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-4.question.tank-fill-predict
     hash: b58c4f79e971bda807ef249d941c6c8e03aff925d0c46b26ba94f6f3417f1980
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-6.question.ls1-toggle-predict
     hash: d9e525127e33ed226dcb33fdf07ba2fdbe9d607e1292948f500aeca51d672294
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-9.question.air-fill-predict
     hash: 416cbd6e0debe539d388e8cdb3981e30c7fea790b1619a45fa89e9a3861987fa
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-4.question.tap-float-contact
     hash: 7560e4799188cc7184e909ae6b745987ef99da996f1d8fa9defad5a9439500d0
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-6.question.tap-limit-contact
     hash: af8c7adb98f87617997793e92291c252123e9e20e97fa042e0d4d529a87912ed
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-4.question.order-float-events
     hash: 4dd1c4c725ea7850a1bafa1a1ba1b5c79e9535fd0f81d4493918c74957fc5dfe
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-10.card.pushbutton-types
     hash: 11a519c3d5b5284ce23c8d6a4228d11fb4a20f4b9a230841e7ec317c2a352969
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-10.card.mushroom-estop
     hash: 5c48d949f446d61bdc08fd9a0920f375d74b6e38331feb88126b38ee97d7eb29
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-11.card.solenoid-coil-load
     hash: b83c97f8da1d8b2c1031522ace7ebd0a5c8d2f86048ac9e61396f94a5878da99
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-12.card.nohc-ncho
     hash: bea3173a6e7375cc5a36f69756adae93f19bcbb0c3c31e69ee004e76e83f8d60
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-12.card.normal-vs-installed
     hash: 459ea3be87904b1b1bae2444f15970b8d7f92e1ffc06f89d822fffe022c887ad
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-13.card.temperature-switch
     hash: 4018a106434fa95b77248e4ec720b490baf139c5358771757861990a90d26f40
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-14.card.pneumatic-timer
     hash: c30af56585b61b142983a5192c91e807f3890d7e20ac42eb12db3b605113645d
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-15.card.instantaneous-contacts
     hash: 652b431a128c0ef7e0e028cbd61b30b2a17468dc121cec2137999b67b350ee8a
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-16.card.solid-state-timer
     hash: 1f09a27200fb7bf1cea58cc79ca562d0169ab38310010406fe0729e453d84dd1
-    status: pending
-    severity: null
+    status: needs-fix
+    severity: minor
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "OVERGENERALIZATION: 'An off-delay solid-state timer ... needs constant supply power ... plus a separate trigger input' and 'If the constant supply is lost, the output drops at once'. That's true of the common trigger (control-signal) type modeled as TD4, but 'true off-delay' solid-state timers also exist. They need no separate trigger or constant supply: they time out after their input power is removed, using stored internal energy. SUGGESTED FIX: 'The common solid-state off-delay timer (the trigger or control-signal type, like TD4) needs...'. Add one sentence: 'Some models, sold as true off-delay timers, time out after power is removed with no separate trigger; check the wiring diagram on the timer.' ch01.u3.s3-16.question.ss-offdelay-supply-loss is fine because its stem fixes the type (output transferred by a trigger, constant supply)."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-17.card.on-delay-off-delay
     hash: 9714d8ac3697f06c3eacbd39771e1967f44d5ae3d4151f87cd7058f8711aebfa
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-17.card.timer-reset-rules
     hash: 81c6d3f9a03f2dc5f68b0f34592beb8c525fc0bd812e60f332ab0a5e36f5d19f
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.card.rails-and-rungs
     hash: 00f80827dc8ed2cf7fd9a2ec61111b7be70bb5d6a74e244d7265446f3fd13f5d
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Note for Chapter 2: overload-relay contacts in a starter are commonly wired between the coil and X2. They are inside the controller, not 'remote', so they don't conflict with 430.74. Avoid wording that says a coil must never have anything between it and X2."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.card.contacts-left-loads-right
     hash: 65ea725733790832eca05c67ae9f78fde83022f2e015779cf740a9f68f60b53c
-    status: pending
-    severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    status: needs-fix
+    severity: minor
+    checkedAgainst:
+      - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
+    basis: source
+    notes: "Checked against the 430.74 photo. The core physics and the 430.74 rationale are correct (with X2 grounded and switching on X1, a ground fault downstream of a contact can't energize the load, and an X1-side ground fault opens the fuse instead of bypassing the stop). OVERREACH to fix: 'Never place a contact between a coil and X2' and the fieldNote 'treat that wiring as a defect'. As the builder's own note says, 430.74 is a performance requirement about ground faults in the control circuit remote from the controller; it doesn't prescribe the layout. In standard NEMA starter wiring (Chapter 2) the overload-relay contact is commonly wired between the M coil and X2 inside the controller, and a learner taught 'never' will call that a defect. SUGGESTED FIX: 'Keep stop, start and other switching devices on the X1 side, and connect the coil directly to X2. (The overload-relay contact inside a starter is a common exception you'll meet in Chapter 2.)' Change the fieldNote to: 'A coil whose switching contacts are on its X2 leg in field wiring can be energized, or have its stop bypassed, by a ground fault. Treat that as a defect.' Otherwise ready to approve (pending book) once the wording is fixed."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.card.nec-430-74-ground-fault-arrangement
     hash: cb13e705c714426983f4d49191e5eb3339562e0a81498d91581fef6deabd8614
-    status: pending
-    severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    status: needs-fix
+    severity: minor
+    checkedAgainst:
+      - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
+    basis: source
+    notes: "Checked against the photo. Claim and body paraphrase 430.74 correctly: grounded conductor, ground fault remote from the controller must (1) not start the motor and (2) not bypass manually operated or automatic safety shutdown devices. Section number unchanged in 2026 (not marked revised), so 'older editions used the same number' is consistent. The bucket explanation also checks: a bolted X1-to-enclosure fault draws about 207 A and clears the 5 A model fuse in about 23 ms. ONLY ISSUE: fieldNote 'look for any contact between a coil and the grounded conductor. That's a 430.74 problem waiting to happen.' That will misfire in Chapter 2, where starter overload contacts sit between the coil and X2 inside the controller (not 'remote'). SUGGESTED FIX: 'When you inspect a control circuit, look for stop, start or safety contacts wired between a coil and the grounded conductor in the remote wiring. That's the arrangement 430.74 is written to prevent.' Approve (pending book) after this wording change."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.card.grounded-vs-ungrounded-control
     hash: 89b806e45187020bf9e0d09142cec73f982a89ba29b50a1150eac55d5cb0ff79
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "NEC2026 250.21(A)(3), 250.21(B), 250.21(C) (user photo review/source-photos/nec2026-p70-139-250.21-250.24.jpg, p. 70-139)"
+    basis: source
+    notes: "Verified against the photo: 250.21(A)(3)a-c (exclusively control circuits; only qualified persons service it; continuity of control power required; transformer primary 1000 V or less); 250.21(B)(1) ground detectors on ungrounded systems permitted by (A)(1)-(A)(4) operating at not less than 120 V and at 1000 V or less; 250.21(C) marking ('Caution: Ungrounded System Operating - ___ Volts Between Conductors' at the source or first disconnecting means). Card text and claim paraphrase this correctly; 'permitted to be grounded but not required' is the code's sense. Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.card.wire-numbers
     hash: 5f3c6cfc364205deca94cfba644da5eb73cbdefc1ff0e229f9be0d9d1e9f53a1
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.card.rung-numbers-cross-reference
     hash: 7a018d0987e685b8f798c8b7c04d5339091afe50dc7b8af0e5b857aace13d278
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.card.trace-to-terminals
     hash: 48b3988b63b0483b00ded4d695df56f13199f6947f2058ccb8a308e2f718f7f2
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-10.question.mushroom-stop-symbol
     hash: 96c76b20fdb95293b5cf6c28978567c531af034148b56364085ff48f8faf1670
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: symbols:nema-ics19"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. FLAG: same clipped mushroom cap as identify-mushroom, so 'mushroom-head' can't be seen in the figure. Fix the viewBox. Wording: no error."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-10.question.momentary-vs-maintained
     hash: 8a3c8df63f578c8fc0e930dfd9fe81fd76cba799951098ea81ce3e8fd004f932
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-10.question.why-mushroom-estop
     hash: dbb1c16b0e70446c358bf5f2cd0d85d15c69f06df25dda54f0f2abe6f9d31649
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-10.question.nc-button-unpressed
     hash: e8e2cd9e19f1239afc79767da873824883f3e807e9b1f68a1708551cd8d938ca
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-11.question.solenoid-jammed-plunger
     hash: 46040d98a61a166128a559ea9a8936041336935acb266f6459e532e62848ee18
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-11.question.tap-solenoid-coil
     hash: 999a736e41ddd90c89255d2d4671700e27b43bf67493a05cacf34af206b54502
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-12.question.nohc-meaning
     hash: 55127f8590957dc1f12795e92f94b3c2f18667dde55fe8e580b0d4d6a204cfa5
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Wording suggestion: 'A limit switch is rated NOHC' should be 'is shown/marked NOHC'. Held-closed describes the installation, not a device rating."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-13.question.temp-switch-installed
     hash: 72a0ce843c6851acb630e6032c5d3ba657a414c4b5b85b984c6108b097efc394
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-12.question.held-state-statements
     hash: 52bacbb814102697e967d11db000c6b8f13fd34c353b82f31a729c69afd877a1
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-12.question.limit-switch-solenoid-scene
     hash: b75dfc06eaae3a76410f3a737e9649706ebf68c2906ce374db7700b176082836
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-17.question.nctc-vs-ncto
     hash: 59e6bf9cecd9d347d302bd6d03a1eda8ed6edadc9d0ac3a16f9c7d9ef0c5b5be
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-17.question.timer-symbol-off-delay
     hash: d2b82b06f8dc4d09b33e2dc48425fa8fbca4eae89c44afa287c24708171f8a3e
     status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: "needs source text before review: symbols:nema-ics19"
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. Arrow renders (down); NOTO label clipped (minor). Arrow convention unverified. Wording: no error."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-17.question.delay-starts-when
     hash: 5780da24fc17dba39861c3e46ac9b4d0760580ed5beb74c512f83d94cc4736a6
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-14.question.pneumatic-method
     hash: e8f1a5a406b613d7ed2a218c7daaabecf4cabb58feb0d2b840534727c68813bd
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-15.question.instantaneous-follow
     hash: de2193442ef51a32f22afd8745b7a981162153cb90e4c0b4e9d354ffd4bf8977
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-16.question.ss-offdelay-supply-loss
     hash: 091a6d119f6a4fdb770fc760f9495a2a0fa7900155e6d479c05571a8a8f83bae
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-17.question.ondelay-multi
     hash: 24e58e057c8dccf0404e93a3a871221edb857e0af83661879917913cc251562b
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-17.question.offdelay-order
     hash: 56aa97cf204b989eda3ddcf8363a385cf9ecf95120af59c7246fef652cc1a2c6
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-17.question.offdelay-reenergize
     hash: 994f1c2e8d23d02dcb81592484233f2b99d34aee60ff6ecdb7f581ea75aea5d1
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-17.question.scene-release-onoff
     hash: 8d95a5e94ca8c28d2e3c259ed4329431aa01262ab5992f57aac13127a6298fc5
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-17.question.scene-offdelay-expires
     hash: bf47c05bf1c05203e20d6b8f46aceb08f564ed97cc1e630d70a7b6202e1803ec
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-17.question.scene-ondelay-interrupted
     hash: cb32fb09700d4cf7bc94415a567abfdf43fb5c10131b2e8a6ff179fb13533c82
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.loads-on-x2
     hash: 1794d8b785082e3365e687258e50ac8f74838ae509a840133fad4a6c04ee6561
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Note for Chapter 2: overload-relay contacts in a starter are commonly wired between the coil and X2. They are inside the controller, not 'remote', so they don't conflict with 430.74. Avoid wording that says a coil must never have anything between it and X2."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.why-contacts-x1
     hash: 0ee6aba1df8cd3d3743b12ad8716dde6e75f9e84d245e523131327a512a42be9
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
+    basis: source
+    notes: "Verified the rule against the 430.74 photo text and checked the physics by hand. Bucket X2 is bonded (bondR 0.01 ohm). A ground on the wire between a closed-on-X1 contact and the coil holds that wire near X2 potential, so the coil sees about 0 V. When the contact closes it's a short from X1 to ground: I is about 120 V / |0.46 + j0.35| ohm, roughly 207 A, so with I2t = 1000 A2s the fuse clears in about 23 ms. The coil is not energized. With the contact on the X2 leg instead (coil fed from X1), a ground between coil and contact completes the coil circuit through the bond: the coil energizes and the contact is bypassed, which is what 430.74(1)/(2) prohibit. Answer and explanation are correct; one defensible answer. Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.nec-430-74-requirement
     hash: 4790118b7925f70ada81759cde39167e360824c7e34a8e7b002a68e8bd9b6d70
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
+      - "NEC2026 250.21(A)(3), 250.21(B), 250.21(C) (user photo review/source-photos/nec2026-p70-139-250.21-250.24.jpg, p. 70-139)"
+    basis: source
+    notes: "Verified against the photo. NEC 2026 430.74: 'Where one conductor of the motor control circuit is grounded, the motor control circuit shall be arranged so that a ground fault in the control circuit remote from the motor controller will (1) not start the motor and (2) not bypass manually operated shutdown devices or automatic safety shutdown devices.' The correct answer matches. Distractors: 430.74 says nothing about overload trip timing or GFCI (correct); ground detectors are 250.21(B) for ungrounded systems (confirmed on p. 70-139). Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.ungrounded-control-conditions
     hash: 8ab06495f4e67270a1df17855514f0fd6c5fc6816f8900cca2a662d0c2a7f240
-    status: pending
+    status: approved-pending-book
     severity: null
-    checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    checkedAgainst:
+      - "NEC2026 250.21(A)(3), 250.21(B), 250.21(C) (user photo review/source-photos/nec2026-p70-139-250.21-250.24.jpg, p. 70-139)"
+    basis: source
+    notes: "Verified against the photo: 250.21(A)(3) separately derived systems supplied by transformers with a primary voltage rating of 1000 V or less, if all of: a. used exclusively for control circuits; b. maintenance and supervision ensure only qualified persons service the installation; c. continuity of control power is required. The 3 correct options match. Optional wording improvement (not blocking): the distractor note 'does not set a control-voltage limit' could also say that 250.21 as a whole covers ac systems of 50 V to 1000 V (section heading in the photo); systems under 50 V fall under 250.20(A) (not in the photo, so I didn't check it). Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.read-left-to-right
     hash: 6ea568bf51fed9ce9905099732119acd1286f0991eed4f842f1eb674d7723dea
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.wire-number-meaning
     hash: d802beefd8a3ce29e57888ba8d55b5b257a4bd93251febd5a84c4a19a4c375dd
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.cross-reference-meaning
     hash: 0e1780fecd7a3236788c1ce2a90fcb802ff3c63568e5d82b93b1b77298a88eaa
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.tap-rung1-contacts
     hash: 6a1752179dbbf116d58ca57596d04ebe0d565d4dddbb25114a0c393e6f53cd55
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.tap-cr1-coil
     hash: a5c8410828725a44e96980a58a26effd53b459b13526f0b5f7c63918955bf424
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.tap-tr1-timed
     hash: 70470a870ee773e9a4201342ed9d11fb23698647980b0608ea859cb3453daaa6
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.trace-to-terminal-order
     hash: a7399c0ecd571a8e6fbe3c95c4661d809ab9c8dd34419e976815bec28da8e094
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.wire1-terminals
     hash: 4155361c071b29591613d9fb03d48ea36b9fc245a51095a4944650d42541ad9d
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.scene-pb3-stop
     hash: 769785d1e0448d58b4adc253fca65e8c362a1aee49333ea09521d19d739aae76
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
   - id: ch01.u3.s3-18.question.scene-no-seal-in
     hash: 5f4c0c3ba57737f0fa168e0e4f14d13f188c1c17caab58bd77bd9f5f1ebd85bd
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
-    basis: null
-    notes: ""
-    reviewer: null
-    date: null
+    basis: general-knowledge
+    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it."
+    reviewer: Eli
+    date: 2026-11-26
