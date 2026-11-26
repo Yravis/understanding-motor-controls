@@ -1,7 +1,8 @@
 // Versioned localStorage save with migrations, JSON export/import (file or pasted code).
 import { SAVE_KEY } from '../config';
+import { InProgressSession, parseSession } from './session';
 
-export const SAVE_VERSION = 2;
+export const SAVE_VERSION = 3;
 export interface ReviewState { step: number; due: string; seen: number }
 export interface Save {
   version: number;
@@ -15,10 +16,11 @@ export interface Save {
   bookScores: Record<string, { got: number; total: number; date: string }>; // key = unit number
   activity: string[];                                                // dates with a finished session
   commissioningPassed: boolean;
+  session: InProgressSession | null;                                 // mid-day lesson/practice; survives tab switches and reloads
 }
 export const defaults = (): Save => ({
   version: SAVE_VERSION, settings: { theme: 'auto', days: [1, 2, 3, 4, 5], bookFree: true }, xp: 0, completedDays: {}, reviews: {}, answers: {},
-  tickets: [], safetyViolations: 0, bookScores: {}, activity: [], commissioningPassed: false,
+  tickets: [], safetyViolations: 0, bookScores: {}, activity: [], commissioningPassed: false, session: null,
 });
 
 type Raw = Record<string, any>;
@@ -29,6 +31,8 @@ const MIGRATIONS: Record<number, (s: Raw) => Raw> = {
     ...s, version: 2, xp: Number(s.points) || 0,
     completedDays: Object.fromEntries((Array.isArray(s.done) ? s.done : []).map((d: number) => [String(d), { date: '1970-01-01', score: 0 }])),
   }),
+  // v2: add in-progress day session (null if none)
+  2: (s) => ({ ...s, version: 3, session: s.session ?? null }),
 };
 
 export function parseSave(raw: unknown): Save {
@@ -52,6 +56,7 @@ export function parseSave(raw: unknown): Save {
   if (s.bookScores && typeof s.bookScores === 'object') for (const [k, v] of Object.entries<any>(s.bookScores)) if (v) d.bookScores[k] = { got: num(v.got), total: num(v.total), date: String(v.date ?? '') };
   if (Array.isArray(s.activity)) d.activity = s.activity.filter((a: unknown) => typeof a === 'string');
   d.commissioningPassed = !!s.commissioningPassed;
+  d.session = parseSession(s.session);
   return d;
 }
 
@@ -63,6 +68,8 @@ export function getSave(): Save {
 }
 export function commit(): void { if (cache) localStorage.setItem(SAVE_KEY, JSON.stringify(cache)); }
 export function replaceSave(s: Save): void { cache = s; commit(); }
+/** Test helper: install a save (or defaults) as the in-memory cache without touching an existing one accidentally. */
+export function resetSaveForTests(s?: Save): Save { cache = s ?? defaults(); return cache; }
 export const exportJson = (s: Save = getSave()): string => JSON.stringify(s, null, 2);
 /** Accepts raw JSON or a pasted code (base64 of the JSON). */
 export function importText(text: string): Save {

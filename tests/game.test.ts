@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { defaults, parseSave, exportJson, importText, exportCode, SAVE_VERSION } from '../src/game/save';
+import { openSession, patchSession, setDraft, recordAttempt, clearSession, hasActiveSession, parseSession } from '../src/game/session';
 import { scheduleReview, dueIds, streak, rank, INTERVALS, addXp, nextDay } from '../src/game/progress';
 import { present, grade } from '../src/game/questions';
 
@@ -70,3 +71,98 @@ describe('question shuffle and grading', () => {
   });
 });
 beforeEach(() => {});
+
+
+describe('in-progress day session persists across view switches and reloads', () => {
+  const ids = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10'];
+  const start = (save = defaults()) => openSession(save, {
+    day: 1, extraRep: false, date: '2026-11-26',
+    warmIds: [], questionIds: ids, faultIds: ['open-start'], cardCount: 4,
+  });
+
+  it('keeps practice position, answers, and score when switching views mid-practice', () => {
+    const save = defaults();
+    const sess = start(save);
+    patchSession(save, { phase: 'practice', index: 0, lessonXpAwarded: true });
+    // Six questions graded (five right, one wrong) — player is now on practice question 7.
+    for (const [id, ok] of [['q1', true], ['q2', true], ['q3', true], ['q4', false], ['q5', true], ['q6', true]] as const) {
+      recordAttempt(save, id, ok);
+    }
+    setDraft(save, { chosen: [2], taps: [] });
+    expect(sess.phase).toBe('practice');
+    expect(sess.index).toBe(6);
+    expect(sess.stats).toEqual({ right: 5, total: 6 });
+    expect(sess.attempts.map((a) => a.id)).toEqual(['q1', 'q2', 'q3', 'q4', 'q5', 'q6']);
+    expect(sess.draft).toEqual({ chosen: [2], taps: [] });
+
+    // Simulate leaving the Work order view (Bucket / Lessons / Progress / Settings) then coming back:
+    // the view is destroyed; a new runSession calls openSession again.
+    const resumed = openSession(save, {
+      day: 1, extraRep: false, date: '2026-11-26',
+      warmIds: ['stale-warm'], questionIds: ids.map((id) => id + '-new'), faultIds: [], cardCount: 4,
+    });
+    expect(resumed).toBe(sess);
+    expect(resumed.phase).toBe('practice');
+    expect(resumed.index).toBe(6);
+    expect(resumed.stats).toEqual({ right: 5, total: 6 });
+    expect(resumed.attempts).toEqual(sess.attempts);
+    expect(resumed.draft).toEqual({ chosen: [2], taps: [] });
+    expect(resumed.questionIds).toEqual(ids);
+
+    // Reload from serialized save (localStorage / export) also resumes mid-day.
+    const reloaded = parseSave(JSON.parse(exportJson(save)));
+    expect(reloaded.session?.phase).toBe('practice');
+    expect(reloaded.session?.index).toBe(6);
+    expect(reloaded.session?.stats).toEqual({ right: 5, total: 6 });
+    expect(reloaded.session?.attempts).toHaveLength(6);
+    expect(reloaded.session?.attempts[3]).toEqual({ id: 'q4', ok: false });
+    expect(reloaded.session?.draft).toEqual({ chosen: [2], taps: [] });
+    expect(reloaded.session?.questionIds).toEqual(ids);
+    const afterReload = openSession(reloaded, {
+      day: 1, extraRep: false, date: '2026-11-27',
+      warmIds: [], questionIds: ids, faultIds: [], cardCount: 4,
+    });
+    expect(afterReload.index).toBe(6);
+    expect(afterReload.stats).toEqual({ right: 5, total: 6 });
+  });
+
+  it('migrates a v2 save to v3 with a null session', () => {
+    const s = parseSave({ version: 2, xp: 10 });
+    expect(s.version).toBe(3);
+    expect(s.session).toBeNull();
+  });
+
+  it('does not let an extra-rep start clobber an official day in progress', () => {
+    const save = defaults();
+    const official = start(save);
+    patchSession(save, { phase: 'practice', index: 6 });
+    expect(hasActiveSession(save, false)).toBe(true);
+    expect(hasActiveSession(save, true)).toBe(false);
+    const attempted = openSession(save, {
+      day: 3, extraRep: true, date: '2026-11-26',
+      warmIds: [], questionIds: ['extra-a'], faultIds: [], cardCount: 0,
+    });
+    expect(attempted).toBe(official);
+    expect(attempted.day).toBe(1);
+    expect(attempted.extraRep).toBe(false);
+    expect(attempted.index).toBe(6);
+    expect(attempted.phase).toBe('practice');
+  });
+
+  it('starts a new session only after the previous one is cleared or completed', () => {
+    const save = defaults();
+    const first = start(save);
+    patchSession(save, { phase: 'wrap', completed: true, index: 0 });
+    const next = openSession(save, {
+      day: 2, extraRep: false, date: '2026-11-27',
+      warmIds: [], questionIds: ['d2-q1'], faultIds: [], cardCount: 3,
+    });
+    expect(next).not.toBe(first);
+    expect(next.day).toBe(2);
+    expect(next.phase).toBe('lesson');
+    expect(next.index).toBe(0);
+    clearSession(save);
+    expect(hasActiveSession(save, false)).toBe(false);
+    expect(parseSession(null)).toBeNull();
+  });
+});

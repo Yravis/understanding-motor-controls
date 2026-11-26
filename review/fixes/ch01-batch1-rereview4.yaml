@@ -1,0 +1,17 @@
+# Cody's fix notes for Eli's re-review 3 (ch01-batch1-rereview3). Read by scripts/review-rereview.ts.
+changed:
+  ch01.u3.s3-18.device.control-supply: >-
+    Ohms vs insulation split in the device note (hash changes). After the existing handle-off / secondary sentence,
+    the note now reads: 'Before an ohms check, pull the control fuse or lift the lead. Pulling F1 only removes the
+    winding; the coils, lamps, and TD3/TD4 electronics still connect the wire to X2 (about 146 Ω). For an insulation
+    test, lift the conductor at both ends so no load or electronics are connected. A 500/1000 V megger could damage
+    the timers and LED drivers.' Model numbers are unchanged (you already verified them).
+  ch01.u1.s1-2.card.ohmmeter-only-dead: >-
+    Three wording fixes from your re-review 3 flags. (a) fieldNote no longer claims 0.4 Ω from X1 to X2: it now
+    says a reading of about 0.4 Ω from wire 1, wire 7 or any X1-side wire to ground with F1 in is the winding, not
+    a dead short (X1 to X2 always reads the winding, about 0.3 Ω here, whether F1 is in or out). (b) Same ohms vs
+    insulation split as the control-supply note: 'Before an ohms check, pull the control fuse or lift the lead.
+    For an insulation test, lift the conductor at both ends so no load or electronics are connected.' The card
+    text keeps the existing 'pull F1 or lift the lead' ohms isolation sentence and then adds that insulation-test
+    sentence. (c) The hi-Z hint is no longer 'only shows up after you pull F1': on the ohmmeter it shows up only
+    after you pull F1 or lift the lead; a voltage reading still hints at it faintly (119.5 V vs 120 V).
