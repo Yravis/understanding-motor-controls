@@ -99,7 +99,7 @@ export function mountBucket(root: HTMLElement, o: PanelOpts): void {
     const chk = checkLoto(loto);
     return h('details', { class: 'card', open: !!o.showLoto },
       h('summary', {}, 'Lockout / test for absence of voltage (EXAMPLE procedure; always follow your employer’s procedure)'),
-      h('p', { class: 'banner' }, 'LOTO steps pending your sign-off and PSC’s procedure.'),
+      h('p', { class: 'banner' }, 'Example procedure (standard OSHA 1910.147 + NFPA 70E 2024). Always follow your employer’s lockout/tagout procedure.'),
       h('div', { class: 'row' }, ev({ step: 'identify', source: 'bucket' }, '1 Identify bucket source'), ev({ step: 'identify', source: 'foreign' }, '1 Identify foreign source'), ev({ step: 'notify' }, '1 Notify')),
       h('div', { class: 'row' }, ev({ step: 'shutdown' }, '2 Normal shutdown')),
       h('div', { class: 'row' }, ev({ step: 'isolate', source: 'bucket' }, '3 Isolate bucket'), ev({ step: 'isolate', source: 'foreign' }, '3 Isolate remote source')),

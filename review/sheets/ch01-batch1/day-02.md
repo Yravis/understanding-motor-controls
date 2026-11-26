@@ -6,7 +6,7 @@
 
 **Claim (what is being checked):** Follow the ordered example sequence and verify absence of voltage on every combination before touching anything. Always follow your employer's procedure.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 **LOTO drill (example procedure)** (Day 2)
 
@@ -44,7 +44,7 @@ At its simplest, motor control lets someone start and stop a machine from a conv
 
 **Claim (what is being checked):** An example lockout/tagout sequence begins by preparing and identifying all energy sources, then stopping the equipment by its normal shutdown procedure.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 **LOTO example: prepare and shut down**
 
@@ -52,7 +52,7 @@ This is an example procedure that follows OSHA lockout/tagout practice. Always f
 
 *Field note:* Write down every source you find. If the drawing and the enclosure disagree, stop and resolve it before going on.
 
-*Reviewer notes (builder's doubts):* LOTO content: example sequence only, framed as always follow your employer's procedure. No clause text quoted. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure.
 
 ---
 
@@ -62,7 +62,7 @@ This is an example procedure that follows OSHA lockout/tagout practice. Always f
 
 **Claim (what is being checked):** In the example sequence, every identified energy source is isolated, including a foreign source, and a lock and tag are applied at each isolation point.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 **LOTO example: isolate, lock and tag**
 
@@ -70,7 +70,7 @@ Next you isolate: open or disconnect every source of energy you identified. The 
 
 *Field note:* A tag alone is a warning, not a barrier. Use the lock whenever the device can be locked.
 
-*Reviewer notes (builder's doubts):* LOTO content: example sequence only. No clause text quoted. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure.
 
 ---
 
@@ -80,7 +80,7 @@ Next you isolate: open or disconnect every source of energy you identified. The 
 
 **Claim (what is being checked):** After isolating and locking out, stored energy such as a charged capacitor, a raised load or compressed air must be relieved, disconnected or restrained before the work starts.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 **LOTO example: stored energy**
 
@@ -88,7 +88,7 @@ Turning off the sources is not always the end of the energy. Some equipment keep
 
 *Field note:* Ask what could still move, spin, fall or discharge even with every source off.
 
-*Reviewer notes (builder's doubts):* LOTO content: example sequence only. Stored energy examples are generic. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure.
 
 ---
 
@@ -98,7 +98,7 @@ Turning off the sources is not always the end of the energy. Some equipment keep
 
 **Claim (what is being checked):** Verification for electrical energy uses live-dead-live: prove the meter on a known live source, test for absence of voltage on every combination including foreign circuit terminals, then prove the meter again.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 **LOTO example: live-dead-live**
 
@@ -106,7 +106,7 @@ The last step is to verify, and for electrical energy this follows the live-dead
 
 *Field note:* Only the final live check proves that the zero you saw came from a working meter.
 
-*Reviewer notes (builder's doubts):* LOTO content: follows NFPA 70E live-dead-live concept; no clause text quoted. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure. Claim also rests on NFPA 70E 2024 (test for absence / live-dead-live, 120.6): blocked until that excerpt is attached.
 
 ---
 
@@ -116,7 +116,7 @@ The last step is to verify, and for electrical energy this follows the live-dead
 
 **Claim (what is being checked):** The ohmmeter or continuity function must be used only on circuits that are de-energized and isolated, never to test for voltage.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 **Ohmmeter only on dead circuits**
 
@@ -124,7 +124,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 *Field note:* Choose the function first, then touch the circuit. A wrong dial setting is a common cause of a damaged meter.
 
-*Reviewer notes (builder's doubts):* Safety rule stated qualitatively. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure. Claim also rests on NFPA 70E 2024 (test for absence / live-dead-live, 120.6): blocked until that excerpt is attached.
 
 ---
 
@@ -134,7 +134,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 **Claim (what is being checked):** A lockout/tagout sequence taught as an example does not replace the employer's own written procedure, which must be followed.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 *Format* mcq · *Day* 2
 
@@ -150,7 +150,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 *Explanation:* Employers write procedures for their own equipment and hazards. An example teaches the logic; the employer's procedure is the one to follow.
 
-*Reviewer notes (builder's doubts):* LOTO-related item. No clause text quoted. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure.
 
 ---
 
@@ -160,7 +160,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 **Claim (what is being checked):** The example lockout/tagout order is prepare and identify all sources, normal shutdown, isolate, lock and tag, relieve stored energy, then verify.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 *Format* order-steps · *Day* 2
 
@@ -175,7 +175,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 *Explanation:* You must know every source before isolating, stop the equipment in an orderly way, isolate and lock, deal with stored energy, and only then prove the circuit dead.
 
-*Reviewer notes (builder's doubts):* LOTO-related item; example order only. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure.
 
 ---
 
@@ -185,7 +185,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 **Claim (what is being checked):** Preparation must find the control supply, any remote foreign source and stored energy, not only the source controlled by the local disconnect.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 *Format* multi-select · *Day* 2
 
@@ -201,7 +201,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 *Explanation:* Energy can come from the local supply, from a foreign source, or be stored in equipment. Missing any one of them leaves a hazard.
 
-*Reviewer notes (builder's doubts):* LOTO-related item. Stored energy examples are generic. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure.
 
 ---
 
@@ -211,7 +211,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 **Claim (what is being checked):** In the example sequence the equipment is stopped by its normal stopping procedure before the energy sources are isolated.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 *Format* mcq · *Day* 2
 
@@ -227,7 +227,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 *Explanation:* A normal stop brings the machine to rest in a controlled way. It is not isolation, so every later step is still needed.
 
-*Reviewer notes (builder's doubts):* LOTO-related item. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure.
 
 ---
 
@@ -237,7 +237,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 **Claim (what is being checked):** A foreign-voltage circuit must be isolated at its own remote source, because the bucket disconnect does not de-energize it.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 *Format* mcq · *Day* 2
 
@@ -253,7 +253,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 *Explanation:* Each source is isolated where it originates. The bucket disconnect cannot isolate a remote source, so the foreign circuit needs its own lock and tag.
 
-*Reviewer notes (builder's doubts):* LOTO-related item. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure.
 
 ---
 
@@ -263,7 +263,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 **Claim (what is being checked):** A lock physically holds an isolating device off, while a tag is a warning that identifies who applied it and why.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 *Format* mcq · *Day* 2
 
@@ -279,7 +279,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 *Explanation:* A lock is a barrier; a tag is information. The example procedure uses both.
 
-*Reviewer notes (builder's doubts):* LOTO-related item. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure.
 
 ---
 
@@ -289,7 +289,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 **Claim (what is being checked):** In live-dead-live, the meter is checked on a known source again after the absence-of-voltage tests to show it did not fail during the tests.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 *Format* mcq · *Day* 2
 
@@ -305,7 +305,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 *Explanation:* A meter can fail during the tests. The second live check shows it still read correctly, so the dead readings mean the circuit really was dead.
 
-*Reviewer notes (builder's doubts):* LOTO-related item. Follows 70E live-dead-live concept without clause text. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure. Claim also rests on NFPA 70E 2024 (test for absence / live-dead-live, 120.6): blocked until that excerpt is attached.
 
 ---
 
@@ -315,7 +315,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 **Claim (what is being checked):** Absence of voltage is tested on every combination: X1 to X2, X1 to ground, X2 to ground, and any foreign circuit terminals.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 *Format* mcq · *Day* 2
 
@@ -331,7 +331,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 *Explanation:* Testing every combination, including foreign-circuit terminals, catches live conductors that a single reading would miss.
 
-*Reviewer notes (builder's doubts):* LOTO-related item. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure. Claim also rests on NFPA 70E 2024 (test for absence / live-dead-live, 120.6): blocked until that excerpt is attached.
 
 ---
 
@@ -341,7 +341,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 **Claim (what is being checked):** The ohmmeter or continuity function is used only on circuits that are de-energized and isolated.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 *Format* mcq · *Day* 2
 
@@ -357,7 +357,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 *Explanation:* Ohms and continuity supply their own test current and assume no external voltage. Isolate and verify first, then switch to those functions.
 
-*Reviewer notes (builder's doubts):* LOTO-related item. Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure. Claim also rests on NFPA 70E 2024 (test for absence / live-dead-live, 120.6): blocked until that excerpt is attached.
 
 ---
 
@@ -367,7 +367,7 @@ In resistance and continuity modes the meter supplies its own small test current
 
 **Claim (what is being checked):** After the bucket control supply is removed, CR1 drops out and the bucket lamps go dark, but the remote interlock lamp PLF stays lit.
 
-> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.
+> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.
 
 *Format* predict-state · *Day* 2
 
@@ -384,7 +384,7 @@ Scene: `[{"do":"press","dev":"PB1"},{"do":"advance","arg":1},{"do":"supply","arg
 
 *Explanation:* No supply means no coil current and no lamp current in the bucket. The interlock circuit is the exception, since a different source feeds it. That is why a bucket that looks dead can still be live.
 
-*Reviewer notes (builder's doubts):* LOTO-related item (supply-off state versus foreign source). Needs human safety sign-off.
+*Reviewer notes (builder's doubts):* LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure.
 
 ---
 

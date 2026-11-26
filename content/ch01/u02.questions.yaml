@@ -191,7 +191,7 @@ items:
   - <<: *d
     id: ch01.u2.s2-3.question.identify-mushroom
     book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
-    claim: "A mushroom-head operator on an NC pushbutton symbol identifies a maintained STOP-style pushbutton."
+    claim: "A wide mushroom-head operator drawn on a normally closed pushbutton symbol identifies a mushroom-head NC pushbutton; whether it is maintained is stated by the legend or drawing, not by the head shape."
     body:
       format: identify-symbol
       day: 4

@@ -40,7 +40,7 @@ order-steps (`steps` in correct order), predict-state (`scene` with actions + `e
 * Bucket facts (reference circuit, see `src/model/bucket.ts`): 120 V X1/X2, wire 1 = X1 rail, wire 2 = X2 rail; PB3 mushroom NC maintained + PB1 NO START in series -> CR1 coil;
   CR1 NO1->PL1 green, CR1 NC1->PL2 red, PB2 NC->PL3, FS1 float NO->PL4, PS1->PL5, TS1->PL6, LS1 NC->SOL1, FLS1->PL7, CR1 NO2->TR1(on-delay pneumatic)/TR2(off-delay pneumatic)/TD3(SS on-delay)/TD4(SS off-delay, constant supply on wire 1, trigger wire 13); PLF remote interlock (orange, foreign source, live with bucket off).
   Contacts sit on the X1 side; coils/loads connect directly to X2.
-* Safety: never teach or reward unsafe practice. LOTO is framed "example procedure - always follow your employer's procedure". Items about LOTO/test-for-absence: add `userSignoff: pending`,
+* Safety: never teach or reward unsafe practice. LOTO is framed "example procedure - always follow your employer's procedure". Items about LOTO/test-for-absence: add `userSignoff: approved` + `userSignoffDate` (user approved the standard OSHA + 70E 2024 approach on 2026-11-26),
   `other: [{src: "osha:1910.147(d)"}, {src: "nfpa70e-2024:test-for-absence"}]` and card `body.loto: true`.
 * Banned: "all of the above", "none of the above", "both of the above", "as the book says", "Mike Holt".
 * Timers: on-delay (NOTC/NCTO): timing starts on energize, resets if coil drops before preset. Off-delay (NOTO/NCTC): contacts transfer immediately on energize, timing starts on de-energize, re-energize during timing resets.

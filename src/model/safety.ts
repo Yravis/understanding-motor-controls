@@ -1,5 +1,5 @@
 // Example LOTO / electrically-safe-work-condition sequence (design.md 4.2). Framed as an EXAMPLE procedure:
-// always follow your employer's procedure. Content status: blocked-on-source, userSignoff pending.
+// always follow your employer's procedure. User approved this standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26.
 export type LotoStep =
   | 'identify' | 'notify' | 'shutdown' | 'isolate' | 'lock' | 'tag' | 'release-stored'
   | 'meter-known-before' | 'test-absence' | 'meter-known-after';

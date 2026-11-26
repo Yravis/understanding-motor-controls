@@ -248,7 +248,7 @@ items:
   - <<: *d
     id: ch01.u3.s3-9.device.process-air
     book: { chapter: 1, unit: 3, section: "3.9", page: 28, pageStatus: toc-unverified, figure: null }
-    claim: "The air-tank pressure process model drives the pressure switch, which has a cut-in and cut-out setting with a differential."
+    claim: "The air-tank pressure process model drives PS1, a normally open pressure-proving switch that actuates (closes) on rising pressure and releases (opens) on falling pressure, with a differential between the two settings."
     basis: illustrative
     body:
       tag: AIR

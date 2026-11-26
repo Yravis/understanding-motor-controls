@@ -278,11 +278,11 @@ An optical sensor uses light to detect an object without touching it. In one com
 
 *type* lessonCard · *book* 3.9 p.28 (toc-unverified) · *basis* general-knowledge · *alignment* provisional
 
-**Claim (what is being checked):** A pressure switch senses fluid or air pressure and changes contact state at a set point; it resets only after pressure moves back past a differential.
+**Claim (what is being checked):** A pressure switch senses fluid or air pressure and changes contact state at a set point; it resets only after pressure moves back past a differential. A compressor control switch opens on rising pressure at cut-out and recloses at cut-in, while a normally open pressure-proving switch such as PS1 closes on rising pressure.
 
 **Pressure switch**
 
-A pressure switch senses the pressure of air or liquid and changes its contact state when pressure reaches an adjustable set point. It does not reset at exactly the same pressure. There is a differential, a gap between where it actuates and where it releases, so the switch does not flutter on and off around one value. A familiar example is an air compressor: the switch starts the motor when pressure falls to its lower setting and stops it at the upper setting. Normal state again means shelf state, with no pressure on the sensing port.
+A pressure switch senses the pressure of air or liquid and changes its contact state when pressure reaches an adjustable set point. It does not reset at exactly the same pressure. There is a differential, a gap between where it actuates and where it releases, so the switch does not flutter on and off around one value. The same device is used two ways. On an air compressor, the control switch's contacts are closed at low pressure, so the motor runs, and they open when pressure rises to the upper (cut-out) setting. They close again when pressure falls back to the lower (cut-in) setting. Bucket 1A's PS1 is the other kind: a normally open pressure-proving switch that closes when pressure rises past its actuate setting and lights PL5 (AIR PRESSURE OK), then opens again only after pressure falls back to its lower release setting. Normal state again means shelf state, with no pressure on the sensing port.
 
 *Field note:* A pressure switch holding its last state between its two settings is normal. Judge it against both set points, not one.
 
@@ -493,7 +493,7 @@ Scene: `[{"do":"toggle","dev":"LS1"},{"do":"advance","arg":1}]` → expected `{"
 
 *Format* predict-state · *Day* 6
 
-**The air receiver is filling and has had time to pass the pressure switch's cut-out setting. You then hold the pressure steady. What is PL5 doing?**
+**The air receiver is filling and has had time to pass PS1's actuate setting (PS1 is a normally open pressure-proving switch). You then hold the pressure steady. What is PL5 doing?**
 
 - ✅ Lit, because PS1 actuated and pressure has not dropped to release it
 - ❌ Off, because PS1 resets as soon as pressure stops rising  

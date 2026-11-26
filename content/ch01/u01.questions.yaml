@@ -184,9 +184,11 @@ items:
     id: ch01.u1.s1-2.question.employer-procedure
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "A lockout/tagout sequence taught as an example does not replace the employer's own written procedure, which must be followed."
-    userSignoff: pending
-    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO-related item. No clause text quoted. Needs human safety sign-off."
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
+    other: [{ src: "osha:1910.147(d)" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure."
     body:
       format: mcq
       day: 2
@@ -202,9 +204,11 @@ items:
     id: ch01.u1.s1-2.question.loto-order
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "The example lockout/tagout order is prepare and identify all sources, normal shutdown, isolate, lock and tag, relieve stored energy, then verify."
-    userSignoff: pending
-    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO-related item; example order only. Needs human safety sign-off."
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
+    other: [{ src: "osha:1910.147(d)" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure."
     body:
       format: order-steps
       day: 2
@@ -222,9 +226,11 @@ items:
     id: ch01.u1.s1-2.question.identify-sources-multi
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "Preparation must find the control supply, any remote foreign source and stored energy, not only the source controlled by the local disconnect."
-    userSignoff: pending
-    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO-related item. Stored energy examples are generic. Needs human safety sign-off."
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
+    other: [{ src: "osha:1910.147(d)" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure."
     body:
       format: multi-select
       day: 2
@@ -241,9 +247,11 @@ items:
     id: ch01.u1.s1-2.question.normal-shutdown
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "In the example sequence the equipment is stopped by its normal stopping procedure before the energy sources are isolated."
-    userSignoff: pending
-    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO-related item. Needs human safety sign-off."
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
+    other: [{ src: "osha:1910.147(d)" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure."
     body:
       format: mcq
       day: 2
@@ -259,9 +267,11 @@ items:
     id: ch01.u1.s1-2.question.isolate-foreign
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "A foreign-voltage circuit must be isolated at its own remote source, because the bucket disconnect does not de-energize it."
-    userSignoff: pending
-    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO-related item. Needs human safety sign-off."
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
+    other: [{ src: "osha:1910.147(d)" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure."
     body:
       format: mcq
       day: 2
@@ -277,9 +287,11 @@ items:
     id: ch01.u1.s1-2.question.lock-versus-tag
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "A lock physically holds an isolating device off, while a tag is a warning that identifies who applied it and why."
-    userSignoff: pending
-    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO-related item. Needs human safety sign-off."
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
+    other: [{ src: "osha:1910.147(d)" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure."
     body:
       format: mcq
       day: 2
@@ -295,9 +307,11 @@ items:
     id: ch01.u1.s1-2.question.recheck-meter
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "In live-dead-live, the meter is checked on a known source again after the absence-of-voltage tests to show it did not fail during the tests."
-    userSignoff: pending
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
     other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO-related item. Follows 70E live-dead-live concept without clause text. Needs human safety sign-off."
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure. Claim also rests on NFPA 70E 2024 (test for absence / live-dead-live, 120.6): blocked until that excerpt is attached."
     body:
       format: mcq
       day: 2
@@ -313,9 +327,11 @@ items:
     id: ch01.u1.s1-2.question.absence-combinations
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "Absence of voltage is tested on every combination: X1 to X2, X1 to ground, X2 to ground, and any foreign circuit terminals."
-    userSignoff: pending
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
     other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO-related item. Needs human safety sign-off."
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure. Claim also rests on NFPA 70E 2024 (test for absence / live-dead-live, 120.6): blocked until that excerpt is attached."
     body:
       format: mcq
       day: 2
@@ -331,9 +347,11 @@ items:
     id: ch01.u1.s1-2.question.ohmmeter-rule
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "The ohmmeter or continuity function is used only on circuits that are de-energized and isolated."
-    userSignoff: pending
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
     other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO-related item. Needs human safety sign-off."
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure. Claim also rests on NFPA 70E 2024 (test for absence / live-dead-live, 120.6): blocked until that excerpt is attached."
     body:
       format: mcq
       day: 2
@@ -349,9 +367,11 @@ items:
     id: ch01.u1.s1-2.question.supply-off-predict
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "After the bucket control supply is removed, CR1 drops out and the bucket lamps go dark, but the remote interlock lamp PLF stays lit."
-    userSignoff: pending
-    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO-related item (supply-off state versus foreign source). Needs human safety sign-off."
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
+    other: [{ src: "osha:1910.147(d)" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure."
     body:
       format: predict-state
       day: 2

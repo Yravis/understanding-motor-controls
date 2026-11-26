@@ -65,7 +65,7 @@ export function faultDefs(p: Params): FaultDef[] {
     },
     {
       id: 'shorted-coil', title: 'Shorted relay coil (fuse clears)', rootCause: 'CR1.coil',
-      cause: 'Turns of the CR1 coil are shorted together; the coil draws far more current than the control fuse allows.',
+      cause: 'The CR1 coil winding is shorted (insulation failure), badly enough that it draws far more current than the control fuse allows.',
       symptom: 'Operator: "When I press START everything on the bucket goes dead." Supply fuse F1 is open.',
       apply: (b) => { b.world.el<Coil>('CR1.coil').shorted = true; },
       fixActions: [{ kind: 'replace', target: 'CR1.coil', note: 'Replace the relay.' }, { kind: 'replace', target: 'F1', note: 'Replace the cleared fuse with the same rating after the cause is fixed.' }],

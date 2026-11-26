@@ -76,11 +76,11 @@
 
 *type* fault · *book* 3.2 p.24 (toc-unverified) · *basis* illustrative · *alignment* provisional
 
-**Claim (what is being checked):** Turns of the CR1 coil are shorted together; the coil draws far more current than the control fuse allows.
+**Claim (what is being checked):** The CR1 coil winding is shorted (insulation failure), badly enough that it draws far more current than the control fuse allows.
 
 **Shorted relay coil (fuse clears)**
 
-*Cause:* Turns of the CR1 coil are shorted together; the coil draws far more current than the control fuse allows.
+*Cause:* The CR1 coil winding is shorted (insulation failure), badly enough that it draws far more current than the control fuse allows.
 
 *Symptom:* Operator: "When I press START everything on the bucket goes dead." Supply fuse F1 is open.
 
@@ -391,11 +391,11 @@ An AC coil draws extra current at the instant it is energized. With the armature
 
 *type* lessonCard · *book* 3.2 p.24 (toc-unverified) · *basis* general-knowledge · *alignment* provisional
 
-**Claim (what is being checked):** An open relay coil never picks up, and while energized the full source voltage appears across it; the coil may only be checked with an ohmmeter when it is de-energized and isolated.
+**Claim (what is being checked):** An open relay coil never picks up, and while the rung is called (every other series device closed) about the full source voltage appears across it; the coil may only be checked with an ohmmeter when it is de-energized and isolated.
 
 **Open coil: symptoms and checks**
 
-An open coil is a break in the winding. The symptom is that the relay never picks up when its control circuit calls for it, even though the START button and every other device are good. With the circuit energized and the call present, a voltmeter across the open coil reads about the source voltage, because the break is where the voltage appears. To confirm, de-energize and isolate the circuit and prove it dead first. Then measure the coil with an ohmmeter. An open winding reads as an open circuit; a good one reads a modest resistance.
+An open coil is a break in the winding. The symptom is that the relay never picks up when its control circuit calls for it, even though the START button and every other device are good. With the circuit energized and the call present, so that every other device in series with the coil is closed, a voltmeter across the open coil reads about the source voltage, because the break is where the voltage appears. If some other series device is also open, the voltage splits across the openings and the reading can mislead you. To confirm, de-energize and isolate the circuit and prove it dead first. Then measure the coil with an ohmmeter. An open winding reads as an open circuit; a good one reads a modest resistance.
 
 *Field note:* An ohmmeter supplies its own test current, so it must never touch a live circuit. Isolate and prove dead first, following your employer's procedure, then measure the coil.
 

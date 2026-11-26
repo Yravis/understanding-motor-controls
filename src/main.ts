@@ -6,6 +6,7 @@ import { runSession } from './ui/session';
 import { mountBucket } from './ui/bucketpanel';
 import { manifest, cardsForDay, dayInfo, badgeOf, faults } from './content';
 import { SHOW_UNREVIEWED } from './config';
+import { SYMBOL_KEYS, symbolFigure } from './ui/symbols';
 
 type Tab = 'home' | 'lesson' | 'practice' | 'bucket' | 'progress' | 'settings';
 let tab: Tab = 'home';
@@ -22,12 +23,19 @@ function bar(): HTMLElement {
   return h('nav', { class: 'bar', 'aria-label': 'Main' }, ...items.map(([t, l]) => h('button', { class: 'tab' + (tab === t ? ' on' : ''), type: 'button', onclick: () => go(t) }, l)));
 }
 
+/** Symbol gallery at #symbols: every NEMA symbol the app draws, for review against NEMA ICS 19 / IEEE 315. */
+function gallery() {
+  app.replaceChildren(h('main', { class: 'main' }, h('h1', {}, 'Symbol gallery (for review)'), h('p', { class: 'small' }, 'Every symbol the app draws, from one renderer (src/ui/symbols.ts). Shapes pending reviewer cross-check against NEMA ICS 19 / IEEE 315.'),
+    ...SYMBOL_KEYS.map((k) => h('div', { class: 'card' }, h('strong', {}, k), h('div', { class: 'symbox' }, symbolFigure(k, k === 'relay-coil' ? 'CR1' : k === 'pilot-light' ? 'G' : ''))))));
+}
+
 function render() {
   theme();
+  if (location.hash === '#symbols') return gallery();
   app.replaceChildren();
   const main = h('main', { class: 'main' });
   if (SHOW_UNREVIEWED) main.append(h('div', { class: 'testbanner' }, 'PLAY-TEST BUILD: content shows with UNREVIEWED badges until the reviewer approves it.'));
-  main.append(h('div', { class: 'banner', id: 'loto-banner' }, 'LOTO steps pending your sign-off and PSC’s procedure.'));
+  main.append(h('div', { class: 'banner', id: 'loto-banner' }, 'Example procedure (standard OSHA 1910.147 + NFPA 70E 2024). Always follow your employer’s lockout/tagout procedure.'));
   app.append(main, bar());
   const save = getSave();
   const today = dayKey();
@@ -77,3 +85,5 @@ function settings(main: HTMLElement) {
 
 render();
 if ('serviceWorker' in navigator && import.meta.env.PROD) navigator.serviceWorker.register(import.meta.env.BASE_URL + 'sw.js').catch(() => {});
+
+window.addEventListener('hashchange', () => render());

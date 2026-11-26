@@ -2,3 +2,6 @@ node_modules
 dist
 *.local
 test-results
+
+# NFPA 70 page photos are copyrighted; they stay on the shared box only (not in the public repo)
+review/source-photos/*.jpg

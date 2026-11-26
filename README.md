@@ -1,5 +1,7 @@
 # Understanding Motor Controls
 
+Live: https://yravis.github.io/understanding-motor-controls/ (symbol gallery for review: `#symbols`)
+
 A phone-first study game for apprentice electricians working through Mike Holt's *Understanding Basic Motor Controls*
 (Revised Ed.), **Chapter 1 (Act 1: Units 1-3)**. It is a job-site career, not an RPG: each session is a **work order** from
 the foreman, you rank up from Apprentice 1st year to Journeyman-ready as you finish book units, and every fault you solve goes
@@ -27,8 +29,8 @@ Content lives in `content/` (YAML, compiled at build time) and is reviewed item 
 `src/config.ts` has `SHOW_UNREVIEWED = true`. The production gate (`src/gate.ts`) includes an item only if its ledger status is `approved` or `approved-pending-book` **and** the item's hash still matches. With the flag on, every non-rejected item is shown with a red **UNREVIEWED** badge (`UNREVIEWED · source needed` for blocked-on-source). **Set it to `false` before real use.** Both modes are tested.
 
 ## Known gaps, by design
-* **NEC 2026 is blocked-on-source.** Chapter 1 is taught without NEC references; any item that cites the NEC must be `blocked-on-source` with `excerpts: []` ("needs user photo of NEC 2026 page"). `enforcedNote` exists on every item and is null; the settings screen shows "Exam / locally enforced edition notes — coming once confirmed."
-* **LOTO is pending sign-off.** LOTO content is framed as an *example procedure — always follow your employer's procedure*, mirrors 29 CFR 1910.147(d)(1)-(6) plus NFPA 70E (2024) live-dead-live, and carries `userSignoff: pending`. The app shows "LOTO steps pending your sign-off and PSC's procedure."
+* **NEC 2026.** Only sections the user has photographed are taught: 430.74 (control-circuit arrangement) and 250.21(A)(3)/(B)/(C) (ungrounded control systems). Photos are in `review/source-photos/` and referenced from each item's `excerpts`. Those items are `pending`; any other NEC ref without a photo stays `blocked-on-source`. `enforcedNote` exists on every item and is null. The home screen shows "Exam / locally enforced edition notes — coming once confirmed."
+* **LOTO uses the standard OSHA 29 CFR 1910.147(d) + NFPA 70E 2024 sequence**, which the user approved on 2026-11-26 (`userSignoff: approved`). It's framed as *always follow your employer's lockout/tagout procedure*. Items resting only on OSHA text cite the public osha.gov URL and are `pending`. Items that also rest on NFPA 70E 2024 text (live-dead-live re-verification, test for absence) stay `blocked-on-source` until a 70E excerpt is attached.
 * **No datasheets.** All device parameters (coil VA/PF, DC resistance, pickup/dropout, LED, timers, meter impedances, coupling) are `typical`/`illustrative` with `datasheet:TBD`; nothing graded depends on them (lint-enforced).
 * Book page numbers come from the publisher TOC (`pageStatus: toc-unverified`); lessons are `bookAlignment: provisional`.
 

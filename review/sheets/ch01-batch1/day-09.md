@@ -324,7 +324,7 @@ A motor control schematic, also called a ladder diagram, is drawn between two ve
 
 ## ch01.u3.s3-18.card.contacts-left-loads-right
 
-*type* lessonCard · *book* 3.18 p.37 (toc-unverified) · *basis* general-knowledge · *alignment* provisional
+*type* lessonCard · *book* 3.18 p.37 (toc-unverified) · *basis* standard · *alignment* provisional
 
 **Claim (what is being checked):** Switching devices belong on the ungrounded X1 side and loads connect directly to the grounded X2 side.
 
@@ -334,7 +334,39 @@ In a grounded control circuit, the X2 side is bonded to ground. Placing every sw
 
 *Field note:* A coil switched on its X2 leg can be energized by a ground fault, so treat that wiring as a defect.
 
-*Reviewer notes (builder's doubts):* Original summary keyed to the section title only (book not available). Conventions stated as common practice; confirm against the book and employer drawings.
+*Reviewer notes (builder's doubts):* Rule confirmed from the user's NEC 2026 photo (p. 70-400). NEC 2026 430.74 states the performance requirement; contacts-on-X1 / coil-on-X2 is the common way to meet it in a grounded control circuit (the code does not prescribe the layout in those words).
+
+---
+
+## ch01.u3.s3-18.card.nec-430-74-ground-fault-arrangement
+
+*type* lessonCard · *book* 3.18 p.37 (toc-unverified) · *basis* standard · *alignment* provisional
+
+**Claim (what is being checked):** NEC 2026 430.74 requires that, where one conductor of a motor control circuit is grounded, a ground fault in the control circuit remote from the controller must not start the motor and must not bypass manual or automatic safety shutdown devices.
+
+**The code behind the X1/X2 rule: NEC 430.74**
+
+The habit of putting contacts on X1 and coils on X2 isn't just tradition. NEC 2026 section 430.74 says that when one conductor of a motor control circuit is grounded, the circuit has to be arranged so that a ground fault out in the remote control wiring will not start the motor and will not bypass a manual stop or an automatic safety shutdown device. In Bucket 1A, X2 is the grounded conductor and the enclosure is bonded to it. If a wire on the X1 side makes a solid (low-impedance) contact with the enclosure, the fault current returns through the bonding path and the control fuse opens. The coil is never energized by the fault. That is the arrangement 430.74 is asking for.
+
+*Field note:* When you inspect a control circuit, look for any contact between a coil and the grounded conductor. That's a 430.74 problem waiting to happen.
+
+*Reviewer notes (builder's doubts):* Paraphrase of NEC 2026 430.74 from the user's photo (p. 70-400). Older editions used the same section number for this rule.
+
+---
+
+## ch01.u3.s3-18.card.grounded-vs-ungrounded-control
+
+*type* lessonCard · *book* 3.18 p.37 (toc-unverified) · *basis* standard · *alignment* provisional
+
+**Claim (what is being checked):** Grounding X2 is the common default, but NEC 2026 250.21(A)(3) permits a transformer-derived system with a primary of 1000 V or less to be ungrounded when it is used exclusively for control circuits, is maintained only by qualified persons, and continuity of control power is required; 250.21(B) then requires ground detectors on ungrounded systems from 120 V to 1000 V, and 250.21(C) covers marking.
+
+**Grounded or ungrounded control power**
+
+Most control circuits you'll meet have X2 grounded, and Bucket 1A is built that way. It isn't the only legal option. NEC 2026 250.21(A)(3) allows a control system fed from a transformer with a primary of 1000 V or less to be left ungrounded, but only if all three conditions hold: it is used only for control circuits, only qualified persons maintain it, and the process needs continuous control power. An ungrounded system can keep running after a first ground fault, so 250.21(B) requires ground detectors to warn that the first fault exists, and 250.21(C) requires marking. If you open a panel and find no grounded X2, check the drawings and labels before assuming anything.
+
+*Field note:* Ungrounded control power is legal in narrow cases. A ground detector light or alarm is your clue.
+
+*Reviewer notes (builder's doubts):* Paraphrase from the user's NEC 2026 photo (p. 70-139). Kept short on purpose: CPTs and their grounding are Unit 8 (Chapter 2) material.
 
 ---
 
@@ -412,7 +444,7 @@ To follow a schematic into the real panel, work in a fixed order. Pick the rung,
 
 ## ch01.u3.s3-18.question.why-contacts-x1
 
-*type* question · *book* 3.18 p.37 (toc-unverified) · *basis* general-knowledge · *alignment* provisional
+*type* question · *book* 3.18 p.37 (toc-unverified) · *basis* standard · *alignment* provisional
 
 **Claim (what is being checked):** With contacts on X1 and coils on X2, a ground fault downstream of a contact cannot energize the load.
 
@@ -430,7 +462,55 @@ To follow a schematic into the real panel, work in a fixed order. Pick the rung,
 
 *Explanation:* If a wire between the contact and the coil touches ground, it is at the same potential as X2, so the coil has no voltage across it. Putting the contact on the X2 leg would let such a ground fault energize the coil and bypass the stop.
 
-*Reviewer notes (builder's doubts):* Original question keyed to the section title only (book not available). Conventions are common practice; confirm against the book.
+*Reviewer notes (builder's doubts):* Rule confirmed from the user's NEC 2026 photo (p. 70-400). NEC 2026 430.74 states the performance requirement; contacts-on-X1 / coil-on-X2 is the common way to meet it in a grounded control circuit (the code does not prescribe the layout in those words).
+
+---
+
+## ch01.u3.s3-18.question.nec-430-74-requirement
+
+*type* question · *book* 3.18 p.37 (toc-unverified) · *basis* standard · *alignment* provisional
+
+**Claim (what is being checked):** NEC 2026 430.74 requires that a ground fault in a grounded control circuit, remote from the controller, must not start the motor or bypass shutdown devices.
+
+*Format* mcq · *Day* 9
+
+**In a motor control circuit with one conductor grounded, what does NEC 2026 430.74 require of a ground fault in the remote control wiring?**
+
+- ✅ It must not start the motor or bypass a shutdown device
+- ❌ It must trip the motor overload relay within 10 seconds of the fault  
+  *why wrong:* 430.74 is about how the control circuit is arranged, not overload trip timing.
+- ❌ It must be detected by a ground detector light mounted on the bucket door  
+  *why wrong:* Ground detectors are the 250.21(B) requirement for ungrounded systems.
+- ❌ It must be cleared by a GFCI on the control circuit  
+  *why wrong:* 430.74 does not call for GFCI protection; it is an arrangement rule.
+
+*Explanation:* 430.74 is a performance rule: arrange the control circuit so a ground fault can neither start the motor nor defeat a stop or safety shutdown. Contacts on X1 with coils on the grounded X2 is the usual way to meet it.
+
+*Reviewer notes (builder's doubts):* Graded on the rule text in the user's NEC 2026 photo, not on any typical value.
+
+---
+
+## ch01.u3.s3-18.question.ungrounded-control-conditions
+
+*type* question · *book* 3.18 p.37 (toc-unverified) · *basis* standard · *alignment* provisional
+
+**Claim (what is being checked):** NEC 2026 250.21(A)(3) lets a transformer-derived control system (primary 1000 V or less) be ungrounded only if it is exclusively for control circuits, maintained only by qualified persons, and continuity of control power is required.
+
+*Format* multi-select · *Day* 9
+
+**Under NEC 2026 250.21(A)(3), which conditions must ALL be met for a transformer-derived control system (primary 1000 V or less) to be left ungrounded? Select every one that applies.**
+
+- ✅ It is used exclusively for control circuits
+- ✅ Only qualified persons service the installation
+- ✅ Continuity of control power is required
+- ❌ The control voltage is 24 V or less  
+  *why wrong:* 250.21(A)(3) does not set a control-voltage limit; it covers transformer primaries of 1000 V or less.
+- ❌ The bucket has no pilot lights  
+  *why wrong:* Pilot lights have nothing to do with the grounding conditions.
+
+*Explanation:* All three conditions in 250.21(A)(3) must hold: control circuits only, qualified-person maintenance, and a need for continuous control power. If the system is ungrounded, 250.21(B) adds ground detectors.
+
+*Reviewer notes (builder's doubts):* Multi-select graded on the three conditions in the user's NEC 2026 photo.
 
 ---
 

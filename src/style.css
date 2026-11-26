@@ -35,3 +35,4 @@ svg .foreign { fill:#e87d00 } .tap { cursor:pointer }
 @media (max-width:380px) { .main, .screen { padding-left:8px; padding-right:8px } }
 .bucket-screen { padding-bottom: 260px }
 .meter .readout { font-size:1.6rem }
+.symbox { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px; margin:8px 0 } svg.symfig { width:100%; max-width:300px; height:auto; display:block; margin:0 auto } svg.symfig .tiny { font-size:7px } svg.symfig .pinlbl { font-size:8px }

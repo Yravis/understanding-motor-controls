@@ -85,9 +85,11 @@ items:
     id: ch01.u1.s1-2.card.loto-prepare-shutdown
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "An example lockout/tagout sequence begins by preparing and identifying all energy sources, then stopping the equipment by its normal shutdown procedure."
-    userSignoff: pending
-    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO content: example sequence only, framed as always follow your employer's procedure. No clause text quoted. Needs human safety sign-off."
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
+    other: [{ src: "osha:1910.147(d)" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure."
     body:
       title: "LOTO example: prepare and shut down"
       text: "This is an example procedure that follows OSHA lockout/tagout practice. Always follow your employer's own written procedure. Step one is to prepare: learn what the equipment is, find every energy source using drawings and labels, including a foreign source such as a remote interlock circuit, and tell the people affected. Step two is to stop the equipment the normal way, using its regular stop control, so it comes to rest in an orderly manner. Only after that do you start isolating. Skipping the preparation is how a hidden source gets missed."
@@ -99,9 +101,11 @@ items:
     id: ch01.u1.s1-2.card.loto-isolate-lock-tag
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "In the example sequence, every identified energy source is isolated, including a foreign source, and a lock and tag are applied at each isolation point."
-    userSignoff: pending
-    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO content: example sequence only. No clause text quoted. Needs human safety sign-off."
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
+    other: [{ src: "osha:1910.147(d)" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure."
     body:
       title: "LOTO example: isolate, lock and tag"
       text: "Next you isolate: open or disconnect every source of energy you identified. The bucket's own disconnect does not touch a circuit fed from a remote source, so that source must be isolated at its own origin. Then apply a lock and a tag at each isolation point. The lock physically holds the device off, and the tag tells others who applied it and why. Each person working on the equipment follows your employer's rules for applying their own lock. This example follows OSHA lockout/tagout practice, but your employer's procedure always governs."
@@ -113,9 +117,11 @@ items:
     id: ch01.u1.s1-2.card.loto-stored-energy
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "After isolating and locking out, stored energy such as a charged capacitor, a raised load or compressed air must be relieved, disconnected or restrained before the work starts."
-    userSignoff: pending
-    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO content: example sequence only. Stored energy examples are generic. Needs human safety sign-off."
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
+    other: [{ src: "osha:1910.147(d)" }]
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure."
     body:
       title: "LOTO example: stored energy"
       text: "Turning off the sources is not always the end of the energy. Some equipment keeps energy after it is isolated: a capacitor that holds a charge, a spring under tension, a load that could fall, or air or fluid trapped under pressure. Before work starts, that energy must be relieved, disconnected or restrained, for example by draining the pressure, blocking the load or discharging the capacitor by an approved method. Which method is acceptable comes from the equipment documentation and your employer's procedure, not from guesswork."
@@ -127,9 +133,11 @@ items:
     id: ch01.u1.s1-2.card.loto-live-dead-live
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "Verification for electrical energy uses live-dead-live: prove the meter on a known live source, test for absence of voltage on every combination including foreign circuit terminals, then prove the meter again."
-    userSignoff: pending
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
     other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "LOTO content: follows NFPA 70E live-dead-live concept; no clause text quoted. Needs human safety sign-off."
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure. Claim also rests on NFPA 70E 2024 (test for absence / live-dead-live, 120.6): blocked until that excerpt is attached."
     body:
       title: "LOTO example: live-dead-live"
       text: "The last step is to verify, and for electrical energy this follows the live-dead-live method used in NFPA 70E. First, check your meter on a known live source. Second, test for absence of voltage on every combination: X1 to X2, X1 to ground, X2 to ground, and the terminals of any foreign circuit to each other and to ground. Third, check the meter again on the known source to show it still works. If any reading shows voltage, stop and go back to find the source you missed."
@@ -141,9 +149,11 @@ items:
     id: ch01.u1.s1-2.card.ohmmeter-only-dead
     book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
     claim: "The ohmmeter or continuity function must be used only on circuits that are de-energized and isolated, never to test for voltage."
-    userSignoff: pending
+    userSignoff: approved
+    userSignoffDate: "2026-11-26"
     other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
-    reviewerNotes: "Safety rule stated qualitatively. Needs human safety sign-off."
+    excerpts: [{ ref: "29 CFR 1910.147(d)", covers: ["osha:1910.147"], url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147", summary: "Energy control procedure: (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation." }]
+    reviewerNotes: "LOTO item. User approved the standard OSHA 1910.147(d) + NFPA 70E 2024 approach on 2026-11-26 (PSC follows standard practice). Example procedure; always follow your employer's procedure. Claim also rests on NFPA 70E 2024 (test for absence / live-dead-live, 120.6): blocked until that excerpt is attached."
     body:
       title: "Ohmmeter only on dead circuits"
       text: "In resistance and continuity modes the meter supplies its own small test current and expects the circuit to have no voltage of its own. On a live circuit the reading is meaningless and the meter can be damaged or the result can mislead you. So use the ohms or continuity function only after the circuit has been isolated and proven dead by the live-dead-live test. Never use it to find out whether a circuit is energized; use the voltage function for that, after proving the meter on a known source."

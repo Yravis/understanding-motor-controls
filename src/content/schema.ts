@@ -9,7 +9,10 @@ const book = z.object({
 });
 const necRef = z.object({ edition: z.literal(2026), ref: z.string(), kind: z.enum(['rule', 'table', 'definition']), editionCheck: z.string() });
 const stdRef = z.object({ std: z.string(), clause: z.string().nullable(), note: z.string().optional() });
-const excerpt = z.object({ ref: z.string(), text: z.string().nullable().optional(), url: z.string().nullable().optional() });
+// An excerpt points at source text the reviewer can actually open: a URL, a photo in review/source-photos/, or typed text.
+// `covers` lists the source keys (see sourceKeys in scripts/lib/ledger.ts) this excerpt satisfies.
+const excerpt = z.object({ ref: z.string(), covers: z.array(z.string()).min(1), text: z.string().nullable().optional(), url: z.string().nullable().optional(), photo: z.string().nullable().optional(), summary: z.string().optional() })
+  .refine((e) => !!(e.url || e.photo || e.text), 'excerpt needs url, photo or text');
 
 const answer = z.object({ text: z.string().min(1), correct: z.boolean().optional(), distractorWhy: z.string().optional() });
 export const questionBody = z.object({
@@ -74,7 +77,8 @@ const envelope = z.object({
   bookAlignment: z.literal('provisional').or(z.literal('aligned')),
   claim: z.string().min(15),
   reviewerNotes: z.string().optional(),
-  userSignoff: z.literal('pending').optional(),
+  userSignoff: z.literal('approved').optional(),       // LOTO approach approved by the user 2026-11-26
+  userSignoffDate: z.string().optional(),
   body: z.any(),
 });
 
@@ -86,6 +90,6 @@ export const itemSchema = envelope.superRefine((it, ctx) => {
   if (it.type === 'deviceSpec') parse(z.object({ tag: z.string(), kind: z.string(), title: z.string(), params: z.record(z.string(), z.object({ qty: z.number(), unit: z.string(), tol: z.string() })).optional() }).passthrough());
   if (it.type === 'scenario') parse(z.object({ title: z.string(), day: z.number().int(), steps: z.array(z.string()).min(1), bucket: z.string().optional() }).passthrough());
   if (it.type === 'fault') parse(z.object({ engineId: z.string(), title: z.string(), cause: z.string(), symptom: z.string(), fixActions: z.array(z.object({ kind: z.string(), target: z.string(), note: z.string() })), day: z.number().int() }).passthrough());
-  if (it.nec.length && it.excerpts.length === 0 && !it.reviewerNotes?.includes('needs user photo of NEC 2026 page')) bad('NEC refs need excerpts: [] plus the note "needs user photo of NEC 2026 page" in reviewerNotes');
+  if (it.nec.length && it.excerpts.length === 0 && !it.reviewerNotes?.includes('needs user photo of NEC 2026 page')) bad('NEC refs without an excerpt need the note "needs user photo of NEC 2026 page" in reviewerNotes');
 });
 export type ItemInput = z.infer<typeof envelope>;

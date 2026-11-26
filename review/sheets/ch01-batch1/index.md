@@ -11,5 +11,5 @@ Generated; do not edit. Each file renders items as the learner sees them. Day 0 
 - day-06.md: 23 items
 - day-07.md: 19 items
 - day-08.md: 20 items
-- day-09.md: 22 items
+- day-09.md: 26 items
 - day-10.md: 1 items

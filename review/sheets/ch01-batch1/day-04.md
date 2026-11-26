@@ -356,7 +356,7 @@ The off-delay timed contact is also drawn as an NO contact with a timing mark, b
 
 *type* question · *book* 2.3 p.19 (toc-unverified) · *basis* general-knowledge · *alignment* provisional
 
-**Claim (what is being checked):** A mushroom-head operator on an NC pushbutton symbol identifies a maintained STOP-style pushbutton.
+**Claim (what is being checked):** A wide mushroom-head operator drawn on a normally closed pushbutton symbol identifies a mushroom-head NC pushbutton; whether it is maintained is stated by the legend or drawing, not by the head shape.
 
 *Format* identify-symbol · *Day* 4
 

@@ -148,11 +148,48 @@ items:
     type: lessonCard
     book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
     claim: "Switching devices belong on the ungrounded X1 side and loads connect directly to the grounded X2 side."
+    nec: [{ edition: 2026, ref: "430.74", kind: rule, editionCheck: "confirmed in NEC 2026 photo (p. 70-400)" }]
+    excerpts: [{ ref: "NEC 2026 430.74", covers: ["nec2026:430.74"], photo: "review/source-photos/nec2026-p70-400-430.72-430.75.jpg", summary: "430.74 Electrical Arrangement of Control Circuits: where one conductor of the motor control circuit is grounded, the circuit is arranged so a ground fault in the control circuit remote from the motor controller will (1) not start the motor and (2) not bypass manually operated shutdown devices or automatic safety shutdown devices." }]
+    basis: standard
+    reviewerNotes: "Rule confirmed from the user's NEC 2026 photo (p. 70-400). NEC 2026 430.74 states the performance requirement; contacts-on-X1 / coil-on-X2 is the common way to meet it in a grounded control circuit (the code does not prescribe the layout in those words)."
     body:
       title: "Why contacts sit on the X1 side and loads on the X2 side"
       text: "In a grounded control circuit, the X2 side is bonded to ground. Placing every switching device on the X1 side and connecting loads directly to X2 means an accidental ground in the wiring downstream of a contact cannot energize the load, because the load is already at ground potential on that side. It also keeps a stop device from being bypassed by a ground fault. The layout rule is simple to read: contacts on the left, coils and lamps on the right, directly on X2. Never place a contact between a coil and X2."
       fieldNote: "A coil switched on its X2 leg can be energized by a ground fault, so treat that wiring as a defect."
       terms: ["grounded conductor", "X1", "X2", "load"]
+      day: 9
+  - <<: *d
+    id: ch01.u3.s3-18.card.nec-430-74-ground-fault-arrangement
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "NEC 2026 430.74 requires that, where one conductor of a motor control circuit is grounded, a ground fault in the control circuit remote from the controller must not start the motor and must not bypass manual or automatic safety shutdown devices."
+    nec: [{ edition: 2026, ref: "430.74", kind: rule, editionCheck: "confirmed in NEC 2026 photo (p. 70-400)" }]
+    excerpts: [{ ref: "NEC 2026 430.74", covers: ["nec2026:430.74"], photo: "review/source-photos/nec2026-p70-400-430.72-430.75.jpg", summary: "430.74 Electrical Arrangement of Control Circuits (see photo)." }]
+    basis: standard
+    reviewerNotes: "Paraphrase of NEC 2026 430.74 from the user's photo (p. 70-400). Older editions used the same section number for this rule."
+    body:
+      title: "The code behind the X1/X2 rule: NEC 430.74"
+      text: "The habit of putting contacts on X1 and coils on X2 isn't just tradition. NEC 2026 section 430.74 says that when one conductor of a motor control circuit is grounded, the circuit has to be arranged so that a ground fault out in the remote control wiring will not start the motor and will not bypass a manual stop or an automatic safety shutdown device. In Bucket 1A, X2 is the grounded conductor and the enclosure is bonded to it. If a wire on the X1 side makes a solid (low-impedance) contact with the enclosure, the fault current returns through the bonding path and the control fuse opens. The coil is never energized by the fault. That is the arrangement 430.74 is asking for."
+      fieldNote: "When you inspect a control circuit, look for any contact between a coil and the grounded conductor. That's a 430.74 problem waiting to happen."
+      terms: ["430.74", "grounded conductor", "ground fault", "bonding"]
+      day: 9
+  - <<: *d
+    id: ch01.u3.s3-18.card.grounded-vs-ungrounded-control
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "Grounding X2 is the common default, but NEC 2026 250.21(A)(3) permits a transformer-derived system with a primary of 1000 V or less to be ungrounded when it is used exclusively for control circuits, is maintained only by qualified persons, and continuity of control power is required; 250.21(B) then requires ground detectors on ungrounded systems from 120 V to 1000 V, and 250.21(C) covers marking."
+    nec:
+      - { edition: 2026, ref: "250.21(A)(3)", kind: rule, editionCheck: "confirmed in NEC 2026 photo (p. 70-139)" }
+      - { edition: 2026, ref: "250.21(B)", kind: rule, editionCheck: "confirmed in NEC 2026 photo (p. 70-139)" }
+      - { edition: 2026, ref: "250.21(C)", kind: rule, editionCheck: "confirmed in NEC 2026 photo (p. 70-139)" }
+    excerpts: [{ ref: "NEC 2026 250.21(A)(3), (B), (C)", covers: ["nec2026:250.21(A)(3)", "nec2026:250.21(B)", "nec2026:250.21(C)"], photo: "review/source-photos/nec2026-p70-139-250.21-250.24.jpg", summary: "250.21(A)(3): separately derived systems from transformers with primary <= 1000 V may be ungrounded if (a) used exclusively for control circuits, (b) qualified-person maintenance only, (c) continuity of control power required. 250.21(B): ground detectors for ungrounded systems 120-1000 V. 250.21(C): marking." }]
+    basis: standard
+    reviewerNotes: "Paraphrase from the user's NEC 2026 photo (p. 70-139). Kept short on purpose: CPTs and their grounding are Unit 8 (Chapter 2) material."
+    body:
+      title: "Grounded or ungrounded control power"
+      text: "Most control circuits you'll meet have X2 grounded, and Bucket 1A is built that way. It isn't the only legal option. NEC 2026 250.21(A)(3) allows a control system fed from a transformer with a primary of 1000 V or less to be left ungrounded, but only if all three conditions hold: it is used only for control circuits, only qualified persons maintain it, and the process needs continuous control power. An ungrounded system can keep running after a first ground fault, so 250.21(B) requires ground detectors to warn that the first fault exists, and 250.21(C) requires marking. If you open a panel and find no grounded X2, check the drawings and labels before assuming anything."
+      fieldNote: "Ungrounded control power is legal in narrow cases. A ground detector light or alarm is your clue."
+      terms: ["250.21(A)(3)", "ungrounded system", "ground detector", "control transformer"]
       day: 9
   - <<: *d
     id: ch01.u3.s3-18.card.wire-numbers

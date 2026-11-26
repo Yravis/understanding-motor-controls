@@ -66,10 +66,10 @@ items:
   - <<: *d
     id: ch01.u3.s3-2.card.open-coil-ohmmeter
     book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
-    claim: "An open relay coil never picks up, and while energized the full source voltage appears across it; the coil may only be checked with an ohmmeter when it is de-energized and isolated."
+    claim: "An open relay coil never picks up, and while the rung is called (every other series device closed) about the full source voltage appears across it; the coil may only be checked with an ohmmeter when it is de-energized and isolated."
     body:
       title: "Open coil: symptoms and checks"
-      text: "An open coil is a break in the winding. The symptom is that the relay never picks up when its control circuit calls for it, even though the START button and every other device are good. With the circuit energized and the call present, a voltmeter across the open coil reads about the source voltage, because the break is where the voltage appears. To confirm, de-energize and isolate the circuit and prove it dead first. Then measure the coil with an ohmmeter. An open winding reads as an open circuit; a good one reads a modest resistance."
+      text: "An open coil is a break in the winding. The symptom is that the relay never picks up when its control circuit calls for it, even though the START button and every other device are good. With the circuit energized and the call present, so that every other device in series with the coil is closed, a voltmeter across the open coil reads about the source voltage, because the break is where the voltage appears. If some other series device is also open, the voltage splits across the openings and the reading can mislead you. To confirm, de-energize and isolate the circuit and prove it dead first. Then measure the coil with an ohmmeter. An open winding reads as an open circuit; a good one reads a modest resistance."
       fieldNote: "An ohmmeter supplies its own test current, so it must never touch a live circuit. Isolate and prove dead first, following your employer's procedure, then measure the coil."
       terms: ["open coil", "ohmmeter", "de-energized", "isolated"]
       day: 5
@@ -147,10 +147,10 @@ items:
   - <<: *d
     id: ch01.u3.s3-9.card.pressure-switch
     book: { chapter: 1, unit: 3, section: "3.9", page: 28, pageStatus: toc-unverified, figure: null }
-    claim: "A pressure switch senses fluid or air pressure and changes contact state at a set point; it resets only after pressure moves back past a differential."
+    claim: "A pressure switch senses fluid or air pressure and changes contact state at a set point; it resets only after pressure moves back past a differential. A compressor control switch opens on rising pressure at cut-out and recloses at cut-in, while a normally open pressure-proving switch such as PS1 closes on rising pressure."
     body:
       title: "Pressure switch"
-      text: "A pressure switch senses the pressure of air or liquid and changes its contact state when pressure reaches an adjustable set point. It does not reset at exactly the same pressure. There is a differential, a gap between where it actuates and where it releases, so the switch does not flutter on and off around one value. A familiar example is an air compressor: the switch starts the motor when pressure falls to its lower setting and stops it at the upper setting. Normal state again means shelf state, with no pressure on the sensing port."
+      text: "A pressure switch senses the pressure of air or liquid and changes its contact state when pressure reaches an adjustable set point. It does not reset at exactly the same pressure. There is a differential, a gap between where it actuates and where it releases, so the switch does not flutter on and off around one value. The same device is used two ways. On an air compressor, the control switch's contacts are closed at low pressure, so the motor runs, and they open when pressure rises to the upper (cut-out) setting. They close again when pressure falls back to the lower (cut-in) setting. Bucket 1A's PS1 is the other kind: a normally open pressure-proving switch that closes when pressure rises past its actuate setting and lights PL5 (AIR PRESSURE OK), then opens again only after pressure falls back to its lower release setting. Normal state again means shelf state, with no pressure on the sensing port."
       fieldNote: "A pressure switch holding its last state between its two settings is normal. Judge it against both set points, not one."
       terms: ["pressure switch", "set point", "differential", "normal state"]
       day: 6

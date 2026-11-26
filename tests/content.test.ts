@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { describe, it, expect } from 'vitest';
 import { loadContent } from '../scripts/lib/content';
 import { itemSchema } from '../src/content/schema';
@@ -32,8 +33,13 @@ describe('content schema', () => {
       expect(it.bookAlignment).toBe('provisional');
     }
   });
-  it('NEC refs are edition 2026 and carry no excerpt (blocked-on-source)', () => {
-    for (const it of items) for (const n of it.nec) { expect(n.edition).toBe(2026); expect(it.excerpts).toEqual([]); expect(it.reviewerNotes).toContain('needs user photo of NEC 2026 page'); }
+  it('NEC refs are edition 2026; each is covered by a photo excerpt that exists, or flagged as needing one', () => {
+    for (const it of items) for (const n of it.nec) {
+      expect(n.edition).toBe(2026);
+      const ex = it.excerpts.find((e: any) => (e.covers ?? []).includes(`nec2026:${n.ref}`));
+      if (ex) { expect(ex.photo ?? ex.url, it.id).toBeTruthy(); if (ex.photo) { expect(ex.photo.startsWith('review/source-photos/'), ex.photo).toBe(true); if (!process.env.CI) expect(existsSync(ex.photo), ex.photo).toBe(true); } /* photos are box-only (copyright), absent in CI */ }
+      else expect(it.reviewerNotes, it.id).toContain('needs user photo of NEC 2026 page');
+    }
   });
   it('enforcedNote exists on every item and is null (no unsourced note)', () => {
     for (const it of items) { expect('enforcedNote' in it).toBe(true); expect(it.enforcedNote).toBeNull(); }
@@ -41,8 +47,11 @@ describe('content schema', () => {
   it('symbol cards carry an IEEE 315 cross-check field and an IEC note', () => {
     for (const it of cards.filter((c) => c.body.symbol)) { expect(it.ieee.some((x: any) => x.std === 'IEEE 315'), it.id).toBe(true); expect(it.body.symbol.iecNote.length, it.id).toBeGreaterThan(5); }
   });
-  it('LOTO items are pending user sign-off', () => {
-    for (const it of items.filter((i) => i.body?.loto)) expect(it.userSignoff, it.id).toBe('pending');
+  it('LOTO items carry the user approval of the standard OSHA + 70E 2024 approach', () => {
+    for (const it of items.filter((i) => i.body?.loto)) { expect(it.userSignoff, it.id).toBe('approved'); expect(it.userSignoffDate, it.id).toBe('2026-11-26'); }
+  });
+  it('no leftover pending-PSC / pending-sign-off wording', () => {
+    for (const it of items) expect(/PSC.s procedure|pending (your )?sign-off|needs human safety sign-off/i.test(JSON.stringify(it)), it.id).toBe(false);
   });
   it('banned phrases absent everywhere', () => {
     for (const it of items) expect(BANNED.test(JSON.stringify(it.body)), it.id).toBe(false);
@@ -90,5 +99,17 @@ describe('question lint', () => {
   it('tap-schematic targets exist in the reference netlist', () => {
     const w = bucket().world;
     for (const q of questions.filter((x) => x.body.format === 'tap-schematic')) for (const t of q.body.tapTargets) expect(w.has(t), q.id + ' ' + t).toBe(true);
+  });
+});
+
+import { SYMBOL_KEYS } from '../src/ui/symbols';
+describe('symbols', () => {
+  it('every symbol key used by content or the bucket has a drawing', () => {
+    const keys = new Set<string>(SYMBOL_KEYS);
+    for (const it of items) {
+      if (it.body?.symbol?.key) expect(keys.has(it.body.symbol.key), it.id).toBe(true);
+      if (typeof it.body?.symbol === 'string') expect(keys.has(it.body.symbol), it.id).toBe(true);
+    }
+    for (const d of bucket().layout.devices) expect(keys.has(d.symbol), d.tag).toBe(true);
   });
 });

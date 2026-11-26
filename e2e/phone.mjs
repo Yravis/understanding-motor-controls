@@ -57,6 +57,19 @@ for (const [w, h] of [[390, 844], [360, 740]]) {
   await page.locator('text=Open the bucket').first().tap();
   await page.waitForSelector('.meter');
   await check('bucket');
+  // SVG terminal hit areas (physical view) must also be >= 44 CSS px at default zoom
+    const svgBad = await page.evaluate(() => {
+    const out = []; let n = 0;
+    for (const el of document.querySelectorAll('svg.phys .hit')) {
+      const b = el.getBoundingClientRect(); n++;
+      if (b.width < 43.5 || b.height < 43.5) out.push(`${Math.round(b.width)}x${Math.round(b.height)}`);
+    }
+    return { n, out };
+  });
+  console.log(`  svg terminal hit areas checked: ${svgBad.n}`);
+  if (svgBad.n === 0) fail('no SVG terminal hit areas found (door closed?)');
+  for (const b of svgBad.out.slice(0, 5)) fail(`small SVG terminal hit area ${b}`);
+  if (svgBad.out.length > 5) fail(`...and ${svgBad.out.length - 5} more small SVG hit areas`);
   // tap two terminals (touch) and read the meter
   const terms = page.locator('svg.phys .tb');
   if (await terms.count() > 3) { await terms.nth(1).tap({ force: true }); await terms.nth(2).tap({ force: true }); }

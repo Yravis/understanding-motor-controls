@@ -380,7 +380,7 @@ About 10 mA at 120 V. Real LED pilot lights vary by manufacturer; some read OL b
 
 *type* deviceSpec · *book* 3.9 p.28 (toc-unverified) · *basis* illustrative · *alignment* provisional
 
-**Claim (what is being checked):** The air-tank pressure process model drives the pressure switch, which has a cut-in and cut-out setting with a differential.
+**Claim (what is being checked):** The air-tank pressure process model drives PS1, a normally open pressure-proving switch that actuates (closes) on rising pressure and releases (opens) on falling pressure, with a differential between the two settings.
 
 **Air receiver pressure (first-order, illustrative)** (tag AIR, process)
 

@@ -262,7 +262,7 @@ A temperature switch changes its contacts when the sensed temperature crosses a 
 
 *type* question · *book* 3.10 p.29 (toc-unverified) · *basis* general-knowledge · *alignment* provisional
 
-**Claim (what is being checked):** The symbol shown is a normally closed maintained mushroom-head pushbutton, typically used as a stop device.
+**Claim (what is being checked):** The symbol shown is a normally closed mushroom-head pushbutton, typically used as a stop device; the head shape alone does not say whether it is maintained.
 
 *Format* identify-symbol · *Day* 7
 

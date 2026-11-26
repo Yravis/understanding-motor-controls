@@ -299,7 +299,7 @@ items:
     body:
       format: predict-state
       day: 6
-      stem: "The air receiver is filling and has had time to pass the pressure switch's cut-out setting. You then hold the pressure steady. What is PL5 doing?"
+      stem: "The air receiver is filling and has had time to pass PS1's actuate setting (PS1 is a normally open pressure-proving switch). You then hold the pressure steady. What is PL5 doing?"
       scene:
         actions: [{ do: mode, dev: AIR, arg: fill }, { do: advance, arg: 90 }, { do: mode, dev: AIR, arg: hold }, { do: advance, arg: 30 }]
         expect: { lit: { PL5: true } }

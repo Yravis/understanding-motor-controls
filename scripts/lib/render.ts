@@ -4,7 +4,7 @@ import { Item } from './content';
 export function renderItem(it: Item): string {
   const b = it.body;
   let md = `## ${it.id}\n\n*type* ${it.type} · *book* ${it.book.section} p.${it.book.page} (${it.book.pageStatus}) · *basis* ${it.basis} · *alignment* ${it.bookAlignment}\n\n**Claim (what is being checked):** ${it.claim}\n\n`;
-  if (it.userSignoff) md += `> LOTO steps pending your sign-off and PSC's procedure. Example procedure, always follow your employer's procedure.\n\n`;
+  if (it.userSignoff) md += `> LOTO: standard OSHA 1910.147(d) + NFPA 70E 2024 approach, approved by the user 2026-11-26. Example procedure; always follow your employer's procedure.\n\n`;
   if (it.type === 'lessonCard') {
     md += `**${b.title}**\n\n${b.text}\n\n*Field note:* ${b.fieldNote}\n\n`;
     if (b.symbol) md += `*Symbol* \`${b.symbol.key}\` (${b.symbol.designation}). NEMA: ${b.symbol.nemaNote} **IEC side note:** ${b.symbol.iecNote}\n\n`;

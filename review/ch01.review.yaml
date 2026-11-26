@@ -127,7 +127,7 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u3.s3-9.device.process-air
-    hash: 96bce795989d6f97d7f98c81e3872edabc7397e33016e37ad4d6b17392f41b49
+    hash: 11723e36e560aed740f85c44edfcf8b60fbc283cd7ff11e957916e5f2a216ca0
     status: pending
     severity: null
     checkedAgainst: []
@@ -172,7 +172,7 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u3.s3-2.fault.shorted-coil
-    hash: 1c8d09c7e50d023d6470783e5067b43c227bfe6c902c00129b9c14ad26d3fd81
+    hash: 76a93117da9c62bf08fbf0b8e168d6c8163798e9b3e28eaf08a44d90b8173bc2
     status: pending
     severity: null
     checkedAgainst: []
@@ -226,7 +226,7 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u3.s3-18.fault.contact-on-x2-side
-    hash: e7ff3e43b69c8447ee4fb54985befaab86ab6011b803084acc3e892cec6848d5
+    hash: 08f960230e81e89aa0bfcc35eb58072df96a780c497cc9fe9c8f4c2cf4f4ab16
     status: pending
     severity: null
     checkedAgainst: []
@@ -271,7 +271,7 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u3.s3-18.fault.x1-ground-fault-clears-fuse
-    hash: 34070ebdd00183d2412f8d7d8657fc5ea2cb9ba02f9180fcff8e8e9e99ad8938
+    hash: b3bbae6e22c4ddb7efacf87d5fb5c5aecb7d8b5902666145015abecbbac0690f
     status: pending
     severity: null
     checkedAgainst: []
@@ -280,7 +280,7 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u3.s3-18.fault.x1-ground-fault-high-impedance
-    hash: 53cce8f188d5cf2b1f9402feae8e1ac08b95c5d53b229ccd79494b4b675c4d5f
+    hash: 62c3096d8024920374d1b34cd207ee54349eb1a5cf5d20ab6558fe453d7c2ed8
     status: pending
     severity: null
     checkedAgainst: []
@@ -307,12 +307,12 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.activity.loto-drill
-    hash: 9c222f696c2e497278098a3994434f9636b8f7069e1080424897688051b7255d
+    hash: dc3b95f8180dacefe60379bdeefe54f7ef0df02116171265b146acc7f83276a2
     status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nfpa70e-2024"
     reviewer: null
     date: null
   - id: ch01.u2.s2-1.activity.device-bench
@@ -451,48 +451,48 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.card.loto-prepare-shutdown
-    hash: f36aacd0e6fd987feb42823f1bede027b3721cc1093432791011c9267503aba1
-    status: blocked-on-source
+    hash: b799ec7f707a1ef5fcb426a242f3e7601f48c592bce9dac9444d0ab591dfc629
+    status: pending
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: ""
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.card.loto-isolate-lock-tag
-    hash: 84e2f2189632733fead79ad5482518c9c525b985880d36c6db1c152a4456e7a2
-    status: blocked-on-source
+    hash: 381fc8b02434f7e88291c91625384a048e7287cfd02ff72c22ca89105f47a743
+    status: pending
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: ""
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.card.loto-stored-energy
-    hash: 43367a2a236cfc3d0cf8376619cd75b96b68380da049af502641c5f2e0cd2e18
-    status: blocked-on-source
+    hash: eb1769efec71157822e6dfad2ee77fac4e26feaaca4ab83eb98f2223ed5b4d17
+    status: pending
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: ""
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.card.loto-live-dead-live
-    hash: ff81b80057b753693ff3556e930a90f45a91af39320d66d880c03d503e27dd25
+    hash: 72f25fd076d9c7d46a4d67695bfcb86baaeddf0ec42e38338415d9b4d4d1c342
     status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nfpa70e-2024"
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.card.ohmmeter-only-dead
-    hash: 9d3822e04dd2ea390c505802e96d21aa0555d4bef6791ed58c252a60d77090c1
+    hash: 13ddd53440b13caea191151731e60fc873ba872e959b79ee362c97db8a91f966
     status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nfpa70e-2024"
     reviewer: null
     date: null
   - id: ch01.u1.s1-1.question.control-vs-power
@@ -586,93 +586,93 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.question.employer-procedure
-    hash: 595b2d1beef1e0ebc0f781eea59d31480ca26d7d85f0058e54e88c1f3b215053
-    status: blocked-on-source
+    hash: cb2475e2ad29cc9b777b2fceade0fe808eb0ce0fc5d04a8e8faef13be629bcc2
+    status: pending
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: ""
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.question.loto-order
-    hash: 400063b21ab87d673f6c4e066eef5123e4b15e0e29fa43b6df0a62f0af450c1d
-    status: blocked-on-source
+    hash: 8e91885a37226a134ca5baa3b66e222e88158a91f31027f8bd3641a3522941bf
+    status: pending
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: ""
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.question.identify-sources-multi
-    hash: 2c44a69a0fa5d6f55067822bbe6cb6e85f34e3b1eaec17d2e177578119a53e88
-    status: blocked-on-source
+    hash: bc1e0c00a3371993e8703f00abfff7f1aa45564b17c07973edd3b1afffbe79b9
+    status: pending
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: ""
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.question.normal-shutdown
-    hash: 874d917c4bba565daf9522dd6ff3243af0a7eb36212eea1b08e77d826c404bf3
-    status: blocked-on-source
+    hash: 334795e79affb4db3f409dd3a8c6d3da2fa78146638c007676e80b0af05d0231
+    status: pending
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: ""
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.question.isolate-foreign
-    hash: 083a7aa58efcdb873fc8dce77a84672b433a75e9efe71bbe4a80d39be30aa546
-    status: blocked-on-source
+    hash: a74671fcd1767493d8d943ccfea1640e9cf946d760cddf1a1e4f407dce035da9
+    status: pending
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: ""
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.question.lock-versus-tag
-    hash: 5d2ec54d71517911b60c9f83a24118d7127c6641d1c7e72c6216bc5e11f107a6
-    status: blocked-on-source
+    hash: 467d436f9722f351f70dad627cfb9dc8c162ec4580fa83e5db76ab932ddd1946
+    status: pending
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: ""
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.question.recheck-meter
-    hash: 16143524c7560223d1850c5fa2eb061f10cd0a3052b18d191bdf09aeddf86e17
+    hash: d8441dd1b83421b60e22e66def0a2f7b07a7360891256ea50512e5b585802514
     status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nfpa70e-2024"
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.question.absence-combinations
-    hash: f414fecf34b9e4371ca3aec2ad22279514c9d095821c87b0436f4d8df6ef0b8d
+    hash: 2ac5021685f5160781f6706bace38353a53c1a092de8ea7ccad9ae5c2bede747
     status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nfpa70e-2024"
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.question.ohmmeter-rule
-    hash: 36f8276b12253828ed855e7f3d561f56f1345b6f9386c58836f029c7279cc67e
+    hash: 59ecca545eaea7baf5ce48a0b7c1ac52213d71025b9aabec7e59884a50965143
     status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nfpa70e-2024"
     reviewer: null
     date: null
   - id: ch01.u1.s1-2.question.supply-off-predict
-    hash: 0305bf303ce4391618758b76325cc807f925cfa6a0faed69d6b7605bca0dca89
-    status: blocked-on-source
+    hash: 87afa00a362717a48f7d11ea444031d0ad0e7ded4a9a51d91d814a34b4508ae2
+    status: pending
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: ""
     reviewer: null
     date: null
   - id: ch01.u2.s2-1.card.control-defined
@@ -825,7 +825,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.symbol.contact-nc
@@ -834,7 +834,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.symbol.pb-no
@@ -843,7 +843,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.symbol.pb-nc
@@ -852,7 +852,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.symbol.pb-nc-mushroom
@@ -861,7 +861,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.symbol.relay-coil
@@ -870,7 +870,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.symbol.pilot-light
@@ -879,7 +879,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.symbol.float-no
@@ -888,7 +888,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.symbol.limit-nc
@@ -897,7 +897,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.symbol.solenoid
@@ -906,7 +906,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.symbol.timer-on-notc
@@ -915,7 +915,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.symbol.timer-off-noto
@@ -924,7 +924,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: nema:NEMA ICS 19, ieee:IEEE 315"
     reviewer: null
     date: null
   - id: ch01.u2.s2-1.question.normally-closed-meaning
@@ -1023,16 +1023,16 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: symbols:nema-ics19"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.question.identify-mushroom
-    hash: 9a9672e19a623a2df821edc7caa4f555cafc8acf4c387a3c41b549a324f4d21b
+    hash: ff89a6c0507386825db1d7113bce4f58ada8923be91311dc195a2ab6e8f4120b
     status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: symbols:nema-ics19"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.question.identify-notc
@@ -1041,7 +1041,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: symbols:nema-ics19"
     reviewer: null
     date: null
   - id: ch01.u2.s2-3.question.tap-start-button
@@ -1153,7 +1153,7 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u3.s3-2.card.open-coil-ohmmeter
-    hash: 2082ca3a8de97ee587a6624573559e701374fac4918885857464f2699289d4c8
+    hash: 7f9320a901d2936ef9e52f21139acc411f7523a56d803ac5f07bf3b4f0c9ece2
     status: pending
     severity: null
     checkedAgainst: []
@@ -1225,7 +1225,7 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u3.s3-9.card.pressure-switch
-    hash: 92f563fc953924b2c77dd83467cf5649e0930e35801ae8e6c77e8ece254f2501
+    hash: 87b1045c3c66e5d954454f63fc564277c3a6cf021590156e5724d59d9e698ebb
     status: pending
     severity: null
     checkedAgainst: []
@@ -1396,7 +1396,7 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u3.s3-9.question.air-fill-predict
-    hash: 2eca26961ae2dd127dde56d29fd024c15239243f457b6db22029bab307e62c7d
+    hash: 416cbd6e0debe539d388e8cdb3981e30c7fea790b1619a45fa89e9a3861987fa
     status: pending
     severity: null
     checkedAgainst: []
@@ -1540,7 +1540,25 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u3.s3-18.card.contacts-left-loads-right
-    hash: c6f3fac6c642421dfad1ac9ae7c910876d61eaf2b1098feec735e450dac31a61
+    hash: 65ea725733790832eca05c67ae9f78fde83022f2e015779cf740a9f68f60b53c
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.card.nec-430-74-ground-fault-arrangement
+    hash: cb13e705c714426983f4d49191e5eb3339562e0a81498d91581fef6deabd8614
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.card.grounded-vs-ungrounded-control
+    hash: 89b806e45187020bf9e0d09142cec73f982a89ba29b50a1150eac55d5cb0ff79
     status: pending
     severity: null
     checkedAgainst: []
@@ -1576,12 +1594,12 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u3.s3-10.question.mushroom-stop-symbol
-    hash: 134920fa7343ed294fde2b876c8ba98443fea903c9a8f7d62206b9c4eeed9770
+    hash: 96c76b20fdb95293b5cf6c28978567c531af034148b56364085ff48f8faf1670
     status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: symbols:nema-ics19"
     reviewer: null
     date: null
   - id: ch01.u3.s3-10.question.momentary-vs-maintained
@@ -1680,7 +1698,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: null
-    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    notes: "needs source text before review: symbols:nema-ics19"
     reviewer: null
     date: null
   - id: ch01.u3.s3-17.question.delay-starts-when
@@ -1783,7 +1801,25 @@ entries:
     reviewer: null
     date: null
   - id: ch01.u3.s3-18.question.why-contacts-x1
-    hash: 9f98ae93766865bfaead651dea24a37c32e55713286fb5475ed1d242eb387af8
+    hash: 0ee6aba1df8cd3d3743b12ad8716dde6e75f9e84d245e523131327a512a42be9
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.nec-430-74-requirement
+    hash: 4790118b7925f70ada81759cde39167e360824c7e34a8e7b002a68e8bd9b6d70
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.ungrounded-control-conditions
+    hash: 8ab06495f4e67270a1df17855514f0fd6c5fc6816f8900cca2a662d0c2a7f240
     status: pending
     severity: null
     checkedAgainst: []

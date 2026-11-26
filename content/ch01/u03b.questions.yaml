@@ -14,7 +14,7 @@ items:
   - <<: *d
     id: ch01.u3.s3-10.question.mushroom-stop-symbol
     book: { chapter: 1, unit: 3, section: "3.10", page: 29, pageStatus: toc-unverified, figure: null }
-    claim: "The symbol shown is a normally closed maintained mushroom-head pushbutton, typically used as a stop device."
+    claim: "The symbol shown is a normally closed mushroom-head pushbutton, typically used as a stop device; the head shape alone does not say whether it is maintained."
     body: {"format": "identify-symbol", "day": 7, "stem": "Which description matches the pushbutton symbol shown?", "answers": [{"text": "A normally closed mushroom-head button, used as a stop device", "correct": true}, {"text": "A normally open flush button, used as a start device", "distractorWhy": "A start button is NO, and the symbol shown is a stop style with a mushroom head."}, {"text": "A normally open mushroom button that closes when pressed", "distractorWhy": "The contacts of a stop device are closed in the shelf state, so NO is wrong."}, {"text": "A normally closed pilot light that glows when stopped", "distractorWhy": "A pilot light is a lamp symbol, not a pushbutton contact block."}], "symbol": "pb-nc-mushroom", "explanation": "The shown device is a mushroom-head NC pushbutton. Its contacts are closed in the shelf state and open when it is pressed, and a maintained head latches. That is why it suits a stop function."}
   - <<: *d
     id: ch01.u3.s3-10.question.momentary-vs-maintained
@@ -130,7 +130,29 @@ items:
     id: ch01.u3.s3-18.question.why-contacts-x1
     book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
     claim: "With contacts on X1 and coils on X2, a ground fault downstream of a contact cannot energize the load."
+    nec: [{ edition: 2026, ref: "430.74", kind: rule, editionCheck: "confirmed in NEC 2026 photo (p. 70-400)" }]
+    excerpts: [{ ref: "NEC 2026 430.74", covers: ["nec2026:430.74"], photo: "review/source-photos/nec2026-p70-400-430.72-430.75.jpg", summary: "430.74 Electrical Arrangement of Control Circuits: where one conductor of the motor control circuit is grounded, the circuit is arranged so a ground fault in the control circuit remote from the motor controller will (1) not start the motor and (2) not bypass manually operated shutdown devices or automatic safety shutdown devices." }]
+    basis: standard
+    reviewerNotes: "Rule confirmed from the user's NEC 2026 photo (p. 70-400). NEC 2026 430.74 states the performance requirement; contacts-on-X1 / coil-on-X2 is the common way to meet it in a grounded control circuit (the code does not prescribe the layout in those words)."
     body: {"format": "mcq", "day": 9, "stem": "Why are the contacts placed on the X1 side with the coil directly on X2 in a control circuit with a grounded X2?", "answers": [{"text": "A ground fault in that wiring cannot energize the coil", "correct": true}, {"text": "It makes the coil draw a lower inrush current", "distractorWhy": "Placement does not change the coil's inrush."}, {"text": "It speeds up the contact action", "distractorWhy": "Position on the rung has no effect on mechanical speed."}, {"text": "It lets one pushbutton serve several coils", "distractorWhy": "Sharing a pushbutton is a wiring choice unrelated to the X1/X2 rule."}], "explanation": "If a wire between the contact and the coil touches ground, it is at the same potential as X2, so the coil has no voltage across it. Putting the contact on the X2 leg would let such a ground fault energize the coil and bypass the stop."}
+  - <<: *d
+    id: ch01.u3.s3-18.question.nec-430-74-requirement
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "NEC 2026 430.74 requires that a ground fault in a grounded control circuit, remote from the controller, must not start the motor or bypass shutdown devices."
+    nec: [{ edition: 2026, ref: "430.74", kind: rule, editionCheck: "confirmed in NEC 2026 photo (p. 70-400)" }]
+    excerpts: [{ ref: "NEC 2026 430.74", covers: ["nec2026:430.74"], photo: "review/source-photos/nec2026-p70-400-430.72-430.75.jpg", summary: "430.74 Electrical Arrangement of Control Circuits (see photo)." }]
+    basis: standard
+    reviewerNotes: "Graded on the rule text in the user's NEC 2026 photo, not on any typical value."
+    body: {"format": "mcq", "day": 9, "stem": "In a motor control circuit with one conductor grounded, what does NEC 2026 430.74 require of a ground fault in the remote control wiring?", "answers": [{"text": "It must not start the motor or bypass a shutdown device", "correct": true}, {"text": "It must trip the motor overload relay within 10 seconds of the fault", "distractorWhy": "430.74 is about how the control circuit is arranged, not overload trip timing."}, {"text": "It must be detected by a ground detector light mounted on the bucket door", "distractorWhy": "Ground detectors are the 250.21(B) requirement for ungrounded systems."}, {"text": "It must be cleared by a GFCI on the control circuit", "distractorWhy": "430.74 does not call for GFCI protection; it is an arrangement rule."}], "explanation": "430.74 is a performance rule: arrange the control circuit so a ground fault can neither start the motor nor defeat a stop or safety shutdown. Contacts on X1 with coils on the grounded X2 is the usual way to meet it."}
+  - <<: *d
+    id: ch01.u3.s3-18.question.ungrounded-control-conditions
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "NEC 2026 250.21(A)(3) lets a transformer-derived control system (primary 1000 V or less) be ungrounded only if it is exclusively for control circuits, maintained only by qualified persons, and continuity of control power is required."
+    nec: [{ edition: 2026, ref: "250.21(A)(3)", kind: rule, editionCheck: "confirmed in NEC 2026 photo (p. 70-139)" }]
+    excerpts: [{ ref: "NEC 2026 250.21(A)(3)", covers: ["nec2026:250.21(A)(3)"], photo: "review/source-photos/nec2026-p70-139-250.21-250.24.jpg", summary: "250.21(A)(3) conditions (a)-(c) (see photo)." }]
+    basis: standard
+    reviewerNotes: "Multi-select graded on the three conditions in the user's NEC 2026 photo."
+    body: {"format": "multi-select", "day": 9, "stem": "Under NEC 2026 250.21(A)(3), which conditions must ALL be met for a transformer-derived control system (primary 1000 V or less) to be left ungrounded? Select every one that applies.", "answers": [{"text": "It is used exclusively for control circuits", "correct": true}, {"text": "Only qualified persons service the installation", "correct": true}, {"text": "Continuity of control power is required", "correct": true}, {"text": "The control voltage is 24 V or less", "distractorWhy": "250.21(A)(3) does not set a control-voltage limit; it covers transformer primaries of 1000 V or less."}, {"text": "The bucket has no pilot lights", "distractorWhy": "Pilot lights have nothing to do with the grounding conditions."}], "explanation": "All three conditions in 250.21(A)(3) must hold: control circuits only, qualified-person maintenance, and a need for continuous control power. If the system is ungrounded, 250.21(B) adds ground detectors."}
   - <<: *d
     id: ch01.u3.s3-18.question.read-left-to-right
     book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }

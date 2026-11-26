@@ -1,5 +1,6 @@
 // A day's session: warm-up review -> lesson cards -> practice -> bucket activity -> wrap-up.
 import { h, btn } from './dom';
+import { symbolFigure } from './symbols';
 import { cardsForDay, questionsForDay, byId, badgeOf, dayInfo, faults, ofType, items } from '../content';
 import { getSave, commit } from '../game/save';
 import { dayKey, dueIds, scheduleReview, addXp, XP, streak, rank, RANK_TITLE, unitDays } from '../game/progress';
@@ -46,9 +47,9 @@ export function runSession(root: HTMLElement, day: number, exit: () => void, ext
     const pg = save.settings.bookFree ? '' : ` · book p. ${c.book.page} (TOC, unverified)`;
     shell(`Lesson ${i + 1}/${cards.length}`,
       h('div', { class: 'card' }, badge(c.id), h('div', { class: 'small' }, `Section ${c.book.section}${pg}`), h('h3', {}, c.body.title),
-        c.body.loto ? h('p', { class: 'banner' }, 'Example procedure. Always follow your employer’s procedure. LOTO steps pending your sign-off and PSC’s procedure.') : null,
+        c.body.loto ? h('p', { class: 'banner' }, 'Example procedure (standard OSHA 1910.147 + NFPA 70E 2024). Always follow your employer’s lockout/tagout procedure.') : null,
         h('p', {}, c.body.text), h('p', { class: 'field' }, h('strong', {}, 'In the field: '), c.body.fieldNote),
-        c.body.symbol ? h('p', { class: 'small' }, `Symbol: ${c.body.symbol.designation}. ${c.body.symbol.nemaNote} `, h('em', {}, c.body.symbol.iecNote)) : null),
+        c.body.symbol ? h('div', { class: 'symbox' }, symbolFigure(c.body.symbol.key, c.body.symbol.designation), h('p', { class: 'small' }, h('strong', {}, 'NEMA: '), `${c.body.symbol.designation}. ${c.body.symbol.nemaNote}`), h('p', { class: 'small iec' }, h('strong', {}, 'IEC side note: '), c.body.symbol.iecNote)) : null),
       save.settings.bookFree ? h('p', { class: 'small' }, 'Book not here yet? These summaries stand alone.') : h('p', { class: 'small' }, `Read book section ${c.book.section} first.`),
       h('div', { class: 'row' }, i > 0 ? btn('Back', () => lesson(i - 1)) : null, btn(i === cards.length - 1 ? 'Start practice' : 'Next', () => lesson(i + 1), 'primary')));
   };
@@ -102,7 +103,7 @@ export function runSession(root: HTMLElement, day: number, exit: () => void, ext
       area.append(h('p', { class: 'small' }, 'Tap the steps in the correct order.'), list, opts); redraw();
     } else {
       const opts = h('div', { class: 'opts' });
-      if (b.format === 'identify-symbol' && b.symbol) area.append(h('p', { class: 'small' }, `Symbol key: ${b.symbol}`));
+      if (b.format === 'identify-symbol' && b.symbol) area.append(h('div', { class: 'symbox' }, symbolFigure(b.symbol)));
       for (const o of p.options) {
         const el = h('button', { class: 'btn opt', type: 'button', 'aria-pressed': 'false' }, o.text);
         el.addEventListener('click', () => {
