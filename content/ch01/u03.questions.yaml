@@ -1,0 +1,351 @@
+# Unit 3 questions, sections 3.1-3.9 (Day 5: 10, Day 6: 12). Original wording; qualitative only.
+defaults: &d
+  type: question
+  version: 1
+  nec: []
+  nema: []
+  ieee: []
+  excerpts: []
+  basis: general-knowledge
+  enforcedNote: null
+  other: []
+  bookAlignment: provisional
+  reviewerNotes: "Qualitative; no typical device values graded. Needs book-alignment check once the book arrives."
+items:
+  # ================= Day 5 =================
+  - <<: *d
+    id: ch01.u3.s3-2.question.coil-moves-contacts
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "Energizing a relay coil changes the state of its contacts; the contacts are separate from the coil."
+    body:
+      format: mcq
+      day: 5
+      stem: "CR1 has two NO and two NC contacts. What happens to its contacts when the CR1 coil is energized?"
+      answers:
+        - { text: "The NO contacts close and the NC contacts open", correct: true }
+        - { text: "Only the NO contacts change; NC contacts never move", distractorWhy: "Every contact on the relay changes state; NC contacts open when the armature moves." }
+        - { text: "All contacts close, since the coil is now live", distractorWhy: "NC contacts open when operated; they do not close." }
+        - { text: "The contacts stay put until the coil is sealed in", distractorWhy: "Contacts move as the armature moves; sealing is just the end of that motion." }
+      explanation: "The armature moves every contact at once. NO contacts close and NC contacts open. When the coil drops out, springs return all of them to the shelf state."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-1.question.voltage-across-open-contact
+    book: { chapter: 1, unit: 3, section: "3.1", page: 23, pageStatus: toc-unverified, figure: null }
+    claim: "A voltmeter across an open contact in series with a load reads about source voltage."
+    body:
+      format: mcq
+      day: 5
+      stem: "A lamp should be on but is dark. With the circuit energized, a voltmeter across the one contact in series with the lamp reads about the full source voltage. What does that indicate?"
+      answers:
+        - { text: "That contact is open when it should be closed", correct: true }
+        - { text: "That contact is closed and passing current to the lamp", distractorWhy: "A closed contact reads about 0 V across it, not full voltage." }
+        - { text: "The lamp itself has failed in a shorted condition", distractorWhy: "A shorted lamp would put the voltage across the contact only if the contact were open; the reading points at the contact." }
+        - { text: "The meter must be reading the neutral to ground", distractorWhy: "The probes are across the contact, so the reading is the voltage across the contact." }
+      explanation: "With the contact open there is no current, so the load drops nothing and the entire source voltage appears across the open contact. A closed contact would read about 0 V."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-1.question.voltage-across-closed-contact
+    book: { chapter: 1, unit: 3, section: "3.1", page: 23, pageStatus: toc-unverified, figure: null }
+    claim: "A voltmeter across a closed contact in series with a load reads about 0 V."
+    body:
+      format: mcq
+      day: 5
+      stem: "A relay contact is closed and feeding a lit lamp. A voltmeter is placed across the contact terminals. What does it read?"
+      answers:
+        - { text: "About zero volts, since a closed contact is nearly a wire", correct: true }
+        - { text: "About the full source voltage, as the lamp is lit", distractorWhy: "The lamp has that voltage across it; the closed contact in series has almost none." }
+        - { text: "About half the source voltage, shared with the lamp", distractorWhy: "The contact's resistance is tiny compared with the lamp, so it takes almost no share." }
+        - { text: "No reading at all, because the meter needs an open circuit", distractorWhy: "A voltmeter reads fine across a closed contact; it just shows about zero." }
+      explanation: "A closed contact has very low resistance, so very little voltage drops across it. The load takes nearly all of the source voltage."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-2.question.ohmmeter-on-coil
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "An ohmmeter may only be used on a de-energized, isolated circuit; a relay coil is checked that way."
+    body:
+      format: mcq
+      day: 5
+      stem: "You want to test a CR1 relay coil with an ohmmeter. Which condition must be met first, following your employer's procedure?"
+      answers:
+        - { text: "The circuit is de-energized, isolated, and proven dead", correct: true }
+        - { text: "The coil is energized so that the armature is sealed in", distractorWhy: "An ohmmeter supplies its own test current and can be damaged or give nonsense readings on a live circuit." }
+        - { text: "The START button is held to keep the coil in circuit", distractorWhy: "Holding START energizes the coil; resistance checks are made with no power present." }
+        - { text: "The meter is first set to the highest AC voltage range", distractorWhy: "AC voltage mode is for live readings and does not measure winding resistance." }
+      explanation: "An ohmmeter injects a small test current, so any live source corrupts the reading or hurts the meter. De-energize, isolate, and prove the circuit dead before measuring."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-2.question.inrush-reason
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "An AC relay coil draws more current while the armature is open than after it seals in."
+    body:
+      format: mcq
+      day: 5
+      stem: "Why does an AC relay coil draw more current just as it is energized than after the armature has closed?"
+      answers:
+        - { text: "The open air gap lowers the coil impedance until the armature seals", correct: true }
+        - { text: "The supply voltage briefly rises whenever a coil is switched on", distractorWhy: "The source does not rise; if anything it sags a little under the extra current." }
+        - { text: "The contacts are still bouncing and adding extra load current", distractorWhy: "Contact bounce does not change coil current; the cause is inside the coil's magnetic circuit." }
+        - { text: "The coil resistance grows as the winding warms up in service", distractorWhy: "Warming is slow; inrush happens in a fraction of a second as the armature closes." }
+      explanation: "With the armature open, the magnetic path has an air gap and the coil has lower impedance, so more current flows. Once the armature seals the gap, impedance rises and the current drops."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-2.question.open-coil-symptom
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "An open relay coil never picks up even though the control circuit calls for it."
+    body:
+      format: mcq
+      day: 5
+      stem: "In the bucket, you hold START and nothing happens: CR1 never picks up and PL1 stays off. The fuse is good and 120 V is present at the START button. Which fault fits best?"
+      answers:
+        - { text: "An open CR1 coil winding, so no current can flow through it", correct: true }
+        - { text: "A welded CR1 NO contact holding the green lamp circuit closed", distractorWhy: "A welded NO contact would make PL1 light without START; it does not stop the coil from pulling in." }
+        - { text: "A shorted CR1 coil that picks up faster than normal", distractorWhy: "A shorted coil draws excess current and usually blows the fuse; it does not just fail to pick up." }
+        - { text: "A float switch that is actuated and closing its contact", distractorWhy: "The float switch is on a separate lamp rung and has no effect on the CR1 coil." }
+      explanation: "If the supply, fuse, and START button are good yet the coil does nothing, the winding itself may be broken. With the circuit live and START held, a voltmeter across the open coil would read about source voltage."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-1.question.relay-statements
+    book: { chapter: 1, unit: 3, section: "3.1", page: 23, pageStatus: toc-unverified, figure: null }
+    claim: "A relay's contacts are mechanically driven and electrically separate from its coil, and normal means shelf state."
+    body:
+      format: multi-select
+      day: 5
+      stem: "Select the statements about control relays that are true."
+      answers:
+        - { text: "A contact's NO or NC label describes its de-energized state", correct: true }
+        - { text: "A coil circuit and a contact circuit can be on separate circuits", correct: true }
+        - { text: "Energizing the coil closes every contact on the relay", distractorWhy: "NC contacts open when the coil is energized." }
+        - { text: "A contact is NO if it is open at the moment you measure it", distractorWhy: "NO means open on the shelf; the present state depends on whether the relay is operated." }
+        - { text: "The coil and contacts share the same electrical conductors", distractorWhy: "They are electrically separate; the armature links them mechanically." }
+      explanation: "NO and NC describe the shelf state. The coil moves the contacts mechanically, so they can sit in a completely different circuit from the coil."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-2.question.press-start
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "Holding START energizes CR1: its NO contact lights PL1 and its NC contact turns PL2 off."
+    body:
+      format: predict-state
+      day: 5
+      stem: "The bucket is at rest. You press and hold START (PB1). Which lamps are lit a moment later?"
+      scene:
+        actions: [{ do: press, dev: PB1 }, { do: advance, arg: 1 }]
+        expect: { lit: { PL1: true, PL2: false }, coil: { CR1.coil: true } }
+      answers:
+        - { text: "PL1 green is lit and PL2 red is off", correct: true }
+        - { text: "PL2 red is lit and PL1 green is off", distractorWhy: "That is the at-rest condition. The NC contact feeding PL2 opens when CR1 energizes." }
+        - { text: "Both PL1 and PL2 are lit", distractorWhy: "The NO and NC contacts move in opposite directions, so only one lamp is lit." }
+        - { text: "Neither lamp is lit", distractorWhy: "One of the two contacts is always closed, so one lamp is lit." }
+      explanation: "START energizes the CR1 coil. The NO contact closes and powers PL1. The NC contact opens and drops PL2."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-2.question.tap-nc-contact
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "CR1 NC1 is the contact that is closed while CR1 is de-energized and feeds PL2."
+    body:
+      format: tap-schematic
+      day: 5
+      stem: "Tap the CR1 contact that is closed while the coil is de-energized and carries power to the red lamp."
+      tapTargets: ["CR1.NC1"]
+      tapWhy: "CR1 NC1 is closed on the shelf and feeds PL2. The NO contacts are open until CR1 energizes."
+      explanation: "NC contacts are closed in the shelf state, so the red lamp is lit at rest. They open when the CR1 coil is energized."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-2.question.order-start-sequence
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "Pressing START energizes the coil, the armature moves, contacts change state, and the lamp circuit responds."
+    body:
+      format: order-steps
+      day: 5
+      stem: "Put these events in order, from first to last, after START is pressed on the bucket."
+      steps:
+        - "START closes and applies voltage to the CR1 coil"
+        - "Current in the coil builds a magnetic field"
+        - "The armature is pulled in and moves the contacts"
+        - "The NO contact closes and PL1 lights"
+      explanation: "Coil first, then magnetism, then the mechanical armature motion, and only then the output contact changes that light the lamp."
+      dependsOn: []
+  # ================= Day 6 =================
+  - <<: *d
+    id: ch01.u3.s3-4.question.float-normal-state
+    book: { chapter: 1, unit: 3, section: "3.4", page: 26, pageStatus: toc-unverified, figure: null }
+    claim: "A float switch's normal contact state is the as-manufactured state, not what it is in an empty or full tank."
+    body:
+      format: mcq
+      day: 6
+      stem: "A float switch is labeled normally open (NO). Which statement about 'normal' is correct?"
+      answers:
+        - { text: "Its contact is open when nothing is actuating it, as made", correct: true }
+        - { text: "Its contact is open whenever the tank happens to be empty", distractorWhy: "Normal is the shelf state and does not depend on the tank level at the moment." }
+        - { text: "Its contact is closed once the tank has been filled", distractorWhy: "Filling actuates the switch, which is its operated state, not its normal state." }
+        - { text: "Its normal state is whatever it was when installed", distractorWhy: "Installation can leave the switch actuated, but its normal state is still the as-manufactured one." }
+      explanation: "Normal means shelf state: with nothing acting on it. An NO float switch stays an NO float switch whether the tank is empty or full."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-4.question.installed-actuated
+    book: { chapter: 1, unit: 3, section: "3.4", page: 26, pageStatus: toc-unverified, figure: null }
+    claim: "A switch can be installed so the process actuates it at rest; this does not change which contact is normal."
+    body:
+      format: mcq
+      day: 6
+      stem: "A normally open limit switch is mounted so a resting machine part presses its lever. A meter shows its contact closed. What is the right conclusion?"
+      answers:
+        - { text: "It is an NO contact being held actuated by the part", correct: true }
+        - { text: "It is really an NC contact, since it measures closed", distractorWhy: "Type is set by the shelf state, not by what the process is doing now." }
+        - { text: "The contact has welded and must be replaced right away", distractorWhy: "A closed reading is expected while the part presses the lever; test again with the lever free." }
+        - { text: "Normal means installed, so the schematic should be redrawn", distractorWhy: "Schematics show the shelf state; installed position does not redefine it." }
+      explanation: "The process is actuating the switch at rest, so an NO contact reads closed. Free the lever to see its normal state. The drawing stays correct."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-3.question.drum-switch
+    book: { chapter: 1, unit: 3, section: "3.3", page: 25, pageStatus: toc-unverified, figure: null }
+    claim: "A drum switch is manually operated; turning its handle changes several contact sets together."
+    body:
+      format: mcq
+      day: 6
+      stem: "What best describes how a drum switch operates?"
+      answers:
+        - { text: "A hand-turned drum makes and breaks several contact sets together", correct: true }
+        - { text: "A float on a rod rises and falls to move its contacts", distractorWhy: "That describes a float switch, which senses liquid level." }
+        - { text: "A vane in a pipe is pushed aside by the passing stream", distractorWhy: "That describes a flow switch, which senses moving fluid." }
+        - { text: "A beam of light is cut by a passing object to switch it", distractorWhy: "That describes an optical sensor, which has no handle at all." }
+      explanation: "A drum switch is a manual selector: its position changes several contacts at once. It does not sense anything in the process."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-5.question.flow-switch
+    book: { chapter: 1, unit: 3, section: "3.5", page: 26, pageStatus: toc-unverified, figure: null }
+    claim: "A flow switch proves that fluid or air is actually moving."
+    body:
+      format: mcq
+      day: 6
+      stem: "A heater should only run when water is actually moving through it. Which device would confirm that?"
+      answers:
+        - { text: "A flow switch with its paddle in the water line", correct: true }
+        - { text: "A drum switch set to the on position by hand", distractorWhy: "A drum switch only reports where someone left the handle, not what the water is doing." }
+        - { text: "A mechanical limit switch on the control panel door", distractorWhy: "A door limit switch senses the door position, not the flow in a pipe." }
+        - { text: "A float switch mounted in an empty supply tank", distractorWhy: "A float switch senses level, which does not prove water is flowing through the line." }
+      explanation: "A flow switch has a paddle or vane in the stream and actuates when flow reaches its setting, so it proves movement."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-7.question.proximity-leakage
+    book: { chapter: 1, unit: 3, section: "3.7", page: 28, pageStatus: toc-unverified, figure: null }
+    claim: "A two-wire proximity sensor's off-state leakage can hold a small high-impedance load on."
+    body:
+      format: mcq
+      day: 6
+      stem: "A small relay wired in series with a two-wire proximity sensor stays picked up even when the sensor is off. Which cause is most likely?"
+      answers:
+        - { text: "Off-state leakage current through the sensor is holding the load", correct: true }
+        - { text: "The sensor's mechanical contacts have welded shut inside it", distractorWhy: "Two-wire proximity sensors are solid-state and have no moving contacts to weld." }
+        - { text: "The sensor has been wired normally closed by the maker", distractorWhy: "A normally closed sensor would show on its marking, and this load is held with the sensor off." }
+        - { text: "The relay coil is drawing inrush current continuously", distractorWhy: "Inrush lasts only until the armature seals and does not hold a relay on." }
+      explanation: "A two-wire sensor passes a small current even when off. A small, high-impedance load can be held on by it, so the load seems stuck on."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-8.question.noncontact-sensors
+    book: { chapter: 1, unit: 3, section: "3.8", page: 28, pageStatus: toc-unverified, figure: null }
+    claim: "Proximity and optical sensors detect without touching; mechanical limit switches and drum switches are operated by touch."
+    body:
+      format: multi-select
+      day: 6
+      stem: "Select the devices that detect or respond without any physical contact with the object."
+      answers:
+        - { text: "A through-beam optical sensor", correct: true }
+        - { text: "A proximity sensor", correct: true }
+        - { text: "A roller-lever mechanical limit switch", distractorWhy: "Its lever must be physically pushed by the object." }
+        - { text: "A drum switch", distractorWhy: "It is turned by hand, not sensed." }
+        - { text: "A paddle-type flow switch", distractorWhy: "Its paddle must be moved by the passing stream." }
+      explanation: "Optical and proximity sensors detect from a distance. Limit, drum, and paddle devices move physically to change their contacts."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-4.question.tank-fill-predict
+    book: { chapter: 1, unit: 3, section: "3.4", page: 26, pageStatus: toc-unverified, figure: null }
+    claim: "As the tank fills, the float switch is actuated and its NO contact closes, lighting PL4."
+    body:
+      format: predict-state
+      day: 6
+      stem: "The simulated tank is filling. After a minute of filling its level has risen well above the float switch's set level. What do you see?"
+      scene:
+        actions: [{ do: mode, dev: TANK, arg: fill }, { do: advance, arg: 60 }]
+        expect: { lit: { PL4: true } }
+      answers:
+        - { text: "PL4 is lit, because the float switch is actuated", correct: true }
+        - { text: "PL4 is off, because a tank that fills sends the switch to normal", distractorWhy: "Rising liquid actuates the switch; it does not return it to its normal state." }
+        - { text: "PL4 is off, because the float switch is NC and opens at the level", distractorWhy: "FS1 is NO as manufactured; actuating it closes its contact." }
+        - { text: "PL4 flashes on and off, because float switches always chatter", distractorWhy: "A float above its set level stays actuated and the lamp stays steadily lit." }
+      explanation: "FS1 is NO as manufactured. Reaching its set level actuates it, which closes the contact and lights the TANK HIGH lamp."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-6.question.ls1-toggle-predict
+    book: { chapter: 1, unit: 3, section: "3.6", page: 27, pageStatus: toc-unverified, figure: null }
+    claim: "LS1 is NC in the bucket: actuating it opens the contact and de-energizes SOL1."
+    body:
+      format: predict-state
+      day: 6
+      stem: "SOL1 is energized through limit switch LS1 with the bucket at rest. You operate the LS1 lever. What happens to the SOL1 coil?"
+      scene:
+        actions: [{ do: toggle, dev: LS1 }, { do: advance, arg: 1 }]
+        expect: { coil: { SOL1.coil: false } }
+      answers:
+        - { text: "SOL1 de-energizes because LS1 is NC and has opened", correct: true }
+        - { text: "SOL1 stays energized because limit switches never open", distractorWhy: "A normally closed limit switch opens when actuated; that is its job here." }
+        - { text: "SOL1 energizes more strongly because LS1 closed", distractorWhy: "LS1 was already closed on the shelf; actuating it opens it." }
+        - { text: "SOL1 is unaffected because LS1 is wired to a lamp", distractorWhy: "In the bucket LS1 feeds the SOL1 coil directly, not a lamp." }
+      explanation: "LS1 is NC as manufactured, so SOL1 is energized at rest. Actuating the lever opens the contact and drops the solenoid out."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-9.question.air-fill-predict
+    book: { chapter: 1, unit: 3, section: "3.9", page: 28, pageStatus: toc-unverified, figure: null }
+    claim: "As air pressure rises past the set point the pressure switch PS1 closes and lights PL5; it stays closed when pressure only holds."
+    body:
+      format: predict-state
+      day: 6
+      stem: "The air receiver is filling and has had time to pass the pressure switch's cut-out setting. You then hold the pressure steady. What is PL5 doing?"
+      scene:
+        actions: [{ do: mode, dev: AIR, arg: fill }, { do: advance, arg: 90 }, { do: mode, dev: AIR, arg: hold }, { do: advance, arg: 30 }]
+        expect: { lit: { PL5: true } }
+      answers:
+        - { text: "Lit, because PS1 actuated and pressure has not dropped to release it", correct: true }
+        - { text: "Off, because PS1 resets as soon as pressure stops rising", distractorWhy: "Release needs pressure to fall back past the differential; holding is not falling." }
+        - { text: "Off, because PS1 only closes while pressure is still increasing", distractorWhy: "A pressure switch responds to the pressure level, not to its direction of change." }
+        - { text: "Lit only if someone toggles the pressure switch by hand", distractorWhy: "The simulated pressure operates the switch; no hand action is needed." }
+      explanation: "Pressure rose past the set point, so PS1 closed. Because of the differential, it stays closed until pressure falls enough to release it."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-4.question.tap-float-contact
+    book: { chapter: 1, unit: 3, section: "3.4", page: 26, pageStatus: toc-unverified, figure: null }
+    claim: "FS1.c is the float switch contact that closes when the tank reaches its set level."
+    body:
+      format: tap-schematic
+      day: 6
+      stem: "Tap the contact that closes to light the TANK HIGH lamp when the tank level reaches its set point."
+      tapTargets: ["FS1.c"]
+      tapWhy: "FS1.c is the float switch contact in series with PL4. It closes when the float actuates."
+      explanation: "The float switch sits in series with PL4. Rising level actuates it and closes the NO contact, which completes the lamp circuit."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-6.question.tap-limit-contact
+    book: { chapter: 1, unit: 3, section: "3.6", page: 27, pageStatus: toc-unverified, figure: null }
+    claim: "LS1.c is the NC limit switch contact in series with the SOL1 coil."
+    body:
+      format: tap-schematic
+      day: 6
+      stem: "Tap the normally closed limit switch contact that opens when its lever is pressed and so drops out the solenoid."
+      tapTargets: ["LS1.c"]
+      tapWhy: "LS1.c is the NC contact in series with the SOL1 coil."
+      explanation: "LS1 is closed on the shelf, so the solenoid is on at rest. Pressing the lever opens LS1.c and removes power from SOL1."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u3.s3-4.question.order-float-events
+    book: { chapter: 1, unit: 3, section: "3.4", page: 26, pageStatus: toc-unverified, figure: null }
+    claim: "As a tank fills, the float rises, the switch actuates, its NO contact closes, and the lamp lights."
+    body:
+      format: order-steps
+      day: 6
+      stem: "Put these events in order, first to last, as the tank fills and the TANK HIGH lamp comes on."
+      steps:
+        - "The tank level rises and lifts the float"
+        - "The float reaches its set level and actuates the switch"
+        - "The NO contact of the float switch closes"
+        - "Current flows through the contact and PL4 lights"
+      explanation: "The process moves the float, the float actuates the switch, the contact changes state, and only then does the lamp get power."
+      dependsOn: []

@@ -1,0 +1,153 @@
+defaults: &d
+  type: lessonCard
+  version: 1
+  nec: []
+  nema: []
+  ieee: []
+  excerpts: []
+  basis: general-knowledge
+  enforcedNote: null
+  other: []
+  bookAlignment: provisional
+  reviewerNotes: "General-knowledge summary keyed to the section title only; the textbook is not available. Check against the book when it arrives."
+items:
+  - <<: *d
+    id: ch01.u1.s1-1.card.what-motor-control-means
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "Motor control is the set of devices and wiring that start, stop, protect and sequence a motor or other load, usually using low-energy signals to command a higher-energy device."
+    body:
+      title: "What motor control means"
+      text: "Motor control is everything that decides when a motor runs and when it stops. A person pressing a button, a float rising in a tank, or a timer finishing its count can each send a signal. The control equipment takes those signals and turns the load on or off in the right order, and protects the motor if something goes wrong. Most of the time the signal itself carries very little energy compared with the motor it commands. That is why a small pushbutton on a panel door can start a machine many times larger than the button."
+      fieldNote: "Before touching any control equipment, ask two questions: what is it commanding, and what tells it to act?"
+      terms: ["motor control", "signal", "load"]
+      day: 1
+  - <<: *d
+    id: ch01.u1.s1-1.card.control-vs-power-circuit
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "The control circuit carries the signals that decide when to switch the load, while the power circuit carries the energy that actually runs the load."
+    body:
+      title: "Control circuit vs power circuit"
+      text: "A motor installation is usually split into two parts. The power circuit carries the large current that actually turns the motor. The control circuit carries the small signals that decide when the power circuit is switched on or off. They may even run at different voltages and come from different sources. In our practice bucket the control circuit is a 120 volt circuit between X1 and X2, and the heavy power parts are shown greyed out for later. Keeping the two ideas separate makes every schematic easier to read."
+      fieldNote: "A control circuit being low in energy does not make it harmless. Treat every circuit as live until you have proven otherwise."
+      terms: ["control circuit", "power circuit", "X1", "X2"]
+      day: 1
+  - <<: *d
+    id: ch01.u1.s1-1.card.pilot-devices-and-loads
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "A pilot device (pushbutton, switch, sensor) sends a command signal in a control circuit, while a load (lamp, coil, solenoid) is the part that does the work when current flows."
+    body:
+      title: "Pilot devices and loads"
+      text: "Two words appear in almost every control conversation. A pilot device is something that sends a command or reports a condition: a pushbutton, a selector switch, a float switch, a limit switch. A load is the part that uses the energy and does something when current reaches it: a pilot lamp, a relay coil, a solenoid valve. In a simple control circuit the pilot devices sit in the path and the load ends the path. Current only flows when every device in the path allows it."
+      fieldNote: "When a load does nothing, work backward: is the load itself bad, or is a pilot device in front of it not passing the signal?"
+      terms: ["pilot device", "load", "pushbutton", "pilot lamp"]
+      day: 1
+  - <<: *d
+    id: ch01.u1.s1-1.card.contact-coil-normal
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "A contact is a switching element that opens or closes a path, a coil is an electromagnet that moves contacts when energized, and the normal state of a device is its de-energized, as-manufactured state."
+    body:
+      title: "Contact, coil and the word normal"
+      text: "A contact is a pair of conducting surfaces that either completes or breaks a path. A coil is a winding that becomes an electromagnet when current flows, and it moves the contacts of a relay. The word normal describes a device on the shelf, with no power applied and nothing pressing on it. A normally open contact is open in that state and closes when operated; a normally closed contact is closed on the shelf and opens when operated. Normal never means how the device happens to be sitting in a particular installation."
+      fieldNote: "If a drawing shows a device and you are unsure of its state, picture it on the shelf with no power, then apply the operating action."
+      terms: ["contact", "coil", "normal state", "normally open", "normally closed"]
+      day: 1
+  - <<: *d
+    id: ch01.u1.s1-1.card.identify-all-energy-sources
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "A control enclosure can contain more than one energy source, including a circuit fed from a separate remote source that stays energized when the local disconnect or control supply is off."
+    body:
+      title: "Identify every energy source"
+      text: "Opening a bucket door and seeing one supply is not enough. Some control enclosures also contain an interlock circuit that is fed from a different source, such as a remote panel. It often has its own warning label on the door, and some sites use orange conductors for such circuits, though that is a local convention and not a universal rule. Because its source is elsewhere, it stays live even when the bucket's own control supply is turned off. Use the drawings, the labels and the conductor colors to find every source before you decide the equipment is safe."
+      fieldNote: "A label that says more than one source feeds this enclosure is an instruction to go find that other source."
+      terms: ["foreign voltage", "interlock circuit", "warning label", "remote source"]
+      day: 1
+  - <<: *d
+    id: ch01.u1.s1-1.card.meter-basics
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "To check a 120 volt AC control circuit, set the meter to AC voltage and first confirm it works by measuring a source known to be live."
+    body:
+      title: "Meter basics: VAC and a known source"
+      text: "A multimeter reads many things, and the function selector decides which one. Control circuits in our bucket are alternating current, so voltage checks use the AC voltage setting, written VAC. Before trusting any reading, prove the meter itself works by measuring a source you know is live. A meter with a dead battery, a blown fuse or a wrong setting can show zero on a live circuit, and zero is exactly the reading that tempts you to relax. Check the leads and the selector before every set of measurements."
+      fieldNote: "A reading of zero only means something if the meter was shown to read correctly just before and just after."
+      terms: ["VAC", "known live source", "multimeter"]
+      day: 1
+  - <<: *d
+    id: ch01.u1.s1-2.card.motor-control-basics
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "Basic motor control lets an operator or a sensor start, stop and protect a load from a convenient location by switching a control device that in turn switches the load."
+    body:
+      title: "Motor control basics"
+      text: "At its simplest, motor control lets someone start and stop a machine from a convenient place without handling the heavy power wiring. The operator works a pilot device, the control circuit responds, and a relay or similar device switches the load. Good control also considers safety: a stop device should always be able to end the run, and an unexpected restart must not be possible while someone is working on the equipment. That last idea is why isolating and locking out the energy matters before any hands-on work."
+      fieldNote: "Control that is convenient for the operator must never be mistaken for a safe way to isolate the machine for maintenance."
+      terms: ["start", "stop", "control device", "load"]
+      day: 2
+  - <<: *d
+    id: ch01.u1.s1-2.card.loto-prepare-shutdown
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "An example lockout/tagout sequence begins by preparing and identifying all energy sources, then stopping the equipment by its normal shutdown procedure."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO content: example sequence only, framed as always follow your employer's procedure. No clause text quoted. Needs human safety sign-off."
+    body:
+      title: "LOTO example: prepare and shut down"
+      text: "This is an example procedure that follows OSHA lockout/tagout practice. Always follow your employer's own written procedure. Step one is to prepare: learn what the equipment is, find every energy source using drawings and labels, including a foreign source such as a remote interlock circuit, and tell the people affected. Step two is to stop the equipment the normal way, using its regular stop control, so it comes to rest in an orderly manner. Only after that do you start isolating. Skipping the preparation is how a hidden source gets missed."
+      fieldNote: "Write down every source you find. If the drawing and the enclosure disagree, stop and resolve it before going on."
+      terms: ["lockout/tagout", "energy source", "normal shutdown"]
+      day: 2
+      loto: true
+  - <<: *d
+    id: ch01.u1.s1-2.card.loto-isolate-lock-tag
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "In the example sequence, every identified energy source is isolated, including a foreign source, and a lock and tag are applied at each isolation point."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO content: example sequence only. No clause text quoted. Needs human safety sign-off."
+    body:
+      title: "LOTO example: isolate, lock and tag"
+      text: "Next you isolate: open or disconnect every source of energy you identified. The bucket's own disconnect does not touch a circuit fed from a remote source, so that source must be isolated at its own origin. Then apply a lock and a tag at each isolation point. The lock physically holds the device off, and the tag tells others who applied it and why. Each person working on the equipment follows your employer's rules for applying their own lock. This example follows OSHA lockout/tagout practice, but your employer's procedure always governs."
+      fieldNote: "A tag alone is a warning, not a barrier. Use the lock whenever the device can be locked."
+      terms: ["isolate", "lock", "tag", "foreign source"]
+      day: 2
+      loto: true
+  - <<: *d
+    id: ch01.u1.s1-2.card.loto-stored-energy
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "After isolating and locking out, stored energy such as a charged capacitor, a raised load or compressed air must be relieved, disconnected or restrained before the work starts."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO content: example sequence only. Stored energy examples are generic. Needs human safety sign-off."
+    body:
+      title: "LOTO example: stored energy"
+      text: "Turning off the sources is not always the end of the energy. Some equipment keeps energy after it is isolated: a capacitor that holds a charge, a spring under tension, a load that could fall, or air or fluid trapped under pressure. Before work starts, that energy must be relieved, disconnected or restrained, for example by draining the pressure, blocking the load or discharging the capacitor by an approved method. Which method is acceptable comes from the equipment documentation and your employer's procedure, not from guesswork."
+      fieldNote: "Ask what could still move, spin, fall or discharge even with every source off."
+      terms: ["stored energy", "capacitor", "restrain"]
+      day: 2
+      loto: true
+  - <<: *d
+    id: ch01.u1.s1-2.card.loto-live-dead-live
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "Verification for electrical energy uses live-dead-live: prove the meter on a known live source, test for absence of voltage on every combination including foreign circuit terminals, then prove the meter again."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO content: follows NFPA 70E live-dead-live concept; no clause text quoted. Needs human safety sign-off."
+    body:
+      title: "LOTO example: live-dead-live"
+      text: "The last step is to verify, and for electrical energy this follows the live-dead-live method used in NFPA 70E. First, check your meter on a known live source. Second, test for absence of voltage on every combination: X1 to X2, X1 to ground, X2 to ground, and the terminals of any foreign circuit to each other and to ground. Third, check the meter again on the known source to show it still works. If any reading shows voltage, stop and go back to find the source you missed."
+      fieldNote: "Only the final live check proves that the zero you saw came from a working meter."
+      terms: ["live-dead-live", "test for absence of voltage", "ground"]
+      day: 2
+      loto: true
+  - <<: *d
+    id: ch01.u1.s1-2.card.ohmmeter-only-dead
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "The ohmmeter or continuity function must be used only on circuits that are de-energized and isolated, never to test for voltage."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "Safety rule stated qualitatively. Needs human safety sign-off."
+    body:
+      title: "Ohmmeter only on dead circuits"
+      text: "In resistance and continuity modes the meter supplies its own small test current and expects the circuit to have no voltage of its own. On a live circuit the reading is meaningless and the meter can be damaged or the result can mislead you. So use the ohms or continuity function only after the circuit has been isolated and proven dead by the live-dead-live test. Never use it to find out whether a circuit is energized; use the voltage function for that, after proving the meter on a known source."
+      fieldNote: "Choose the function first, then touch the circuit. A wrong dial setting is a common cause of a damaged meter."
+      terms: ["ohmmeter", "continuity", "de-energized"]
+      day: 2
+      loto: true

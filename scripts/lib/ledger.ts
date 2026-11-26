@@ -5,7 +5,7 @@ const VERDICTS = new Set(['approved', 'approved-pending-book', 'needs-fix', 'que
 
 /** Items that cite NEC/NEMA/IEEE/OSHA/70E clause text (or need sign-off) cannot be reviewed without source text. */
 export function needsSource(it: Item): boolean {
-  return it.nec.length > 0 || it.nema.length > 0 || it.ieee.length > 0 || !!it.userSignoff ||
+  return it.body?.format === 'identify-symbol' || it.nec.length > 0 || it.nema.length > 0 || it.ieee.length > 0 || !!it.userSignoff ||
     (it.other ?? []).some((o: any) => /^(osha|nfpa70e|nfpa-70e|nec|nema|ieee)/i.test(o.src));
 }
 

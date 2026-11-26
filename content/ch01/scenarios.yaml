@@ -1,0 +1,116 @@
+defaults: &d
+  type: scenario
+  version: 1
+  nec: []
+  nema: []
+  ieee: []
+  excerpts: []
+  basis: illustrative
+  enforcedNote: null
+  other: [{ src: "datasheet:TBD" }]
+  bookAlignment: provisional
+  reviewerNotes: "Bucket readings are model outputs (typical/illustrative device values); nothing here is graded on a specific reading. See the generated review sheets."
+items:
+  - <<: *d
+    id: ch01.u1.s1-1.activity.bucket-tour
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "Open the door (it only opens with the handle OFF). Identify the parts. Find the control source X1/X2, the terminal strip, and the orange foreign-voltage interlock circuit with its door warning label. Set the meter to VAC and prove it on the known source."
+    body:
+      title: "Bucket tour: find every energy source"
+      day: 1
+      bucket: "1A"
+      steps: ["Tap the handle and open the door", "Tap each device and read its nameplate", "Find wires 91/92 (orange) and the warning label", "Set the meter to VAC and read X1-X2 on the live bucket"]
+      faults: []
+  - <<: *d
+    id: ch01.u1.s1-2.activity.loto-drill
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "Follow the ordered example sequence and verify absence of voltage on every combination before touching anything. Always follow your employer's procedure."
+    body:
+      title: "LOTO drill (example procedure)"
+      day: 2
+      loto: true
+      bucket: "1A"
+      steps: ["Identify all sources, including the foreign circuit", "Normal shutdown", "Isolate both sources", "Lock and tag each isolation point", "Relieve stored energy", "Meter on known source, test X1-X2, X1-G, X2-G and 91/92, 91-G, 92-G, re-verify the meter", "Measure continuity on the de-energized bench"]
+      faults: []
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+  - <<: *d
+    id: ch01.u2.s2-1.activity.device-bench
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "Meter a pushbutton and CR1's NO and NC contacts at rest and operated, and record a truth table."
+    body:
+      title: "Device bench: truth table"
+      day: 3
+      bucket: "1A"
+      steps: ["Press and release PB1 and watch the contact", "Meter across PB1 contacts, open and closed", "Meter CR1 NO and NC contacts, dropped out and picked up", "Fill in the truth table"]
+      faults: []
+  - <<: *d
+    id: ch01.u2.s2-3.activity.tag-the-bucket
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "Match each physical device to its symbol and designation, and find the mislabeled tag."
+    body:
+      title: "Tag the bucket"
+      day: 4
+      bucket: "1A"
+      steps: ["Tap a device, pick its symbol and designation", "Repeat for every device on the panel", "Find the one tag that does not match its device"]
+      faults: []
+  - <<: *d
+    id: ch01.u3.s3-2.activity.relay-bench
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "Energize CR1 from PB1, watch contacts change state, meter the coil de-energized, and meter across an open vs closed contact while energized. Then find the open coil."
+    body:
+      title: "Relay bench with an open coil"
+      day: 5
+      bucket: "1A"
+      steps: ["Press PB1 and watch CR1", "Meter across PB1 and across CR1 NO contact, energized", "Lock out, then meter coil resistance", "Troubleshoot the open-coil work order"]
+      faults: [open-coil]
+  - <<: *d
+    id: ch01.u3.s3-4.activity.sensor-loop
+    book: { chapter: 1, unit: 3, section: "3.4", page: 26, pageStatus: toc-unverified, figure: null }
+    claim: "Fill the tank, pressurize the air receiver, heat the process. Predict lamp states, then verify. Then find the float switch landed on the wrong contact."
+    body:
+      title: "Sensor loop"
+      day: 6
+      bucket: "1A"
+      steps: ["Predict PL4, PL5, PL6 before running the process", "Run fill/hold/drain and compare", "Troubleshoot the float-switch work order"]
+      faults: [float-no-nc-miswire, stuck-limit-switch]
+  - <<: *d
+    id: ch01.u3.s3-10.activity.pushbutton-solenoid
+    book: { chapter: 1, unit: 3, section: "3.10", page: 29, pageStatus: toc-unverified, figure: null }
+    claim: "Operate PB1, PB2, the maintained mushroom PB3 and the solenoid valve, and meter each. Then troubleshoot a loose terminal or a high-resistance contact."
+    body:
+      title: "Pushbutton station and solenoid valve"
+      day: 7
+      bucket: "1A"
+      steps: ["Operate each pushbutton and note contact state", "Meter across the solenoid coil", "Troubleshoot the START work order"]
+      faults: [loose-terminal, high-resistance-contact]
+  - <<: *d
+    id: ch01.u3.s3-14.activity.timer-bench
+    book: { chapter: 1, unit: 3, section: "3.14", page: 35, pageStatus: toc-unverified, figure: null }
+    claim: "Predict timer contact timing including reset cases on the simulated clock, then troubleshoot a wrong timer type or an off-delay wired without constant supply."
+    body:
+      title: "Timer bench"
+      day: 8
+      bucket: "1A"
+      steps: ["Predict TR1 and TR2 lamp timing", "Drop the coil before the preset and watch the reset", "Re-energize TR2 during timing", "Troubleshoot the timer work order"]
+      faults: [wrong-timer-type, ss-offdelay-no-constant-supply]
+  - <<: *d
+    id: ch01.u3.s3-18.activity.trace-and-troubleshoot
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "Follow the schematic to the physical terminals, then diagnose two faults drawn at random from Days 5-8."
+    body:
+      title: "Trace and troubleshoot"
+      day: 9
+      bucket: "1A"
+      steps: ["Tap a rung on the schematic and find its terminals", "Check the wire numbers match", "Diagnose two random faults"]
+      faults: [open-wire, contact-on-x2-side]
+  - <<: *d
+    id: ch01.u3.s3-18.activity.commissioning-check
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "Three random faults, scored on correct diagnosis, safe process and number of measurements used. Passing completes Act 1."
+    body:
+      title: "Commissioning check"
+      day: 10
+      bucket: "1A"
+      steps: ["Receive three work orders", "Lock out before touching anything", "Diagnose and repair each fault", "Review score"]
+      faults: [any-three]

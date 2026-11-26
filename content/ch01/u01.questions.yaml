@@ -1,0 +1,373 @@
+defaults: &d
+  type: question
+  version: 1
+  nec: []
+  nema: []
+  ieee: []
+  excerpts: []
+  basis: general-knowledge
+  enforcedNote: null
+  other: []
+  bookAlignment: provisional
+  reviewerNotes: "General-knowledge question keyed to the section title only; the textbook is not available."
+items:
+  # ---------------- Day 1 (section 1.1) ----------------
+  - <<: *d
+    id: ch01.u1.s1-1.question.control-vs-power
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "The control circuit carries the signals that decide when the load is switched, while the power circuit carries the energy that runs the load."
+    body:
+      format: mcq
+      day: 1
+      stem: "Which statement best describes the control circuit of a motor installation?"
+      answers:
+        - { text: "It carries the signals that decide when the load is switched on or off.", correct: true }
+        - { text: "It carries the large current that turns the motor shaft under load.", distractorWhy: "That describes the power circuit, not the control circuit." }
+        - { text: "It is the section that stays dead because it only holds the wire labels.", distractorWhy: "A control circuit is a working circuit and can be energized; wire labels are just markings." }
+        - { text: "It is the metal enclosure and bonding path around the equipment.", distractorWhy: "The enclosure and bonding path are grounding parts, not the control circuit." }
+      explanation: "The control circuit decides, and the power circuit does the heavy work. Separating the two ideas makes schematics easier to read, and it reminds you that a control circuit can still be live."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-1.question.pilot-device
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "A pushbutton is a pilot device, which sends a command signal, while a relay coil or pilot lamp is a load."
+    body:
+      format: mcq
+      day: 1
+      stem: "Which of these is a pilot device rather than a load?"
+      answers:
+        - { text: "A pushbutton that sends a start signal", correct: true }
+        - { text: "A green pilot lamp that glows when current flows", distractorWhy: "A lamp uses the energy and does something with it, so it is a load." }
+        - { text: "A solenoid valve operator that moves a plunger", distractorWhy: "A solenoid coil is a load that does work when energized." }
+        - { text: "A relay coil that closes contacts when it is energized", distractorWhy: "A coil is a load; its contacts are what the circuit then uses." }
+      explanation: "Pilot devices command or report; loads consume energy and act. A lamp, a coil and a solenoid are all loads."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-1.question.normal-state
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "The normal state of a contact or device is its de-energized, as-manufactured shelf state."
+    body:
+      format: mcq
+      day: 1
+      stem: "What does the word normal mean when describing a normally closed contact?"
+      answers:
+        - { text: "It is closed when the device has no power and nothing operating it.", correct: true }
+        - { text: "It is closed during ordinary running because that is the usual operating mode.", distractorWhy: "Normal refers to the shelf state, not to what happens during typical running." }
+        - { text: "It is closed whenever the coil of the nearest relay is energized.", distractorWhy: "A contact closed by an energized coil has changed state; that is not its normal state." }
+        - { text: "It is closed only after the operator has pressed the pushbutton once.", distractorWhy: "Operating the device changes its state; normal is the state before that." }
+      explanation: "Normal means de-energized and not operated. A normally closed contact is closed in that state and opens when operated."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-1.question.foreign-voltage-live
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "An interlock circuit fed from a remote source remains energized when the bucket's own control supply is off, because its source is elsewhere."
+    body:
+      format: mcq
+      day: 1
+      stem: "The bucket control supply is off, but the door carries a warning label and orange conductors run to the terminal strip. What should you assume about those conductors?"
+      answers:
+        - { text: "They may still be live, because a separate remote source feeds them.", correct: true }
+        - { text: "They are dead, because turning off the bucket supply turns off everything inside.", distractorWhy: "A circuit fed from another source is not controlled by the bucket's own supply." }
+        - { text: "They are safe to touch because orange conductors always mean a de-energized circuit.", distractorWhy: "Orange is only a local convention for foreign circuits and says nothing about being de-energized." }
+        - { text: "They are only a spare cable that carries no signal at all.", distractorWhy: "The warning label indicates a real circuit; assuming a spare is an unsafe guess." }
+      explanation: "A foreign-voltage circuit stays energized from its own source. The label is a prompt to find that source and isolate it before work."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-1.question.meter-function
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "A 120 volt AC control circuit is checked for voltage with the meter set to AC voltage (VAC)."
+    body:
+      format: mcq
+      day: 1
+      stem: "You need to check for voltage on a 120 V AC control terminal. Which meter setting is correct?"
+      answers:
+        - { text: "AC voltage, marked VAC", correct: true }
+        - { text: "Continuity, marked with a beeper symbol", distractorWhy: "Continuity mode supplies its own test current and is for de-energized circuits only." }
+        - { text: "DC voltage, marked VDC", distractorWhy: "A control circuit on alternating current is read on the AC function." }
+        - { text: "Resistance, marked with the ohm symbol", distractorWhy: "Resistance mode must only be used on de-energized, isolated circuits and does not show voltage." }
+      explanation: "Match the meter function to what you are measuring. AC control voltage uses the VAC setting; ohms and continuity belong on dead circuits only."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-1.question.verify-meter-first
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "A meter is verified on a known live source so that a zero reading on the circuit under test can be trusted."
+    body:
+      format: mcq
+      day: 1
+      stem: "Why should you check your meter on a known live source before using it?"
+      answers:
+        - { text: "So you know a zero reading later means no voltage, not a bad meter.", correct: true }
+        - { text: "So the meter battery is charged by the voltage of the known source.", distractorWhy: "Measuring a source does not charge the battery; the purpose is to prove function." }
+        - { text: "So the meter automatically selects the correct range for later readings.", distractorWhy: "Range selection has nothing to do with proving the meter works." }
+        - { text: "So the circuit under test is guaranteed to be de-energized afterwards.", distractorWhy: "Checking the meter says nothing about the circuit you will test next." }
+      explanation: "A faulty meter or wrong setting can read zero on a live circuit. Proving it on a known source first removes that doubt."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-1.question.pb1-predict
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "When the start pushbutton PB1 is pressed, CR1 picks up, its normally open contact lights PL1 and its normally closed contact turns PL2 off."
+    body:
+      format: predict-state
+      day: 1
+      stem: "In the bucket, PB1 (the START pushbutton) is pressed and the circuit settles. What happens to the CR1 coil and the green and red pilot lamps?"
+      scene:
+        actions:
+          - { do: press, dev: PB1 }
+          - { do: advance, arg: 1 }
+        expect:
+          lit: { PL1: true, PL2: false }
+          coil: { CR1.coil: true }
+      answers:
+        - { text: "CR1 is energized, PL1 (green) is on and PL2 (red) is off.", correct: true }
+        - { text: "CR1 is energized, but PL1 is off and PL2 stays on.", distractorWhy: "When CR1 picks up its NO contact closes to light PL1 and its NC contact opens to turn PL2 off." }
+        - { text: "CR1 stays off because pressing PB1 only opens a contact.", distractorWhy: "PB1 is normally open; pressing it closes the path to the CR1 coil." }
+        - { text: "CR1 is energized and both PL1 and PL2 are on.", distractorWhy: "The NC contact that feeds PL2 opens once CR1 is energized, so PL2 goes dark." }
+      explanation: "Pressing PB1 energizes the CR1 coil. The coil moves its contacts: the normally open one closes (PL1 on) and the normally closed one opens (PL2 off)."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-1.question.shelf-state-predict
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "With everything idle, CR1 is de-energized, so its normally closed contact lights PL2 and its normally open contact leaves PL1 off."
+    body:
+      format: predict-state
+      day: 1
+      stem: "The bucket is powered and nothing has been pressed. Which lamps are lit?"
+      scene:
+        actions: []
+        expect:
+          lit: { PL1: false, PL2: true }
+          coil: { CR1.coil: false }
+      answers:
+        - { text: "PL2 (red) is on and PL1 (green) is off, because CR1 is de-energized.", correct: true }
+        - { text: "PL1 (green) is on and PL2 (red) is off, because the bucket is powered.", distractorWhy: "PL1 is fed through a normally open contact, which stays open with the coil de-energized." }
+        - { text: "Both PL1 and PL2 are off until someone presses a button.", distractorWhy: "PL2 is fed through a normally closed contact, so it is lit in the idle state." }
+        - { text: "Both PL1 and PL2 are on because the supply reaches both.", distractorWhy: "A normally open contact blocks PL1 until CR1 energizes." }
+      explanation: "Idle means every device is in its normal state. The NC contact passes current to PL2 and the NO contact blocks PL1."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-1.question.interlock-lamp-predict
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "The remote interlock lamp PLF is fed from a foreign source and stays lit when the bucket's own control supply is switched off."
+    body:
+      format: predict-state
+      day: 1
+      stem: "The bucket control supply is switched off. What happens to the remote interlock lamp PLF, which is fed through the orange conductors?"
+      scene:
+        actions:
+          - { do: supply, arg: false }
+        expect:
+          lit: { PLF: true, PL2: false, PL1: false }
+      answers:
+        - { text: "PLF stays lit, because a remote source feeds it.", correct: true }
+        - { text: "PLF goes dark, because every lamp depends on the bucket supply.", distractorWhy: "PLF is on a foreign circuit that does not depend on the bucket control supply." }
+        - { text: "PLF flickers until the bucket supply is restored.", distractorWhy: "Nothing in the bucket affects its source, so it simply stays on." }
+        - { text: "PLF lights only if PB1 is also pressed.", distractorWhy: "PB1 is in the bucket control circuit and has no part in the interlock circuit." }
+      explanation: "With the bucket supply off, the bucket lamps go dark, but the interlock circuit still has its own source. That is why identifying every source matters."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-1.question.energy-sources-multi
+    book: { chapter: 1, unit: 1, section: "1.1", page: 4, pageStatus: toc-unverified, figure: null }
+    claim: "The bucket control supply and the remote source feeding the interlock circuit are energy sources to identify; a pilot lamp and a relay coil are loads."
+    body:
+      format: multi-select
+      day: 1
+      stem: "During the bucket tour, which of these are energy sources you must identify? Select all that apply."
+      answers:
+        - { text: "The control supply between X1 and X2", correct: true }
+        - { text: "The remote source behind the orange interlock conductors", correct: true }
+        - { text: "The green pilot lamp PL1", distractorWhy: "A lamp is a load that uses energy; it is not a source." }
+        - { text: "The CR1 relay coil", distractorWhy: "A coil is a load; it takes energy from a source." }
+      explanation: "Sources supply energy. The control supply and the remote interlock source are both sources; lamps and coils are loads."
+      dependsOn: []
+  # ---------------- Day 2 (section 1.2) ----------------
+  - <<: *d
+    id: ch01.u1.s1-2.question.employer-procedure
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "A lockout/tagout sequence taught as an example does not replace the employer's own written procedure, which must be followed."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO-related item. No clause text quoted. Needs human safety sign-off."
+    body:
+      format: mcq
+      day: 2
+      stem: "The lockout/tagout steps in this course are an example. What should you do when your employer's procedure differs in some details?"
+      answers:
+        - { text: "Follow your employer's written procedure.", correct: true }
+        - { text: "Follow the course steps, since they were learned most recently.", distractorWhy: "The course is an example; the employer's procedure governs on the job." }
+        - { text: "Use whichever procedure takes fewer steps on that job.", distractorWhy: "Shortcuts are how steps get skipped; fewer steps is not a valid reason." }
+        - { text: "Combine both and skip any step the two do not share.", distractorWhy: "Dropping steps based on a comparison is unsafe and not a sanctioned approach." }
+      explanation: "Employers write procedures for their own equipment and hazards. An example teaches the logic; the employer's procedure is the one to follow."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-2.question.loto-order
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "The example lockout/tagout order is prepare and identify all sources, normal shutdown, isolate, lock and tag, relieve stored energy, then verify."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO-related item; example order only. Needs human safety sign-off."
+    body:
+      format: order-steps
+      day: 2
+      stem: "Put this example lockout/tagout sequence in the correct order."
+      steps:
+        - "Prepare and identify all energy sources"
+        - "Shut down by the normal stopping procedure"
+        - "Isolate every energy source, including the foreign source"
+        - "Apply a lock and tag at each isolation point"
+        - "Relieve or restrain stored energy"
+        - "Verify absence of voltage with live-dead-live"
+      explanation: "You must know every source before isolating, stop the equipment in an orderly way, isolate and lock, deal with stored energy, and only then prove the circuit dead."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-2.question.identify-sources-multi
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "Preparation must find the control supply, any remote foreign source and stored energy, not only the source controlled by the local disconnect."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO-related item. Stored energy examples are generic. Needs human safety sign-off."
+    body:
+      format: multi-select
+      day: 2
+      stem: "Before isolating a bucket for work, which of these must be identified as energy to deal with? Select all that apply."
+      answers:
+        - { text: "The control supply feeding X1 and X2", correct: true }
+        - { text: "A remote source feeding an interlock circuit", correct: true }
+        - { text: "Stored energy such as a charged capacitor or trapped pressure", correct: true }
+        - { text: "Only whatever the bucket disconnect handle controls", distractorWhy: "A disconnect does not control a circuit fed from another source." }
+        - { text: "The pilot lamp PL1, since it is the only part that glows", distractorWhy: "A lamp is a load, not a source of energy." }
+      explanation: "Energy can come from the local supply, from a foreign source, or be stored in equipment. Missing any one of them leaves a hazard."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-2.question.normal-shutdown
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "In the example sequence the equipment is stopped by its normal stopping procedure before the energy sources are isolated."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO-related item. Needs human safety sign-off."
+    body:
+      format: mcq
+      day: 2
+      stem: "In the example lockout/tagout sequence, why is the equipment stopped normally before the isolating devices are opened?"
+      answers:
+        - { text: "So the equipment stops in an orderly way, not by an abrupt loss of power.", correct: true }
+        - { text: "So the stop button can serve as the lock in place of a padlock.", distractorWhy: "A stop control is not an isolation device and never replaces a lock." }
+        - { text: "So the isolating devices are not needed once the stop is pressed.", distractorWhy: "Normal stopping does not isolate any energy source; isolation is still required." }
+        - { text: "So the test for absence of voltage can be skipped later on.", distractorWhy: "Verification is always required; stopping does not replace it." }
+      explanation: "A normal stop brings the machine to rest in a controlled way. It is not isolation, so every later step is still needed."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-2.question.isolate-foreign
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "A foreign-voltage circuit must be isolated at its own remote source, because the bucket disconnect does not de-energize it."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO-related item. Needs human safety sign-off."
+    body:
+      format: mcq
+      day: 2
+      stem: "Where is the interlock circuit fed from a remote panel isolated in the example sequence?"
+      answers:
+        - { text: "At its own source, in the remote panel, with its own lock and tag.", correct: true }
+        - { text: "At the bucket disconnect, since that handle opens every circuit inside.", distractorWhy: "The bucket disconnect only opens the circuits it controls; the remote source is unaffected." }
+        - { text: "Nowhere, because a low-energy interlock circuit cannot hurt anyone.", distractorWhy: "Low energy does not mean harmless; every source must be isolated or proven dead." }
+        - { text: "By pulling the warning label off the door and keeping it nearby.", distractorWhy: "A label is information, not an isolation device." }
+      explanation: "Each source is isolated where it originates. The bucket disconnect cannot isolate a remote source, so the foreign circuit needs its own lock and tag."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-2.question.lock-versus-tag
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "A lock physically holds an isolating device off, while a tag is a warning that identifies who applied it and why."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO-related item. Needs human safety sign-off."
+    body:
+      format: mcq
+      day: 2
+      stem: "What is the difference between the lock and the tag at an isolation point?"
+      answers:
+        - { text: "The lock holds the device off; the tag warns and names who applied it.", correct: true }
+        - { text: "The tag holds the device off; the lock is only a decoration for visibility.", distractorWhy: "A tag cannot physically hold a device off; the lock does that." }
+        - { text: "They do the same job, so using one of them on the device is always enough.", distractorWhy: "They serve different purposes; a lock is a barrier and a tag is a warning." }
+        - { text: "The lock tells others the reason, and the tag stops the handle moving.", distractorWhy: "That reverses the roles: the tag communicates, the lock restrains." }
+      explanation: "A lock is a barrier; a tag is information. The example procedure uses both."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-2.question.recheck-meter
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "In live-dead-live, the meter is checked on a known source again after the absence-of-voltage tests to show it did not fail during the tests."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO-related item. Follows 70E live-dead-live concept without clause text. Needs human safety sign-off."
+    body:
+      format: mcq
+      day: 2
+      stem: "In live-dead-live, why is the meter checked on the known live source again after the zero readings?"
+      answers:
+        - { text: "To show the meter still works, so the zero readings can be trusted.", correct: true }
+        - { text: "To drain any leftover charge out of the circuit that was tested.", distractorWhy: "A meter check does not discharge anything; stored energy is handled earlier." }
+        - { text: "To re-energize the circuit so the lock can be removed safely.", distractorWhy: "Re-energizing is the opposite of the goal; the final check only proves the meter." }
+        - { text: "To reset the meter so it displays zero for the next user.", distractorWhy: "The check is about proof of function, not about resetting a display." }
+      explanation: "A meter can fail during the tests. The second live check shows it still read correctly, so the dead readings mean the circuit really was dead."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-2.question.absence-combinations
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "Absence of voltage is tested on every combination: X1 to X2, X1 to ground, X2 to ground, and any foreign circuit terminals."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO-related item. Needs human safety sign-off."
+    body:
+      format: mcq
+      day: 2
+      stem: "Which set of checks correctly covers the test for absence of voltage on the bucket?"
+      answers:
+        - { text: "X1-X2, X1-ground, X2-ground, plus foreign circuit terminals", correct: true }
+        - { text: "X1-X2 only, since that pair is the control supply itself", distractorWhy: "A single pair can read zero while another combination is still live, for example a fault to ground." }
+        - { text: "X1-ground only, since ground is the safest reference point", distractorWhy: "One combination does not show the other conductor or the foreign circuit is dead." }
+        - { text: "Only the terminals that a technician happened to label", distractorWhy: "Labels can be missing or wrong; every combination must be tested." }
+      explanation: "Testing every combination, including foreign-circuit terminals, catches live conductors that a single reading would miss."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-2.question.ohmmeter-rule
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "The ohmmeter or continuity function is used only on circuits that are de-energized and isolated."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO-related item. Needs human safety sign-off."
+    body:
+      format: mcq
+      day: 2
+      stem: "When is it appropriate to use the ohmmeter or continuity function on a control circuit?"
+      answers:
+        - { text: "Only after the circuit is isolated and proven de-energized", correct: true }
+        - { text: "Any time, because the meter protects itself from live circuits", distractorWhy: "Resistance mode is not designed for live circuits and can give false readings or damage the meter." }
+        - { text: "To decide whether the circuit is live before you test it", distractorWhy: "Use the voltage function to look for voltage, after proving the meter on a known source." }
+        - { text: "Whenever the pilot lamp is dark, since a dark lamp means dead", distractorWhy: "A dark lamp does not prove the circuit is dead; a blown lamp or open contact looks the same." }
+      explanation: "Ohms and continuity supply their own test current and assume no external voltage. Isolate and verify first, then switch to those functions."
+      dependsOn: []
+  - <<: *d
+    id: ch01.u1.s1-2.question.supply-off-predict
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "After the bucket control supply is removed, CR1 drops out and the bucket lamps go dark, but the remote interlock lamp PLF stays lit."
+    userSignoff: pending
+    other: [{ src: "osha:1910.147(d)" }, { src: "nfpa70e-2024:test-for-absence" }]
+    reviewerNotes: "LOTO-related item (supply-off state versus foreign source). Needs human safety sign-off."
+    body:
+      format: predict-state
+      day: 2
+      stem: "The START button was pressed and CR1 is running. The bucket control supply is then switched off. What is the state of CR1 and the lamps PL1, PL2 and PLF?"
+      scene:
+        actions:
+          - { do: press, dev: PB1 }
+          - { do: advance, arg: 1 }
+          - { do: supply, arg: false }
+        expect:
+          lit: { PL1: false, PL2: false, PLF: true }
+          coil: { CR1.coil: false }
+      answers:
+        - { text: "CR1 drops out and PL1 and PL2 are off, but PLF is still lit.", correct: true }
+        - { text: "CR1 drops out and every lamp including PLF goes dark.", distractorWhy: "PLF is fed from a foreign source and stays lit with the bucket supply off." }
+        - { text: "CR1 stays in and PL1 remains lit because the button is held.", distractorWhy: "With no supply there is no coil current, so CR1 cannot stay picked up." }
+        - { text: "CR1 drops out and PL2 lights because the NC contact has closed.", distractorWhy: "PL2 needs supply voltage to light; with the supply off, it cannot be on." }
+      explanation: "No supply means no coil current and no lamp current in the bucket. The interlock circuit is the exception, since a different source feeds it. That is why a bucket that looks dead can still be live."
+      dependsOn: []

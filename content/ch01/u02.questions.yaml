@@ -1,0 +1,321 @@
+# Unit 2 questions: day 3 (2.1 terminology) and day 4 (2.2 abbreviations, 2.3 symbols). Ten each.
+defaults: &d
+  type: question
+  version: 1
+  nec: []
+  nema: []
+  ieee: []
+  excerpts: []
+  basis: general-knowledge
+  enforcedNote: null
+  other: []
+  bookAlignment: provisional
+  reviewerNotes: "General-knowledge vocabulary question; no numbers from typical parameters. Book alignment pending."
+items:
+  # ======================================================== DAY 3 (2.1)
+  - <<: *d
+    id: ch01.u2.s2-1.question.normally-closed-meaning
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "A normally closed contact is closed in the de-energized, unoperated (shelf) state."
+    body:
+      format: mcq
+      day: 3
+      stem: "A control relay sits on the shelf, never connected to power. One of its contacts is described as 'normally closed.' What does that mean?"
+      answers:
+        - { text: "It is closed while the coil is de-energized, and it opens when the coil energizes", correct: true }
+        - { text: "It is closed whenever the machine is running normally, even while the coil is energized", distractorWhy: "'Normal' is not the running condition of a machine. It is the shelf, de-energized state." }
+        - { text: "It is closed only after the coil has been energized for some period of time", distractorWhy: "That describes a timed contact, not the plain normal state." }
+        - { text: "It is closed or open depending on how the technician left it last", distractorWhy: "The normal state is fixed by construction, not by the last user." }
+      explanation: "Normal means de-energized and unoperated, as manufactured. A normally closed contact is closed in that state and opens when the device operates. A normally open contact is the reverse."
+  - <<: *d
+    id: ch01.u2.s2-1.question.maintained-operator
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "A maintained operator stays in its operated position after release until reset; a momentary operator springs back."
+    body:
+      format: mcq
+      day: 3
+      stem: "Which operator stays in its operated position after you let go, until someone resets it by hand?"
+      answers:
+        - { text: "A maintained operator, such as a latching mushroom head pulled to reset", correct: true }
+        - { text: "A momentary pushbutton, since its contacts keep the new state after release", distractorWhy: "Momentary operators spring back as soon as they are released." }
+        - { text: "A normally open contact, since open and closed describe how long it stays put", distractorWhy: "NO and NC describe the shelf state of a contact, not what the operator does after release." }
+        - { text: "A pilot light, since its lens stays lit until the circuit is reset", distractorWhy: "A pilot light is an indicator, not an operator you press or release." }
+      explanation: "Maintained and momentary describe the operator's behavior after release. Normal state (NO/NC) is a different idea that describes the contact on the shelf."
+  - <<: *d
+    id: ch01.u2.s2-1.question.pickup-event
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "Pickup is the point where a relay's armature moves to the energized position; dropout is the point where it returns."
+    body:
+      format: mcq
+      day: 3
+      stem: "A relay coil's voltage slowly rises from zero. At a certain point the armature pulls in and the contacts change state. What is that event called?"
+      answers:
+        - { text: "Pickup, the armature moving to its energized position", correct: true }
+        - { text: "Dropout, the armature moving back to its de-energized position", distractorWhy: "Dropout happens when the voltage falls enough to release the armature, the opposite event." }
+        - { text: "Seal-in, a contact holding its own coil on after the start signal ends", distractorWhy: "Seal-in describes a contact holding the coil on, not the armature's first movement." }
+        - { text: "Overload, the motor drawing more current than its rating allows", distractorWhy: "Overload is about excess motor current, not about relay armature movement." }
+      explanation: "Pickup is the armature moving to the energized state. Dropout is the return to the de-energized state, and it happens at a lower voltage than pickup."
+  - <<: *d
+    id: ch01.u2.s2-1.question.seal-in-term
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "Seal-in means a relay or starter uses one of its own contacts to keep its coil energized after a momentary start signal."
+    body:
+      format: mcq
+      day: 3
+      stem: "A technician says a starter is 'sealed in' after START is released. What is being described?"
+      answers:
+        - { text: "One of its own contacts is keeping its coil energized, so START need not be held", correct: true }
+        - { text: "Its enclosure gasket is keeping dust and moisture out of the starter cabinet", distractorWhy: "That describes an enclosure seal, not the control-circuit term." }
+        - { text: "Its START button is mechanically locked down so it cannot be pressed again", distractorWhy: "A locked button would be a maintained operator, not seal-in." }
+        - { text: "Its overload relay has tripped and is holding the contactor open for safety", distractorWhy: "A tripped overload drops the starter out; it is not seal-in." }
+      explanation: "Seal-in, or holding, is a contact of the relay or starter itself carrying the coil current after a momentary signal ends. How it is wired comes later."
+  - <<: *d
+    id: ch01.u2.s2-1.question.pilot-device-meaning
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "A pilot device is a control-circuit device, such as a pushbutton or float switch, that signals a controller and does not carry the load current."
+    body:
+      format: mcq
+      day: 3
+      stem: "Which statement best describes a pilot device?"
+      answers:
+        - { text: "A control-circuit device, like a pushbutton, that signals a controller what to do", correct: true }
+        - { text: "A power-circuit device that carries the full running current to a motor load", distractorWhy: "That describes the power contacts of a contactor or starter." }
+        - { text: "A small auxiliary motor that moves a larger machine into position for starting", distractorWhy: "A pilot device is not a motor; it is a switching or sensing device." }
+        - { text: "A protective part that opens the circuit when current stays high for too long", distractorWhy: "That describes an overload device or a fuse, not a pilot device." }
+      explanation: "Pilot devices sit in the control circuit and give signals. Pushbuttons, selector switches, limit switches, float switches, and pressure switches are examples."
+  - <<: *d
+    id: ch01.u2.s2-1.question.pilot-devices-select
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "Pushbuttons, float switches, and pressure switches are pilot devices; a motor and a contactor's power contacts are not."
+    body:
+      format: multi-select
+      day: 3
+      stem: "Which of these are pilot devices? Select all that apply."
+      answers:
+        - { text: "A pushbutton", correct: true }
+        - { text: "A float switch", correct: true }
+        - { text: "A pressure switch", correct: true }
+        - { text: "The motor it controls", distractorWhy: "The motor is the load, not a signal giver." }
+        - { text: "The power contacts of a contactor", distractorWhy: "Those carry load current in the power circuit; they are not pilot devices." }
+      explanation: "Pilot devices signal a controller through small control-circuit contacts. The motor is the load and the power contacts carry its current."
+  - <<: *d
+    id: ch01.u2.s2-1.question.control-vs-power
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "The control circuit carries signals that tell the controller when to operate; the power circuit carries the current that feeds the load."
+    body:
+      format: mcq
+      day: 3
+      stem: "Which statement correctly separates the control circuit from the power circuit in a motor installation?"
+      answers:
+        - { text: "Control carries the signals that decide when to operate; power carries the load's current", correct: true }
+        - { text: "Control carries the load's current; power carries the signals that decide when to operate", distractorWhy: "The roles are reversed." }
+        - { text: "They are the same conductors; only the insulation color of the wire differs", distractorWhy: "They are separate circuits with different jobs, not the same conductors." }
+        - { text: "Pushbuttons and lamps belong to the power circuit; motors belong to the control circuit", distractorWhy: "Pushbuttons and lamps are control devices; the motor is the load." }
+      explanation: "The load is the device doing the work, such as a motor. The power circuit feeds it. The control circuit decides when the controller connects it."
+  - <<: *d
+    id: ch01.u2.s2-1.question.relay-sequence
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "When a relay coil is energized, its magnetic field pulls the armature in, which closes NO contacts and opens NC contacts."
+    body:
+      format: order-steps
+      day: 3
+      stem: "Put the events in order when a relay coil is energized."
+      steps:
+        - "Voltage is applied across the relay coil"
+        - "Coil current builds a magnetic field"
+        - "The field pulls the armature to its energized position"
+        - "NO contacts close and NC contacts open"
+      explanation: "The coil acts first, the armature moves second, and only then do the contacts change state. The contacts are electrically separate from the coil."
+  - <<: *d
+    id: ch01.u2.s2-1.question.maintained-estop-predict
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "A maintained NC mushroom button stays latched open after release, so holding START afterward does not energize CR1."
+    body:
+      format: predict-state
+      day: 3
+      stem: "In the reference bucket, the maintained mushroom PB3 is pressed and then released (it stays latched), and then START PB1 is pressed and held. What is the state of CR1 and the lamps?"
+      scene:
+        actions:
+          - { do: press, dev: PB3 }
+          - { do: release, dev: PB3 }
+          - { do: press, dev: PB1 }
+          - { do: advance, arg: 1 }
+        expect:
+          lit: { PL1: false, PL2: true }
+          coil: { CR1.coil: false }
+      answers:
+        - { text: "CR1 stays dropped out: green PL1 off, red PL2 on", correct: true }
+        - { text: "CR1 picks up: green PL1 on, red PL2 off", distractorWhy: "The latched NC contact of PB3 is open in series with START, so the coil has no path." }
+        - { text: "CR1 picks up, and both PL1 and PL2 are lit", distractorWhy: "If CR1 picked up, its NC contact would open and PL2 would go dark." }
+        - { text: "CR1 stays dropped out and both PL1 and PL2 are off", distractorWhy: "With CR1 dropped out, its NC contact is closed, so red PL2 is lit." }
+      explanation: "PB3 is NC and maintained. Pressing it opens its contact and it stays that way after release. It is in series with START, so CR1 cannot energize, and its NC contact keeps red PL2 lit."
+  - <<: *d
+    id: ch01.u2.s2-1.question.momentary-start-predict
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "A momentary START with no holding contact in the rung de-energizes CR1 as soon as it is released."
+    body:
+      format: predict-state
+      day: 3
+      stem: "In the reference bucket, START PB1 is pressed, held for a moment, and then released. The CR1 rung has only PB3 and PB1 in series with the coil. What is the state after release?"
+      scene:
+        actions:
+          - { do: press, dev: PB1 }
+          - { do: advance, arg: 1 }
+          - { do: release, dev: PB1 }
+          - { do: advance, arg: 1 }
+        expect:
+          lit: { PL1: false, PL2: true }
+          coil: { CR1.coil: false }
+      answers:
+        - { text: "CR1 drops out: green PL1 off, red PL2 on", correct: true }
+        - { text: "CR1 stays picked up: green PL1 on, red PL2 off", distractorWhy: "Nothing in this rung holds the coil on; the button is momentary." }
+        - { text: "CR1 stays picked up, but red PL2 also lights", distractorWhy: "A picked-up CR1 opens its NC contact, so PL2 could not be lit." }
+        - { text: "CR1 drops out and both lamps are dark", distractorWhy: "CR1's NC contact closes when it drops out, so red PL2 is lit." }
+      explanation: "START is momentary and this rung has no holding contact, so releasing it removes the coil's path. A circuit that keeps the coil on after release uses a seal-in, which comes later."
+  # ======================================================== DAY 4 (2.2 / 2.3)
+  - <<: *d
+    id: ch01.u2.s2-3.question.identify-nc-contact
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "Two parallel vertical lines with a diagonal slash is the NEMA symbol for a normally closed contact."
+    body:
+      format: identify-symbol
+      day: 4
+      symbol: contact-nc
+      stem: "What does the symbol shown represent?"
+      answers:
+        - { text: "A contact that is closed on the shelf and opens when its device operates", correct: true }
+        - { text: "A contact that is open on the shelf and closes when its device operates", distractorWhy: "That is the NO contact, drawn without the slash." }
+        - { text: "A pilot light that shows a color letter inside a circle", distractorWhy: "A pilot light is a circle with a letter, not parallel lines." }
+        - { text: "A relay coil that moves its armature when voltage is applied", distractorWhy: "A coil is drawn as a circle with a tag, not as a contact." }
+      explanation: "The slash across the two lines marks the contact as normally closed, which is its shelf state. Without the slash the same pair of lines is a normally open contact."
+  - <<: *d
+    id: ch01.u2.s2-3.question.identify-mushroom
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "A mushroom-head operator on an NC pushbutton symbol identifies a maintained STOP-style pushbutton."
+    body:
+      format: identify-symbol
+      day: 4
+      symbol: pb-nc-mushroom
+      stem: "What does the symbol shown represent?"
+      answers:
+        - { text: "A normally closed pushbutton with a wide mushroom-head operator", correct: true }
+        - { text: "A normally open momentary pushbutton such as a START button", distractorWhy: "A START button is NO and has a small operator bar, without the wide cap." }
+        - { text: "A float switch with the float marker next to the contact", distractorWhy: "A float switch symbol has a float marker, not a pushbutton cap." }
+        - { text: "A normally open contact of a control relay with a coil tag", distractorWhy: "A relay contact has no operator cap at all." }
+      explanation: "The wide cap on the operator tells you it is a mushroom-head pushbutton. The contact drawn closed makes it NC. Whether it is maintained is stated by the legend or drawing."
+  - <<: *d
+    id: ch01.u2.s2-3.question.identify-notc
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "An NO contact with a timing mark that closes after a delay once its coil is energized is an NOTC (on-delay) contact."
+    body:
+      format: identify-symbol
+      day: 4
+      symbol: timer-on-notc
+      stem: "What does the symbol shown represent?"
+      answers:
+        - { text: "A normally open contact that closes after a delay when its timer coil energizes", correct: true }
+        - { text: "A normally open contact that closes at once and opens after the delay", distractorWhy: "That is the NOTO off-delay behavior, a different symbol mark." }
+        - { text: "An ordinary relay NO contact that changes state without any delay", distractorWhy: "The timing mark shows the action is delayed; a plain NO has none." }
+        - { text: "A normally closed pushbutton contact that opens while it is pressed", distractorWhy: "A pushbutton symbol has an operator bar, not a timing mark." }
+      explanation: "NOTC reads normally open, timed closed. It belongs to an on-delay timer: timing starts when the coil energizes, and it resets if the coil drops first."
+  - <<: *d
+    id: ch01.u2.s2-3.question.tap-start-button
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "In the reference circuit the START pushbutton PB1 is a normally open momentary contact in series with the CR1 coil."
+    body:
+      format: tap-schematic
+      day: 4
+      stem: "Tap the contact that is the normally open momentary START pushbutton."
+      tapTargets: [PB1.c]
+      tapWhy: "PB1 is the NO pushbutton in series with PB3 and the CR1 coil. PB3 is the NC maintained mushroom, and PB2 is the NC momentary."
+      explanation: "The START pushbutton is PB1; its contact is PB1.c. It is NO on the shelf and closes only while pressed."
+  - <<: *d
+    id: ch01.u2.s2-3.question.tap-coil-and-contact
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "In the reference circuit the CR1 coil operates the CR1 NO1 contact, which feeds the green lamp PL1."
+    body:
+      format: tap-schematic
+      day: 4
+      stem: "Tap the CR1 coil and the CR1 contact that feeds the green 'picked up' lamp PL1."
+      tapTargets: [CR1.coil, CR1.NO1]
+      tapWhy: "The coil operates the NO contact CR1.NO1; that contact then feeds PL1, so the lamp is on while CR1 is energized."
+      explanation: "A coil and its contacts share a tag. Energizing CR1.coil closes CR1.NO1, which lights PL1. The NC contact feeds the red lamp instead."
+  - <<: *d
+    id: ch01.u2.s2-2.question.float-vs-flow
+    book: { chapter: 1, unit: 2, section: "2.2", page: 18, pageStatus: toc-unverified, figure: null }
+    claim: "In common US practice (and this bucket's tags), FS is a float switch and FLS is a flow switch."
+    reviewerNotes: "FS and FLS are common but not universal; the stem pins the answer to the bucket's convention. Reviewer to confirm FS = float switch and FLS = flow switch as common US practice (some drawings use FS for foot switch or flow switch)."
+    body:
+      format: mcq
+      day: 4
+      stem: "Using the labeling in this bucket, what are FS1 and FLS1?"
+      answers:
+        - { text: "FS1 is a float switch and FLS1 is a flow switch", correct: true }
+        - { text: "FS1 is a flow switch and FLS1 is a float switch, the same two swapped around", distractorWhy: "The assignment is reversed: FLS is the flow switch." }
+        - { text: "Both are float switches; the L marks a later revision of the same device", distractorWhy: "The extra L is part of the code for a different device." }
+        - { text: "Both are fuse designations; the L means the fuse is a low-voltage type", distractorWhy: "Fuses are tagged with F; these are sensing switches." }
+      explanation: "FS is the float switch for liquid level, and FLS is the flow switch for movement of fluid. Read the second letter carefully, and check the legend if a drawing differs."
+  - <<: *d
+    id: ch01.u2.s2-2.question.timing-relay-tag
+    book: { chapter: 1, unit: 2, section: "2.2", page: 18, pageStatus: toc-unverified, figure: null }
+    claim: "TR commonly designates a timing relay."
+    body:
+      format: mcq
+      day: 4
+      stem: "A coil on a drawing is labeled TR2, and timed contacts with the same tag appear elsewhere. What is the device?"
+      answers:
+        - { text: "A timing relay", correct: true }
+        - { text: "A motor starter or contactor, since M is already the tag for starters", distractorWhy: "Starters are commonly tagged M; TR is not a starter tag." }
+        - { text: "A terminal rail marker used to number the terminals in a cabinet", distractorWhy: "A terminal marker would not have timed contacts tied to a coil." }
+        - { text: "A solenoid valve, since solenoids are the devices that open lines", distractorWhy: "A solenoid is tagged SOL and has no timed contacts." }
+      explanation: "TR is the common code for a timing relay (TD for time delay is also used). Timed contacts that carry the same tag belong to that timer's coil."
+  - <<: *d
+    id: ch01.u2.s2-2.question.notc-code
+    book: { chapter: 1, unit: 2, section: "2.2", page: 18, pageStatus: toc-unverified, figure: null }
+    claim: "NOTC means normally open, timed closed: an on-delay contact that closes after the delay once its coil is energized."
+    body:
+      format: mcq
+      day: 4
+      stem: "A timer contact is marked NOTC. Which description is correct?"
+      answers:
+        - { text: "Normally open, and it closes after the delay once the timer coil is energized", correct: true }
+        - { text: "Normally closed, and it opens after the delay once the timer coil is energized", distractorWhy: "That describes NCTO; NOTC starts open." }
+        - { text: "Normally open, and it closes at once, then reopens after the coil is de-energized and the delay ends", distractorWhy: "That describes NOTO, an off-delay contact." }
+        - { text: "Not operated by the timer coil, so it ignores the timer and changes with the relay", distractorWhy: "NOTC is a code for the timed action of a timer contact." }
+      explanation: "Read NOTC as 'normally open, timed closed.' It is an on-delay contact, and if the coil drops out before the delay finishes, the timing resets."
+  - <<: *d
+    id: ch01.u2.s2-2.question.abbreviations-select
+    book: { chapter: 1, unit: 2, section: "2.2", page: 18, pageStatus: toc-unverified, figure: null }
+    claim: "PB means pushbutton, OL overload relay or contact, and MCC motor control center in common US control practice."
+    body:
+      format: multi-select
+      day: 4
+      stem: "Which abbreviation pairings are standard in US control practice? Select all that apply."
+      answers:
+        - { text: "PB: pushbutton", correct: true }
+        - { text: "OL: overload relay or its contact", correct: true }
+        - { text: "MCC: motor control center", correct: true }
+        - { text: "CR: circuit rail", distractorWhy: "CR is a control relay." }
+        - { text: "SOL: solder link", distractorWhy: "SOL is a solenoid." }
+      explanation: "PB is a pushbutton, OL is an overload relay or contact, and MCC is a motor control center. CR is a control relay and SOL is a solenoid."
+  - <<: *d
+    id: ch01.u2.s2-3.question.nc-pushbutton-predict
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "An NC pushbutton passes current in its shelf state and opens only while pressed, so the lamp it feeds goes dark when it is pressed."
+    body:
+      format: predict-state
+      day: 4
+      stem: "In the reference bucket, the amber lamp PL3 is fed through the NC pushbutton PB2 and is lit at rest. PB2 is pressed and held. What happens to PL3 and to CR1?"
+      scene:
+        actions:
+          - { do: press, dev: PB2 }
+          - { do: advance, arg: 1 }
+        expect:
+          lit: { PL3: false }
+          coil: { CR1.coil: false }
+      answers:
+        - { text: "PL3 goes dark and CR1 stays dropped out", correct: true }
+        - { text: "PL3 stays lit and CR1 stays dropped out", distractorWhy: "Pressing an NC button opens its contact, so PL3 loses its path." }
+        - { text: "PL3 goes dark and CR1 picks up", distractorWhy: "PB2 is not in the CR1 rung, so pressing it cannot pick up CR1." }
+        - { text: "PL3 stays lit and CR1 picks up", distractorWhy: "Neither happens: PB2 is only in series with PL3." }
+      explanation: "The NC contact of PB2 is closed on the shelf, which is why PL3 starts lit. Pressing opens it and the lamp goes dark. PB2 is only in series with PL3, so CR1 is unaffected."

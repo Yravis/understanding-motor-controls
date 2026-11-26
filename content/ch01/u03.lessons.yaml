@@ -1,0 +1,156 @@
+# Unit 3 lesson cards, sections 3.1-3.9 (Days 5 and 6). Original wording; summaries keyed to section titles only.
+defaults: &d
+  type: lessonCard
+  version: 1
+  nec: []
+  nema: []
+  ieee: []
+  excerpts: []
+  basis: general-knowledge
+  enforcedNote: null
+  other: []
+  bookAlignment: provisional
+  reviewerNotes: "Written without the textbook; conceptual, qualitative content only. Needs book-alignment check once the book arrives."
+items:
+  # ---------------- Day 5: 3.1 Auxiliary Contacts, 3.2 Relays ----------------
+  - <<: *d
+    id: ch01.u3.s3-1.card.auxiliary-contacts
+    book: { chapter: 1, unit: 3, section: "3.1", page: 23, pageStatus: toc-unverified, figure: null }
+    claim: "Auxiliary contacts are extra small contacts operated by a device such as a contactor or relay; they carry control-circuit current and are electrically separate from the device's coil."
+    body:
+      title: "Auxiliary contacts"
+      text: "An auxiliary contact is a small contact that rides along with a larger device. When a contactor or relay operates, its auxiliary contacts change state too. They are built for control-circuit current, not for motor current, so they switch lamps, other coils, and logic inputs. Because they are separate pieces of metal, an auxiliary contact is electrically isolated from the coil that moves it: the coil can sit on one circuit while its contacts switch something else entirely. You will see them used to light a pilot light, to start another relay, or to feed information back to a controller."
+      fieldNote: "When a lamp or a second relay reacts to a contactor, an auxiliary contact is usually what connects them. Check which contact is used before assuming the coil is wired to the lamp."
+      terms: ["auxiliary contact", "control circuit", "isolation"]
+      day: 5
+  - <<: *d
+    id: ch01.u3.s3-1.card.no-nc-state-change
+    book: { chapter: 1, unit: 3, section: "3.1", page: 23, pageStatus: toc-unverified, figure: null }
+    claim: "A normally open contact closes and a normally closed contact opens when its operating device is energized or actuated; both return to the shelf state when it is released."
+    body:
+      title: "NO and NC contacts change state together"
+      text: "Contact arrangement is named for the shelf state, with the coil de-energized and nothing pressed. A normally open (NO) contact is open on the shelf and closes when the device operates. A normally closed (NC) contact is closed on the shelf and opens when the device operates. On a relay with both kinds, energizing the coil makes every contact flip at once: the NO ones close while the NC ones open. When the coil drops out, springs return every contact to its shelf state. The names describe the starting point, not the present condition."
+      fieldNote: "When a circuit misbehaves, first ask whether each contact is in its shelf state or its operated state right now. Many wiring mistakes are an NO and NC swapped."
+      terms: ["normally open", "normally closed", "shelf state", "operated state"]
+      day: 5
+  - <<: *d
+    id: ch01.u3.s3-1.card.voltage-across-contacts
+    book: { chapter: 1, unit: 3, section: "3.1", page: 23, pageStatus: toc-unverified, figure: null }
+    claim: "A voltmeter across an open contact in series with a load reads about the source voltage; across a closed contact it reads about 0 V."
+    body:
+      title: "Voltage across a contact"
+      text: "A contact in series with a load splits the source voltage with it. When the contact is closed, it is nearly a wire, so almost no voltage appears across it and a voltmeter there reads about 0 V. The load gets the rest. When the contact is open, no current flows, so the load drops nothing, and the whole source voltage appears across the open contact. A voltmeter placed across it reads about the source voltage. That is why a lamp that stays off can be traced: a reading near full voltage across a contact that should be closed means it is open."
+      fieldNote: "Use this to find an open contact in a live circuit: across the open one you will read about source voltage; across every closed one, about zero."
+      terms: ["voltage drop", "open contact", "closed contact", "series load"]
+      day: 5
+  - <<: *d
+    id: ch01.u3.s3-2.card.relay-coil-vs-contacts
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "A control relay's coil is the input that, when energized, moves an armature that changes the state of its separate contacts."
+    body:
+      title: "Relay: coil versus contacts"
+      text: "A control relay has two halves that are easy to confuse. The coil is the input. Current through the coil makes a magnet, and the magnet pulls an armature. The contacts are the output. The armature moves them, so they open or close other circuits. Nothing electrical connects the two halves; the link is mechanical. A coil is marked with a voltage rating and appears on the schematic as a circle with a designation such as CR1. Its contacts appear elsewhere on the drawing carrying that same designation, so you match them by name."
+      fieldNote: "On a schematic, find the coil for CR1 first, then look for every CR1 contact. The coil rung tells you when the contacts change; the contact rungs tell you what they do."
+      terms: ["coil", "armature", "contacts", "control relay"]
+      day: 5
+  - <<: *d
+    id: ch01.u3.s3-2.card.relay-inrush
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "An AC relay coil draws more current while its armature is open than after the armature has sealed in, because the air gap raises the current."
+    body:
+      title: "Inrush until the armature seals"
+      text: "An AC coil draws extra current at the instant it is energized. With the armature still open, the magnetic path has an air gap, and the coil has lower impedance, so more current flows. As the armature closes and seals against the core, the gap disappears, impedance rises, and the current falls to a much smaller steady value. The larger value is called inrush. Because of it, a weak supply or a long, thin control wire can sag in voltage just as a relay picks up. A relay that is held open by a jam keeps drawing inrush current and can overheat."
+      fieldNote: "If lights dim or a relay chatters at the instant it energizes, suspect a weak source or voltage drop in the wiring rather than the relay."
+      terms: ["inrush current", "sealed current", "air gap", "impedance"]
+      day: 5
+  - <<: *d
+    id: ch01.u3.s3-2.card.open-coil-ohmmeter
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "An open relay coil never picks up, and while energized the full source voltage appears across it; the coil may only be checked with an ohmmeter when it is de-energized and isolated."
+    body:
+      title: "Open coil: symptoms and checks"
+      text: "An open coil is a break in the winding. The symptom is that the relay never picks up when its control circuit calls for it, even though the START button and every other device are good. With the circuit energized and the call present, a voltmeter across the open coil reads about the source voltage, because the break is where the voltage appears. To confirm, de-energize and isolate the circuit and prove it dead first. Then measure the coil with an ohmmeter. An open winding reads as an open circuit; a good one reads a modest resistance."
+      fieldNote: "An ohmmeter supplies its own test current, so it must never touch a live circuit. Isolate and prove dead first, following your employer's procedure, then measure the coil."
+      terms: ["open coil", "ohmmeter", "de-energized", "isolated"]
+      day: 5
+  # ---------------- Day 6: 3.3-3.9 sensing switches ----------------
+  - <<: *d
+    id: ch01.u3.s3-3.card.drum-switch
+    book: { chapter: 1, unit: 3, section: "3.3", page: 25, pageStatus: toc-unverified, figure: null }
+    claim: "A drum switch is a manually operated rotary switch whose handle turns a drum that makes and breaks several contact sets at once, for example to select direction."
+    body:
+      title: "Drum switch"
+      text: "A drum switch is operated by hand. A handle turns a drum inside the switch, and as the drum rotates, several sets of contacts open and close together according to the handle position. Each position has its own contact pattern, such as FORWARD, OFF, and REVERSE. That makes it a handy way for one person to choose between several connections with a single motion. It is a manual selector, not a sensing device: it changes state only when someone moves the handle, never because of anything the process does."
+      fieldNote: "Check the position chart marked on the drum switch, not the handle's feel. The chart tells you which contacts are closed in each position."
+      terms: ["drum switch", "manual switch", "position chart"]
+      day: 6
+  - <<: *d
+    id: ch01.u3.s3-4.card.float-normal-state
+    book: { chapter: 1, unit: 3, section: "3.4", page: 26, pageStatus: toc-unverified, figure: null }
+    claim: "A float switch senses liquid level; its normal contact state is the as-manufactured state, not the state it happens to be in an empty or full tank."
+    body:
+      title: "Float switch and its normal state"
+      text: "A float switch senses liquid level. A float rises or falls with the surface and operates a contact at a set level. In a control schematic it is drawn in its normal state, which means the state it has with nothing acting on it: as manufactured, on the shelf. A float switch labeled normally open (NO) has an open contact when the float hangs free, whatever the tank is doing. When the float rises to its set level and the switch is actuated, an NO contact closes. The word normal never means what the tank looks like today."
+      fieldNote: "Do not infer a float switch's contact type from whether the tank is empty or full. Read the device marking or test the contact off the process."
+      terms: ["float switch", "normal state", "actuated", "as manufactured"]
+      day: 6
+  - <<: *d
+    id: ch01.u3.s3-4.card.normal-versus-installed
+    book: { chapter: 1, unit: 3, section: "3.4", page: 26, pageStatus: toc-unverified, figure: null }
+    claim: "Normal means the shelf (as-manufactured) state; a switch can be installed so that the process holds it actuated while at rest, so its present state may differ from normal."
+    body:
+      title: "Normal state versus installed state"
+      text: "Normal means the shelf state, with no force or process acting on the device. Installed state means what the switch is doing right now, in place. They can differ. A switch can be mounted so the process holds it actuated at rest: a limit switch whose lever is pressed by a part that rests against it, or a float switch mounted at a height the liquid already covers. The schematic still draws it in its normal state. A normally open contact held actuated is closed now, but it is still an NO contact."
+      fieldNote: "When a reading disagrees with the drawing, ask two questions: what is the contact's normal state, and is the process actuating it at this moment?"
+      terms: ["normal state", "installed state", "actuated", "shelf state"]
+      day: 6
+  - <<: *d
+    id: ch01.u3.s3-5.card.flow-switch
+    book: { chapter: 1, unit: 3, section: "3.5", page: 26, pageStatus: toc-unverified, figure: null }
+    claim: "A flow switch senses moving liquid or air in a pipe or duct and operates its contact when flow reaches its set level."
+    body:
+      title: "Flow switch"
+      text: "A flow switch is mounted in a pipe or duct. It has a paddle or vane that sits in the stream. Moving liquid or air pushes it, and at a set amount of flow the switch actuates and changes its contact state. When flow stops, the paddle returns and the contact goes back to its normal state. Flow switches are commonly used to prove that something is actually moving, such as water through a heater or air across a coil, before another device is allowed to run. In the bucket, the flow switch lights PL7 when its NO contact closes."
+      fieldNote: "A running pump does not prove flow. A flow switch proves the stream is there, so trace a stuck paddle or a clogged line before replacing the pump."
+      terms: ["flow switch", "paddle", "proving flow"]
+      day: 6
+  - <<: *d
+    id: ch01.u3.s3-6.card.limit-switch-mechanical
+    book: { chapter: 1, unit: 3, section: "3.6", page: 27, pageStatus: toc-unverified, figure: null }
+    claim: "A mechanical limit switch is actuated by physical contact with a moving part, such as a lever pushed by a machine part, and then changes the state of its contacts."
+    body:
+      title: "Mechanical limit switch"
+      text: "A mechanical limit switch has an arm, roller, or plunger that a moving machine part physically touches. When the part pushes the actuator far enough, the switch operates, and its contacts change state. When the part moves away, a spring returns the actuator and the contacts go back to normal. It senses position: whether a door is closed, a carriage has reached its end, or a part is present. A normally closed limit switch on a solenoid, as LS1 is in the bucket, drops the solenoid out when it is actuated."
+      fieldNote: "A bent lever, a loose mount, or a worn roller changes where the switch operates. If a machine stops short or overruns, check the switch's mounting before changing any control logic."
+      terms: ["limit switch", "actuator", "position sensing"]
+      day: 6
+  - <<: *d
+    id: ch01.u3.s3-7.card.limit-switch-proximity
+    book: { chapter: 1, unit: 3, section: "3.7", page: 28, pageStatus: toc-unverified, figure: null }
+    claim: "A proximity sensor detects a nearby object without touching it; a two-wire type passes a small leakage current when off, which can hold a small, high-impedance load on."
+    body:
+      title: "Proximity sensor and leakage"
+      text: "A proximity sensor detects a nearby object without touching it, so nothing wears from contact. Most types are solid-state electronics, not metal contacts. A two-wire sensor is wired in series with its load, and it must draw a little current to power itself. Even when the sensor is off, a small leakage current flows through the load. A large load ignores it, but a small, high-impedance load such as a small relay or an LED lamp can be held on by that leakage. The load seems stuck on even though the sensor reads off."
+      fieldNote: "A load that will not turn off with a two-wire sensor may be held by leakage, not by a welded contact. Check the load's size and the sensor's rated off-state leakage before replacing parts."
+      terms: ["proximity sensor", "two-wire sensor", "leakage current", "solid state"]
+      day: 6
+  - <<: *d
+    id: ch01.u3.s3-8.card.limit-switch-optical
+    book: { chapter: 1, unit: 3, section: "3.8", page: 28, pageStatus: toc-unverified, figure: null }
+    claim: "An optical (photoelectric) sensor detects objects with a light beam without touching them, either by an interrupted beam or by light reflected back from the object."
+    body:
+      title: "Optical sensor"
+      text: "An optical sensor uses light to detect an object without touching it. In one common arrangement, a transmitter sends a beam to a separate receiver, and the sensor operates when an object interrupts the beam. In another, one housing sends light and also receives it, and the sensor operates when an object reflects light back. It can sense objects at a distance and without wear, but dust, dirt, and misalignment can fool it. Its output is usually solid-state, and like other sensors it can be supplied with either contact arrangement."
+      fieldNote: "If an optical sensor misbehaves, clean the lens and check alignment first. A dirty lens can look like a blocked beam or a missing object."
+      terms: ["optical sensor", "photoelectric", "through-beam", "reflective"]
+      day: 6
+  - <<: *d
+    id: ch01.u3.s3-9.card.pressure-switch
+    book: { chapter: 1, unit: 3, section: "3.9", page: 28, pageStatus: toc-unverified, figure: null }
+    claim: "A pressure switch senses fluid or air pressure and changes contact state at a set point; it resets only after pressure moves back past a differential."
+    body:
+      title: "Pressure switch"
+      text: "A pressure switch senses the pressure of air or liquid and changes its contact state when pressure reaches an adjustable set point. It does not reset at exactly the same pressure. There is a differential, a gap between where it actuates and where it releases, so the switch does not flutter on and off around one value. A familiar example is an air compressor: the switch starts the motor when pressure falls to its lower setting and stops it at the upper setting. Normal state again means shelf state, with no pressure on the sensing port."
+      fieldNote: "A pressure switch holding its last state between its two settings is normal. Judge it against both set points, not one."
+      terms: ["pressure switch", "set point", "differential", "normal state"]
+      day: 6

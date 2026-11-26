@@ -1,0 +1,369 @@
+# Unit 2 lesson cards: 2.1 control terminology (days 2-3), 2.2 abbreviations and 2.3 NEMA symbols (day 4).
+# Original wording, general knowledge only. Summaries are keyed to the section titles in content/manifest.yaml.
+defaults: &d
+  type: lessonCard
+  version: 1
+  nec: []
+  nema: []
+  ieee: []
+  excerpts: []
+  basis: general-knowledge
+  enforcedNote: null
+  other: []
+  bookAlignment: provisional
+  reviewerNotes: "General-knowledge vocabulary card; checked against common US control practice only. Book alignment pending."
+symbolDefaults: &s
+  nema: [{ std: "NEMA ICS 19", clause: null, note: "symbols" }]
+  ieee: [{ std: "IEEE 315", clause: null }]
+  reviewerNotes: "NEMA ladder symbols and IEC notes from general knowledge only; symbol drawing details are described in words and should be checked against NEMA ICS 19 and IEEE 315 before approval. Drawn figures are produced by the app."
+items:
+  # ---------------------------------------------------------------- 2.1, day 2 (first definitions)
+  - <<: *d
+    id: ch01.u2.s2-1.card.control-defined
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "In motor work, 'control' means deciding when and how a load starts, stops, and runs, as opposed to supplying the load's power."
+    body:
+      title: "Control: the decision-making side"
+      text: "In motor work, control means deciding when a load runs, when it stops, and sometimes how it runs, such as direction or order of operation. It is separate from power, which is the energy the load actually uses. A button that starts a pump is control; the current flowing through the pump motor is power. Control circuits usually work at a lower voltage and a much smaller current than the loads they command, which is one reason they can be wired with smaller conductors and handled with different devices. Keeping the two ideas apart makes every drawing easier to read."
+      fieldNote: "When something will not start, first ask whether the decision (control) or the work (power) is missing. It tells you where to look."
+      terms: [control, power, load]
+      day: 2
+  - <<: *d
+    id: ch01.u2.s2-1.card.controller-defined
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "A controller is the device that starts, stops, or otherwise governs the electrical load according to signals it receives."
+    body:
+      title: "Controller: the device in charge of the load"
+      text: "A controller is the piece of equipment that actually switches and governs the load. It receives instructions, for example from a pushbutton, and then connects or disconnects the load from its supply. A simple on/off controller closes contacts to feed a motor and opens them to stop it. Controllers can be as basic as a manual switch or as involved as a starter with several protective and timing features. The important idea is the division of labor: the operator or sensor suggests, the controller carries out the action, and the load does the work."
+      fieldNote: "On a job drawing, the controller is usually the device whose coil you trace back to find what commands it."
+      terms: [controller, starter, load]
+      day: 2
+  - <<: *d
+    id: ch01.u2.s2-1.card.pilot-device-intro
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "A pilot device is a control-circuit device, such as a pushbutton or a float switch, that signals a controller; it does not carry the load current."
+    body:
+      title: "Pilot device: the signal giver"
+      text: "A pilot device sits in the control circuit and tells the controller what is wanted. Pushbuttons, selector switches, limit switches, float switches, pressure switches, and temperature switches are all examples. Each one opens or closes a small contact in response to a hand, a position, a level, or a process condition. The pilot device is a messenger: it carries only the small control current needed to operate a coil, not the load current. Because it is the part people touch and the part the process acts on, it is also the part that most often wears out or is miswired."
+      fieldNote: "Pilot devices take the daily abuse. Suspect them early when a control circuit misbehaves, then confirm with a measurement."
+      terms: [pilot device, pushbutton, float switch]
+      day: 2
+  # ---------------------------------------------------------------- 2.1, day 3
+  - <<: *d
+    id: ch01.u2.s2-1.card.maintained-vs-momentary
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "A momentary operator returns to rest when released; a maintained operator stays in its operated position until it is deliberately reset."
+    body:
+      title: "Momentary versus maintained"
+      text: "These words describe what an operator does when you let go. A momentary device, like a typical START button, springs back to its rest position the moment you release it, so its contact is changed only while you hold it. A maintained device stays where you put it until you reset it: a toggle or selector switch stays in position, and a mushroom-head button may latch down until it is pulled or twisted back. Maintained does not mean the load is running; it only describes the operator. What the circuit does after release depends on how the rest of the circuit is wired."
+      fieldNote: "If a button seems stuck down, check whether it is meant to be maintained before you decide it is broken."
+      terms: [momentary, maintained, operator]
+      day: 3
+  - <<: *d
+    id: ch01.u2.s2-1.card.normal-state
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "A contact's normal state (normally open or normally closed) is its state with the device de-energized and unoperated, as manufactured, not its state in an operating circuit."
+    body:
+      title: "Normally open and normally closed"
+      text: "Normal means the state on the shelf: the device is not energized, nobody is pressing it, and nothing is acting on it. A normally open (NO) contact is open in that state and closes when the device operates. A normally closed (NC) contact is closed on the shelf and opens when the device operates. The word describes the device as manufactured, not what you see in a running machine. A float switch in a full tank, or a pressure switch on a charged system, may be holding its contact away from the normal state, yet it is still called by its shelf name."
+      fieldNote: "Always name a contact by its shelf state. Otherwise two people can look at the same switch and disagree about what it is."
+      terms: [normally open, normally closed, shelf state]
+      day: 3
+  - <<: *d
+    id: ch01.u2.s2-1.card.coil-contacts-relay
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "A relay is an electromagnetic switch: current in its coil moves an armature that changes the state of its contacts, which are electrically separate from the coil."
+    body:
+      title: "Coil, contacts, and the relay"
+      text: "A relay has two electrically separate parts. The coil is a winding that becomes an electromagnet when voltage is applied. The contacts are the switching points that the moving armature opens and closes. When the coil is energized, its NO contacts close and its NC contacts open; when the coil is de-energized, springs return everything to the normal state. Because the coil and contacts are separate, a small coil signal can control contacts in a different circuit. On drawings the coil and each contact are often drawn in different places and linked by the same designation, such as CR1."
+      fieldNote: "When you test a relay, check the coil and the contacts separately. A good coil says nothing about the contacts."
+      terms: [relay, coil, contacts, armature]
+      day: 3
+  - <<: *d
+    id: ch01.u2.s2-1.card.pickup-dropout
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "Pickup is the coil voltage level at which a relay's armature moves to the energized position; dropout is the lower level at which it returns."
+    body:
+      title: "Pickup and dropout"
+      text: "Pickup describes the moment a coil becomes strong enough to pull its armature to the energized position, so contacts change state. Dropout describes the moment the coil is weak enough for the springs to return the armature, so contacts go back to normal. They are different voltages: the armature needs a stronger pull to start moving across the open gap than it needs to stay held in once closed, so dropout happens at a lower voltage than pickup. This is vocabulary for now; real devices have manufacturer ratings, and nothing here depends on specific numbers."
+      fieldNote: "Low control voltage can leave a relay chattering or refusing to pull in. Remember that pickup and dropout are not the same point."
+      terms: [pickup, dropout, armature]
+      day: 3
+  - <<: *d
+    id: ch01.u2.s2-1.card.seal-in-vocabulary
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "Seal-in (holding) refers to a relay or starter using one of its own contacts to keep its coil energized after a momentary START signal ends."
+    body:
+      title: "Seal-in: a word to know"
+      text: "Seal-in, also called holding or maintaining, is the idea that a relay or starter can use one of its own auxiliary contacts to keep its own coil energized. The START signal only has to be momentary: once the coil picks up and its contact closes, that contact carries the coil current and keeps it going after the button is released. The word names the effect and the contact involved, often called the seal-in or holding contact. This card is vocabulary only. The circuit that creates a seal-in is covered later, so do not worry about how it is wired yet."
+      fieldNote: "If a drawing mentions a seal-in contact, you now know its job: it keeps the coil on after a momentary start."
+      terms: [seal-in, holding contact, auxiliary contact]
+      day: 3
+  - <<: *d
+    id: ch01.u2.s2-1.card.control-vs-power-load
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "The power circuit carries the current that feeds the load; the control circuit carries the signals that tell the controller when to operate; the load is the device that does the work."
+    body:
+      title: "Control circuit, power circuit, and load"
+      text: "The load is the device that converts electrical energy into useful work: a motor, a heater, a solenoid valve. The power circuit carries the current that feeds the load. The control circuit carries the small signals, from pushbuttons, sensors, and coils, that decide when the controller connects the load to power. Some devices fit in both worlds: a coil is a load of the control circuit, even though it is part of the controller. Keeping the words straight prevents confusion when two circuits are in the same enclosure but have different voltages and different jobs."
+      fieldNote: "Always ask which circuit you are touching. Control and power circuits can share one enclosure and still be fed from different sources."
+      terms: [control circuit, power circuit, load]
+      day: 3
+  - <<: *d
+    id: ch01.u2.s2-1.card.contactor-starter-overload
+    book: { chapter: 1, unit: 2, section: "2.1", page: 11, pageStatus: toc-unverified, figure: null }
+    claim: "A contactor is a coil-operated switch for power contacts; a motor starter is a contactor plus overload protection; an overload relay responds to sustained excess motor current."
+    body:
+      title: "Contactor, starter, and overload"
+      text: "A contactor is a coil-operated switch with heavy power contacts for carrying load current. A motor starter is a contactor combined with overload protection. The overload relay is the part that responds when a motor draws too much current for too long, and it signals the controller to drop out, usually through a small contact in the control circuit. These are vocabulary words for now: the bucket shows them greyed out as a preview of Chapter 2. For now, remember that the coil is a control-circuit device while the power contacts it moves belong to the power circuit."
+      fieldNote: "A contactor by itself does not protect the motor from overload. The overload relay is what does that job in a starter."
+      terms: [contactor, starter, overload relay]
+      day: 3
+  # ---------------------------------------------------------------- 2.2 abbreviations, day 4
+  - <<: *d
+    id: ch01.u2.s2-2.card.device-letters
+    book: { chapter: 1, unit: 2, section: "2.2", page: 18, pageStatus: toc-unverified, figure: null }
+    claim: "In common US control drawings, CR means control relay, PB pushbutton, PL pilot light, and LS limit switch, usually followed by a number."
+    body:
+      title: "Everyday device abbreviations"
+      text: "Control drawings use short letter codes so a device can be named in a tiny space. CR is a control relay, PB is a pushbutton, PL is a pilot light, and LS is a limit switch. A number follows to tell similar devices apart, so PB1 and PB2 are two different pushbuttons and CR1 is the first control relay. The letters name the kind of device; the number names the specific one. A drawing's legend or parts list is the final word, because some plants vary the codes, but these are the standard starting vocabulary."
+      fieldNote: "When you tag a device in the field, use the same letters and number as the drawing so everybody is talking about the same thing."
+      terms: [CR, PB, PL, LS]
+      day: 4
+  - <<: *d
+    id: ch01.u2.s2-2.card.sensing-switch-letters
+    book: { chapter: 1, unit: 2, section: "2.2", page: 18, pageStatus: toc-unverified, figure: null }
+    claim: "In common US control drawings, FS is a float switch, FLS a flow switch, PS a pressure switch, and TS a temperature switch."
+    body:
+      title: "Sensing switch abbreviations"
+      text: "Switches that react to a process condition get their own codes. FS is a float switch, which responds to liquid level. FLS is a flow switch, which responds to fluid movement in a pipe. PS is a pressure switch and TS is a temperature switch. FS and FLS are easy to mix up, so read the second letter carefully. In this app the bucket uses exactly these tags. Other drawings may use different letters for the same devices, which is why the legend matters. Learn the pattern now: letters for the device kind, then a number for the specific device."
+      fieldNote: "Mixing up FS and FLS can send you to the wrong end of the plant. Read the tag slowly and check the legend."
+      terms: [FS, FLS, PS, TS]
+      day: 4
+  - <<: *d
+    id: ch01.u2.s2-2.card.timing-and-solenoid
+    book: { chapter: 1, unit: 2, section: "2.2", page: 18, pageStatus: toc-unverified, figure: null }
+    claim: "TR and TD commonly designate timing relays (time delay), and SOL designates a solenoid."
+    body:
+      title: "Timers and solenoids"
+      text: "A timing relay is often tagged TR, and the letters TD for time delay are also common, so TR1 and TD3 are both timing devices in the bucket. SOL stands for a solenoid, such as a valve operator. Notice that a timer has two parts to name, just like any relay: the coil or supply side that starts the timing, and the timed contacts that change state later. The same tag ties them together on the drawing. The meaning of on-delay and off-delay comes in Unit 3; for now, learn to recognize these tags and to tie each coil to its contacts."
+      fieldNote: "A TR tag on a coil means 'look for timed contacts with the same tag elsewhere on the sheet'."
+      terms: [TR, TD, SOL, time delay]
+      day: 4
+  - <<: *d
+    id: ch01.u2.s2-2.card.starter-overload-mcc
+    book: { chapter: 1, unit: 2, section: "2.2", page: 18, pageStatus: toc-unverified, figure: null }
+    claim: "M commonly designates a motor starter or contactor, OL an overload relay or its contact, and MCC a motor control center."
+    body:
+      title: "Starter, overload, and MCC"
+      text: "On motor drawings, M commonly marks a motor starter or contactor, with its coil and its power contacts carrying the same letter. OL marks the overload relay or the control contact it operates. MCC stands for motor control center, the lineup of enclosures that holds many starters, each in its own bucket. The reference bucket in this app is one such bucket. Some drawings use other letters for starters, so treat these as common practice rather than a law. The pattern holds: a short code for the kind, a number for the individual device, and a legend for anything unusual."
+      fieldNote: "If a drawing uses a letter you do not recognize, look for the legend before you guess."
+      terms: [M, OL, MCC, bucket]
+      day: 4
+  - <<: *d
+    id: ch01.u2.s2-2.card.contact-timing-letters
+    book: { chapter: 1, unit: 2, section: "2.2", page: 18, pageStatus: toc-unverified, figure: null }
+    claim: "NO and NC abbreviate normally open and normally closed; NOTC, NCTO, NOTO, and NCTC name the normal state followed by the timed action of a timer contact."
+    body:
+      title: "NO, NC, and the timed-contact codes"
+      text: "NO means normally open and NC means normally closed. Timer contacts add a second pair of letters for the timed action. NOTC is normally open, timed closed; NCTO is normally closed, timed open. Those two belong to an on-delay timer, where the timing starts on energizing. NOTO is normally open, timed open and NCTC is normally closed, timed closed, which belong to an off-delay timer, where timing starts on de-energizing. Read the code as a two-part sentence: the shelf state first, then what the contact does after the delay."
+      fieldNote: "Decode a timed-contact code letter by letter before you predict what it does."
+      terms: [NO, NC, NOTC, NCTO, NOTO, NCTC]
+      day: 4
+  - <<: *d
+    id: ch01.u2.s2-2.card.tags-and-legends
+    book: { chapter: 1, unit: 2, section: "2.2", page: 18, pageStatus: toc-unverified, figure: null }
+    claim: "Matching tags tie a relay's coil to its contacts on a drawing, and the drawing's legend is the authority when abbreviations differ."
+    body:
+      title: "Tags tie parts together"
+      text: "A relay coil and its contacts are drawn apart, often on different rungs, and linked only by a shared tag. If a coil is CR1, then every contact labeled CR1 belongs to that relay and changes state when that coil is energized. Different tags such as CR1 and CR2 are different relays, even if they look alike. Where abbreviations differ between companies, the legend or parts list on the drawing is the final authority. Reading a schematic starts with this habit: find a tag, then find every other place it appears."
+      fieldNote: "Tracing a tag across the sheet is the quickest way to find what a relay really controls."
+      terms: [tag, designation, legend]
+      day: 4
+  # ---------------------------------------------------------------- 2.3 symbol cards, day 4
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.contact-no
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "A normally open contact is drawn as two parallel vertical lines with a gap between them, open in the de-energized shelf state."
+    body:
+      title: "NO contact"
+      text: "The normally open contact is drawn as two short parallel vertical lines in the wire, like a gap in the path. The gap is the point: in the shelf state, nothing flows. When the device operates, such as when its relay coil energizes, the contact closes and the path is complete. The symbol is used for relay contacts, starter auxiliary contacts, and many sensing switches, and the tag beside it tells you which device operates it. Remember that the symbol always shows the shelf state, not the state in the running circuit."
+      fieldNote: "Seeing two plain parallel lines means open on the shelf, closed when the named device operates."
+      terms: [NO contact, shelf state]
+      day: 4
+      symbol:
+        key: contact-no
+        designation: "CR1"
+        nemaNote: "Two parallel vertical lines with a gap; the tag (such as CR1) names the coil that operates it."
+        iecNote: "IEC: you may also see a switch-blade style symbol, an open line with an angled blade, and terminals numbered 13-14 for an NO contact."
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.contact-nc
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "A normally closed contact is drawn like the NO contact with a diagonal slash through the two vertical lines, closed in the shelf state."
+    body:
+      title: "NC contact"
+      text: "The normally closed contact looks like the normally open contact with a diagonal slash through its two vertical lines. The slash tells you that the path is closed in the shelf state, and the contact opens when its device operates. Relay NC contacts, auxiliary contacts, and many sensing switches use this symbol. Do not confuse it with a closed circuit in a running machine; the slash means normal, not current state. Many mistakes at the bench come from forgetting that an NC contact is open when its coil is energized."
+      fieldNote: "A slash through the contact means closed on the shelf and open when the named device operates."
+      terms: [NC contact, shelf state]
+      day: 4
+      symbol:
+        key: contact-nc
+        designation: "CR1"
+        nemaNote: "Two parallel vertical lines with a diagonal slash through them."
+        iecNote: "IEC: you may also see a blade symbol with a small hook closing the path, and terminals numbered 21-22 for an NC contact."
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.pb-no
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "A normally open momentary pushbutton is drawn as two terminals with a gap and an operating bar above them; it is closed only while pressed."
+    body:
+      title: "NO momentary pushbutton"
+      text: "The normally open pushbutton is drawn as two stationary terminals with a gap between them and a short bar above the gap that represents the operator. Pressing the button brings the bar down so the circuit completes; releasing it lets the spring return everything, and the path opens again. This is the usual START button. The symbol is a contact-with-operator picture, so the gap tells you NO and the bar tells you pushbutton. The tag, such as PB1, names the device, and the drawing may add the word START nearby."
+      fieldNote: "A START button is NO and momentary. It closes only while you hold it."
+      terms: [pushbutton, NO, momentary]
+      day: 4
+      symbol:
+        key: pb-no
+        designation: "PB1"
+        nemaNote: "Two terminals with a gap and an operator bar above; NO, spring return."
+        iecNote: "IEC: you may also see a pushbutton drawn as a switch symbol with an operating mark and a designation starting with S; pushbuttons are generally marked S."
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.pb-nc
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "A normally closed momentary pushbutton is drawn with its contact bridged closed and an operating bar; pressing it opens the circuit."
+    body:
+      title: "NC momentary pushbutton"
+      text: "The normally closed pushbutton is drawn with its contact path bridged closed in the shelf state, plus the operator bar above. Pressing the button breaks the bridge and opens the circuit; releasing it lets the spring close it again. This is the usual STOP button, wired so that pressing it removes the signal that was keeping something on. The drawing shows the shelf state: closed. That is why a lamp wired through an NC button is on until the button is pressed. The tag, such as PB2, names the device."
+      fieldNote: "A STOP button is NC and momentary. It opens only while you hold it."
+      terms: [pushbutton, NC, momentary]
+      day: 4
+      symbol:
+        key: pb-nc
+        designation: "PB2"
+        nemaNote: "Contact bridged closed with an operator bar above; NC, spring return."
+        iecNote: "IEC: you may also see the NC pushbutton drawn with the switch-blade symbol and an operating mark; its contact terminals are commonly numbered 21-22."
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.pb-nc-mushroom
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "A mushroom-head pushbutton symbol shows a wide cap on an NC pushbutton; maintained types stay operated until reset by hand."
+    body:
+      title: "Mushroom-head maintained PB"
+      text: "A mushroom-head pushbutton is drawn like a normal pushbutton but with a wide cap on the operator. The cap shape tells you it is a large head meant to be struck by a palm. When it is an NC maintained type, pressing it opens the circuit and it stays latched down until it is pulled or twisted to reset. That makes it a good choice for a STOP function. The symbol shows the shelf state, closed, and the drawing or legend should say whether the operator is maintained, since the cap shape alone does not."
+      fieldNote: "If the machine will not restart, check whether a latched mushroom button is holding its NC contact open."
+      terms: [mushroom head, maintained, NC]
+      day: 4
+      symbol:
+        key: pb-nc-mushroom
+        designation: "PB3"
+        nemaNote: "NC pushbutton with a wide mushroom cap drawn on the operator."
+        iecNote: "IEC: you may also see a pushbutton symbol with a mushroom-head operator mark and an NC contact; designations typically start with S."
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.relay-coil
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "A relay coil is drawn as a circle containing its designation; the matching contacts are drawn elsewhere with the same tag."
+    body:
+      title: "Relay coil"
+      text: "The control relay coil is drawn as a circle with its tag, such as CR1, written inside or beside it. On a ladder diagram the coil sits at the right end of its rung, connected directly to the X2 side. Its contacts do not appear next to it: they are drawn wherever they are used, each labeled CR1 as well. A circle with a tag therefore means: when this rung is energized, every CR1 contact on the sheet changes state. The circle is also used for some other loads, so read the letters inside to know what it is."
+      fieldNote: "Find the coil first. It tells you which contacts elsewhere will change state."
+      terms: [coil, designation]
+      day: 4
+      symbol:
+        key: relay-coil
+        designation: "CR1"
+        nemaNote: "A circle containing the relay tag, placed at the load end of its rung."
+        iecNote: "IEC: you may also see the coil drawn as a rectangle, usually with terminals marked A1 and A2, and the relay tagged with the letter K."
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.pilot-light
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "A pilot light is drawn as a circle with a letter inside giving its color, such as R for red or G for green."
+    body:
+      title: "Pilot light"
+      text: "A pilot light looks like a circle, much like a coil, but a letter inside the circle gives the lens color: R for red, G for green, A for amber, and so on. It is an indicating load, so it connects to the X2 side like any other load. In the bucket, PL1 is the green lamp that shows CR1 is picked up and PL2 is the red lamp that shows it is dropped out. Always check the letter in the circle: a plain circle with a tag could be a coil, while a circle with a color letter is a lamp."
+      fieldNote: "Color letters and tags beat guessing: always read what is inside the circle."
+      terms: [pilot light, indicator]
+      day: 4
+      symbol:
+        key: pilot-light
+        designation: "PL1"
+        nemaNote: "A circle with a color letter (R, G, A, and so on) inside."
+        iecNote: "IEC: you may also see an indicating lamp drawn as a circle with a cross, usually tagged with the letter H."
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.float-no
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "A float switch symbol is a switch contact drawn with a float marker; its NO or NC shape shows the shelf state, not the state in a tank."
+    body:
+      title: "Float switch (NO)"
+      text: "The float switch symbol is a switch contact drawn with a small float marker on its operator, and the shape of the contact shows whether it is NO or NC. As with every symbol, the picture shows the shelf state, the switch as manufactured. A float switch lying on a bench is the shelf state; the same switch hanging in a full tank is operated. The designation, usually FS and a number, names the device. In the bucket, FS1 is drawn NO and feeds the tank-high lamp, so it closes when the simulated level rises."
+      fieldNote: "Never read the symbol as the tank condition. It always shows the device sitting on the shelf."
+      terms: [float switch, level]
+      day: 4
+      symbol:
+        key: float-no
+        designation: "FS1"
+        nemaNote: "Switch contact with a float marker on the operator; NO shape as drawn."
+        iecNote: "IEC: you may also see level switches drawn with a switch symbol plus a level-sensing mark; designations differ, so check the legend."
+      # note: exact NEMA drawing of the float marker is described only generally
+    reviewerNotes: "NEMA ladder symbols and IEC notes from general knowledge only. The float marker shape is described generically on purpose; reviewer should confirm the NEMA ICS 19 liquid-level switch symbol. IEC note is conservative (no designation letters stated)."
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.limit-nc
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "A limit switch symbol is a switch contact drawn with a mechanical operator; the NC version is closed until the machine part operates it."
+    body:
+      title: "Limit switch (NC)"
+      text: "A limit switch is a pilot device operated by the position of a machine part, such as a door or a moving carriage. Its symbol is a switch contact drawn with a mechanical operating mark, and the contact shape tells you NO or NC. The normally closed type is closed until a machine part presses the lever, which then opens it. In the bucket, LS1 is drawn NC and sits in series with the solenoid, so the solenoid is energized until the limit switch is operated. The tag usually starts with LS."
+      fieldNote: "A limit switch is read by the position of the machine part, so check where the part actually is."
+      terms: [limit switch, NC]
+      day: 4
+      symbol:
+        key: limit-nc
+        designation: "LS1"
+        nemaNote: "NC contact with a mechanical operator mark; closed on the shelf."
+        iecNote: "IEC: you may also see a position switch drawn with a switch symbol and a mechanical-operator mark, with NC terminals commonly numbered 21-22."
+    reviewerNotes: "NEMA ladder symbols and IEC notes from general knowledge only. The operator-mark shape is described generically on purpose; reviewer should confirm the NEMA ICS 19 limit switch symbol. IEC position-switch description is conservative."
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.solenoid
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "A solenoid is a coil-type load tagged SOL; it sits at the load end of its rung like a relay coil."
+    body:
+      title: "Solenoid"
+      text: "A solenoid is a coil that moves a plunger when energized, often to operate a valve. On a ladder diagram it is a load, so it sits at the right end of its rung, connected to the X2 side, and it is tagged SOL with a number. Its symbol is a coil-type mark labeled SOL; drawings differ on the exact shape, so read the tag and the legend. Like a relay coil, it draws more current while the plunger is out than after it seats, but the symbol does not show that. In the bucket, SOL1 is fed through the limit switch."
+      fieldNote: "If a valve does not move, confirm the solenoid has voltage across it before you suspect the valve."
+      terms: [solenoid, load]
+      day: 4
+      symbol:
+        key: solenoid
+        designation: "SOL1"
+        nemaNote: "A coil-type load symbol labeled SOL at the load end of its rung."
+        iecNote: "IEC: you may also see the operating coil drawn as a rectangle, often tagged with a Y letter for valves."
+    reviewerNotes: "NEMA ladder symbols and IEC notes from general knowledge only. Exact NEMA solenoid shape is not described on purpose (drawings vary); reviewer should confirm NEMA ICS 19. IEC tag letter Y for valve operators is from general knowledge; confirm or remove."
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.timer-on-notc
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "An NOTC timed contact is a normally open contact that closes after a delay when its on-delay timer coil is energized; its symbol is an NO contact with a timing mark."
+    body:
+      title: "On-delay timed contact (NOTC)"
+      text: "The on-delay timed contact is drawn like a normal NO contact but with an extra timing mark, usually an arrow, that shows the contact action is delayed. NOTC means normally open, timed closed: after the timer coil is energized the contact waits out the delay and then closes. If the coil drops out before the delay finishes, the timing starts over. The matching NCTO contact is the opposite: closed on the shelf and opening after the delay. The tag, such as TR1, ties the contact to its coil, and the extra mark is your cue that this is not an ordinary relay contact."
+      fieldNote: "An extra timing mark on a contact means: do not expect an instant change. Wait for the delay."
+      terms: [on-delay, NOTC, NCTO]
+      day: 4
+      symbol:
+        key: timer-on-notc
+        designation: "TR1"
+        nemaNote: "NO contact with a timing arrow mark; timed closing after the coil is energized."
+        iecNote: "IEC: you may also see delayed contacts drawn with a semicircular delay mark on the contact, and timers tagged with KT."
+    reviewerNotes: "NEMA ladder symbols and IEC notes from general knowledge only. Arrow direction convention for NOTC vs NOTO intentionally not stated; reviewer should confirm NEMA ICS 19 timed-contact symbols. IEC KT tag and delay mark are conservative general knowledge."
+  - <<: [*s, *d]
+    id: ch01.u2.s2-3.symbol.timer-off-noto
+    book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }
+    claim: "An NOTO timed contact is a normally open contact that closes immediately when its off-delay timer coil is energized and opens after a delay once the coil is de-energized."
+    body:
+      title: "Off-delay timed contact (NOTO)"
+      text: "The off-delay timed contact is also drawn as an NO contact with a timing mark, but the mark shows the delay applies when the coil is de-energized. NOTO means normally open, timed open: the contact closes immediately when the timer coil is energized, and it stays closed for the delay after the coil is de-energized, then opens. If the coil is energized again during the delay, the timing resets. The matching NCTC contact is the opposite shape: open immediately on energizing, then closing after the delay once the coil drops. Compare with NOTC to tell the two timer types apart."
+      fieldNote: "Off-delay contacts change at once on energizing and only delay the return."
+      terms: [off-delay, NOTO, NCTC]
+      day: 4
+      symbol:
+        key: timer-off-noto
+        designation: "TR2"
+        nemaNote: "NO contact with a timing mark; timing starts when the coil is de-energized."
+        iecNote: "IEC: you may also see delayed contacts with a delay mark that differs for on-delay and off-delay; check the legend."
+    reviewerNotes: "NEMA ladder symbols and IEC notes from general knowledge only. Arrow direction convention intentionally not stated; reviewer should confirm NEMA ICS 19 timed-contact symbols. The IEC note is deliberately conservative."

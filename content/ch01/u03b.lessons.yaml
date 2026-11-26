@@ -1,0 +1,189 @@
+defaults: &d
+  type: lessonCard
+  version: 1
+  nec: []
+  nema: []
+  ieee: []
+  excerpts: []
+  basis: general-knowledge
+  enforcedNote: null
+  other: []
+  bookAlignment: provisional
+  reviewerNotes: "Original summary keyed to the section title only (book not available). Conventions stated as common practice; confirm against the book and employer drawings."
+items:
+  - <<: *d
+    id: ch01.u3.s3-10.card.pushbutton-types
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.10", page: 29, pageStatus: toc-unverified, figure: null }
+    claim: "A pushbutton's normal state is unpressed; momentary types spring back and maintained types stay put until operated again."
+    body:
+      title: "Pushbuttons: head styles and momentary vs maintained"
+      text: "A pushbutton is an operator-actuated pilot device with one or more contact blocks. Common heads are flush (hard to press by accident), extended, and the large mushroom head. Momentary buttons spring back when released, so their contacts return to the normal state. Maintained buttons stay in the pressed position until operated again (push-pull and twist-to-release styles are common). Normal always means the unpressed, shelf state: a normally open button closes when pressed, a normally closed button opens when pressed. A START function is usually a momentary NO button; a STOP function is usually an NC button."
+      fieldNote: "When a button seems to do the opposite of its label, check the contact block type and whether the head is maintained before blaming the wiring."
+      terms: ["pushbutton", "momentary", "maintained", "mushroom head", "flush head"]
+      day: 7
+  - <<: *d
+    id: ch01.u3.s3-10.card.mushroom-estop
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.10", page: 29, pageStatus: toc-unverified, figure: null }
+    claim: "A mushroom-head stop button is typically a maintained, normally closed device that latches when pressed."
+    body:
+      title: "The mushroom head as a stop device"
+      text: "The large mushroom head is easy to strike quickly with the palm, even with a gloved or full hand, which is why it is a common choice for emergency-stop style buttons. Many such heads are maintained: once struck they latch in the pressed position and must be deliberately reset by twisting or pulling. The contact block behind a stop head is normally closed, so pressing it opens the circuit and de-energizes the coil. In the reference bucket, PB3 is a maintained mushroom NC stop in series with the PB1 START button on the rung-1 path to the CR1 coil."
+      fieldNote: "A latched stop button is a clue when a machine will not restart: someone may have pressed it and nobody reset it."
+      terms: ["mushroom head", "maintained", "STOP", "NC contact"]
+      day: 7
+  - <<: *d
+    id: ch01.u3.s3-11.card.solenoid-coil-load
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.11", page: 31, pageStatus: toc-unverified, figure: null }
+    claim: "A solenoid is a coil load that pulls in a plunger, and an AC solenoid draws more current while the plunger is out than when seated."
+    body:
+      title: "A solenoid is a coil that moves a plunger"
+      text: "A solenoid is an electromagnet coil with a movable iron plunger. When the coil is energized, the magnetic field pulls the plunger in, and the plunger moves a valve, latch, or lever. On the schematic a solenoid is a load, so it connects on the X2 side, with its controlling contacts on the X1 side, just like a relay coil. An AC solenoid draws a much larger current while the plunger is out than after it seats, the same inrush idea as a relay coil. Qualitatively, that is why a plunger that jams open can overheat the coil."
+      fieldNote: "A solenoid valve that hums but does not move is a warning sign: stop and find the mechanical cause before the coil cooks."
+      terms: ["solenoid", "plunger", "inrush", "load"]
+      day: 7
+  - <<: *d
+    id: ch01.u3.s3-12.card.nohc-ncho
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.12", page: 31, pageStatus: toc-unverified, figure: null }
+    claim: "NOHC means normally open on the shelf but held closed in the installation; NCHO is the reverse."
+    body:
+      title: "Switch operations: held-closed and held-open contacts"
+      text: "The shelf state of a switch is its contact arrangement with nothing acting on it. In a real installation a machine part may be pressing the actuator all the time. A contact that is normally open on the shelf but held closed by the machine in its resting position is described as normally open, held closed (NOHC). A contact that is normally closed on the shelf but held open by the machine is normally closed, held open (NCHO). The symbol shows the shelf state with a note or marking for the held condition, so read both before predicting what the circuit sees."
+      fieldNote: "When a limit switch sits against a machine at rest, the circuit sees the held state, not the shelf state."
+      terms: ["NOHC", "NCHO", "shelf state", "held closed", "held open"]
+      day: 7
+  - <<: *d
+    id: ch01.u3.s3-12.card.normal-vs-installed
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.12", page: 31, pageStatus: toc-unverified, figure: null }
+    claim: "Normal refers to the shelf state, and the installed state also depends on what acts on the actuator."
+    body:
+      title: "Normal is the shelf state, not the installed state"
+      text: "Throughout controls, normal means de-energized and not actuated, the state as manufactured and shipped. It does not describe what the device is doing in the installed system. A pressure switch bolted to a pressurized line is actuated even though its contacts are still called normally open. The same idea explains held-closed and held-open contacts. To predict a circuit, take the shelf state, then apply whatever the installation is doing to the actuator right now. Skipping the second step is a very common source of wrong predictions and wrong troubleshooting conclusions."
+      fieldNote: "Before meter work, ask two questions: what is the shelf state, and what is acting on the actuator right now?"
+      terms: ["normal state", "shelf state", "installed state", "actuator"]
+      day: 7
+  - <<: *d
+    id: ch01.u3.s3-13.card.temperature-switch
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.13", page: 34, pageStatus: toc-unverified, figure: null }
+    claim: "A temperature switch's normal state is its shelf state; installed in a hot process it may already be actuated, and it may have a deadband."
+    body:
+      title: "Temperature switches: shelf state vs installed"
+      text: "A temperature switch changes its contacts when the sensed temperature crosses a setpoint. Its normal state is the shelf state at rest, before it senses a process condition. A normally open temperature switch is open when it is not actuated, which for a heating-limit style device means below its setpoint, and closes when the sensed temperature rises past the setpoint. Many have a deadband, so the contacts return only after the temperature falls some distance below the actuation point. The sensor reading and the switch contacts are different things, so an installed switch may already be actuated by a hot process."
+      fieldNote: "If a high-temperature lamp is lit, check the actual process temperature before suspecting the switch."
+      terms: ["temperature switch", "setpoint", "deadband", "NO/NC"]
+      day: 7
+  - <<: *d
+    id: ch01.u3.s3-14.card.pneumatic-timer
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.14", page: 35, pageStatus: toc-unverified, figure: null }
+    claim: "A pneumatic timing relay is coil driven and delays by metering air through an adjustable opening."
+    body:
+      title: "Pneumatic timing relays"
+      text: "A pneumatic timing relay is coil operated. When the coil energizes, a mechanism moves while air is metered through an adjustable opening, so the timed contacts change only after the set delay. Turning the adjustment changes the delay. Because air movement is affected by wear, dirt, and temperature, repeatability is looser than for electronic timers. The coil itself is the timing input, so no separate supply is needed. An on-delay model starts timing when the coil is energized, and an off-delay model starts timing when the coil is de-energized."
+      fieldNote: "A pneumatic timer that drifts or gets slower may have a blocked orifice or aged parts, not a bad coil."
+      terms: ["pneumatic timer", "adjustable orifice", "repeatability"]
+      day: 8
+  - <<: *d
+    id: ch01.u3.s3-15.card.instantaneous-contacts
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.15", page: 35, pageStatus: toc-unverified, figure: null }
+    claim: "Instantaneous contacts on a timing relay change with the coil immediately, with no delay."
+    body:
+      title: "Instantaneous contacts on a timing relay"
+      text: "Many timing relays include both timed contacts and instantaneous contacts. Instantaneous contacts follow the coil without any delay: they change state as soon as the coil energizes and return as soon as it de-energizes. Timed contacts follow the delay rules. When tracing a circuit, look at which contact set the schematic uses. A contact marked with a timing symbol waits; an unmarked contact on the same device does not. Using the wrong set can make a lamp or load switch at the wrong time even though the timer itself is working."
+      fieldNote: "If a load switches at the wrong moment, confirm that the timed contact set, not the instantaneous set, is wired to it."
+      terms: ["instantaneous contacts", "timed contacts"]
+      day: 8
+  - <<: *d
+    id: ch01.u3.s3-16.card.solid-state-timer
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.16", page: 36, pageStatus: toc-unverified, figure: null }
+    claim: "A solid-state off-delay timer needs a constant supply plus a separate trigger, and losing supply drops the output immediately."
+    body:
+      title: "Solid-state timing relays"
+      text: "A solid-state timing relay uses electronics to time the delay, with an adjustable setting and generally better repeatability than a pneumatic timer. An on-delay solid-state timer can time from the moment its supply is applied. An off-delay solid-state timer works differently: it needs constant supply power to stay alive, plus a separate trigger input. The trigger energizing makes the output transfer immediately, and removing the trigger starts the delay. If the constant supply is lost, the output drops at once, with no timing. In the reference bucket, TD4 has its supply on wire 1 and its trigger on wire 13."
+      fieldNote: "A solid-state off-delay wired without a constant supply will not time out; it just drops out when the supply is gone."
+      terms: ["solid-state timer", "constant supply", "trigger"]
+      day: 8
+  - <<: *d
+    id: ch01.u3.s3-17.card.on-delay-off-delay
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.17", page: 36, pageStatus: toc-unverified, figure: null }
+    claim: "On-delay contacts are NOTC and NCTO; off-delay contacts are NOTO and NCTC; interrupted timing resets."
+    body:
+      title: "On-delay vs off-delay and the contact names"
+      text: "On-delay timers start timing when energized. Their NO contact is NOTC: normally open, timed closed, closing after the delay. Their NC contact is NCTO: normally closed, timed open. When the coil de-energizes, the contacts return at once. Off-delay timers transfer immediately on energize and start timing when de-energized. Their NO contact is NOTO and their NC contact is NCTC. If the coil drops before an on-delay finishes, it resets and the contacts never change. If the coil returns during an off-delay, it resets and the contacts stay transferred."
+      fieldNote: "Read the contact name left to right: normal state, then timed action. NOTC means open, then closes after timing."
+      terms: ["NOTC", "NCTO", "NOTO", "NCTC", "on-delay", "off-delay", "reset"]
+      day: 8
+  - <<: *d
+    id: ch01.u3.s3-17.card.timer-reset-rules
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.17", page: 36, pageStatus: toc-unverified, figure: null }
+    claim: "On-delay timing resets if the coil drops early, and off-delay timing resets if the coil returns during timing."
+    body:
+      title: "Timer reset rules"
+      text: "Three rules cover most timing questions. First, an on-delay resets to zero if its coil drops before the preset, so the contacts never change state. Second, an off-delay transfers its contacts the moment the coil energizes, and timing begins on de-energize. Third, if an off-delay coil is re-energized while it is timing, the timer resets and the contacts remain in the energized state. A solid-state off-delay times on its trigger, but only while its supply is present. A scenario that ends exactly at the preset counts as timed out."
+      fieldNote: "When a timed lamp flickers or never lights, trace whether the coil input was interrupted before the delay finished."
+      terms: ["reset", "preset", "coil", "trigger"]
+      day: 8
+  - <<: *d
+    id: ch01.u3.s3-18.card.rails-and-rungs
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "A ladder schematic runs between two rails, and each rung is a series path of contacts leading to a load."
+    body:
+      title: "Rails and rungs"
+      text: "A motor control schematic, also called a ladder diagram, is drawn between two vertical rails. In the reference bucket the left rail is X1 (the fused supply side) and the right rail is X2 (the grounded side). Each horizontal line between them is a rung, and a rung is one complete path from rail to rail. Contacts and other switching devices sit on the left of a rung, and the load, such as a coil or pilot light, sits at the right. Read a rung left to right: power can reach the load only if every contact in series is closed."
+      fieldNote: "Finding the rung that feeds a dead load is the first move in most troubleshooting."
+      terms: ["ladder diagram", "rail", "rung", "X1", "X2"]
+      day: 9
+  - <<: *d
+    id: ch01.u3.s3-18.card.contacts-left-loads-right
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "Switching devices belong on the ungrounded X1 side and loads connect directly to the grounded X2 side."
+    body:
+      title: "Why contacts sit on the X1 side and loads on the X2 side"
+      text: "In a grounded control circuit, the X2 side is bonded to ground. Placing every switching device on the X1 side and connecting loads directly to X2 means an accidental ground in the wiring downstream of a contact cannot energize the load, because the load is already at ground potential on that side. It also keeps a stop device from being bypassed by a ground fault. The layout rule is simple to read: contacts on the left, coils and lamps on the right, directly on X2. Never place a contact between a coil and X2."
+      fieldNote: "A coil switched on its X2 leg can be energized by a ground fault, so treat that wiring as a defect."
+      terms: ["grounded conductor", "X1", "X2", "load"]
+      day: 9
+  - <<: *d
+    id: ch01.u3.s3-18.card.wire-numbers
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "Electrically common points share a wire number, and the number changes after a device."
+    body:
+      title: "Wire numbers"
+      text: "Wire numbers label the conductors so a schematic can be matched to the panel. Every point that is electrically common, with no device between them, gets the same number. When a wire passes through a device such as a contact or a pushbutton, the number changes on the other side. In the reference bucket, wire 1 is the X1 rail and wire 2 is the X2 rail. Wire numbers usually appear on the schematic next to the rung and on the physical wire labels and terminal strip, so a number on paper points to a real terminal."
+      fieldNote: "To find a broken wire, test between the two ends labeled with the same number."
+      terms: ["wire number", "common point", "terminal strip"]
+      day: 9
+  - <<: *d
+    id: ch01.u3.s3-18.card.rung-numbers-cross-reference
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "Cross-references list the rungs where a coil's contacts appear and tie each contact to its coil."
+    body:
+      title: "Rung numbers and contact cross-reference"
+      text: "Rungs are often numbered along the left edge. A coil can carry a cross-reference beside it listing the rung numbers where its contacts appear. That is how you find every contact controlled by one coil, such as CR1 and its NO and NC contacts on other rungs. In the other direction, each contact is identified by the tag of the coil that operates it. A cross-reference saves time on large drawings, but the exact formatting varies, so read the legend on the drawing set you are using."
+      fieldNote: "When a contact is on the schematic, the cross-reference tells you which coil to check first."
+      terms: ["rung number", "cross-reference", "coil tag"]
+      day: 9
+  - <<: *d
+    id: ch01.u3.s3-18.card.trace-to-terminals
+    type: lessonCard
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "Tracing a schematic to the panel means matching device tags and wire numbers to the physical terminals."
+    body:
+      title: "Tracing a schematic to the physical terminals"
+      text: "To follow a schematic into the real panel, work in a fixed order. Pick the rung, identify each device by its tag, and note the wire numbers on both sides of that device. Then find the same tag and the same numbers on the terminal strip and on the device terminals in the enclosure. One rung may cross several physical locations: a pilot device on the door, a relay in the back, and the terminal strip between them. Confirm a path only by matching tag and number, never by wire color alone, and treat the circuit as energized until proven otherwise."
+      fieldNote: "Matching numbers rather than guessing from layout is what makes a trace safe and repeatable."
+      terms: ["trace", "terminal strip", "device tag", "wire number"]
+      day: 9

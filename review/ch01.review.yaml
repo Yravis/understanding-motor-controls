@@ -1,0 +1,1883 @@
+# Review ledger. Eli writes verdicts here; the seed script only adds missing entries and flags stale hashes.
+entries:
+  - id: ch01.u3.s3-18.device.control-supply
+    hash: 4add40c523bf183c9107ea8e1d315be60d77ff00f5a217875c191a38cdb25c9c
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.device.supply-fuse
+    hash: d2aab7cf3e20997d862dede42547672d33afc5a528670f087d5d9a462f461078
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.device.wire-and-bond
+    hash: c52f335212c91fe9739dee284fad652b65076024882f097e3af339e607dc65ec
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-1.device.contact-block
+    hash: 28d544f19a3f114e9ba84ccc769a8575b70e1b6a95a66460e3818dd3586948d4
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.device.cr1
+    hash: 424676c94dc00e1db71691a1f1a597f8719398f8bf3cce98be0383acc5058f6a
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-14.device.tr1
+    hash: 411a5f2b65288671bd480dbc7adc12a876c393ea5e83e998ec66541e23da85b7
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-14.device.tr2
+    hash: fec5618b8334969089d90b3a09af30cef752134e9b9cc9ab8564ade0bfcce93b
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-16.device.td3
+    hash: 7690dbd3e92482d22b584427b808b41d9a781eb67a499513bd675bfd9de347a7
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-16.device.td4
+    hash: f75d0126b14677d49455967d75d9aaf42f1058902eaf635a551505407e2b4c75
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-11.device.sol1
+    hash: 53e404ef29ef049885fab80915a092b65d8799f701736322e831fbb44a2ebfce
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-10.device.led-pilot
+    hash: 8aed06ea6a1bb728d7ef973af0affb029083c3cec6e1b5fa2b951b0fcd49fd80
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-10.device.incandescent-pilot
+    hash: bcd73bbea0e14514252fa903d901c432f190df51e8b5ce86b28d7e157b36638a
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-7.device.px1
+    hash: 4987909adff26aaadf8cdb2aa17866bb93024ab92992833a6a7adafd50abc1fe
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-4.device.process-tank
+    hash: a82870166a2e96dd9dd4ae05adefc5ec15edeef53ab40c15ba6d566b2d0eb265
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-9.device.process-air
+    hash: 96bce795989d6f97d7f98c81e3872edabc7397e33016e37ad4d6b17392f41b49
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-13.device.process-heat
+    hash: 0f4360f5a4227b0e5b022bb98e70923cd3c8ba0ed6abe3f290ea4c43943da421
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.device.coupling
+    hash: 7f422adb590a31782c55071ac4ea6f55a650b49ce6227763b071cc2a3eb38035
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.device.meter
+    hash: 15417b9fba6e2e596e122f50eb1d8a55d5c05720c6ac1046e97d3e0976fd3e66
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.fault.open-coil
+    hash: 1899846e37deddd3e97d478440129853922a6f1f0752f9f6918fa269f2a863ff
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.fault.shorted-coil
+    hash: 1c8d09c7e50d023d6470783e5067b43c227bfe6c902c00129b9c14ad26d3fd81
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.fault.welded-contact
+    hash: f1310368fd4fd03b7ec3b29bfde3ad61b68e5d1c5ec1da0b2ced8130623c576f
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-10.fault.high-resistance-contact
+    hash: ff18b927657ee25d97649d4e02cf025d33bdfb21b304be4bf8462b4e8eccf0ba
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-10.fault.loose-terminal
+    hash: dd22c83af6256303b9bdc46571bae63b9b38cca49093bf9c69862210b9ef6585
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.fault.open-wire
+    hash: 4bfcf06ca999176b2cb58b8179f7f49d2b279006e1d601ba33bc73021ea00894
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-4.fault.float-no-nc-miswire
+    hash: ece0602dc744d90bc86ba9c847ca0c48441d63d2fcd01299f916c7af9c07f48b
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.fault.contact-on-x2-side
+    hash: e7ff3e43b69c8447ee4fb54985befaab86ab6011b803084acc3e892cec6848d5
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-14.fault.wrong-timer-type
+    hash: 18a005c9efd7e82afc37747131b144902fd1c780c5721112b8e063df340dd2b7
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-16.fault.ss-offdelay-no-constant-supply
+    hash: 6f64f8f9913549ac70db25367be68496a5ab7d442c7c52083d3848a388d2a713
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-6.fault.stuck-limit-switch
+    hash: 49b1cdaf73ef44962cee4b5cfff7170c9cc646854b0b5a5973dcdfa6d2df5e3f
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.fault.broken-shading-ring
+    hash: ccbe7d66ad9c1f8f93abc9c59581061414e936d901b8ace7dcfc0757f9b76475
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.fault.x1-ground-fault-clears-fuse
+    hash: 34070ebdd00183d2412f8d7d8657fc5ea2cb9ba02f9180fcff8e8e9e99ad8938
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.fault.x1-ground-fault-high-impedance
+    hash: 53cce8f188d5cf2b1f9402feae8e1ac08b95c5d53b229ccd79494b4b675c4d5f
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.fault.foreign-voltage-bucket-off
+    hash: 00c2b0bdb467bec182fd3e436eb660b5dcce3a98ce52d4ce88c2b622417965f6
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.activity.bucket-tour
+    hash: 34eeee3ddbd0c58f02c99f648e8d5bd79b4bdd538d28e6cf5f35b02cf2b0f628
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.activity.loto-drill
+    hash: 9c222f696c2e497278098a3994434f9636b8f7069e1080424897688051b7255d
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.activity.device-bench
+    hash: 1d12b8243fa1fa893d60c8f05171de550152f477fd1b3b5c3885195d04b6c9a4
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.activity.tag-the-bucket
+    hash: 76f1ea191b98b54d74502c1984810c2ec4a4dede4718309a682a6ea11702b7b2
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.activity.relay-bench
+    hash: 7c993692759169e5de480513d3654e02b2e1d6712139050c989fd48536194f5f
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-4.activity.sensor-loop
+    hash: 4365a11580d1a082ac0d0f38f189567f7508cfa44a4ee523d1cd7c9ed911bf96
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-10.activity.pushbutton-solenoid
+    hash: b284319ac870261583ee7986f9435309464daab34b885df190191e28066b4a4a
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-14.activity.timer-bench
+    hash: cd280866efa121697e2e5c6d92d570c4b7b3d4fbc5c5f2758a24082ccb3f901b
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.activity.trace-and-troubleshoot
+    hash: e3dee32facef5fce1f51f59805383947006df1d73f97c30ba5cb7dbdb30fc3b2
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.activity.commissioning-check
+    hash: 93ef0faf2147ea6c1e7330a929d0c5719388ff40697db4111c6e1164b0750a2d
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.card.what-motor-control-means
+    hash: fb3780fa1daf0f7612c8793a3cbe4d8d098ba07c1e8af0ab409c7d531631eb15
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.card.control-vs-power-circuit
+    hash: f919a196f50c44d0c1c9cd7db55f94243a1960e50c3ad04c44d85163d6ba5382
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.card.pilot-devices-and-loads
+    hash: a9bafb99b530be258f3d4b4d2ae1c3a6d96b238bebca262109b20299019b4c31
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.card.contact-coil-normal
+    hash: 05c6a0c69441a8bf0c43046098614be42fa6e07f91aebf271a7cd254551bc16b
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.card.identify-all-energy-sources
+    hash: ad6b61938f8f7da13dc8d35141de6174d165f388af6e40946ea755b034ceaf76
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.card.meter-basics
+    hash: 737ede4cda1f3bfa4a532472af2d99cdc19c4264a8497f03e6baffe519831ea4
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.card.motor-control-basics
+    hash: b2d0e14464ddd5b98fd9f52d4d2b96540af1e6d0ed92d30d75b035640748a636
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.card.loto-prepare-shutdown
+    hash: f36aacd0e6fd987feb42823f1bede027b3721cc1093432791011c9267503aba1
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.card.loto-isolate-lock-tag
+    hash: 84e2f2189632733fead79ad5482518c9c525b985880d36c6db1c152a4456e7a2
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.card.loto-stored-energy
+    hash: 43367a2a236cfc3d0cf8376619cd75b96b68380da049af502641c5f2e0cd2e18
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.card.loto-live-dead-live
+    hash: ff81b80057b753693ff3556e930a90f45a91af39320d66d880c03d503e27dd25
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.card.ohmmeter-only-dead
+    hash: 9d3822e04dd2ea390c505802e96d21aa0555d4bef6791ed58c252a60d77090c1
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.question.control-vs-power
+    hash: 67fd37e36c27a9f7e56e2ef26c46f5eb9dee72903e6f67f91120802410730842
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.question.pilot-device
+    hash: ee79c439c8553db44302a341f0812685f5a78f69c6dc68fc77167e8b40942b8a
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.question.normal-state
+    hash: 8061f3b08dbfeb33396f3cd614a1d04e605cf0d3f247f3acff91971b58e740fd
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.question.foreign-voltage-live
+    hash: 52e314f8c06f1209d8d4326149e3c0022c86910607f3ffb663ada0b814922f19
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.question.meter-function
+    hash: 89baedab90a7a8ead637b42942e0c3c8f903786dde0434851356bfc3e1e87a86
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.question.verify-meter-first
+    hash: 26c280782ba3b98dbf1584ce2507018bb8dc5f3d2cdb81ff4a9da1e78d31f7bd
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.question.pb1-predict
+    hash: 119a07e327b2a4b1d6fd29f17410938b0198a61cacb1aa58745ce0638def15a2
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.question.shelf-state-predict
+    hash: d05448e425769ae0162afccd7d219c56b67313ce9eb8240e6e68f76b144ab9e8
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.question.interlock-lamp-predict
+    hash: 30785e0964745cd77bd7dc0ce07b1ddeadfb608c6faa7679281d13c255d5107b
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-1.question.energy-sources-multi
+    hash: 6be097a8d660f93adc9c453f90549e20cd99d29c0cc39c6174e6c13e48f76db8
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.question.employer-procedure
+    hash: 595b2d1beef1e0ebc0f781eea59d31480ca26d7d85f0058e54e88c1f3b215053
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.question.loto-order
+    hash: 400063b21ab87d673f6c4e066eef5123e4b15e0e29fa43b6df0a62f0af450c1d
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.question.identify-sources-multi
+    hash: 2c44a69a0fa5d6f55067822bbe6cb6e85f34e3b1eaec17d2e177578119a53e88
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.question.normal-shutdown
+    hash: 874d917c4bba565daf9522dd6ff3243af0a7eb36212eea1b08e77d826c404bf3
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.question.isolate-foreign
+    hash: 083a7aa58efcdb873fc8dce77a84672b433a75e9efe71bbe4a80d39be30aa546
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.question.lock-versus-tag
+    hash: 5d2ec54d71517911b60c9f83a24118d7127c6641d1c7e72c6216bc5e11f107a6
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.question.recheck-meter
+    hash: 16143524c7560223d1850c5fa2eb061f10cd0a3052b18d191bdf09aeddf86e17
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.question.absence-combinations
+    hash: f414fecf34b9e4371ca3aec2ad22279514c9d095821c87b0436f4d8df6ef0b8d
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.question.ohmmeter-rule
+    hash: 36f8276b12253828ed855e7f3d561f56f1345b6f9386c58836f029c7279cc67e
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u1.s1-2.question.supply-off-predict
+    hash: 0305bf303ce4391618758b76325cc807f925cfa6a0faed69d6b7605bca0dca89
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.card.control-defined
+    hash: 1d78da2bacbb5e99c94d9295030cb67992221913d23e10d8f82ba342edce1894
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.card.controller-defined
+    hash: 16ce06631b21d107cab2591134bab1b02d94a5e5c87d53c767a660276862ce72
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.card.pilot-device-intro
+    hash: 2dd7c8aeb83c8fb1bd4c8a4420f9a2af9ecc9fc535d3ee067edf7421acd86421
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.card.maintained-vs-momentary
+    hash: 9070d27f9d036371bb6db72b198352ca0ffaa8761efd425e2be4b5bda9c7054c
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.card.normal-state
+    hash: 511415b472ad41afdc06b05cf0dc7880f7f076ebc509d23757cdf6cb20fbb102
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.card.coil-contacts-relay
+    hash: ac778428a23513c8ddf39f94d0090b4c0ddab56d44c2311cfe89746d64627c01
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.card.pickup-dropout
+    hash: a8f9bc241d4cb7be6956c4c43cd6f8719ebd04da80211aa4581c26e02e21ab0d
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.card.seal-in-vocabulary
+    hash: 9982a0c2e02daef75d547e84d27a80e277c94495501029381d95b79617968b0b
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.card.control-vs-power-load
+    hash: ba7db36a1c2a0a9ada601475664e610808d324a561a51697dacc638b07faae35
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.card.contactor-starter-overload
+    hash: 0d81350e961b397f76f398e6828d9f5a4e5b72be3272504c3a52e0139f01c0fa
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-2.card.device-letters
+    hash: 922109d8854a099a8865c9484f858767eac79d200137eaf62e4d486eaaaa2e94
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-2.card.sensing-switch-letters
+    hash: a98e6521ee851d67cd71c832fabd3c45c6f2b2acc136b55fa785e113d0f185a6
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-2.card.timing-and-solenoid
+    hash: 047f14280751b16653ad5e3086eaee378632cad01c351f47e9517e4b21a87372
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-2.card.starter-overload-mcc
+    hash: 8815555b01751ec87936d315be0edf8a42322cf378c373005e0726c42e4494b3
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-2.card.contact-timing-letters
+    hash: 9b05deffafd5176d5fd8b1fb1f4d7eee2ad2e623b74c167645f908c79126a864
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-2.card.tags-and-legends
+    hash: 234c3d64db9245dd5f7151a6d2a3f1a7d8b821f5c44209324993f787308e34b0
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.contact-no
+    hash: 4f8f9987e93b9fd57ff08dc3129b5d10cafd2cd5d98a9e9355aa27c1fb53bcd5
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.contact-nc
+    hash: f1dd2b4d2a541b3e470c1397fd3976b0dda0553f1cc115fb10f315d6a54537b4
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.pb-no
+    hash: 0f75dc1f61da63cc9fd5dac7fbda435bac95219d4b8610938c0c85035744ed1b
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.pb-nc
+    hash: c19dd36c46d277ebc2251c8636c6ace9de11676f67c9b64d5fa9d6385e41596e
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.pb-nc-mushroom
+    hash: aefb4832b7f2b81d411f46454dcd9e6b399b4a0557876b64f69494583fa3432e
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.relay-coil
+    hash: e8cf94ad039aff3f2b1f93b66c247cbc6ebc55f69200a3ac2285b85630e5a02c
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.pilot-light
+    hash: c9fd499adf420f15fcd4a9665ad1396ee1e86fb644a8004e3ffd324c53eaea38
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.float-no
+    hash: 1ffaff5388a042d47ea8db30c3df24265ac4b56b60abed3aa43c716b95fe971a
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.limit-nc
+    hash: 7aebb0c339b3a270afacd6c2a49c657273eee0070a04404ac9ab9375c23819c0
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.solenoid
+    hash: f2213a0386f9bb651f6da5a651920b10dc0f7140158741de8cf2799a779a4210
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.timer-on-notc
+    hash: aed443baab3bb35e72962aea73f9800d24deb167d7eb86f338923ca41c8d90ea
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.symbol.timer-off-noto
+    hash: 8017f73d556e58382195dd45702390dc1954df78f80fd550825633719cdce13c
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.question.normally-closed-meaning
+    hash: 6825a1d7cfeb1ce9722d1118d91ff6627579c3b2639b5fb18b1f1a5d76dad12e
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.question.maintained-operator
+    hash: e37598d6c2e50dcb77e8c9838c87a401a3b19c00d52571ffe4198d97e5e8011b
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.question.pickup-event
+    hash: b2c2267cb8dd4502b99c27b31d153a793adbceb7d1173155f6d8070c02732d23
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.question.seal-in-term
+    hash: 65b3429a7edb2026f3f3d80351c771d5059470c65b16b517160533a12c6f8bc6
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.question.pilot-device-meaning
+    hash: c31986525a71540d9208190dc00a52a2000d64a6abedf39f6d8584854a472a2d
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.question.pilot-devices-select
+    hash: ee9a77c3532b688780d988732799aaa4a7c3d3ad016071f9c23023199222a8e7
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.question.control-vs-power
+    hash: f2e85e4a88e2adc15a599ed78e7627512fb4c7dacc88acf927e775c2abf793ac
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.question.relay-sequence
+    hash: 96b27915e630bd85a2113328c0054ddba3722211df9b6b6b85734d14f896dfb7
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.question.maintained-estop-predict
+    hash: b95a6358cd6e073747b3f311dda1330ee6617dc4a76eef6764f97975da11e91c
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-1.question.momentary-start-predict
+    hash: 3849681beb66229ea3d94f511b41498f0f6543ae5d63a4724ad0ca5374e80573
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.question.identify-nc-contact
+    hash: e6eb6bcbf6212f54e943b928c4d6b7b98d0b50285df1476c86bdafdd0080da02
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.question.identify-mushroom
+    hash: 9a9672e19a623a2df821edc7caa4f555cafc8acf4c387a3c41b549a324f4d21b
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.question.identify-notc
+    hash: 1109a077451c0db99ba4a22e77cd73a1d079e2daeb9088ba3f90c682e7dc8057
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.question.tap-start-button
+    hash: e5c12fd7a2fc9c31bcf756007cdc64f788524ef75fa5632a0c1a8b87f9605171
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.question.tap-coil-and-contact
+    hash: e63830397b48ec9d9eaff88747cf797d18b246500998f91cf582cb1daf1c094a
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-2.question.float-vs-flow
+    hash: 420174b99b1cfe154445310e9d9abc6f5ea368990e59b22579a99b2aff7f36fd
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-2.question.timing-relay-tag
+    hash: 5c61846fea1916b26fba09250c345463ed362d4b5bf7cd56953d3dc26f127e12
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-2.question.notc-code
+    hash: 181f8485e72c59d5d7fce912b1a4712d934861b77f1c8540d0d2f7c2d53cade3
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-2.question.abbreviations-select
+    hash: 9f60cfdb8c610534351685081b39464a0fceced7a71868dc552ce4401f057259
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u2.s2-3.question.nc-pushbutton-predict
+    hash: e78d129b40636cb6aabfbdd406a4fa28149addfb13692ec55d4562c645ea07ef
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-1.card.auxiliary-contacts
+    hash: 7807e44f454ff3f140a331d8bbe2e0471a563c5e34e37900e6096a4e64435e53
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-1.card.no-nc-state-change
+    hash: 6ba3b8279184df401aa0a432a4f01e4238b35b822e997ceaa7c3284ae543aca1
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-1.card.voltage-across-contacts
+    hash: c6b8909d6b81ec3678c1e366076d44edc2b45baba531cb22d98240965d7536dc
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.card.relay-coil-vs-contacts
+    hash: 5e334e199f0bc53dc923d34683b3f05133cc1d217f197d8beaeb70c23092c379
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.card.relay-inrush
+    hash: bc9621fe247aa68f69e49a90b041f8fbe3dc04919e72751ae0ffa4e84feb8d42
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.card.open-coil-ohmmeter
+    hash: 2082ca3a8de97ee587a6624573559e701374fac4918885857464f2699289d4c8
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-3.card.drum-switch
+    hash: ce7ba754da79ee0ee16952b4de3aa066267d829ebd9be1fd81e19b47d0a9c390
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-4.card.float-normal-state
+    hash: 34fe190e477a171d60e5a0285b92e4120ee8593b591ea42da051f9a2eb46c1a7
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-4.card.normal-versus-installed
+    hash: 3d03fa795342a9971f3f6ba91c914ce93701dcfd299143930bf5b482119f28a2
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-5.card.flow-switch
+    hash: 0ce41fd51aee1f6e522b433e496f735cac500251f2a549a8ab21417e52f72562
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-6.card.limit-switch-mechanical
+    hash: 502cd75b4b80e70d1b8d82ac46cf865bd4d3e4cf80a2d7d0537e30d12bbf61c7
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-7.card.limit-switch-proximity
+    hash: 6f737965d1ba500491f56b5c17581623352f757abc97cc7fab236dced1d243e8
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-8.card.limit-switch-optical
+    hash: cee9620410cdc6cec925e56d4c0b4b4d24c7b5724498df1c0d6cd20dd9c09690
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-9.card.pressure-switch
+    hash: 92f563fc953924b2c77dd83467cf5649e0930e35801ae8e6c77e8ece254f2501
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.question.coil-moves-contacts
+    hash: 54236d062060a798584dae8558f0108c32bb74df7080a9354563fb6575575083
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-1.question.voltage-across-open-contact
+    hash: 5f5c17d6c4d54ac37abdbb1a77bf55e6c62ca3448d77c195640ffe912d2e27c9
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-1.question.voltage-across-closed-contact
+    hash: e47e3e9e93283f7a04dd0230f2f3068816af6785d344d81832be9f027b2d7d9a
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.question.ohmmeter-on-coil
+    hash: c23e15360f441ee9ff0f9f5b1e26dd1fdab1e1961d7a3a5a4131b28815ea513f
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.question.inrush-reason
+    hash: 019d42712c7c3482c66c4e34c0b4751c45e54ece5087a9b61e68c452b6e9e270
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.question.open-coil-symptom
+    hash: 89e1ee787095be5b6f91cecebb2a87d583dba90a429469404fbf9e7c737fe273
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-1.question.relay-statements
+    hash: cfa59808363d8effa94f8c65b18cecaa1fd0e73feca1dc1bde11cd5959bd92e9
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.question.press-start
+    hash: b34dbc9051ab095766104705625b46f8de6d73251035f76ac01b3ea7c6de0b8d
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.question.tap-nc-contact
+    hash: 4937f71b80748767d49d1ab9a200c617300dc10ebcaf2050871f0d46169809fa
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-2.question.order-start-sequence
+    hash: 8202f430c3b7f834113d677b27a3edc7ce7edf46f7e7647164366bcee925f881
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-4.question.float-normal-state
+    hash: 6db18e530e1ef2efe6865ee07cfbc2f2be0f15aff7089549e928c320dc31c294
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-4.question.installed-actuated
+    hash: 58cba2cde725e3bc274f7443ee422dbcd55b0cccef0b1058ef57d32ec69e82ab
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-3.question.drum-switch
+    hash: bffd8d47d7340f19c78d1bd725756256896ed411686831d78bf6eb30ccda1aed
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-5.question.flow-switch
+    hash: 2191127581271f273db21f19d742f1f7827da9b38a0188621cef17bbcc8fcb8e
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-7.question.proximity-leakage
+    hash: 1e83bd8ac6bbc337ec5c76eb311d63f92a97eeb5e887339997c591614de10c5a
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-8.question.noncontact-sensors
+    hash: 1eec33aed20f6131787695e50bfe10ec1326d542aa16b4450849ca3a2f22ecbc
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-4.question.tank-fill-predict
+    hash: b58c4f79e971bda807ef249d941c6c8e03aff925d0c46b26ba94f6f3417f1980
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-6.question.ls1-toggle-predict
+    hash: d9e525127e33ed226dcb33fdf07ba2fdbe9d607e1292948f500aeca51d672294
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-9.question.air-fill-predict
+    hash: 2eca26961ae2dd127dde56d29fd024c15239243f457b6db22029bab307e62c7d
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-4.question.tap-float-contact
+    hash: 7560e4799188cc7184e909ae6b745987ef99da996f1d8fa9defad5a9439500d0
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-6.question.tap-limit-contact
+    hash: af8c7adb98f87617997793e92291c252123e9e20e97fa042e0d4d529a87912ed
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-4.question.order-float-events
+    hash: 4dd1c4c725ea7850a1bafa1a1ba1b5c79e9535fd0f81d4493918c74957fc5dfe
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-10.card.pushbutton-types
+    hash: 11a519c3d5b5284ce23c8d6a4228d11fb4a20f4b9a230841e7ec317c2a352969
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-10.card.mushroom-estop
+    hash: 5c48d949f446d61bdc08fd9a0920f375d74b6e38331feb88126b38ee97d7eb29
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-11.card.solenoid-coil-load
+    hash: b83c97f8da1d8b2c1031522ace7ebd0a5c8d2f86048ac9e61396f94a5878da99
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-12.card.nohc-ncho
+    hash: bea3173a6e7375cc5a36f69756adae93f19bcbb0c3c31e69ee004e76e83f8d60
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-12.card.normal-vs-installed
+    hash: 459ea3be87904b1b1bae2444f15970b8d7f92e1ffc06f89d822fffe022c887ad
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-13.card.temperature-switch
+    hash: 4018a106434fa95b77248e4ec720b490baf139c5358771757861990a90d26f40
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-14.card.pneumatic-timer
+    hash: c30af56585b61b142983a5192c91e807f3890d7e20ac42eb12db3b605113645d
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-15.card.instantaneous-contacts
+    hash: 652b431a128c0ef7e0e028cbd61b30b2a17468dc121cec2137999b67b350ee8a
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-16.card.solid-state-timer
+    hash: 1f09a27200fb7bf1cea58cc79ca562d0169ab38310010406fe0729e453d84dd1
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-17.card.on-delay-off-delay
+    hash: 9714d8ac3697f06c3eacbd39771e1967f44d5ae3d4151f87cd7058f8711aebfa
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-17.card.timer-reset-rules
+    hash: 81c6d3f9a03f2dc5f68b0f34592beb8c525fc0bd812e60f332ab0a5e36f5d19f
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.card.rails-and-rungs
+    hash: 00f80827dc8ed2cf7fd9a2ec61111b7be70bb5d6a74e244d7265446f3fd13f5d
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.card.contacts-left-loads-right
+    hash: c6f3fac6c642421dfad1ac9ae7c910876d61eaf2b1098feec735e450dac31a61
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.card.wire-numbers
+    hash: 5f3c6cfc364205deca94cfba644da5eb73cbdefc1ff0e229f9be0d9d1e9f53a1
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.card.rung-numbers-cross-reference
+    hash: 7a018d0987e685b8f798c8b7c04d5339091afe50dc7b8af0e5b857aace13d278
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.card.trace-to-terminals
+    hash: 48b3988b63b0483b00ded4d695df56f13199f6947f2058ccb8a308e2f718f7f2
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-10.question.mushroom-stop-symbol
+    hash: 134920fa7343ed294fde2b876c8ba98443fea903c9a8f7d62206b9c4eeed9770
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-10.question.momentary-vs-maintained
+    hash: 8a3c8df63f578c8fc0e930dfd9fe81fd76cba799951098ea81ce3e8fd004f932
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-10.question.why-mushroom-estop
+    hash: dbb1c16b0e70446c358bf5f2cd0d85d15c69f06df25dda54f0f2abe6f9d31649
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-10.question.nc-button-unpressed
+    hash: e8e2cd9e19f1239afc79767da873824883f3e807e9b1f68a1708551cd8d938ca
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-11.question.solenoid-jammed-plunger
+    hash: 46040d98a61a166128a559ea9a8936041336935acb266f6459e532e62848ee18
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-11.question.tap-solenoid-coil
+    hash: 999a736e41ddd90c89255d2d4671700e27b43bf67493a05cacf34af206b54502
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-12.question.nohc-meaning
+    hash: 55127f8590957dc1f12795e92f94b3c2f18667dde55fe8e580b0d4d6a204cfa5
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-13.question.temp-switch-installed
+    hash: 72a0ce843c6851acb630e6032c5d3ba657a414c4b5b85b984c6108b097efc394
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-12.question.held-state-statements
+    hash: 52bacbb814102697e967d11db000c6b8f13fd34c353b82f31a729c69afd877a1
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-12.question.limit-switch-solenoid-scene
+    hash: b75dfc06eaae3a76410f3a737e9649706ebf68c2906ce374db7700b176082836
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-17.question.nctc-vs-ncto
+    hash: 59e6bf9cecd9d347d302bd6d03a1eda8ed6edadc9d0ac3a16f9c7d9ef0c5b5be
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-17.question.timer-symbol-off-delay
+    hash: d2b82b06f8dc4d09b33e2dc48425fa8fbca4eae89c44afa287c24708171f8a3e
+    status: blocked-on-source
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: needs source text (NEC 2026 photo / NEMA / IEEE / OSHA / NFPA 70E excerpt) before review
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-17.question.delay-starts-when
+    hash: 5780da24fc17dba39861c3e46ac9b4d0760580ed5beb74c512f83d94cc4736a6
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-14.question.pneumatic-method
+    hash: e8f1a5a406b613d7ed2a218c7daaabecf4cabb58feb0d2b840534727c68813bd
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-15.question.instantaneous-follow
+    hash: de2193442ef51a32f22afd8745b7a981162153cb90e4c0b4e9d354ffd4bf8977
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-16.question.ss-offdelay-supply-loss
+    hash: 091a6d119f6a4fdb770fc760f9495a2a0fa7900155e6d479c05571a8a8f83bae
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-17.question.ondelay-multi
+    hash: 24e58e057c8dccf0404e93a3a871221edb857e0af83661879917913cc251562b
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-17.question.offdelay-order
+    hash: 56aa97cf204b989eda3ddcf8363a385cf9ecf95120af59c7246fef652cc1a2c6
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-17.question.offdelay-reenergize
+    hash: 994f1c2e8d23d02dcb81592484233f2b99d34aee60ff6ecdb7f581ea75aea5d1
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-17.question.scene-release-onoff
+    hash: 8d95a5e94ca8c28d2e3c259ed4329431aa01262ab5992f57aac13127a6298fc5
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-17.question.scene-offdelay-expires
+    hash: bf47c05bf1c05203e20d6b8f46aceb08f564ed97cc1e630d70a7b6202e1803ec
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-17.question.scene-ondelay-interrupted
+    hash: cb32fb09700d4cf7bc94415a567abfdf43fb5c10131b2e8a6ff179fb13533c82
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.loads-on-x2
+    hash: 1794d8b785082e3365e687258e50ac8f74838ae509a840133fad4a6c04ee6561
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.why-contacts-x1
+    hash: 9f98ae93766865bfaead651dea24a37c32e55713286fb5475ed1d242eb387af8
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.read-left-to-right
+    hash: 6ea568bf51fed9ce9905099732119acd1286f0991eed4f842f1eb674d7723dea
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.wire-number-meaning
+    hash: d802beefd8a3ce29e57888ba8d55b5b257a4bd93251febd5a84c4a19a4c375dd
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.cross-reference-meaning
+    hash: 0e1780fecd7a3236788c1ce2a90fcb802ff3c63568e5d82b93b1b77298a88eaa
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.tap-rung1-contacts
+    hash: 6a1752179dbbf116d58ca57596d04ebe0d565d4dddbb25114a0c393e6f53cd55
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.tap-cr1-coil
+    hash: a5c8410828725a44e96980a58a26effd53b459b13526f0b5f7c63918955bf424
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.tap-tr1-timed
+    hash: 70470a870ee773e9a4201342ed9d11fb23698647980b0608ea859cb3453daaa6
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.trace-to-terminal-order
+    hash: a7399c0ecd571a8e6fbe3c95c4661d809ab9c8dd34419e976815bec28da8e094
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.wire1-terminals
+    hash: 4155361c071b29591613d9fb03d48ea36b9fc245a51095a4944650d42541ad9d
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.scene-pb3-stop
+    hash: 769785d1e0448d58b4adc253fca65e8c362a1aee49333ea09521d19d739aae76
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
+  - id: ch01.u3.s3-18.question.scene-no-seal-in
+    hash: 5f4c0c3ba57737f0fa168e0e4f14d13f188c1c17caab58bd77bd9f5f1ebd85bd
+    status: pending
+    severity: null
+    checkedAgainst: []
+    basis: null
+    notes: ""
+    reviewer: null
+    date: null
