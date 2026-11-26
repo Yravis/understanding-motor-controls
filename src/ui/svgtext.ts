@@ -23,14 +23,14 @@ export function lineWidth(text: string, fontSize: number, charEm = CHAR_EM): num
 }
 
 export const WARN_TEXT = 'WARNING: orange wires 91/92 (remote interlock) stay live when this bucket is off';
-/** Banner inner width in SVG user units (rect is 340 wide with 8-unit side inset). */
-export const WARN_MAX_WIDTH = 324;
-export const WARN_FONT = 10;
-export const WARN_LINE = 13;
+/** Banner inner width in SVG user units (enclosure warning plate). */
+export const WARN_MAX_WIDTH = 554;
+export const WARN_FONT = 14;
+export const WARN_LINE = 17;
 export const WARN_PAD = 8;
-export const WARN_X = 10;
-export const WARN_Y = 34;
-export const WARN_RECT_W = 340;
+export const WARN_X = 400;
+export const WARN_Y = 48;
+export const WARN_RECT_W = 572;
 
 export function warningBannerLayout(text = WARN_TEXT): { lines: string[]; height: number; panelTop: number } {
   const lines = wrapLines(text, WARN_MAX_WIDTH, WARN_FONT);

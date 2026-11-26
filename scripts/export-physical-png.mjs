@@ -4,7 +4,7 @@ import { spawn } from 'node:child_process';
 import { mkdirSync } from 'node:fs';
 
 const OUT_DIR = '/workspace/understanding-motor-controls-notes/photo-overlay';
-const OUT = `${OUT_DIR}/reference-physical.png`;
+const OUT = `${OUT_DIR}/reference-physical-v2.png`;
 const PORT = 4188;
 const PAGE = `http://127.0.0.1:${PORT}/understanding-motor-controls/scripts/export-physical.html`;
 mkdirSync(OUT_DIR, { recursive: true });

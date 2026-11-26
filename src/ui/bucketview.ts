@@ -1,71 +1,300 @@
-// Physical bucket view (SVG): door, panel with devices, terminal strip, greyed-out Chapter 2 preview.
+// Physical bucket view (SVG): front elevation of a generic MCC bucket, door open to the left.
 // Tap a terminal to place the red probe, then another for the black probe. Pinch-zoom / pan on the wrapper.
 import { s, h } from './dom';
 import type { Bucket } from '../model/bucket';
-import { WARN_TEXT, WARN_X, WARN_Y, WARN_LINE } from './svgtext';
-import { PHYS, physicalLayout, deviceHeaderH } from './physicallayout';
+import { WARN_TEXT, WARN_LINE } from './svgtext';
+import { PHYS, physicalLayout, type LaidDevice, type LaidPin, type LaidTerminal, type Box } from './physicallayout';
 
 export interface PhysOpts { red?: string | null; black?: string | null; highlightNet?: string | null; onTerminal: (nodeId: string) => void; onDevice?: (tag: string) => void; doorOpen: boolean }
-// Terminal hit areas are >= 47 x 47 SVG units so they stay >= 44 CSS px at a 360 px wide phone (scale ~0.95).
+
+const LENS: Record<string, string> = {
+  PL1: '#1b8f3a', PL2: '#c42b2b', PL3: '#e0a000',
+  PL4: '#f2efe6', PL5: '#f2efe6', PL6: '#f2efe6', PL7: '#f2efe6',
+  PL8: '#f2efe6', PL9: '#f2efe6', PL10: '#f2efe6', PL11: '#f2efe6',
+  PLF: '#f4d3a0',
+};
+
+const pathOf = (pts: { x: number; y: number }[], extraY = 0) => {
+  if (!pts.length) return '';
+  const p0 = pts[0];
+  let d = `M${p0.x} ${p0.y + extraY}`;
+  for (let i = 1; i < pts.length; i++) {
+    const a = pts[i - 1], b = pts[i];
+    const mx = (a.x + b.x) / 2;
+    d += ` C${mx} ${a.y + extraY}, ${mx} ${b.y + extraY}, ${b.x} ${b.y + extraY}`;
+  }
+  return d;
+};
+
+const pinClass = (o: PhysOpts, id: string, net: string, foreign = false) => {
+  const sel = o.red === id ? 'red' : o.black === id ? 'black' : '';
+  const hl = o.highlightNet && (o.highlightNet === net || o.highlightNet === id) ? ' hl' : '';
+  return `term ${sel}${hl}${foreign ? ' foreign' : ''}`;
+};
 
 export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
   const w = b.world;
   const lay = physicalLayout(b, o.doorOpen);
-  const { HIT, PIN_DY } = PHYS;
-  const H = lay.viewBox.h;
-  const svg = s('svg', { viewBox: `0 0 ${lay.viewBox.w} ${H}`, class: 'phys', role: 'img', 'aria-label': 'Physical bucket' });
-  svg.append(s('rect', { x: 4, y: 4, width: 352, height: H - 8, rx: 8, class: 'door-frame' }));
-  svg.append(s('text', { x: 14, y: 24, class: 'lbl' }, 'BUCKET 1A · control section · door ' + (o.doorOpen ? 'OPEN' : 'CLOSED')));
+  const { HIT, PIN_R } = PHYS;
+  const W = lay.viewBox.w, H = lay.viewBox.h;
+  const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, class: 'phys', role: 'img', 'aria-label': 'Physical bucket, door open' });
+
+  const txt = (x: number, y: number, cls: string, text: string, attrs: Record<string, string> = {}) =>
+    s('text', { x, y, class: cls, ...attrs }, text);
+  const rect = (box: Box, cls: string, extra: Record<string, string | number> = {}) =>
+    s('rect', { x: box.x, y: box.y, width: box.w, height: box.h, class: cls, ...extra });
+
+  const pin = (p: { x: number; y: number; id: string; net: string; label?: string; foreign?: boolean }, role: 'below' | 'above' | 'none' = 'below') => {
+    const netNo = p.net.startsWith('w') ? p.net.slice(1) : p.net;
+    const g = s('g', { class: pinClass(o, p.id, p.net, !!p.foreign), onclick: () => o.onTerminal(p.id) });
+    g.append(
+      s('circle', { cx: p.x, cy: p.y, r: PIN_R, class: 'pin' }),
+      s('rect', { x: p.x - HIT / 2, y: p.y - HIT / 2, width: HIT, height: HIT, fill: 'transparent', class: 'hit' }),
+    );
+    g.append(txt(p.x, p.y + 3.5, 'pinlbl', netNo, { 'text-anchor': 'middle' }));
+    const pinName = p.label && p.label !== netNo && !p.label.startsWith(netNo) ? p.label.replace(/\s*\(.*\)$/, '') : '';
+    if (role !== 'none' && pinName && pinName !== netNo) {
+      const ly = role === 'above' ? p.y - 14 : p.y + 18;
+      g.append(txt(p.x, ly, 'tiny pin-role', pinName, { 'text-anchor': 'middle' }));
+    }
+    return g;
+  };
+  const tbPin = (t: LaidTerminal) => {
+    const g = s('g', { class: pinClass(o, t.id, t.id, t.foreign) + ' tb', onclick: () => o.onTerminal(t.id) });
+    g.append(s('rect', { x: t.box.x, y: t.box.y, width: t.box.w, height: t.box.h, rx: 2, class: 'tbbox hit' }),
+      txt(t.x, t.y + 4, 'pinlbl', t.net, { 'text-anchor': 'middle' }));
+    return g;
+  };
+
+  // Background / shop floor
+  svg.append(s('rect', { x: 0, y: 0, width: W, height: H, class: 'shop' }));
+
+  // ---- Enclosure shell (always drawn; door covers it when closed) ----
+  const encl = s('g', { class: 'encl-skin door-frame' });
+  encl.append(
+    s('rect', { x: lay.enclosure.x - 8, y: lay.enclosure.y - 8, width: lay.enclosure.w + 16, height: lay.enclosure.h + 16, rx: 4, class: 'encl-shell' }),
+    rect(lay.enclosure, 'encl-face'),
+    rect(lay.backplate, 'backplate'),
+  );
+  svg.append(encl);
+
+  // Nameplate
+  svg.append(rect(lay.nameplate.box, 'nameplate', { rx: 2 }));
+  svg.append(txt(lay.nameplate.box.x + 10, lay.nameplate.box.y + 18, 'lbl nameplate-text', lay.nameplate.text));
+  svg.append(txt(lay.nameplate.box.x + lay.nameplate.box.w + 16, lay.nameplate.box.y + 18, 'tiny', o.doorOpen ? 'Door OPEN — inside face shown' : 'Door CLOSED'));
+
+  // Warning plate on the enclosure flange
   const banner = s('g', { class: 'warn-banner', 'data-warning': WARN_TEXT });
-  banner.append(s('rect', { x: lay.warning.box.x, y: lay.warning.box.y, width: lay.warning.box.w, height: lay.warning.box.h, rx: 4, class: 'warn' }));
-  const wt = s('text', { x: WARN_X + 6, y: WARN_Y + 14, class: 'warn-label' });
-  lay.warning.lines.forEach((line, i) => wt.append(s('tspan', { x: WARN_X + 6, dy: i === 0 ? 0 : WARN_LINE }, line)));
+  banner.append(rect(lay.warning.box, 'warn', { rx: 3 }));
+  const wt = s('text', { x: lay.warning.box.x + 10, y: lay.warning.box.y + 18, class: 'warn-label' });
+  lay.warning.lines.forEach((line, i) => wt.append(s('tspan', { x: lay.warning.box.x + 10, dy: i === 0 ? 0 : WARN_LINE }, line)));
   banner.append(wt);
   svg.append(banner);
+
   if (!o.doorOpen) {
-    svg.append(s('rect', { x: 10, y: lay.panelTop - 4, width: 340, height: H - lay.panelTop - 80, rx: 6, class: 'door' }));
-    svg.append(s('text', { x: 180, y: lay.panelTop + 60, 'text-anchor': 'middle', class: 'lbl' }, 'Door closed. Turn the handle OFF, then open the door.'));
+    // Closed door covers the interior: show the outside face of the operators.
+    const closed = s('g', { class: 'door door-closed' });
+    closed.append(s('rect', { x: lay.enclosure.x, y: lay.enclosure.y, width: lay.enclosure.w, height: lay.enclosure.h, rx: 3, class: 'door-front' }));
+    closed.append(txt(lay.enclosure.x + lay.enclosure.w / 2, lay.enclosure.y + 48, 'lbl', 'Door closed. Turn the handle OFF, then open the door.', { 'text-anchor': 'middle' }));
+    // Simple front operators so the closed door still reads as the same bucket.
+    for (const d of lay.devices.filter((d) => d.zone === 'door')) {
+      const x = lay.enclosure.x + 40 + (d.box.x - lay.door.x) * (lay.enclosure.w - 80) / lay.door.w;
+      const y = lay.enclosure.y + 70 + (d.box.y - lay.door.y) * 0.85;
+      drawOperator(closed, d, false, x, y, true);
+    }
+    svg.append(closed);
+    drawFieldInset(svg, lay, o, w, pin, false);
     return svg;
   }
-  for (const d of lay.devices) {
-      const { x, y, w: width, h: hgt } = d.box;
-      const lit = d.kind === 'lamp' && w.lit(d.tag);
-      const g = s('g', { class: 'dev' + (lit ? ' on' : '') + (d.foreign ? ' foreign' : '') });
-      g.append(s('rect', { x, y, width, height: hgt, rx: 5, class: 'devbox', onclick: () => o.onDevice?.(d.tag) }));
-      g.append(s('text', { x: x + 6, y: y + 15, class: 'lbl' }, d.designation + (lit ? ' · LIT' : '')));
-      const title = s('text', { x: x + 6, y: y + PHYS.TITLE_Y, class: 'tiny device-title' });
-      d.titleLines.forEach((line, i) => title.append(s('tspan', { x: x + 6, dy: i === 0 ? 0 : PHYS.TITLE_LINE }, line)));
-      g.append(title);
-      const pinOrigin = y + deviceHeaderH(d.title);
-      d.pins.forEach((p, i) => {
-        const px = x + 28 + (i % 2) * 56, py = pinOrigin + Math.floor(i / 2) * PIN_DY + 8;
-        const sel = o.red === p.id ? 'red' : o.black === p.id ? 'black' : '';
-        const hl = o.highlightNet && p.net === o.highlightNet;
-        const t = s('g', { class: 'term ' + sel + (hl ? ' hl' : ''), onclick: () => o.onTerminal(p.id) });
-        t.append(s('circle', { cx: px, cy: py, r: 10, class: 'pin' }), s('rect', { x: px - HIT / 2 - 2, y: py - HIT / 2, width: HIT + 4, height: HIT, fill: 'transparent', class: 'hit' }));
-        t.append(s('text', { x: px, y: py + 3, 'text-anchor': 'middle', class: 'pinlbl' }, p.net.slice(1)));
-        t.append(s('text', { x: px, y: py + 19, 'text-anchor': 'middle', class: 'tiny' }, p.label));
-        g.append(t);
-      });
-      svg.append(g);
+
+  // ---- Open door (inside face) ----
+  const doorG = s('g', { class: 'door-skin' });
+  doorG.append(
+    s('rect', { x: lay.door.x - 8, y: lay.door.y - 8, width: lay.door.w + 12, height: lay.door.h + 16, rx: 4, class: 'door-edge' }),
+    rect(lay.door, 'door-inside'),
+    // Hinges on the right edge of the door (swinging open to the left)
+    s('rect', { x: lay.door.x + lay.door.w - 2, y: lay.door.y + 40, width: 10, height: 28, rx: 2, class: 'hinge' }),
+    s('rect', { x: lay.door.x + lay.door.w - 2, y: lay.door.y + lay.door.h - 80, width: 10, height: 28, rx: 2, class: 'hinge' }),
+  );
+  svg.append(doorG);
+  svg.append(txt(lay.door.x + 10, lay.door.y + 18, 'tiny', 'DOOR — inside face  ·  22 mm operators'));
+
+  // Door harness loop (plausible wiring; only 91/92 are colored)
+  const harness = s('g', { class: 'harness', 'aria-hidden': 'true' });
+  for (let i = -3; i <= 3; i++) {
+    harness.append(s('path', { d: pathOf(lay.harness.bundle, i * 3), class: 'wire-run', fill: 'none' }));
   }
-  // terminal strip
-  svg.append(s('text', { x: 14, y: lay.terminalStrip.y - 6, class: 'lbl' }, lay.terminalStrip.label));
-  for (const tm of lay.terminalStrip.terminals) {
-    const sel = o.red === tm.id ? 'red' : o.black === tm.id ? 'black' : '';
-    const t = s('g', { class: 'term tb ' + sel + (o.highlightNet === tm.id ? ' hl' : '') + (tm.foreign ? ' foreign' : ''), onclick: () => o.onTerminal(tm.id) });
-    t.append(s('rect', { x: tm.box.x, y: tm.box.y, width: tm.box.w, height: tm.box.h, rx: 3, class: 'tbbox hit' }), s('text', { x: tm.box.x + 26, y: tm.box.y + 29, 'text-anchor': 'middle', class: 'pinlbl' }, tm.net));
-    svg.append(t);
-  }
-  // chapter 2 preview, greyed out
-  svg.append(s('text', { x: 14, y: lay.ch2Preview.y - 4, class: 'lbl' }, lay.ch2Preview.label));
+  harness.append(s('path', { d: pathOf(lay.harness.orange), class: 'wire-orange', fill: 'none' }));
+  harness.append(s('path', { d: pathOf(lay.harness.orangeB), class: 'wire-orange', fill: 'none' }));
+  svg.append(harness);
+
+  // Chapter 2 power section (greyed, inspect-only)
+  const ch2 = s('g', { class: 'ch2 ch2-section' });
+  ch2.append(rect(lay.ch2Preview.box, 'ch2-area', { rx: 3 }));
+  ch2.append(txt(lay.ch2Preview.box.x + 8, lay.ch2Preview.box.y + 16, 'tiny ch2-label', lay.ch2Preview.label));
   for (const c of lay.ch2Preview.items) {
-    const g = s('g', { class: 'ch2', onclick: () => o.onDevice?.('ch2:' + c.tag) });
-    g.append(s('rect', { x: c.box.x, y: c.box.y, width: c.box.w, height: c.box.h, rx: 4, class: 'ch2box' }), s('text', { x: c.box.x + c.box.w / 2, y: c.box.y + 17, 'text-anchor': 'middle', class: 'tiny' }, c.tag), s('text', { x: c.box.x + c.box.w / 2, y: c.box.y + 33, 'text-anchor': 'middle', class: 'tiny' }, 'Ch 2'));
+    const g = s('g', { class: 'ch2-item', onclick: () => o.onDevice?.('ch2:' + c.tag) });
+    g.append(rect(c.box, 'ch2box', { rx: 3 }));
+    drawCh2Glyph(g, c.tag, c.box);
+    g.append(txt(c.box.x + c.box.w / 2, c.box.y + c.box.h - 6, 'tiny', c.tag + ' · Ch 2', { 'text-anchor': 'middle' }));
+    ch2.append(g);
+  }
+  svg.append(ch2);
+
+  // CPT
+  const cpt = s('g', { class: 'cpt-block' });
+  cpt.append(rect(lay.cpt.box, 'devbox powerbox', { rx: 3 }));
+  cpt.append(txt(lay.cpt.box.x + 8, lay.cpt.box.y + 16, 'lbl', 'CPT'));
+  cpt.append(txt(lay.cpt.box.x + 44, lay.cpt.box.y + 16, 'tiny', 'control transformer  ·  120 V secondary'));
+  drawTransformer(cpt, lay.cpt.box);
+  for (const t of lay.cpt.terminals) cpt.append(tbPin(t));
+  svg.append(cpt);
+
+  // F1
+  const f1 = s('g', { class: 'f1-block' });
+  f1.append(rect(lay.f1.box, 'devbox powerbox', { rx: 3 }));
+  f1.append(txt(lay.f1.box.x + 8, lay.f1.box.y + 16, 'lbl', 'F1'));
+  f1.append(txt(lay.f1.box.x + 32, lay.f1.box.y + 16, 'tiny', 'control fuse'));
+  drawFuseHolder(f1, lay.f1.box);
+  for (const t of lay.f1.terminals) f1.append(tbPin(t));
+  svg.append(f1);
+
+  // DIN rails
+  for (const rail of lay.dinRails) {
+    svg.append(s('rect', { x: rail.x, y: rail.y + rail.h / 2 - 7, width: rail.w, height: 14, rx: 1, class: 'din-rail' }));
+  }
+
+  // Devices
+  for (const d of lay.devices) {
+    const lit = d.kind === 'lamp' && w.lit(d.tag);
+    const g = s('g', { class: 'dev ' + d.zone + (lit ? ' on' : '') + (d.foreign ? ' foreign' : ''), 'data-tag': d.tag });
+    if (d.zone === 'door') {
+      g.append(s('rect', { x: d.box.x, y: d.box.y, width: d.box.w, height: d.box.h, rx: 3, class: 'op-cell', onclick: () => o.onDevice?.(d.tag) }));
+      drawOperator(g, d, lit);
+      g.append(s('text', { x: d.cx, y: d.box.y + 11, class: 'lbl legend', 'text-anchor': 'middle' }, d.legend[0]));
+      if (d.legend[1]) g.append(s('text', { x: d.cx, y: d.box.y + 23, class: 'tiny legend', 'text-anchor': 'middle' }, d.legend[1]));
+      for (const p of d.pins) g.append(pin(p, 'none'));
+    } else if (d.zone === 'din') {
+      g.append(s('rect', { x: d.box.x, y: d.box.y, width: d.box.w, height: d.box.h, rx: 3, class: 'devbox din-dev', onclick: () => o.onDevice?.(d.tag) }));
+      drawDinDevice(g, d);
+      drawLegend(g, d, d.cx, d.box.y + 12);
+      const ys = [...new Set(d.pins.map((p) => Math.round(p.y)))];
+      const midY = d.pins.reduce((s, p) => s + p.y, 0) / d.pins.length;
+      for (const p of d.pins) g.append(pin(p, ys.length === 1 ? 'none' : (p.y <= midY + 1 ? 'above' : 'below')));
+    } else {
+      continue;
+    }
     svg.append(g);
   }
+
+  // Terminal strip
+  const tb = s('g', { class: 'tb-strip' });
+  tb.append(rect(lay.terminalStrip.box, 'tb-area', { rx: 3 }));
+  tb.append(txt(lay.terminalStrip.box.x + 8, lay.terminalStrip.box.y + 16, 'tiny', lay.terminalStrip.label));
+  for (const t of lay.terminalStrip.terminals) tb.append(tbPin(t));
+  svg.append(tb);
+
+  drawFieldInset(svg, lay, o, w, pin, true);
   return svg;
 }
+
+function drawLegend(parent: SVGElement, d: LaidDevice, cx: number, y: number) {
+  d.legend.forEach((line, i) => {
+    parent.append(s('text', { x: cx, y: y + i * 13, class: i === 0 ? 'lbl legend' : 'tiny legend', 'text-anchor': 'middle' }, line));
+  });
+}
+
+function drawOperator(parent: SVGElement, d: LaidDevice, lit: boolean, cx = d.cx, cy = d.cy, front = false) {
+  const color = LENS[d.tag] ?? '#d0d4d8';
+  if (d.kind === 'pb-mushroom') {
+    parent.append(s('circle', { cx, cy, r: 20, class: 'op-mush-base' }));
+    parent.append(s('circle', { cx, cy, r: 15, class: 'op-mush' }));
+    if (!front) parent.append(s('rect', { x: cx - 14, y: cy + 14, width: 28, height: 6, rx: 1, class: 'contact-block' }));
+  } else if (d.kind.startsWith('pb')) {
+    parent.append(s('circle', { cx, cy, r: 12, class: 'op-ring' }));
+    parent.append(s('circle', { cx, cy, r: 10, class: d.kind === 'pb-no' ? 'op-start' : 'op-stop' }));
+    if (!front) parent.append(s('rect', { x: cx - 14, y: cy + 12, width: 28, height: 6, rx: 1, class: 'contact-block' }));
+  } else {
+    parent.append(s('circle', { cx, cy, r: 12, class: 'op-ring' + (d.foreign ? ' foreign-ring' : '') }));
+    parent.append(s('circle', { cx, cy, r: 10, class: 'op-lens' + (lit ? ' lit' : ''), fill: color }));
+    if (lit) parent.append(s('circle', { cx, cy, r: 13, class: 'op-glow', fill: color }));
+  }
+}
+
+function drawDinDevice(parent: SVGElement, d: LaidDevice) {
+  const { box, cx } = d;
+  const top = box.y + 26;
+  if (d.tag === 'CR1') {
+    parent.append(s('rect', { x: cx - 34, y: top, width: 68, height: 18, rx: 2, class: 'relay-body' }));
+    parent.append(s('rect', { x: cx - 16, y: top + 4, width: 32, height: 10, rx: 1, class: 'relay-top' }));
+  } else if (d.tag === 'TR1' || d.tag === 'TR2') {
+    // Pneumatic timer head sitting on a relay body
+    parent.append(s('rect', { x: cx - 28, y: top + 14, width: 56, height: 12, rx: 2, class: 'relay-body' }));
+    parent.append(s('rect', { x: cx - 20, y: top - 4, width: 40, height: 18, rx: 3, class: 'timer-head' }));
+    parent.append(s('circle', { cx, cy: top + 5, r: 6, class: 'timer-dial' }));
+    parent.append(s('line', { x1: cx, y1: top + 5, x2: cx + 4, y2: top + 1, class: 'timer-needle' }));
+  } else {
+    parent.append(s('rect', { x: box.x + 20, y: top, width: box.w - 40, height: 16, rx: 3, class: 'ss-timer' }));
+    parent.append(s('circle', { cx: box.x + 44, cy: top + 8, r: 6, class: 'timer-dial' }));
+    parent.append(s('rect', { x: box.x + 58, y: top + 4, width: 40, height: 8, rx: 1, class: 'ss-window' }));
+  }
+}
+
+function drawTransformer(parent: SVGElement, box: Box) {
+  const cx = box.x + box.w / 2, cy = box.y + 34;
+  parent.append(s('rect', { x: cx - 28, y: cy - 14, width: 56, height: 28, rx: 2, class: 'cpt-body' }));
+  parent.append(s('line', { x1: cx - 10, y1: cy - 10, x2: cx - 10, y2: cy + 10, class: 'cpt-coil' }));
+  parent.append(s('line', { x1: cx + 10, y1: cy - 10, x2: cx + 10, y2: cy + 10, class: 'cpt-coil' }));
+}
+
+function drawFuseHolder(parent: SVGElement, box: Box) {
+  const cx = box.x + box.w / 2, cy = box.y + 34;
+  parent.append(s('rect', { x: cx - 36, y: cy - 8, width: 72, height: 16, rx: 3, class: 'fuse-holder' }));
+  parent.append(s('rect', { x: cx - 22, y: cy - 6, width: 44, height: 12, rx: 2, class: 'fuse-cart' }));
+}
+
+function drawCh2Glyph(parent: SVGElement, tag: string, box: Box) {
+  const cx = box.x + box.w / 2, cy = box.y + 22;
+  if (tag === 'DISC') {
+    parent.append(s('rect', { x: cx - 16, y: cy - 10, width: 32, height: 20, rx: 2, class: 'ch2-glyph' }));
+    parent.append(s('line', { x1: cx - 6, y1: cy + 2, x2: cx + 10, y2: cy - 8, class: 'ch2-glyph' }));
+  } else if (tag === 'PF') {
+    for (let i = -1; i <= 1; i++) parent.append(s('rect', { x: cx + i * 12 - 4, y: cy - 10, width: 8, height: 20, rx: 1, class: 'ch2-glyph' }));
+  } else if (tag === 'M') {
+    parent.append(s('rect', { x: cx - 20, y: cy - 10, width: 40, height: 20, rx: 2, class: 'ch2-glyph' }));
+    parent.append(s('text', { x: cx, y: cy + 4, class: 'tiny', 'text-anchor': 'middle' }, 'M'));
+  } else if (tag === 'OL') {
+    parent.append(s('rect', { x: cx - 16, y: cy - 8, width: 32, height: 16, rx: 2, class: 'ch2-glyph' }));
+    parent.append(s('text', { x: cx, y: cy + 4, class: 'tiny', 'text-anchor': 'middle' }, 'OL'));
+  } else {
+    parent.append(s('circle', { cx, cy, r: 11, class: 'ch2-glyph' }));
+    parent.append(s('line', { x1: cx + 11, y1: cy, x2: cx + 20, y2: cy, class: 'ch2-glyph' }));
+  }
+}
+
+function drawFieldInset(
+  svg: SVGElement,
+  lay: ReturnType<typeof physicalLayout>,
+  o: PhysOpts,
+  w: Bucket['world'],
+  pin: (p: LaidPin) => SVGElement,
+  withPins: boolean,
+) {
+  const g = s('g', { class: 'field-inset' });
+  g.append(s('rect', { x: lay.fieldInset.box.x, y: lay.fieldInset.box.y, width: lay.fieldInset.box.w, height: lay.fieldInset.box.h, rx: 4, class: 'field-area' }));
+  g.append(s('text', { x: lay.fieldInset.box.x + 10, y: lay.fieldInset.box.y + 18, class: 'lbl' }, lay.fieldInset.label));
+  for (const d of lay.devices.filter((d) => d.zone === 'field')) {
+    const dg = s('g', { class: 'dev field' + (d.kind === 'lamp' && w.lit(d.tag) ? ' on' : ''), onclick: () => o.onDevice?.(d.tag) });
+    dg.append(s('rect', { x: d.box.x, y: d.box.y, width: d.box.w, height: d.box.h, rx: 3, class: 'devbox field-dev' }));
+    dg.append(s('text', { x: d.cx, y: d.box.y + 16, class: 'lbl legend', 'text-anchor': 'middle' }, d.legend[0]));
+    dg.append(s('text', { x: d.cx, y: d.box.y + 30, class: 'tiny legend', 'text-anchor': 'middle' }, d.legend[1] ?? ''));
+    dg.append(s('rect', { x: d.cx - 22, y: d.box.y + 40, width: 44, height: 16, rx: 2, class: 'term-block' }));
+    if (withPins) for (const p of d.pins) dg.append(pin(p));
+    g.append(dg);
+  }
+  svg.append(g);
+}
+
 /** Pinch-zoom + pan wrapper for an SVG. Touch only needs two fingers; buttons also provided. */
 export function zoomable(child: SVGElement | HTMLElement): HTMLElement {
   const wrap = h('div', { class: 'zoom' });
