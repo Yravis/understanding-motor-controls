@@ -2,11 +2,11 @@
 entries:
   - id: ch01.u3.s3-18.device.control-supply
     hash: 5f9e1a955e26545def0e8f0336631f6a17ecc96bae476f3f8fb34f4e1dedf694
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Re-review 3 (2026-11-26, commit 73e7d0f). Re-review 2 gap RESOLVED: the note now explains that the handle opens the CPT primary and the secondary still connects X1 to X2 through a fraction of an ohm (consistent with the model and sheets: w7-G 0.4 ohm with F1 in, 146.4 ohm with F1 pulled; START 100.4 / 246.4 ohm). ONE WORDING FIX (minor): 'Before an ohms or insulation check, pull the control fuse or lift the lead' treats the two as equivalent for both tests. For an ohms check, pulling F1 removes only the winding path; the coils, lamps and solid-state timers on the conductor still connect it to the grounded X2 side (the sheet shows w7-G 146.4 ohm healthy with F1 pulled). That is fine for an ohmmeter comparison against a known-good reading, but an insulation-resistance (megohmmeter) test needs the conductor lifted at both ends, clear of every load and electronic device: otherwise it just reads the load network, and the 500/1000 V test voltage can damage TD3/TD4, LED drivers or other electronics. FIX: 'Before an ohms check, pull the control fuse or lift the lead. For an insulation (megohmmeter) test, lift the conductor at both ends so no load or electronic device is connected.' General knowledge only, no datasheet opened."
+    notes: "Re-review 4 (2026-11-26, commit d3bbf3a). Re-review 3 wording flag RESOLVED: the note now separates the ohms check (pull F1 or lift the lead) from the insulation test (lift the conductor at both ends, no loads or electronics; a 500/1000 V megger could damage the timers and LED drivers). Checked against the model: handle off, F1 in, wire 1 / wire 7 to ground 0.4 ohm and X1-X2 0.3 ohm; F1 pulled, wire 7 to ground 146.4 ohm ('about 146 ohm' is right), X1-X2 still 0.3 ohm. Physically right. No error found. No datasheet or other source opened covers the claim, so it stays unapproved (blocked-on-source, general knowledge)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -608,13 +608,13 @@ entries:
         staledOn: 2026-11-26
   - id: ch01.u1.s1-2.card.ohmmeter-only-dead
     hash: a4eda25268d99104de2c05b4143fa5d5008c52e4c5dbde0ca51d2d8eb4c730d9
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst:
       - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
       - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
     basis: general-knowledge
-    notes: "Re-review 3 (2026-11-26, commit 73e7d0f). Still blocked-on-source: needs the NFPA 70E 2024 text (the card ties ohms use to the live-dead-live test). The original text still checks against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(B) (opened 2026-11-26); the new winding/isolation material is general knowledge and is right in substance. TWO FLAGS in the new fieldNote (minor): (1) 'A reading of about 0.4 ohm from X1 to X2, or from wire 7 to ground, with F1 still in is the transformer winding': X1 and X2 are the transformer's own terminals, so X1-X2 reads the winding whether F1 is in or out (the model gives 0.3 ohm X1-X2 both ways; 0.4 ohm is the wire 7 to ground figure). As written it implies pulling F1 changes the X1-X2 reading. FIX: 'about 0.4 ohm from wire 1, wire 7 or any other X1-side wire to ground or X2, with F1 still in, is the transformer winding, not a dead short (X1 to X2 always reads the winding, about 0.3 ohm here).' (2) 'Before an ohms or insulation check, pull the control fuse or lift the lead': pulling F1 removes only the winding path; the coils, lamps and solid-state timers on the conductor still connect it to the grounded X2 side (the sheet shows w7-G 146.4 ohm healthy with F1 pulled). That is fine for an ohmmeter comparison against a known-good reading, but an insulation-resistance (megohmmeter) test needs the conductor lifted at both ends, clear of every load and electronic device: otherwise it just reads the load network, and the 500/1000 V test voltage can damage TD3/TD4, LED drivers or other electronics. FIX: 'Before an ohms check, pull F1 or lift the lead; for an insulation test, lift the conductor at both ends.' Also make 'a high-impedance ground fault only shows up after you pull F1' read 'on the ohmmeter, a high-impedance ground fault only shows up after you pull F1 or lift the lead' (it also appears, faintly, on the voltage readings: w7-G 119.5 V vs 120.0 V on the sheet). The card text sentence ('isolate the conductor: pull the control fuse F1 or lift the lead') is fine for the ohms function."
+    notes: "Re-review 4 (2026-11-26, commit d3bbf3a). Still blocked-on-source: needs the NFPA 70E 2024 text (the card ties ohms use to the live-dead-live test). The original text still checks against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(B) (opened 2026-11-26). All re-review 3 flags CLEARED, each checked against the model and sheets: (1) about 0.4 ohm from wire 1, wire 7 or any X1-side wire to ground with F1 in (model: 0.4 ohm), and X1-X2 always reads the winding, about 0.3 ohm, F1 in or out (model: 0.3 ohm both ways); (2) ohms check vs insulation test now split in both the text and the fieldNote (lift the conductor at both ends for insulation); (3) 'on the ohmmeter, a high-impedance ground fault only shows up after you pull F1 or lift the lead' (F1 in 0.4 ohm both ways; F1 pulled 146.4 healthy vs 59.4 ohm faulted), with the faint voltage hint 119.5 V vs 120 V (model wire 7 to ground, live). No error found."
     reviewer: Eli
     date: 2026-11-26
     history:
