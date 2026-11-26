@@ -4,17 +4,17 @@
 import type { Bucket, DeviceView, PinView } from '../model/bucket';
 import { warningBannerLayout, WARN_TEXT, wrapLines } from './svgtext';
 
-/** 4:3 landscape, sized so compact 16–18uu labels read at about 13–14px in the desktop bucket pane. */
+/** 4:3 landscape; 10–14uu labels read at about 9–12px in the desktop bucket pane. */
 export const PHYS = {
   VIEW_W: 1000,
   VIEW_H: 750,
-  HIT: 44,
+  HIT: 40,
   PIN_R: 7,
-  LABEL_FONT: 16,
-  LEGEND_FONT: 13,
-  PIN_FONT: 14,
-  TINY_FONT: 12,
-  TITLE_FONT: 13, // kept for legend wrap checks
+  LABEL_FONT: 14,
+  LEGEND_FONT: 12,
+  PIN_FONT: 10,
+  TINY_FONT: 11,
+  TITLE_FONT: 12, // kept for legend wrap checks
   TITLE_MAX_W: 96,
 } as const;
 
@@ -128,186 +128,147 @@ export function physicalLayout(b: Bucket, doorOpen = true): PhysicalLayout {
   const devs = byTag(b.layout.devices);
   const warn = warningBannerLayout();
 
-  const door: Box = { x: 16, y: 40, w: 324, h: 524 };
-  const hinge: Box = { x: 340, y: 90, w: 48, h: 420 };
-  const enclosure: Box = { x: 388, y: 40, w: 596, h: 524 };
-  const backplate: Box = { x: 400, y: 88, w: 572, h: 464 };
+  const door: Box = { x: 16, y: 40, w: 324, h: 560 };
+  const hinge: Box = { x: 340, y: 90, w: 48, h: 460 };
+  const enclosure: Box = { x: 388, y: 40, w: 596, h: 560 };
+  const backplate: Box = { x: 400, y: 100, w: 572, h: 492 };
   const nameplate: Box = { x: 16, y: 8, w: 260, h: 26 };
   const warnBox: Box = { x: 400, y: 48, w: 572, h: warn.height };
-  const ch2Box: Box = { x: 400, y: 100, w: 572, h: 80 };
-  const cptBox: Box = { x: 400, y: 188, w: 196, h: 80 };
-  const f1Box: Box = { x: 604, y: 188, w: 160, h: 80 };
-  const din1: Box = { x: 400, y: 276, w: 572, h: 98 };
-  const din2: Box = { x: 400, y: 382, w: 572, h: 90 };
-  const tbBox: Box = { x: 400, y: 480, w: 572, h: 74 };
-  const fieldBox: Box = { x: 16, y: 576, w: 968, h: 162 };
+  // Everything mounted on the backplate shares one content column with an 8-unit margin.
+  const cx0 = 408, cw = 556, gut = 12;
+  const ch2Box: Box = { x: cx0, y: 108, w: cw, h: 68 };
+  const cptBox: Box = { x: cx0, y: 188, w: 262, h: 74 };
+  const f1Box: Box = { x: cx0 + 262 + gut, y: 188, w: 150, h: 74 };
+  const din1: Box = { x: 400, y: 274, w: 572, h: 112 };
+  const din2: Box = { x: 400, y: 398, w: 572, h: 84 };
+  const tbBox: Box = { x: cx0, y: 494, w: cw, h: 84 };
+  const fieldBox: Box = { x: 16, y: 612, w: 968, h: 126 };
 
   const devices: LaidDevice[] = [];
 
-  // ---- Door: 22 mm operators, 3 columns of lights, then START/STOP and the mushroom ----
-  const dPadX = 10, dPadY = 28;
-  const cellW = (door.w - dPadX * 2) / 3;
-  const cellH = 80;
-  DOOR_LIGHTS.forEach((row, ri) => {
-    row.forEach((tag, ci) => {
-      const d = devs.get(tag)!;
-      const box: Box = { x: door.x + dPadX + ci * cellW, y: door.y + dPadY + ri * cellH, w: cellW - 4, h: cellH - 6 };
-      const cx = box.x + box.w / 2, cy = box.y + 40;
-      const pins = pairPins(d, cx, box.y + box.h - 16, 24);
-      devices.push(laidDev(d, 'door', box, cx, cy, pins, W, H, box.w - 8));
-    });
-  });
-  {
-    const d = devs.get('PB1')!;
-    const box: Box = { x: door.x + 16, y: door.y + dPadY + 4 * cellH, w: 140, h: 78 };
-    const cx = box.x + box.w / 2, cy = box.y + 40;
-    devices.push(laidDev(d, 'door', box, cx, cy, pairPins(d, cx, box.y + box.h - 12, 24), W, H, box.w - 8));
-  }
-  {
-    const d = devs.get('PB2')!;
-    const box: Box = { x: door.x + 168, y: door.y + dPadY + 4 * cellH, w: 140, h: 78 };
-    const cx = box.x + box.w / 2, cy = box.y + 40;
-    devices.push(laidDev(d, 'door', box, cx, cy, pairPins(d, cx, box.y + box.h - 12, 24), W, H, box.w - 8));
-  }
-  {
-    const d = devs.get('PB3')!;
-    const box: Box = { x: door.x + 86, y: door.y + dPadY + 4 * cellH + 82, w: 152, h: 92 };
-    const cx = box.x + box.w / 2, cy = box.y + 44;
-    devices.push(laidDev(d, 'door', box, cx, cy, pairPins(d, cx, box.y + box.h - 12, 26), W, H, box.w - 8));
-  }
+  // ---- Door: 22 mm operators, 3 columns of 86x84 cells with 10-12 unit gutters ----
+  const cellW = 86, cellH = 84, gx = 12, gy = 10;
+  const dPadX = (door.w - (3 * cellW + 2 * gx)) / 2, dPadY = 30;
+  const doorCell = (tag: string, ri: number, ci: number) => {
+    const d = devs.get(tag)!;
+    const box: Box = { x: door.x + dPadX + ci * (cellW + gx), y: door.y + dPadY + ri * (cellH + gy), w: cellW, h: cellH };
+    const cx = box.x + box.w / 2, cy = box.y + (d.kind === 'pb-mushroom' ? 47 : 46);
+    devices.push(laidDev(d, 'door', box, cx, cy, pairPins(d, cx, box.y + 70, 13), W, H, box.w - 8));
+  };
+  DOOR_LIGHTS.forEach((row, ri) => row.forEach((tag, ci) => doorCell(tag, ri, ci)));
+  ['PB1', 'PB2', 'PB3'].forEach((tag, ci) => doorCell(tag, 4, ci));
 
-  // ---- DIN rail row 1: CR1, TR1, TR2 ----
-  const dinRow = (rail: Box, tags: string[], pinLayout: (d: DeviceView, box: Box) => { cx: number; cy: number; pins: LaidPin[] }) => {
-    const w = rail.w / tags.length;
+  // ---- DIN rails: cards sit on the rail with 12-unit gutters; legend left, device graphic right ----
+  const dinRow = (rail: Box, tags: string[], pinLayout: (d: DeviceView, box: Box) => LaidPin[]) => {
+    const w = (cw - gut * (tags.length - 1)) / tags.length;
     tags.forEach((tag, i) => {
       const d = devs.get(tag)!;
-      const box: Box = { x: rail.x + i * w + 6, y: rail.y + 6, w: w - 12, h: rail.h - 10 };
-      const { cx, cy, pins } = pinLayout(d, box);
-      devices.push(laidDev(d, 'din', box, cx, cy, pins, W, H, box.w - 8));
+      const box: Box = { x: cx0 + i * (w + gut), y: rail.y + 4, w, h: rail.h - 8 };
+      const cx = box.x + box.w - 8 - (tag.startsWith('TD') ? 50 : 28), cy = box.y + 20;
+      devices.push(laidDev(d, 'din', box, cx, cy, pinLayout(d, box), W, H, box.w - 8));
     });
   };
+  const find = (d: DeviceView, label: string) => d.pins.find((p) => p.label === label || p.id === `${d.tag}:${label}`)!;
   dinRow(din1, ['CR1', 'TR1', 'TR2'], (d, box) => {
-    const cx = box.x + box.w / 2, cy = box.y + 28;
+    const pins: LaidPin[] = [];
     if (d.tag === 'CR1') {
       // Ice-cube socket: C1 C2 on the left, then contact pairs 1/2, 3/4, 5/6.
-      const cols = [
-        ['C1', 'C2'],
-        ['1', '2'],
-        ['3', '4'],
-        ['5', '6'],
-      ];
-      const pins: LaidPin[] = [];
-      const x0 = box.x + 28, dx = (box.w - 48) / 3, y1 = box.y + 54, y2 = box.y + 82;
-      for (let c = 0; c < cols.length; c++) {
-        for (let r = 0; r < 2; r++) {
-          const label = cols[c][r];
-          const src = d.pins.find((p) => p.label === label || p.id === `${d.tag}:${label}`)!;
-          pins.push({ ...src, x: x0 + c * dx, y: r === 0 ? y1 : y2 });
-        }
-      }
-      return { cx, cy, pins };
+      const cols = [['C1', 'C2'], ['1', '2'], ['3', '4'], ['5', '6']];
+      const x0 = box.x + 28, dx = (box.w - 56) / 3, y1 = box.y + 61, y2 = box.y + 82;
+      cols.forEach((col, c) => col.forEach((label, r) => pins.push({ ...find(d, label), x: x0 + c * dx, y: r === 0 ? y1 : y2 })));
+      return pins;
     }
     // TR1 / TR2: A1/A2 then timed contact 1/2, two rows.
-    const top = ['A1', 'A2'], bot = ['1', '2'];
-    const pins: LaidPin[] = [];
-    const x1 = box.x + box.w * 0.32, x2 = box.x + box.w * 0.68, y1 = box.y + 58, y2 = box.y + 84;
-    for (const [labels, y] of [[top, y1], [bot, y2]] as const) {
-      labels.forEach((label, i) => {
-        const src = d.pins.find((p) => p.label === label || p.id === `${d.tag}:${label}`)!;
-        pins.push({ ...src, x: i === 0 ? x1 : x2, y });
-      });
+    const x1 = box.x + box.w * 0.32, x2 = box.x + box.w * 0.68;
+    for (const [labels, y] of [[['A1', 'A2'], box.y + 61], [['1', '2'], box.y + 82]] as const) {
+      labels.forEach((label, i) => pins.push({ ...find(d, label), x: i === 0 ? x1 : x2, y }));
     }
-    return { cx, cy: box.y + 24, pins };
+    return pins;
   });
-
-  // ---- DIN rail row 2: TD3, TD4 ----
   dinRow(din2, ['TD3', 'TD4'], (d, box) => {
-    const cx = box.x + box.w / 2, cy = box.y + 26;
     const labels = d.tag === 'TD4' ? ['A1', 'A2', 'T', '1', '2'] : ['A1', 'A2', '1', '2'];
-    const y = box.y + box.h - 18;
-    const x0 = box.x + 28;
-    const dx = (box.w - 56) / (labels.length - 1);
-    const pins: LaidPin[] = labels.map((label, i) => {
-      const src = d.pins.find((p) => p.label.startsWith(label) || p.id === `${d.tag}:${label}`)!;
-      return { ...src, x: x0 + i * dx, y };
-    });
-    return { cx, cy, pins };
+    const y = box.y + 56, x0 = box.x + 28, dx = (box.w - 56) / (labels.length - 1);
+    return labels.map((label, i) => ({
+      ...(d.pins.find((p) => p.label.startsWith(label) || p.id === `${d.tag}:${label}`)!), x: x0 + i * dx, y,
+    }));
   });
 
   // ---- Field-device inset (these are not mounted in the bucket) ----
   const fieldTags = ['FS1', 'PS1', 'TS1', 'LS1', 'FLS1', 'SOL1'];
-  const fw = fieldBox.w / fieldTags.length;
+  const fgut = 12, fpad = 10;
+  const fw = (fieldBox.w - 2 * fpad - fgut * (fieldTags.length - 1)) / fieldTags.length;
   fieldTags.forEach((tag, i) => {
     const d = devs.get(tag)!;
-    const box: Box = { x: fieldBox.x + i * fw + 8, y: fieldBox.y + 36, w: fw - 16, h: fieldBox.h - 48 };
-    const cx = box.x + box.w / 2, cy = box.y + 28;
-    devices.push(laidDev(d, 'field', box, cx, cy, pairPins(d, cx, box.y + box.h - 22, 28), W, H, box.w - 8));
+    const box: Box = { x: fieldBox.x + fpad + i * (fw + fgut), y: fieldBox.y + 28, w: fw, h: 90 };
+    const cx = box.x + box.w / 2, cy = box.y + 40;
+    devices.push(laidDev(d, 'field', box, cx, cy, pairPins(d, cx, box.y + 60, 28), W, H, box.w - 8));
   });
 
-  // ---- Terminal strip ----
+  // ---- Terminal strip: label row on top, two terminal rows below ----
   const tbNets = b.layout.tbNets;
-  const row1 = tbNets.slice(0, 11);
-  const row2 = tbNets.slice(11);
   const terminals: LaidTerminal[] = [];
-  const placeRow = (nets: string[], y: number) => {
-    const step = tbBox.w / 11;
-    nets.forEach((n, i) => {
-      const x = tbBox.x + step * (i + 0.5);
-      const id = n === 'X1' || n === 'X2' || n === 'G' ? n : 'w' + n;
-      terminals.push(term(n, id, x, y, W, H, step - 4, 30));
-    });
-  };
-  placeRow(row1, tbBox.y + 28);
-  placeRow(row2, tbBox.y + 58);
+  const step = tbBox.w / 11;
+  const placeRow = (nets: string[], y: number) => nets.forEach((n, i) => {
+    const id = n === 'X1' || n === 'X2' || n === 'G' ? n : 'w' + n;
+    terminals.push(term(n, id, tbBox.x + step * (i + 0.5), y, W, H, step - 8, 26));
+  });
+  placeRow(tbNets.slice(0, 11), tbBox.y + 36);
+  placeRow(tbNets.slice(11), tbBox.y + 64);
 
   // ---- CPT X1/X2 and F1 (line X1, load wire 1) ----
   const cptTerms = [
-    term('X1', 'X1', cptBox.x + 58, cptBox.y + 62, W, H, 40, 32),
-    term('X2', 'X2', cptBox.x + 138, cptBox.y + 62, W, H, 40, 32),
+    term('X1', 'X1', cptBox.x + 50, cptBox.y + 54, W, H, 36, 24),
+    term('X2', 'X2', cptBox.x + cptBox.w - 50, cptBox.y + 54, W, H, 36, 24),
   ];
   const f1Terms = [
-    term('X1', 'X1', f1Box.x + 46, f1Box.y + 62, W, H, 40, 32),
-    term('1', 'w1', f1Box.x + 114, f1Box.y + 62, W, H, 40, 32),
+    term('X1', 'X1', f1Box.x + 38, f1Box.y + 54, W, H, 36, 24),
+    term('1', 'w1', f1Box.x + f1Box.w - 38, f1Box.y + 54, W, H, 36, 24),
   ];
 
   const ch2Items: LaidCh2[] = b.layout.ch2Preview.map((c, i) => {
-    const w = ch2Box.w / b.layout.ch2Preview.length;
-    const box: Box = { x: ch2Box.x + i * w + 6, y: ch2Box.y + 22, w: w - 12, h: 56 };
+    const n = b.layout.ch2Preview.length, g = 8;
+    const w = (ch2Box.w - 16 - g * (n - 1)) / n;
+    const box: Box = { x: ch2Box.x + 8 + i * (w + g), y: ch2Box.y + 20, w, h: 44 };
     return { tag: c.tag, title: c.title, box, boxPct: boxPct(box, W, H), centerPct: centerPct(box, W, H) };
   });
 
-  // Door harness: from the door's right edge, a loop in the hinge gap, then into the enclosure toward the TB.
+  // Door harness: a loop through the hinge gap, then down the left channel to the strip.
+  // Wires approach the strip from its left edge (bundle) or from below (orange 91/92),
+  // so none crosses the TERMINAL STRIP label at the top of the strip.
+  const mid = tbBox.y + 46;
   const bundle = [
     { x: door.x + door.w - 2, y: 240 },
     { x: hinge.x + 8, y: 230 },
     { x: hinge.x + 38, y: 210 },
     { x: hinge.x + 38, y: 430 },
     { x: hinge.x + 10, y: 500 },
-    { x: enclosure.x + 6, y: tbBox.y - 8 },
-    { x: tbBox.x + 16, y: tbBox.y - 6 },
+    { x: enclosure.x + 6, y: mid },
+    { x: tbBox.x - 2, y: mid },
   ];
   const plf = devices.find((d) => d.tag === 'PLF')!;
   const t91 = terminals.find((t) => t.net === '91')!;
   const t92 = terminals.find((t) => t.net === '92')!;
+  const [p91, p92] = [plf.pins[0], plf.pins[1]];
+  const yA = tbBox.y + tbBox.h + 9, yB = yA + 4;
   const orange = [
-    { x: plf.pins[0].x, y: plf.pins[0].y },
-    { x: door.x + door.w - 2, y: plf.pins[0].y },
-    { x: hinge.x + 16, y: plf.pins[0].y + 8 },
-    { x: hinge.x + 30, y: 360 },
-    { x: hinge.x + 16, y: 500 },
-    { x: enclosure.x + 8, y: tbBox.y - 4 },
-    { x: t91.x, y: tbBox.y - 4 },
-    { x: t91.x, y: t91.y },
+    { x: p91.x, y: p91.y },
+    { x: p91.x, y: p91.y + 12 },
+    { x: door.x + door.w - 2, y: p91.y + 12 },
+    { x: hinge.x + 12, y: p91.y + 16 },
+    { x: hinge.x + 12, y: 540 },
+    { x: enclosure.x + 8, y: yB },
+    { x: t91.x, y: yB },
+    { x: t91.x, y: t91.y + 13 },
   ];
   const orangeB = [
-    { x: plf.pins[1].x, y: plf.pins[1].y },
-    { x: door.x + door.w - 2, y: plf.pins[1].y },
-    { x: hinge.x + 22, y: plf.pins[1].y + 8 },
-    { x: hinge.x + 36, y: 360 },
-    { x: hinge.x + 22, y: 508 },
-    { x: enclosure.x + 8, y: tbBox.y - 6 },
-    { x: t92.x, y: tbBox.y - 6 },
-    { x: t92.x, y: t92.y },
+    { x: p92.x, y: p92.y },
+    { x: p92.x, y: p92.y + 9 },
+    { x: door.x + door.w - 2, y: p92.y + 9 },
+    { x: hinge.x + 18, y: p92.y + 12 },
+    { x: hinge.x + 18, y: 536 },
+    { x: enclosure.x + 8, y: yA },
+    { x: t92.x, y: yA },
+    { x: t92.x, y: t92.y + 13 },
   ];
 
   return {

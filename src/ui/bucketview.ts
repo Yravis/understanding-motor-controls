@@ -51,10 +51,10 @@ export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
       s('circle', { cx: p.x, cy: p.y, r: PIN_R, class: 'pin' }),
       s('rect', { x: p.x - HIT / 2, y: p.y - HIT / 2, width: HIT, height: HIT, fill: 'transparent', class: 'hit' }),
     );
-    g.append(txt(p.x, p.y + 3.5, 'pinlbl', netNo, { 'text-anchor': 'middle' }));
+    g.append(txt(p.x, p.y + 3.6, 'pinlbl', netNo, { 'text-anchor': 'middle' }));
     const pinName = p.label && p.label !== netNo && !p.label.startsWith(netNo) ? p.label.replace(/\s*\(.*\)$/, '') : '';
     if (role !== 'none' && pinName && pinName !== netNo) {
-      const ly = role === 'above' ? p.y - 14 : p.y + 18;
+      const ly = role === 'above' ? p.y - 12 : p.y + 16;
       g.append(txt(p.x, ly, 'tiny pin-role', pinName, { 'text-anchor': 'middle' }));
     }
     return g;
@@ -62,7 +62,7 @@ export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
   const tbPin = (t: LaidTerminal) => {
     const g = s('g', { class: pinClass(o, t.id, t.id, t.foreign) + ' tb', onclick: () => o.onTerminal(t.id) });
     g.append(s('rect', { x: t.box.x, y: t.box.y, width: t.box.w, height: t.box.h, rx: 2, class: 'tbbox hit' }),
-      txt(t.x, t.y + 4, 'pinlbl', t.net, { 'text-anchor': 'middle' }));
+      txt(t.x, t.y + 3.8, 'pinlbl', t.net, { 'text-anchor': 'middle' }));
     return g;
   };
 
@@ -119,24 +119,15 @@ export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
   svg.append(doorG);
   svg.append(txt(lay.door.x + 10, lay.door.y + 18, 'tiny', 'DOOR — inside face  ·  22 mm operators'));
 
-  // Door harness loop (plausible wiring; only 91/92 are colored)
-  const harness = s('g', { class: 'harness', 'aria-hidden': 'true' });
-  for (let i = -3; i <= 3; i++) {
-    harness.append(s('path', { d: pathOf(lay.harness.bundle, i * 3), class: 'wire-run', fill: 'none' }));
-  }
-  harness.append(s('path', { d: pathOf(lay.harness.orange), class: 'wire-orange', fill: 'none' }));
-  harness.append(s('path', { d: pathOf(lay.harness.orangeB), class: 'wire-orange', fill: 'none' }));
-  svg.append(harness);
-
   // Chapter 2 power section (greyed, inspect-only)
   const ch2 = s('g', { class: 'ch2 ch2-section' });
   ch2.append(rect(lay.ch2Preview.box, 'ch2-area', { rx: 3 }));
-  ch2.append(txt(lay.ch2Preview.box.x + 8, lay.ch2Preview.box.y + 16, 'tiny ch2-label', lay.ch2Preview.label));
+  ch2.append(txt(lay.ch2Preview.box.x + 8, lay.ch2Preview.box.y + 14, 'tiny ch2-label', lay.ch2Preview.label));
   for (const c of lay.ch2Preview.items) {
     const g = s('g', { class: 'ch2-item', onclick: () => o.onDevice?.('ch2:' + c.tag) });
     g.append(rect(c.box, 'ch2box', { rx: 3 }));
     drawCh2Glyph(g, c.tag, c.box);
-    g.append(txt(c.box.x + c.box.w / 2, c.box.y + c.box.h - 6, 'tiny', c.tag + ' · Ch 2', { 'text-anchor': 'middle' }));
+    g.append(txt(c.box.x + c.box.w / 2, c.box.y + c.box.h - 5, 'tiny', c.tag + ' · Ch 2', { 'text-anchor': 'middle' }));
     ch2.append(g);
   }
   svg.append(ch2);
@@ -144,8 +135,8 @@ export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
   // CPT
   const cpt = s('g', { class: 'cpt-block' });
   cpt.append(rect(lay.cpt.box, 'devbox powerbox', { rx: 3 }));
-  cpt.append(txt(lay.cpt.box.x + 8, lay.cpt.box.y + 16, 'lbl', 'CPT'));
-  cpt.append(txt(lay.cpt.box.x + 44, lay.cpt.box.y + 16, 'tiny', 'control transformer  ·  120 V secondary'));
+  cpt.append(txt(lay.cpt.box.x + 8, lay.cpt.box.y + 15, 'lbl', 'CPT'));
+  cpt.append(txt(lay.cpt.box.x + 36, lay.cpt.box.y + 15, 'tiny', 'control transformer  ·  120 V secondary'));
   drawTransformer(cpt, lay.cpt.box);
   for (const t of lay.cpt.terminals) cpt.append(tbPin(t));
   svg.append(cpt);
@@ -153,8 +144,8 @@ export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
   // F1
   const f1 = s('g', { class: 'f1-block' });
   f1.append(rect(lay.f1.box, 'devbox powerbox', { rx: 3 }));
-  f1.append(txt(lay.f1.box.x + 8, lay.f1.box.y + 16, 'lbl', 'F1'));
-  f1.append(txt(lay.f1.box.x + 32, lay.f1.box.y + 16, 'tiny', 'control fuse'));
+  f1.append(txt(lay.f1.box.x + 8, lay.f1.box.y + 15, 'lbl', 'F1'));
+  f1.append(txt(lay.f1.box.x + 28, lay.f1.box.y + 15, 'tiny', 'control fuse'));
   drawFuseHolder(f1, lay.f1.box);
   for (const t of lay.f1.terminals) f1.append(tbPin(t));
   svg.append(f1);
@@ -171,13 +162,13 @@ export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
     if (d.zone === 'door') {
       g.append(s('rect', { x: d.box.x, y: d.box.y, width: d.box.w, height: d.box.h, rx: 3, class: 'op-cell', onclick: () => o.onDevice?.(d.tag) }));
       drawOperator(g, d, lit);
-      g.append(s('text', { x: d.cx, y: d.box.y + 11, class: 'lbl legend', 'text-anchor': 'middle' }, d.legend[0]));
-      if (d.legend[1]) g.append(s('text', { x: d.cx, y: d.box.y + 23, class: 'tiny legend', 'text-anchor': 'middle' }, d.legend[1]));
+      g.append(s('text', { x: d.cx, y: d.box.y + 14, class: 'lbl legend', 'text-anchor': 'middle' }, d.legend[0]));
+      if (d.legend[1]) g.append(s('text', { x: d.cx, y: d.box.y + 27, class: 'tiny legend', 'text-anchor': 'middle' }, d.legend[1]));
       for (const p of d.pins) g.append(pin(p, 'none'));
     } else if (d.zone === 'din') {
       g.append(s('rect', { x: d.box.x, y: d.box.y, width: d.box.w, height: d.box.h, rx: 3, class: 'devbox din-dev', onclick: () => o.onDevice?.(d.tag) }));
       drawDinDevice(g, d);
-      drawLegend(g, d, d.cx, d.box.y + 12);
+      drawLegend(g, d, d.box.x + 10, d.box.y + 15);
       const ys = [...new Set(d.pins.map((p) => Math.round(p.y)))];
       const midY = d.pins.reduce((s, p) => s + p.y, 0) / d.pins.length;
       for (const p of d.pins) g.append(pin(p, ys.length === 1 ? 'none' : (p.y <= midY + 1 ? 'above' : 'below')));
@@ -190,9 +181,18 @@ export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
   // Terminal strip
   const tb = s('g', { class: 'tb-strip' });
   tb.append(rect(lay.terminalStrip.box, 'tb-area', { rx: 3 }));
-  tb.append(txt(lay.terminalStrip.box.x + 8, lay.terminalStrip.box.y + 16, 'tiny', lay.terminalStrip.label));
+  tb.append(txt(lay.terminalStrip.box.x + 8, lay.terminalStrip.box.y + 15, 'tiny tb-label', lay.terminalStrip.label));
   for (const t of lay.terminalStrip.terminals) tb.append(tbPin(t));
   svg.append(tb);
+
+  // Door harness (drawn over the backplate; only 91/92 are colored). Enters the strip from the left / below.
+  const harness = s('g', { class: 'harness', 'aria-hidden': 'true' });
+  for (let i = -3; i <= 3; i++) {
+    harness.append(s('path', { d: pathOf(lay.harness.bundle, i * 3), class: 'wire-run', fill: 'none' }));
+  }
+  harness.append(s('path', { d: pathOf(lay.harness.orange), class: 'wire-orange', fill: 'none' }));
+  harness.append(s('path', { d: pathOf(lay.harness.orangeB), class: 'wire-orange', fill: 'none' }));
+  svg.append(harness);
 
   drawFieldInset(svg, lay, o, w, pin, true);
   return svg;
@@ -200,75 +200,73 @@ export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
 
 function drawLegend(parent: SVGElement, d: LaidDevice, cx: number, y: number) {
   d.legend.forEach((line, i) => {
-    parent.append(s('text', { x: cx, y: y + i * 13, class: i === 0 ? 'lbl legend' : 'tiny legend', 'text-anchor': 'middle' }, line));
+    parent.append(s('text', { x: cx, y: y + i * 13, class: i === 0 ? 'lbl legend' : 'tiny legend', 'text-anchor': 'start' }, line));
   });
 }
 
 function drawOperator(parent: SVGElement, d: LaidDevice, lit: boolean, cx = d.cx, cy = d.cy, front = false) {
   const color = LENS[d.tag] ?? '#d0d4d8';
   if (d.kind === 'pb-mushroom') {
-    parent.append(s('circle', { cx, cy, r: 20, class: 'op-mush-base' }));
-    parent.append(s('circle', { cx, cy, r: 15, class: 'op-mush' }));
-    if (!front) parent.append(s('rect', { x: cx - 14, y: cy + 14, width: 28, height: 6, rx: 1, class: 'contact-block' }));
+    parent.append(s('circle', { cx, cy, r: 14, class: 'op-mush-base' }));
+    parent.append(s('circle', { cx, cy, r: 11, class: 'op-mush' }));
   } else if (d.kind.startsWith('pb')) {
-    parent.append(s('circle', { cx, cy, r: 12, class: 'op-ring' }));
-    parent.append(s('circle', { cx, cy, r: 10, class: d.kind === 'pb-no' ? 'op-start' : 'op-stop' }));
-    if (!front) parent.append(s('rect', { x: cx - 14, y: cy + 12, width: 28, height: 6, rx: 1, class: 'contact-block' }));
+    parent.append(s('circle', { cx, cy, r: 11, class: 'op-ring' }));
+    parent.append(s('circle', { cx, cy, r: 9, class: d.kind === 'pb-no' ? 'op-start' : 'op-stop' }));
+    if (!front) parent.append(s('rect', { x: cx - 10, y: cy + 11, width: 20, height: 4, rx: 1, class: 'contact-block' }));
   } else {
-    parent.append(s('circle', { cx, cy, r: 12, class: 'op-ring' + (d.foreign ? ' foreign-ring' : '') }));
-    parent.append(s('circle', { cx, cy, r: 10, class: 'op-lens' + (lit ? ' lit' : ''), fill: color }));
-    if (lit) parent.append(s('circle', { cx, cy, r: 13, class: 'op-glow', fill: color }));
+    parent.append(s('circle', { cx, cy, r: 11, class: 'op-ring' + (d.foreign ? ' foreign-ring' : '') }));
+    parent.append(s('circle', { cx, cy, r: 9, class: 'op-lens' + (lit ? ' lit' : ''), fill: color }));
+    if (lit) parent.append(s('circle', { cx, cy, r: 12, class: 'op-glow', fill: color }));
   }
 }
 
 function drawDinDevice(parent: SVGElement, d: LaidDevice) {
   const { box, cx } = d;
-  const top = box.y + 26;
   if (d.tag === 'CR1') {
-    parent.append(s('rect', { x: cx - 34, y: top, width: 68, height: 18, rx: 2, class: 'relay-body' }));
-    parent.append(s('rect', { x: cx - 16, y: top + 4, width: 32, height: 10, rx: 1, class: 'relay-top' }));
+    parent.append(s('rect', { x: cx - 28, y: box.y + 10, width: 56, height: 14, rx: 2, class: 'relay-body' }));
+    parent.append(s('rect', { x: cx - 14, y: box.y + 13, width: 28, height: 8, rx: 1, class: 'relay-top' }));
   } else if (d.tag === 'TR1' || d.tag === 'TR2') {
     // Pneumatic timer head sitting on a relay body
-    parent.append(s('rect', { x: cx - 28, y: top + 14, width: 56, height: 12, rx: 2, class: 'relay-body' }));
-    parent.append(s('rect', { x: cx - 20, y: top - 4, width: 40, height: 18, rx: 3, class: 'timer-head' }));
-    parent.append(s('circle', { cx, cy: top + 5, r: 6, class: 'timer-dial' }));
-    parent.append(s('line', { x1: cx, y1: top + 5, x2: cx + 4, y2: top + 1, class: 'timer-needle' }));
+    parent.append(s('rect', { x: cx - 26, y: box.y + 21, width: 52, height: 11, rx: 2, class: 'relay-body' }));
+    parent.append(s('rect', { x: cx - 18, y: box.y + 6, width: 36, height: 15, rx: 3, class: 'timer-head' }));
+    parent.append(s('circle', { cx, cy: box.y + 13.5, r: 5, class: 'timer-dial' }));
+    parent.append(s('line', { x1: cx, y1: box.y + 13.5, x2: cx + 3.5, y2: box.y + 10, class: 'timer-needle' }));
   } else {
-    parent.append(s('rect', { x: box.x + 20, y: top, width: box.w - 40, height: 16, rx: 3, class: 'ss-timer' }));
-    parent.append(s('circle', { cx: box.x + 44, cy: top + 8, r: 6, class: 'timer-dial' }));
-    parent.append(s('rect', { x: box.x + 58, y: top + 4, width: 40, height: 8, rx: 1, class: 'ss-window' }));
+    parent.append(s('rect', { x: cx - 50, y: box.y + 8, width: 100, height: 22, rx: 3, class: 'ss-timer' }));
+    parent.append(s('circle', { cx: cx - 34, cy: box.y + 19, r: 6, class: 'timer-dial' }));
+    parent.append(s('rect', { x: cx - 18, y: box.y + 14, width: 48, height: 10, rx: 1, class: 'ss-window' }));
   }
 }
 
 function drawTransformer(parent: SVGElement, box: Box) {
   const cx = box.x + box.w / 2, cy = box.y + 34;
-  parent.append(s('rect', { x: cx - 28, y: cy - 14, width: 56, height: 28, rx: 2, class: 'cpt-body' }));
-  parent.append(s('line', { x1: cx - 10, y1: cy - 10, x2: cx - 10, y2: cy + 10, class: 'cpt-coil' }));
-  parent.append(s('line', { x1: cx + 10, y1: cy - 10, x2: cx + 10, y2: cy + 10, class: 'cpt-coil' }));
+  parent.append(s('rect', { x: cx - 24, y: cy - 11, width: 48, height: 22, rx: 2, class: 'cpt-body' }));
+  parent.append(s('line', { x1: cx - 8, y1: cy - 7, x2: cx - 8, y2: cy + 7, class: 'cpt-coil' }));
+  parent.append(s('line', { x1: cx + 8, y1: cy - 7, x2: cx + 8, y2: cy + 7, class: 'cpt-coil' }));
 }
 
 function drawFuseHolder(parent: SVGElement, box: Box) {
-  const cx = box.x + box.w / 2, cy = box.y + 34;
-  parent.append(s('rect', { x: cx - 36, y: cy - 8, width: 72, height: 16, rx: 3, class: 'fuse-holder' }));
-  parent.append(s('rect', { x: cx - 22, y: cy - 6, width: 44, height: 12, rx: 2, class: 'fuse-cart' }));
+  const cx = box.x + box.w / 2, cy = box.y + 32;
+  parent.append(s('rect', { x: cx - 28, y: cy - 7, width: 56, height: 14, rx: 3, class: 'fuse-holder' }));
+  parent.append(s('rect', { x: cx - 18, y: cy - 4, width: 36, height: 8, rx: 2, class: 'fuse-cart' }));
 }
 
 function drawCh2Glyph(parent: SVGElement, tag: string, box: Box) {
-  const cx = box.x + box.w / 2, cy = box.y + 22;
+  const cx = box.x + box.w / 2, cy = box.y + 15;
   if (tag === 'DISC') {
-    parent.append(s('rect', { x: cx - 16, y: cy - 10, width: 32, height: 20, rx: 2, class: 'ch2-glyph' }));
-    parent.append(s('line', { x1: cx - 6, y1: cy + 2, x2: cx + 10, y2: cy - 8, class: 'ch2-glyph' }));
+    parent.append(s('rect', { x: cx - 14, y: cy - 8, width: 28, height: 16, rx: 2, class: 'ch2-glyph' }));
+    parent.append(s('line', { x1: cx - 5, y1: cy + 2, x2: cx + 8, y2: cy - 6, class: 'ch2-glyph' }));
   } else if (tag === 'PF') {
-    for (let i = -1; i <= 1; i++) parent.append(s('rect', { x: cx + i * 12 - 4, y: cy - 10, width: 8, height: 20, rx: 1, class: 'ch2-glyph' }));
+    for (let i = -1; i <= 1; i++) parent.append(s('rect', { x: cx + i * 11 - 3.5, y: cy - 8, width: 7, height: 16, rx: 1, class: 'ch2-glyph' }));
   } else if (tag === 'M') {
-    parent.append(s('rect', { x: cx - 20, y: cy - 10, width: 40, height: 20, rx: 2, class: 'ch2-glyph' }));
+    parent.append(s('rect', { x: cx - 18, y: cy - 8, width: 36, height: 16, rx: 2, class: 'ch2-glyph' }));
     parent.append(s('text', { x: cx, y: cy + 4, class: 'tiny', 'text-anchor': 'middle' }, 'M'));
   } else if (tag === 'OL') {
     parent.append(s('rect', { x: cx - 16, y: cy - 8, width: 32, height: 16, rx: 2, class: 'ch2-glyph' }));
     parent.append(s('text', { x: cx, y: cy + 4, class: 'tiny', 'text-anchor': 'middle' }, 'OL'));
   } else {
-    parent.append(s('circle', { cx, cy, r: 11, class: 'ch2-glyph' }));
-    parent.append(s('line', { x1: cx + 11, y1: cy, x2: cx + 20, y2: cy, class: 'ch2-glyph' }));
+    parent.append(s('circle', { cx, cy, r: 8, class: 'ch2-glyph' }));
+    parent.append(s('line', { x1: cx + 8, y1: cy, x2: cx + 16, y2: cy, class: 'ch2-glyph' }));
   }
 }
 
@@ -282,13 +280,13 @@ function drawFieldInset(
 ) {
   const g = s('g', { class: 'field-inset' });
   g.append(s('rect', { x: lay.fieldInset.box.x, y: lay.fieldInset.box.y, width: lay.fieldInset.box.w, height: lay.fieldInset.box.h, rx: 4, class: 'field-area' }));
-  g.append(s('text', { x: lay.fieldInset.box.x + 10, y: lay.fieldInset.box.y + 18, class: 'lbl' }, lay.fieldInset.label));
+  g.append(s('text', { x: lay.fieldInset.box.x + 10, y: lay.fieldInset.box.y + 17, class: 'lbl' }, lay.fieldInset.label));
   for (const d of lay.devices.filter((d) => d.zone === 'field')) {
     const dg = s('g', { class: 'dev field' + (d.kind === 'lamp' && w.lit(d.tag) ? ' on' : ''), onclick: () => o.onDevice?.(d.tag) });
     dg.append(s('rect', { x: d.box.x, y: d.box.y, width: d.box.w, height: d.box.h, rx: 3, class: 'devbox field-dev' }));
-    dg.append(s('text', { x: d.cx, y: d.box.y + 16, class: 'lbl legend', 'text-anchor': 'middle' }, d.legend[0]));
-    dg.append(s('text', { x: d.cx, y: d.box.y + 30, class: 'tiny legend', 'text-anchor': 'middle' }, d.legend[1] ?? ''));
-    dg.append(s('rect', { x: d.cx - 22, y: d.box.y + 40, width: 44, height: 16, rx: 2, class: 'term-block' }));
+    dg.append(s('text', { x: d.cx, y: d.box.y + 15, class: 'lbl legend', 'text-anchor': 'middle' }, d.legend[0]));
+    dg.append(s('text', { x: d.cx, y: d.box.y + 28, class: 'tiny legend', 'text-anchor': 'middle' }, d.legend[1] ?? ''));
+    dg.append(s('rect', { x: d.cx - 20, y: d.box.y + 34, width: 40, height: 12, rx: 2, class: 'term-block' }));
     if (withPins) for (const p of d.pins) dg.append(pin(p));
     g.append(dg);
   }

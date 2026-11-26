@@ -86,13 +86,18 @@ svg .foreign { fill:#e87d00 } .tap { cursor:pointer }
 .photo-opacity { width:180px; min-height:44px; }
 
 /* Physical bucket elevation (viewBox 1000×750). Font px here are SVG user units. */
-svg.phys text { font-size:16px; }
-svg.phys .tiny { font-size:13px; }
-svg.phys .lbl, svg.phys .legend { font-size:15px; }
-svg.phys .tiny.legend { font-size:13px; }
-svg.phys .legend { fill:var(--fg); }
-svg.phys .pinlbl { font-size:13px; font-weight:700; }
-svg.phys .warn-label { font-size:14px; font-weight:700; fill:#000; }
+svg.phys text { font-size:13px; }
+svg.phys .tiny { font-size:11px; }
+svg.phys .lbl, svg.phys .legend { font-size:13px; }
+svg.phys .pin-role { font-size:10px; }
+svg.phys .pinlbl { font-size:10px; font-weight:700; }
+svg.phys .warn-label { font-size:13px; font-weight:700; fill:#000; }
+/* Door / device legends must read clearly: beat `svg .tiny { fill: var(--mute) }`. */
+svg.phys text.legend, svg.phys text.tiny.legend, svg.phys .dev text.legend { fill:var(--fg); opacity:1; font-weight:700; }
+svg.phys text.tiny.legend { font-size:11px; font-weight:600; }
+/* `svg .door { stroke:var(--line) }` also matches the door-zone device groups and washed the legend glyphs out. */
+svg.phys .dev.door { stroke:none; }
+svg.phys .dev.door text { stroke:none; }
 svg.phys .shop { fill:#ece8e0; }
 svg.phys .nameplate { fill:#e8e2d6; stroke:#5a5348; stroke-width:1.2; }
 svg.phys .encl-shell { fill:#9a9488; stroke:#4a453c; stroke-width:2; }
