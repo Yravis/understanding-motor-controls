@@ -28,16 +28,24 @@ export function mountBucket(root: HTMLElement, o: PanelOpts): void {
   let strikes = 0, count = 0, replaced: string[] = [], suspect = '', score: Score | null = null;
   let door = true, msg = '';
   const snap = () => { undo.push({ ...b, world: b.world.clone() }); if (undo.length > 40) undo.shift(); };
-  const act = (f: () => void) => { snap(); f(); msg = ''; render(); };
+  const refreshLoading = () => { if (red && black) reading = measure(b.world, mode, red, black, { applyLoading: true }); };
+  const act = (f: () => void) => { snap(); f(); refreshLoading(); msg = ''; render(); };
 
+  const liftProbes = () => { b.world.settle(); }; // drop meter loading so lamps return to the unloaded state
+  const takeReading = () => {
+    if (!red || !black) return;
+    reading = measure(b.world, mode, red, black, { applyLoading: true });
+    count++;
+    if (reading.strike) strikes++;
+  };
   const terminal = (id: string) => {
-    if (!red || (red && black)) { red = id; black = null; reading = null; }
+    if (!red || (red && black)) { if (red && black) liftProbes(); red = id; black = null; reading = null; }
     else if (id === red) { red = null; }
-    else { black = id; reading = measure(b.world, mode, red, black); count++; if (reading.strike) strikes++; }
+    else { black = id; takeReading(); }
     hl = id.startsWith('w') ? id : hl;
     render();
   };
-  const remeasure = () => { if (red && black) { reading = measure(b.world, mode, red, black); count++; if (reading.strike) strikes++; } };
+  const remeasure = () => { if (red && black) takeReading(); };
 
   function controls(): HTMLElement {
     const w = b.world;
@@ -58,6 +66,7 @@ export function mountBucket(root: HTMLElement, o: PanelOpts): void {
       btn('Fill', () => act(() => setProcessMode(b, p, 'fill')), 'small'), btn('Hold', () => act(() => setProcessMode(b, p, 'hold')), 'small'), btn('Drain', () => act(() => setProcessMode(b, p, 'drain')), 'small'));
     return h('div', { class: 'card' },
       h('div', { class: 'row' }, btn(`Handle: ${src.on ? 'ON' : 'OFF'} (tap to change)`, () => act(() => w.setSource('SRC', !src.on)), 'ctl'),
+        btn((() => { const f = w.els.find((e) => e.id === 'F1') as any; return f?.pulled ? 'Install F1' : 'Pull F1'; })(), () => act(() => { const f = w.el<any>('F1'); f.pulled ? w.installFuse('F1') : w.pullFuse('F1'); }), 'ctl'),
         btn(door ? 'Close door' : 'Open door', () => { if (!door && src.on) { msg = 'Door is interlocked: turn the handle OFF first.'; render(); } else act(() => { door = !door; }); }, 'ctl')),
       h('div', { class: 'row' }, pbBtn('PB1', 'PB1 START (hold)'), pbBtn('PB2', 'PB2 STOP (hold)'), pbBtn('PB3', 'PB3 mushroom')),
       h('div', { class: 'row' }, sw('LS1', 'LS1 limit'), sw('FLS1', 'FLS1 flow')),
@@ -70,7 +79,9 @@ export function mountBucket(root: HTMLElement, o: PanelOpts): void {
   function lamps(): HTMLElement {
     const w = b.world;
     const notes: string[] = [];
-    if (w.els.some((e) => e.kind === 'fuse' && (e as any).blown)) notes.push('FUSE F1 IS OPEN');
+    const f1 = w.els.find((e) => e.id === 'F1') as any;
+    if (f1?.pulled) notes.push('FUSE F1 IS PULLED (CPT secondary isolated from the X1 rail)');
+    else if (f1?.blown) notes.push('FUSE F1 IS OPEN');
     if (w.chatter.length) notes.push('CHATTER: ' + w.chatter.join(', '));
     if (w.hum.length) notes.push('HUM/BUZZ: ' + w.hum.join(', '));
     return h('div', { class: 'card lamps' }, h('strong', {}, 'Lamps and relays'),
@@ -86,7 +97,7 @@ export function mountBucket(root: HTMLElement, o: PanelOpts): void {
       h('div', { class: 'probes small' }, `Red: ${red ?? 'tap a terminal'} · Black: ${black ?? (red ? 'tap a second terminal' : '—')}${r?.floating ? ' · FLOATING point' : ''}${r?.beep ? ' · 🔔 BEEP' : ''}`),
       r?.note && r.strike ? h('div', { class: 'warn-txt' }, 'SAFETY STRIKE: ' + r.note) : null,
       h('div', { class: 'modes' }, ...MODES.map(([m, l]) => h('button', { class: 'btn small' + (m === mode ? ' active' : ''), type: 'button', onclick: () => { mode = m; remeasure(); render(); } }, l)),
-        btn('Clear', () => { red = null; black = null; reading = null; render(); }, 'small')));
+        btn('Clear', () => { red = null; black = null; reading = null; liftProbes(); render(); }, 'small')));
   }
 
   function lotoSheet(): HTMLElement {

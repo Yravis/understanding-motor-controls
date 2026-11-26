@@ -285,7 +285,7 @@ items:
         key: pilot-light
         designation: "G"
         nemaNote: "A circle with radiating lines (rays); a color letter (R, G, A, and so on) inside is common but optional."
-        iecNote: "IEC: you may also see an indicating lamp drawn as a circle with a cross, usually tagged with the letter H."
+        iecNote: "IEC: you may also see an indicating lamp drawn as a circle with a cross, usually tagged with the letter H (older) or P."
   - <<: [*s, *d]
     id: ch01.u2.s2-3.symbol.float-no
     book: { chapter: 1, unit: 2, section: "2.3", page: 19, pageStatus: toc-unverified, figure: null }

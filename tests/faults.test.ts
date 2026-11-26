@@ -5,6 +5,7 @@ import { buildBucket, snapshotBehavior } from '../src/model/bucket';
 import { lintDesignRules } from '../src/model/lint';
 import { checkLoto, perfectLoto } from '../src/model/safety';
 import { scoreAttempt, minimalMeasurements } from '../src/model/scoring';
+import { measure } from '../src/model/meter';
 
 const defs = faultDefs(params);
 const seeds = Array.from({ length: 150 }, (_, i) => i + 1);
@@ -14,6 +15,17 @@ describe('design-rule lint on the reference circuit', () => {
   it('flags the deliberate X2-side contact miswire', () => {
     const f = defs.find((d) => d.id === 'contact-on-x2-side')!;
     expect(lintDesignRules(buildFaulted(params, f).world).length).toBeGreaterThan(0);
+  });
+  it('X2-side START miswire puts both CR1 coil terminals at X1 while START is released, and C2 is at X2 while START is held', () => {
+    const f = defs.find((d) => d.id === 'contact-on-x2-side')!;
+    const w = buildFaulted(params, f).world;
+    expect(measure(w, 'VAC', 'CR1:C1', 'G').value!).toBeCloseTo(120, 0);
+    expect(measure(w, 'VAC', 'CR1:C2', 'G').value!).toBeCloseTo(120, 0);
+    expect(w.coilOn['CR1.coil']).toBe(false);
+    w.press('PB1');
+    expect(w.coilOn['CR1.coil']).toBe(true);
+    expect(measure(w, 'VAC', 'CR1:C1', 'G').value!).toBeCloseTo(120, 0);
+    expect(measure(w, 'VAC', 'CR1:C2', 'G').value!).toBeCloseTo(0, 0);
   });
 });
 

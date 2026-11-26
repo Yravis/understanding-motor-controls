@@ -140,3 +140,48 @@ describe('meter as a circuit element', () => {
     void add;
   });
 });
+
+describe('de-energized source winding, fuse isolation, and LED lamp/meter interaction', () => {
+  it('CPT secondary winding stays in the ohms solve when the bucket supply is off; pulling F1 isolates it', () => {
+    const w = bucket().world;
+    w.setSource('SRC', false);
+    w.setSource('FSRC', false);
+    const w7 = measure(w, 'OHMS', 'w7', 'G').value!;
+    const start = measure(w, 'OHMS', 'PB1:1', 'PB1:2').value!;
+    expect(w7).toBeLessThan(1);
+    expect(start).toBeGreaterThan(99);
+    expect(start).toBeLessThan(102);
+    w.pullFuse('F1');
+    const w7iso = measure(w, 'OHMS', 'w7', 'G').value!;
+    const startIso = measure(w, 'OHMS', 'PB1:1', 'PB1:2').value!;
+    expect(w7iso).toBeGreaterThan(50);
+    expect(startIso).toBeGreaterThan(200);
+  });
+  it('high-impedance X1 ground fault is hidden by the winding until F1 is pulled', () => {
+    const w = bucket().world;
+    // same 100 ohm path the hi-Z fault uses, applied here so this file stays free of the fault catalog
+    w.els.push({ kind: 'res', id: 'GF', a: 'w7', b: 'G', r: params.WIRE.groundFaultHighZR, label: 'ground fault path' });
+    w.settle();
+    w.setSource('SRC', false);
+    w.setSource('FSRC', false);
+    expect(measure(w, 'OHMS', 'w7', 'G').value!).toBeLessThan(1);
+    w.pullFuse('F1');
+    const iso = measure(w, 'OHMS', 'w7', 'G').value!;
+    expect(iso).toBeGreaterThan(40);
+    expect(iso).toBeLessThan(80); // ~100 ohm fault in parallel with the load network (~146 ohm) ≈ 59 ohm
+  });
+  it('LoZ across an open contact lights PL1 while the probes are applied, and the 10 Mohm range converges in a few LED solves', () => {
+    const w = bucket().world;
+    const hi = measure(w, 'VAC', 'CR1:1', 'CR1:2');
+    expect(w.lastLedIters).toBeLessThanOrEqual(3);
+    expect(w.lit('PL1')).toBe(false);
+    expect(hi.value!).toBeGreaterThan(100);
+    const loz = measure(w, 'LOZ', 'CR1:1', 'CR1:2', { applyLoading: true });
+    expect(w.lastLedIters).toBeLessThanOrEqual(3);
+    expect(loz.value!).toBeCloseTo((120 * 3e3) / (3e3 + params.LED.rLamp), 0);
+    expect(w.lit('PL1')).toBe(true);
+    expect(loz.note).toMatch(/lights PL1/);
+    w.settle();
+    expect(w.lit('PL1')).toBe(false);
+  });
+});

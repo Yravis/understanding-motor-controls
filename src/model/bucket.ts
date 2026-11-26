@@ -43,7 +43,7 @@ export function buildBucket(p: Params, opt: BucketOptions = {}): Bucket {
   // ---- source, fuse, bond ----
   const zs = opt.zsScale ?? 1;
   w.els.push({ kind: 'source', id: 'SRC', a: 'X1', b: 'X2', volts: P(p, 'SRC', 'volts'), zsR: P(p, 'SRC', 'zsR') * zs, zsX: P(p, 'SRC', 'zsX') * zs, on: true, label: 'Control supply' });
-  w.els.push({ kind: 'fuse', id: 'F1', a: 'X1', b: net('1'), rating: P(p, 'F1', 'rating'), r: P(p, 'F1', 'r'), minMeltX: P(p, 'F1', 'minMeltX'), i2tMelt: P(p, 'F1', 'i2tMelt'), blown: false, accum: 0 });
+  w.els.push({ kind: 'fuse', id: 'F1', a: 'X1', b: net('1'), rating: P(p, 'F1', 'rating'), r: P(p, 'F1', 'r'), minMeltX: P(p, 'F1', 'minMeltX'), i2tMelt: P(p, 'F1', 'i2tMelt'), blown: false, pulled: false, accum: 0 });
   w.els.push({ kind: 'wire', id: 'W:X2', a: 'X2', b: net('2'), r: wireR });
   w.els.push({ kind: 'wire', id: 'BOND:X2-G', a: 'X2', b: 'G', r: P(p, 'WIRE', 'bondR') });
 

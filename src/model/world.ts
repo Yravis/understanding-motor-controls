@@ -30,6 +30,7 @@ export class World {
   timerStarts = 0;
   doorOpen = false;
   lastSolve: { v: Record<string, C>; floating: string[]; branches: Branch[] } | null = null;
+  lastLedIters = 0;
   log: string[] = [];
 
   clone(): World {
@@ -77,7 +78,8 @@ export class World {
     const out: Branch[] = [];
     for (const e of this.els) {
       switch (e.kind) {
-        case 'source': if (e.on) { const y = inv(c(e.zsR, e.zsX)); out.push({ id: e.id, a: e.a, b: e.b, y, i: scale(y, e.volts) }); } break;
+        // winding stays in circuit when the source is off (handle opens the CPT primary, not the secondary); only the generated voltage is removed
+        case 'source': { const y = inv(c(e.zsR, e.zsX)); out.push(e.on ? { id: e.id, a: e.a, b: e.b, y, i: scale(y, e.volts) } : { id: e.id, a: e.a, b: e.b, y }); break; }
         case 'res': out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.r) }); break;
         case 'cap': out.push({ id: e.id, a: e.a, b: e.b, y: capAdmittance(e.c) }); break;
         case 'wire': {
@@ -99,7 +101,7 @@ export class World {
         case 'led': out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / (this.ledOn[e.id] ? e.rLamp : e.rOff)) }); break;
         case 'lamp': out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.hotR) }); break;
         case 'contact': if (this.contactClosed(e)) out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / (e.rClosed + (e.extraR ?? 0))) }); break;
-        case 'fuse': if (!e.blown) out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.r) }); break;
+        case 'fuse': if (!e.blown && !e.pulled) out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.r) }); break;
         case 'prox': out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / (this.devActuated(e.dev, 'main') ? e.rOn : e.rLeak)) }); break;
       }
     }
@@ -110,7 +112,7 @@ export class World {
     const out: Branch[] = [];
     for (const e of this.els) {
       switch (e.kind) {
-        case 'source': if (e.on) out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / Math.max(e.zsR, 1e-3)) }); break; // winding DC resistance
+        case 'source': out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / Math.max(e.zsR, 1e-3)) }); break; // winding DC resistance stays, even with the primary off
         case 'res': out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.r) }); break;
         case 'cap': break; // DC blocks
         case 'wire': {
@@ -127,37 +129,37 @@ export class World {
         case 'led': if (fwd[e.id]) out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.rLamp), i: c(e.vf / e.rLamp) }); break;
         case 'lamp': out.push({ id: e.id, a: e.a, b: e.b, y: c(e.coldFactor / e.hotR) }); break; // cold resistance = hot / factor
         case 'contact': if (this.contactClosed(e)) out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / (e.rClosed + (e.extraR ?? 0))) }); break;
-        case 'fuse': if (!e.blown) out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.r) }); break;
+        case 'fuse': if (!e.blown && !e.pulled) out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.r) }); break;
         case 'prox': out.push({ id: e.id, a: e.a, b: e.b, y: c(1 / e.rLeak) }); break;
       }
     }
     return [...out, ...extra];
   }
 
-  /** AC solve with LED operating-point iteration (piecewise-linear). Updates this.ledOn to the converged point;
-   *  LEDs that cannot settle (hysteresis ping-pong, e.g. near the turn-on voltage) are left off. */
-  solveAC(extra: Branch[] = []): { sol: Solution; branches: Branch[] } {
-    let sol!: Solution, br: Branch[] = [];
-    let flips: Record<string, number> = {};
-    for (let k = 0; k < 40; k++) {
+  /** AC solve with a lit-state LED decision (piecewise-linear). Each LED is first solved at rLamp; it stays on only
+   *  if that operating point holds (voltage at or above the hold threshold, or current at or above litI). This
+   *  converges in at most two solves and does not rely on a flip-count guard. */
+  solveAC(extra: Branch[] = []): { sol: Solution; branches: Branch[]; ledIters: number } {
+    for (const e of this.els) if (e.kind === 'led') this.ledOn[e.id] = true;
+    let br = this.acBranches(extra);
+    let sol = solve(br, this.nodes());
+    let ledIters = 1;
+    let ch = false;
+    for (const e of this.els) {
+      if (e.kind !== 'led') continue;
+      const v = abs(vAcross(sol, e.a, e.b));
+      const brE = br.find((b) => b.id === e.id);
+      const i = brE ? abs(branchCurrent(sol, brE)) : 0;
+      const on = v >= 0.8 * e.vOnRms || i >= e.litI;
+      if (on !== !!this.ledOn[e.id]) { this.ledOn[e.id] = on; ch = true; }
+    }
+    if (ch) {
+      ledIters++;
       br = this.acBranches(extra);
       sol = solve(br, this.nodes());
-      let ch = false;
-      for (const e of this.els) {
-        if (e.kind !== 'led') continue;
-        const v = abs(vAcross(sol, e.a, e.b));
-        const on = !!this.ledOn[e.id];
-        const next = !on ? v >= e.vOnRms : v >= 0.8 * e.vOnRms;
-        if (next !== on) {
-          flips[e.id] = (flips[e.id] ?? 0) + 1;
-          this.ledOn[e.id] = flips[e.id] > 4 ? false : next;
-          ch = true;
-        }
-      }
-      if (!ch) break;
-      if (k === 39) { br = this.acBranches(extra); sol = solve(br, this.nodes()); }
     }
-    return { sol, branches: br };
+    this.lastLedIters = ledIters;
+    return { sol, branches: br, ledIters };
   }
 
   solveDC(extra: Branch[]): { sol: Solution; branches: Branch[] } {
@@ -230,7 +232,7 @@ export class World {
   private finishSettle(sol: Solution, branches: Branch[]): void {
     this.fuseI = {};
     for (const e of this.els) {
-      if (e.kind === 'fuse' && !e.blown) {
+      if (e.kind === 'fuse' && !e.blown && !e.pulled) {
         const br = branches.find((b) => b.id === e.id);
         if (br) this.fuseI[e.id] = abs(branchCurrent(sol, br));
       }
@@ -314,7 +316,7 @@ export class World {
       }
     }
     for (const e of this.els) {
-      if (e.kind === 'fuse' && !e.blown) {
+      if (e.kind === 'fuse' && !e.blown && !e.pulled) {
         const i = this.fuseI[e.id] ?? 0;
         if (i >= e.minMeltX * e.rating) best = Math.min(best, this.t + Math.max(0, (e.i2tMelt - e.accum) / (i * i)));
       }
@@ -383,6 +385,10 @@ export class World {
   /** Release a hand-operated override so the process drives the switch again. */
   clearOverride(id: string): void { const d = this.devs[id]; if (d?.kind === 'switch') { d.override = false; this.settle(); } }
   setSource(id: string, on: boolean): void { this.el<Extract<El, { kind: 'source' }>>(id).on = on; this.settle(); }
+  /** Pull the fuse out of its holder (isolates the X1 rail from the CPT secondary). Distinct from a blown fuse. */
+  pullFuse(id: string): void { this.el<Extract<El, { kind: 'fuse' }>>(id).pulled = true; this.settle(); }
+  /** Put the fuse back (does not clear a blown fuse; replace that separately). */
+  installFuse(id: string): void { this.el<Extract<El, { kind: 'fuse' }>>(id).pulled = false; this.settle(); }
   setTarget(proc: string, target: number): void { this.procs[proc].target = target; this.settle(); }
 
   // ---- readouts -----------------------------------------------------------------------------------------

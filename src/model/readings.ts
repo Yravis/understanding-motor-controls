@@ -12,6 +12,9 @@ export const KEY_POINTS: { mode: 'VAC' | 'OHMS'; red: string; black: string; wha
   { mode: 'VAC', red: 'X2', black: 'G', what: 'X2 to ground' },
   { mode: 'VAC', red: 'PB1:1', black: 'PB1:2', what: 'across START contact' },
   { mode: 'VAC', red: 'CR1:C1', black: 'CR1:C2', what: 'across CR1 coil' },
+  { mode: 'VAC', red: 'CR1:C1', black: 'G', what: 'CR1 coil terminal C1 to ground' },
+  { mode: 'VAC', red: 'CR1:C2', black: 'G', what: 'CR1 coil terminal C2 to ground' },
+  { mode: 'VAC', red: 'PB1:2', black: 'G', what: 'START far terminal to ground' },
   { mode: 'VAC', red: 'CR1:1', black: 'CR1:2', what: 'across CR1 NO contact' },
   { mode: 'VAC', red: 'PL1:1', black: 'PL1:2', what: 'across PL1' },
   { mode: 'VAC', red: 'FS1:1', black: 'FS1:2', what: 'across float switch' },
@@ -36,6 +39,7 @@ export const STATES: { id: string; label: string; run: (b: Bucket) => void }[] =
   { id: 'ls1-open', label: 'Bucket ON, LS1 operated (open), after 1 s', run: (b) => { b.world.advance(1); b.world.toggleSwitch('LS1'); b.world.advance(1); } },
   { id: 'start', label: 'Bucket ON, START held 1 s', run: (b) => { b.world.advance(1); b.world.press('PB1'); b.world.advance(1); } },
   { id: 'dead', label: 'Bucket supply OFF and remote source OFF (de-energized, for ohms)', run: (b) => { b.world.setSource('SRC', false); b.world.setSource('FSRC', false); } },
+  { id: 'dead-f1-pulled', label: 'Bucket supply OFF, F1 pulled, remote source OFF (winding isolated)', run: (b) => { b.world.setSource('SRC', false); b.world.setSource('FSRC', false); b.world.pullFuse('F1'); } },
   { id: 'bucket-off-foreign-live', label: 'Bucket supply OFF, remote source still ON', run: (b) => { b.world.setSource('SRC', false); } },
 ];
 export interface Row { state: string; mode: string; what: string; points: string; display: string; note: string }
@@ -48,7 +52,7 @@ export function readingsFor(b0: Bucket): Row[] {
     st.run(b);
     const lit = Object.keys(b.world.ledOn).filter((id) => b.world.lit(id)).join(' ') || 'none'; // before the meter touches the model
     for (const k of KEY_POINTS) {
-      if (st.id === 'dead' && k.mode === 'VAC') continue;
+      if ((st.id === 'dead' || st.id === 'dead-f1-pulled') && k.mode === 'VAC') continue;
       if (st.id === 'bucket-off-foreign-live' && k.mode === 'OHMS') continue;
       if ((st.id === 'idle' || st.id === 'start' || st.id === 'ls1-open') && k.mode === 'OHMS') continue;
       if (st.id === 'ls1-open' && !/SOL1|LS1/.test(k.red + k.black)) continue;

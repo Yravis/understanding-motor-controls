@@ -26,7 +26,7 @@ export function fmtOhms(r: number): string {
   return r.toFixed(1) + ' Ω';
 }
 
-export function measure(w: World, mode: MeterMode, red: string, black: string): Reading {
+export function measure(w: World, mode: MeterMode, red: string, black: string, opts?: { applyLoading?: boolean }): Reading {
   const base: Reading = { mode, red, black, value: null, unit: '', display: '', valid: true, floating: false, beep: false, strike: null, note: '' };
   const nodes = new Set(w.nodes());
   if (red === black) return { ...base, value: 0, unit: mode === 'VDC' || mode === 'VAC' || mode === 'LOZ' ? 'V' : 'Ω', display: mode.startsWith('V') || mode === 'LOZ' ? '0.0' : '0.0 Ω', note: 'both probes on the same point' };
@@ -35,14 +35,23 @@ export function measure(w: World, mode: MeterMode, red: string, black: string): 
   if (mode === 'VAC' || mode === 'LOZ') {
     const zm = mode === 'VAC' ? METER_HIZ : METER_LOZ;
     const meter: Branch = { id: 'METER', a: red, b: black, y: c(1 / zm) };
+    const savedLed = structuredClone(w.ledOn);
+    const savedSolve = w.lastSolve;
     // pre-solve without the meter to detect floating probes (floating means no real path to reference)
     const { sol: s0 } = w.solveAC([]);
     const floating = s0.floating.has(red) || s0.floating.has(black);
-    const saved = structuredClone(w.ledOn);
-    const { sol } = w.solveAC([meter]);
-    w.ledOn = saved; // the meter reading never changes lamp state
+    const { sol, branches } = w.solveAC([meter]);
     const val = abs(vAcross(sol, red, black));
-    return { ...base, value: val, unit: 'V', display: fmtVolts(val), floating, note: floating ? 'a probe is on a floating (unconnected) point' : '' };
+    let note = floating ? 'a probe is on a floating (unconnected) point' : '';
+    if (opts?.applyLoading) {
+      w.lastSolve = { v: Object.fromEntries(sol.v), floating: [...sol.floating], branches };
+      const litByMeter = Object.keys(w.ledOn).filter((id) => w.lit(id) && !savedLed[id]);
+      if (litByMeter.length) note = (note ? note + ' ' : '') + `Meter loading lights ${litByMeter.join(', ')}.`;
+    } else {
+      w.ledOn = savedLed;
+      w.lastSolve = savedSolve;
+    }
+    return { ...base, value: val, unit: 'V', display: fmtVolts(val), floating, note };
   }
   if (mode === 'VDC') {
     const meter: Branch = { id: 'METER', a: red, b: black, y: c(1 / METER_HIZ) };

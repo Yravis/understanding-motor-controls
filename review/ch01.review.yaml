@@ -2,13 +2,20 @@
 entries:
   - id: ch01.u3.s3-18.device.control-supply
     hash: 4add40c523bf183c9107ea8e1d315be60d77ff00f5a217875c191a38cdb25c9c
-    status: needs-fix
-    severity: minor
+    status: pending
+    severity: null
     checkedAgainst: []
     basis: general-knowledge
     notes: "NEW FLAG (re-review 2026-11-26), model behavior, claim text fine. When the bucket supply is turned OFF the model removes the whole source element (world.ts: DC/ohms branch only 'if (e.on)'), which also removes the control transformer's secondary winding between X1 and X2. In a real bucket the disconnect opens the CPT primary; the secondary winding (a fraction of an ohm here, zsR 0.35 ohm) stays connected X1-X2 unless F1 is pulled or a lead is lifted. So de-energized ohms readings from any X1-side point to X2/ground should read about the winding resistance (well under 1 ohm), not the load network. The sheets show the effect: 'wire 7 to ground' 146.4 ohm healthy and 59.4 ohm with the high-impedance X1 ground fault (real: both under 1 ohm, so an ohmmeter can't find that fault without isolating the conductor), and 'START contact (released)' 246.4 ohm (real: about 100 ohm, through the winding and CR1 coil). That teaches a wrong expectation for in-circuit resistance checks, a classic apprentice trap. FIX: keep the winding resistance in the DC/ohms solve when the source is off, and model 'pull F1' or 'lift the lead' as the way to isolate a conductor for an ohms or insulation check; regenerate the sheets. General knowledge only, no datasheet opened. Note: this item's hash won't change from a model-only fix, so move it back to pending by hand when fixed."
     reviewer: Eli
     date: 2026-11-26
+    history:
+      - hash: 4add40c523bf183c9107ea8e1d315be60d77ff00f5a217875c191a38cdb25c9c
+        status: needs-fix
+        severity: minor
+        reviewer: Eli
+        date: 2026-11-26
+        staledOn: 2026-11-26
   - id: ch01.u3.s3-18.device.supply-fuse
     hash: d2aab7cf3e20997d862dede42547672d33afc5a528670f087d5d9a462f461078
     status: blocked-on-source
@@ -275,9 +282,9 @@ entries:
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u3.s3-18.fault.contact-on-x2-side
-    hash: e6944a06112f34550a64f78faea3c1a4f70c41505e6a7a7c923790e99a636f55
-    status: needs-fix
-    severity: minor
+    hash: 89809eab2286f2416cca50c42301af68f72525d03304f83cae9a733f380c2efe
+    status: pending
+    severity: null
     checkedAgainst:
       - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
     basis: source
@@ -286,6 +293,12 @@ entries:
     date: 2026-11-26
     history:
       - hash: 08f960230e81e89aa0bfcc35eb58072df96a780c497cc9fe9c8f4c2cf4f4ab16
+        status: needs-fix
+        severity: minor
+        reviewer: Eli
+        date: 2026-11-26
+        staledOn: 2026-11-26
+      - hash: e6944a06112f34550a64f78faea3c1a4f70c41505e6a7a7c923790e99a636f55
         status: needs-fix
         severity: minor
         reviewer: Eli
@@ -991,8 +1004,8 @@ entries:
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.pilot-light
-    hash: 51cb878d0ecc4c0b32d53195d817cde2289577c890479bdefc522dab4b8ac9d5
-    status: blocked-on-source
+    hash: d2e194cd564518a676d41a16b5115ca02e7031cf212fb8c1291cd7f7e547bb43
+    status: pending
     severity: null
     checkedAgainst: []
     basis: general-knowledge
@@ -1001,6 +1014,12 @@ entries:
     date: 2026-11-26
     history:
       - hash: c9fd499adf420f15fcd4a9665ad1396ee1e86fb644a8004e3ffd324c53eaea38
+        status: blocked-on-source
+        severity: null
+        reviewer: Eli
+        date: 2026-11-26
+        staledOn: 2026-11-26
+      - hash: 51cb878d0ecc4c0b32d53195d817cde2289577c890479bdefc522dab4b8ac9d5
         status: blocked-on-source
         severity: null
         reviewer: Eli

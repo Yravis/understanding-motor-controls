@@ -112,15 +112,16 @@ export function faultDefs(p: Params): FaultDef[] {
       sequence: [{ do: 'mode', dev: 'TANK', arg: 'fill' }, { do: 'advance', arg: 60 }],
     },
     {
-      id: 'contact-on-x2-side', title: 'Limit switch wired on the X2 side of SOL1', rootCause: 'W:LS1:2',
-      cause: 'Limit switch LS1 (the safety stop for SOL1) was wired between the SOL1 coil and X2 instead of between X1 and the coil. The valve still works, but the SOL1 coil terminals now sit at X1 potential, so a ground fault on the field wire between SOL1 and LS1 would energize SOL1 and bypass LS1 (the arrangement NEC 2026 430.74 prohibits).',
-      symptom: 'Operator: "Everything works." (Behavior is unchanged: a hazard found by measurement. With LS1 closed, LS1\'s far terminal reads 0 V to ground instead of 120 V; with LS1 open, SOL1 still has 120 V to ground on both terminals.)',
+      id: 'contact-on-x2-side', title: 'START pushbutton wired on the X2 side of CR1', rootCause: 'W:PB1:2',
+      cause: 'START pushbutton PB1 was wired between the CR1 coil and X2 instead of between the E-stop and the coil. The circuit still works, but while START is released, both CR1 coil terminals sit at X1 potential, so a ground fault on the field wire between CR1 and PB1 would energize CR1 without pressing START (the arrangement NEC 2026 430.74 prohibits in a motor control circuit).',
+      symptom: 'Operator: "Everything works." (Behavior is unchanged: a hazard found by measurement. While START is released, both CR1 coil terminals read 120 V to ground instead of 0 V.)',
       behaviorSame: true,
       apply: (b) => {
-        W(b, 'W:SOL1:C1').b = 'w1'; W(b, 'W:SOL1:C2').b = 'w11'; W(b, 'W:LS1:1').b = 'w11'; W(b, 'W:LS1:2').b = 'w2'; b.world.settle();
+        // X1 -- PB3 -- CR1 -- PB1 -- X2  (START landed on the grounded side of the coil)
+        W(b, 'W:CR1:C1').b = 'w3'; W(b, 'W:CR1:C2').b = 'w4'; W(b, 'W:PB1:1').b = 'w4'; W(b, 'W:PB1:2').b = 'w2'; b.world.settle();
       },
-      fixActions: [{ kind: 'reland', target: 'W:LS1:1', note: 'Land LS1 on the X1 side (wire 1).' }, { kind: 'reland', target: 'W:LS1:2', note: 'Land the LS1 output on wire 11.' }, { kind: 'reland', target: 'W:SOL1:C1', note: 'Land the SOL1 feed on wire 11.' }, { kind: 'reland', target: 'W:SOL1:C2', note: 'Land SOL1 directly on X2 (wire 2).' }],
-      sequence: [{ do: 'toggle', dev: 'LS1' }, { do: 'advance', arg: 1 }, { do: 'toggle', dev: 'LS1' }, { do: 'advance', arg: 1 }],
+      fixActions: [{ kind: 'reland', target: 'W:PB1:1', note: 'Land PB1 on the X1 side (wire 3, after the E-stop).' }, { kind: 'reland', target: 'W:PB1:2', note: 'Land the PB1 output on wire 4.' }, { kind: 'reland', target: 'W:CR1:C1', note: 'Land the CR1 coil feed on wire 4.' }, { kind: 'reland', target: 'W:CR1:C2', note: 'Land CR1 directly on X2 (wire 2).' }],
+      sequence: [{ do: 'press', dev: 'PB1' }, { do: 'advance', arg: 1 }, { do: 'release', dev: 'PB1' }, { do: 'advance', arg: 1 }],
     },
     {
       id: 'wrong-timer-type', title: 'Wrong timer type installed', rootCause: 'TR1',
@@ -269,6 +270,8 @@ export const OBS_STATES: ObsState[] = [
   { id: 'idle', run: () => {}, mode: 'VAC' },
   { id: 'start-held', run: (b) => { b.world.press('PB1'); b.world.advance(1); }, mode: 'VAC' },
   { id: 'dead-ohms', run: (b) => { b.world.setSource('SRC', false); b.world.setSource('FSRC', false); }, mode: 'OHMS' },
+  // the CPT secondary shorts X1 to X2, so an X1-side ground fault only shows up on an ohmmeter after F1 is pulled (or a lead is lifted)
+  { id: 'dead-ohms-f1-pulled', run: (b) => { b.world.setSource('SRC', false); b.world.setSource('FSRC', false); b.world.pullFuse('F1'); }, mode: 'OHMS' },
 ];
 
 export function observations(b0: Bucket, probes: [string, string][]): Map<string, string> {

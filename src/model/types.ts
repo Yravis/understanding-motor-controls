@@ -19,7 +19,7 @@ export interface Contact extends Base {
   kind: 'contact'; dev: string; pole: Pole; nc: boolean; rClosed: number;
   welded?: boolean; stuckOpen?: boolean; extraR?: number;
 }
-export interface Fuse extends Base { kind: 'fuse'; rating: number; r: number; minMeltX: number; i2tMelt: number; blown: boolean; accum: number }
+export interface Fuse extends Base { kind: 'fuse'; rating: number; r: number; minMeltX: number; i2tMelt: number; blown: boolean; pulled: boolean; accum: number }
 export interface Prox extends Base { kind: 'prox'; dev: string; rLeak: number; rOn: number }
 export type El = Source | Res | Cap | Wire | Coil | Led | Lamp | Contact | Fuse | Prox;
 

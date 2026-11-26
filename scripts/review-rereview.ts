@@ -39,7 +39,11 @@ for (const e of order) {
   for (const k of ['text', 'fieldNote', 'stem', 'explanation', 'cause', 'symptom', 'note']) if (it.body?.[k]) md += `- **${k}:** ${cell(it.body[k])}\n`;
   if (it.body?.steps) md += `- **steps:** ${it.body.steps.map((s: string, i: number) => `${i + 1}. ${s}`).join(' ')}\n`;
   if (it.body?.params) md += `- **params:** ${Object.entries(it.body.params).map(([k, v]: any) => `${k} ${v.qty} ${v.unit}`).join(', ')}\n`;
-  if (it.body?.symbol) md += `- **figure:** ${it.body.symbol.key} labelled "${it.body.symbol.designation}"; NEMA note: ${cell(it.body.symbol.nemaNote)}\n`;
+  if (it.body?.symbol) {
+    const s = it.body.symbol;
+    if (typeof s === 'string') md += `- **figure:** ${s}\n`;
+    else md += `- **figure:** ${s.key} labelled "${s.designation}"; NEMA note: ${cell(s.nemaNote)}\n`;
+  }
   if (it.body?.answers) md += `- **answers:** ${it.body.answers.map((a: any) => (a.correct ? '✔ ' : '✘ ') + a.text).join(' · ')}\n`;
   md += `- **Your batch 1 note (kept in the ledger):** ${cell(e.notes).slice(0, 400)}${cell(e.notes).length > 400 ? '…' : ''}\n\n`;
 }

@@ -1,0 +1,38 @@
+# Cody's fix notes for Eli's re-review (ch01-batch1-rereview). Read by scripts/review-rereview.ts.
+changed:
+  ch01.u3.s3-18.fault.contact-on-x2-side: >-
+    Miswire moved off the SOL1 valve rung onto the CR1 motor-control-circuit rung (your preferred option):
+    START pushbutton PB1 is now wired between the CR1 coil and X2 (CR1:C1 on wire 3 after the E-stop,
+    CR1:C2 + PB1:1 on wire 4, PB1:2 on X2). While START is released, both CR1 coil terminals sit at X1
+    potential, so a ground fault on the field wire between CR1 and PB1 would energize CR1 without pressing
+    START (the arrangement 430.74 prohibits in a motor control circuit). Behavior unchanged (same lamps
+    at idle and with START held). Wording no longer claims the terminals sit at X1 at idle when a
+    normally-closed contact is still closed. New sheet probes: CR1:C1-G, CR1:C2-G, PB1:2-G. Idle:
+    CR1:C1-G and CR1:C2-G 0.0 -> 120.0 V (the hazard is visible with nothing operated). With START held,
+    both sides look the same on the coil (C1-G 119.8 V, C2-G 0.0 V); the START far terminal (PB1:2-G)
+    is the remaining tell (119.8 -> 0.0 V, because that terminal now lands on X2).
+  ch01.u3.s3-18.device.control-supply: >-
+    MODEL-ONLY (hash unchanged; set back to pending by hand, notes kept). The CPT secondary winding
+    (zsR 0.35 ohm) now stays in both the AC and DC/ohms solves when the bucket handle is off; only the
+    generated voltage is removed. Isolation is by pulling F1 (new World.pullFuse / UI "Pull F1" button)
+    or lifting a lead. De-energized ohms, handle off, F1 in: wire 7 to ground 146.4 -> 0.4 ohm healthy
+    and 59.4 -> 0.4 ohm with the hi-Z X1 ground fault (both under 1 ohm, so an ohmmeter cannot find that
+    fault until the conductor is isolated); START contact (released) 246.4 -> 100.4 ohm (about 100 ohm
+    through the winding and the CR1 coil, dcR 100 ohm). After F1 is pulled the old load-network readings
+    return (healthy w7-G 146.4 ohm, START 246.4 ohm; hi-Z w7-G 59.4 ohm). New sheet state: "Bucket supply
+    OFF, F1 pulled, remote source OFF (winding isolated)". Observation probes used for fault
+    distinguishability now include this isolated-ohms state, because the winding otherwise hides the
+    hi-Z ground fault. New tests cover the winding, F1 isolation, and the hidden-until-isolated hi-Z case.
+  ch01.u2.s2-3.symbol.pilot-light: "IEC note: 'usually tagged with the letter H' -> 'usually tagged with the letter H (older) or P'."
+tooling: >-
+  (a) measure() no longer throws away the meter's effect on lamps when the UI passes applyLoading:
+  lastSolve and ledOn reflect the loaded circuit, so PL1 shows LIT during a LoZ test across the open
+  CR1 NO contact (the note says the LoZ current turns the LED on). Clearing the probes or starting a
+  new pair calls settle() to drop the loading. Default measure() (sheets and tests) still restores
+  lamp state so one reading does not pollute the next. (b) solveAC now decides each LED from the
+  lit-state (rLamp) solve: it stays on only if that operating point holds (V >= 0.8 vOnRms or I >= litI).
+  The 10 Mohm range across an open contact feeding an LED converges in at most two solves (was 40
+  iterations bouncing until the 5-flip guard forced it off). New test asserts lastLedIters <= 3 and
+  that applyLoading LoZ lights PL1. (c) review:rereview prints identify-symbol figures whose
+  body.symbol is a string key (it had printed 'undefined labelled "undefined"' for identify-nc-contact).
+  (d) Pilot-light IEC note as above.
