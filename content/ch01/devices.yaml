@@ -1,0 +1,306 @@
+# Device parameter sets for Bucket 1A (generic MCC bucket, no manufacturer).
+# NO real datasheet is available to the builder: every number below is TYPICAL / ILLUSTRATIVE.
+# The engine reads only params[*].qty. Graded content may never depend on these numbers (lint-enforced).
+defaults: &d
+  type: deviceSpec
+  version: 1
+  nec: []
+  nema: []
+  ieee: []
+  excerpts: []
+  basis: typical
+  enforcedNote: null
+  other: [{ src: "datasheet:TBD" }]
+  bookAlignment: provisional
+  reviewerNotes: "Typical values only; a real datasheet is needed before any value is graded."
+items:
+  - <<: *d
+    id: ch01.u3.s3-18.device.control-supply
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "The bucket control source is a 120 V, 60 Hz supply between X1 and X2 with a small internal impedance, so its terminal voltage sags a little when a coil draws inrush current. X2 is bonded to the enclosure (grounded) in this configuration."
+    body:
+      tag: SRC
+      kind: source
+      title: "Control power supply (X1/X2)"
+      params:
+        volts: { qty: 120, unit: V, tol: "±0" }
+        zsR: { qty: 0.35, unit: ohm, tol: "illustrative" }
+        zsX: { qty: 0.35, unit: ohm, tol: "illustrative" }
+      note: "Internal impedance |Zs| about 0.5 ohm is an illustrative value; real control transformers range from tenths of an ohm to several ohms depending on VA rating."
+  - <<: *d
+    id: ch01.u3.s3-18.device.supply-fuse
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "The control supply is protected by a supply fuse F1 in the X1 conductor. A fuse opens when enough current flows for long enough; a large fault current opens it quickly, a small overload takes much longer or never opens it."
+    body:
+      tag: F1
+      kind: fuse
+      title: "Control supply fuse F1 (X1 side)"
+      params:
+        rating: { qty: 5, unit: A, tol: "illustrative" }
+        r: { qty: 0.02, unit: ohm, tol: "illustrative" }
+        minMeltX: { qty: 1.35, unit: ratio, tol: "illustrative" }
+        i2tMelt: { qty: 1000, unit: A2s, tol: "illustrative" }
+      note: "Simple I-squared-t model. Fuse does not heat below 1.35x rating; 10 A (2x) clears in about 10 s in this model. Real time-current curves differ by fuse class."
+  - <<: *d
+    id: ch01.u3.s3-18.device.wire-and-bond
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "Control wiring has a small resistance; a loose terminal adds a large resistance or opens the circuit. The enclosure (equipment grounding conductor) is bonded to X2 at the source."
+    body:
+      tag: WIRE
+      kind: wire
+      title: "Control wire, loose-terminal and bond parameters"
+      params:
+        r: { qty: 0.01, unit: ohm, tol: "illustrative" }
+        looseR: { qty: 50000, unit: ohm, tol: "illustrative" }
+        bondR: { qty: 0.01, unit: ohm, tol: "illustrative" }
+        groundFaultBoltedR: { qty: 0.05, unit: ohm, tol: "illustrative" }
+        groundFaultHighZR: { qty: 100, unit: ohm, tol: "illustrative" }
+      note: "Bolted ground-fault path resistance 0.05 ohm vs a 100 ohm high-impedance fault; the second never reaches the fuse's melt current."
+  - <<: *d
+    id: ch01.u3.s3-1.device.contact-block
+    book: { chapter: 1, unit: 3, section: "3.1", page: 23, pageStatus: toc-unverified, figure: null }
+    claim: "A closed contact has a resistance of a few milliohms; an open contact is a break in the circuit."
+    body:
+      tag: CONTACT
+      kind: contact
+      title: "Generic contact block"
+      params:
+        rClosed: { qty: 0.005, unit: ohm, tol: "illustrative" }
+        highRFaultR: { qty: 2000, unit: ohm, tol: "illustrative" }
+      note: "Closed resistance range 2-20 milliohm typical for new pilot-device contacts."
+  - <<: *d
+    id: ch01.u3.s3-2.device.cr1
+    book: { chapter: 1, unit: 3, section: "3.2", page: 24, pageStatus: toc-unverified, figure: null }
+    claim: "A 120 V control relay coil draws much more current (inrush) while its armature is open than after the armature seals in. Its guaranteed-operate band is a rating, not the exact pickup point."
+    body:
+      tag: CR1
+      kind: relay
+      title: "Control relay CR1 (2 NO + 2 NC)"
+      contacts: { NO: 2, NC: 2 }
+      params:
+        rated: { qty: 120, unit: V, tol: "±0" }
+        inrushVA: { qty: 70, unit: VA, tol: "typical 25-90" }
+        inrushPF: { qty: 0.6, unit: pf, tol: "typical 0.4-0.8" }
+        sealedVA: { qty: 10, unit: VA, tol: "typical 4-15" }
+        sealedPF: { qty: 0.3, unit: pf, tol: "typical 0.25-0.5" }
+        dcR: { qty: 350, unit: ohm, tol: "typical 100-700" }
+        guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
+        guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
+        simPickupPct: { qty: 75, unit: pct, tol: "typical 60-85" }
+        simDropoutPct: { qty: 50, unit: pct, tol: "typical 30-60" }
+      note: "Simulator pickup/dropout are separate from the guaranteed-operate band and are typical values only; nothing is graded on them."
+  - <<: *d
+    id: ch01.u3.s3-14.device.tr1
+    book: { chapter: 1, unit: 3, section: "3.14", page: 35, pageStatus: toc-unverified, figure: null }
+    claim: "A pneumatic on-delay timing relay is driven by its own coil; its timed contacts change state after the preset once the coil has stayed energized, and reset if the coil drops first."
+    body:
+      tag: TR1
+      kind: timer
+      title: "Pneumatic on-delay timer TR1 (NOTC/NCTO)"
+      params:
+        rated: { qty: 120, unit: V, tol: "±0" }
+        inrushVA: { qty: 30, unit: VA, tol: "typical 15-50" }
+        inrushPF: { qty: 0.6, unit: pf, tol: "typical" }
+        sealedVA: { qty: 7, unit: VA, tol: "typical 3-10" }
+        sealedPF: { qty: 0.3, unit: pf, tol: "typical" }
+        dcR: { qty: 500, unit: ohm, tol: "typical 200-900" }
+        guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
+        guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
+        simPickupPct: { qty: 75, unit: pct, tol: "typical" }
+        simDropoutPct: { qty: 50, unit: pct, tol: "typical" }
+        presetS: { qty: 5, unit: s, tol: "setting" }
+        repeatAccuracyPct: { qty: 10, unit: pct, tol: "typical pneumatic 5-15" }
+  - <<: *d
+    id: ch01.u3.s3-14.device.tr2
+    book: { chapter: 1, unit: 3, section: "3.14", page: 35, pageStatus: toc-unverified, figure: null }
+    claim: "A pneumatic off-delay timing relay changes its timed contacts immediately when the coil energizes and returns them after the preset once the coil de-energizes; re-energizing during timing resets it."
+    body:
+      tag: TR2
+      kind: timer
+      title: "Pneumatic off-delay timer TR2 (NOTO/NCTC)"
+      params:
+        rated: { qty: 120, unit: V, tol: "±0" }
+        inrushVA: { qty: 30, unit: VA, tol: "typical 15-50" }
+        inrushPF: { qty: 0.6, unit: pf, tol: "typical" }
+        sealedVA: { qty: 7, unit: VA, tol: "typical 3-10" }
+        sealedPF: { qty: 0.3, unit: pf, tol: "typical" }
+        dcR: { qty: 500, unit: ohm, tol: "typical 200-900" }
+        guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
+        guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
+        simPickupPct: { qty: 75, unit: pct, tol: "typical" }
+        simDropoutPct: { qty: 50, unit: pct, tol: "typical" }
+        presetS: { qty: 5, unit: s, tol: "setting" }
+        repeatAccuracyPct: { qty: 10, unit: pct, tol: "typical pneumatic 5-15" }
+  - <<: *d
+    id: ch01.u3.s3-16.device.td3
+    book: { chapter: 1, unit: 3, section: "3.16", page: 36, pageStatus: toc-unverified, figure: null }
+    claim: "A solid-state on-delay timer with no separate trigger starts timing when its supply is applied."
+    body:
+      tag: TD3
+      kind: timer
+      title: "Solid-state on-delay timer TD3 (supply-triggered)"
+      params:
+        rated: { qty: 120, unit: V, tol: "±0" }
+        inrushVA: { qty: 1.5, unit: VA, tol: "typical 0.5-3" }
+        inrushPF: { qty: 0.7, unit: pf, tol: "typical" }
+        sealedVA: { qty: 1.5, unit: VA, tol: "typical 0.5-3" }
+        sealedPF: { qty: 0.7, unit: pf, tol: "typical" }
+        dcR: { qty: 12000, unit: ohm, tol: "typical 5k-30k" }
+        guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
+        guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
+        simPickupPct: { qty: 70, unit: pct, tol: "typical" }
+        simDropoutPct: { qty: 50, unit: pct, tol: "typical" }
+        presetS: { qty: 3, unit: s, tol: "setting" }
+        repeatAccuracyPct: { qty: 1, unit: pct, tol: "typical solid-state 0.5-2" }
+  - <<: *d
+    id: ch01.u3.s3-16.device.td4
+    book: { chapter: 1, unit: 3, section: "3.16", page: 36, pageStatus: toc-unverified, figure: null }
+    claim: "A solid-state off-delay timer needs a constant supply plus a separate trigger input. Timing starts when the trigger is removed; if the supply is lost the output drops immediately."
+    body:
+      tag: TD4
+      kind: timer
+      title: "Solid-state off-delay timer TD4 (constant supply + trigger)"
+      params:
+        rated: { qty: 120, unit: V, tol: "±0" }
+        inrushVA: { qty: 1.5, unit: VA, tol: "typical 0.5-3" }
+        inrushPF: { qty: 0.7, unit: pf, tol: "typical" }
+        sealedVA: { qty: 1.5, unit: VA, tol: "typical 0.5-3" }
+        sealedPF: { qty: 0.7, unit: pf, tol: "typical" }
+        dcR: { qty: 12000, unit: ohm, tol: "typical 5k-30k" }
+        guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
+        guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
+        simPickupPct: { qty: 70, unit: pct, tol: "typical" }
+        simDropoutPct: { qty: 50, unit: pct, tol: "typical" }
+        presetS: { qty: 3, unit: s, tol: "setting" }
+        repeatAccuracyPct: { qty: 1, unit: pct, tol: "typical solid-state 0.5-2" }
+  - <<: *d
+    id: ch01.u3.s3-11.device.sol1
+    book: { chapter: 1, unit: 3, section: "3.11", page: 31, pageStatus: toc-unverified, figure: null }
+    claim: "A solenoid valve operator is a coil load: like a relay coil it draws more current while its plunger is out than after it seats."
+    body:
+      tag: SOL1
+      kind: solenoid
+      title: "Solenoid valve SOL1 (120 V coil)"
+      params:
+        rated: { qty: 120, unit: V, tol: "±0" }
+        inrushVA: { qty: 40, unit: VA, tol: "typical 20-80" }
+        inrushPF: { qty: 0.5, unit: pf, tol: "typical" }
+        sealedVA: { qty: 8, unit: VA, tol: "typical 4-15" }
+        sealedPF: { qty: 0.3, unit: pf, tol: "typical" }
+        dcR: { qty: 400, unit: ohm, tol: "typical 150-900" }
+        guaranteedLowPct: { qty: 85, unit: pct, tol: "rating" }
+        guaranteedHighPct: { qty: 110, unit: pct, tol: "rating" }
+        simPickupPct: { qty: 75, unit: pct, tol: "typical" }
+        simDropoutPct: { qty: 50, unit: pct, tol: "typical" }
+  - <<: *d
+    id: ch01.u3.s3-10.device.led-pilot
+    book: { chapter: 1, unit: 3, section: "3.10", page: 29, pageStatus: toc-unverified, figure: null }
+    claim: "LED pilot lights are the default in new installations. They draw only a few milliamps and are nonlinear: they conduct only above a small threshold voltage and read differently with the ohmmeter probes reversed."
+    body:
+      tag: LED
+      kind: led
+      title: "120 V LED pilot light"
+      params:
+        rLamp: { qty: 12000, unit: ohm, tol: "typical 8k-20k" }
+        vOnRms: { qty: 3, unit: V, tol: "illustrative" }
+        vf: { qty: 1.8, unit: V, tol: "illustrative" }
+        litI: { qty: 0.002, unit: A, tol: "illustrative" }
+      note: "About 10 mA at 120 V. Real LED pilot lights vary by manufacturer; some read OL both ways on an ohmmeter."
+  - <<: *d
+    id: ch01.u3.s3-10.device.incandescent-pilot
+    book: { chapter: 1, unit: 3, section: "3.10", page: 29, pageStatus: toc-unverified, figure: null }
+    claim: "An incandescent lamp has a much lower resistance cold than hot (roughly one-tenth)."
+    body:
+      tag: LAMP
+      kind: lamp
+      title: "Incandescent pilot lamp (optional)"
+      params:
+        hotR: { qty: 2400, unit: ohm, tol: "typical" }
+        coldFactor: { qty: 10, unit: ratio, tol: "typical about 10" }
+        ratedV: { qty: 120, unit: V, tol: "±0" }
+  - <<: *d
+    id: ch01.u3.s3-7.device.px1
+    book: { chapter: 1, unit: 3, section: "3.7", page: 28, pageStatus: toc-unverified, figure: null }
+    claim: "A two-wire proximity sensor passes a small leakage current when off; that leakage can hold a high-impedance load such as a small relay or LED on."
+    body:
+      tag: PX1
+      kind: prox
+      title: "Two-wire proximity sensor (optional)"
+      params:
+        rLeak: { qty: 70000, unit: ohm, tol: "typical 1-3 mA at 120 V" }
+        rOn: { qty: 10, unit: ohm, tol: "illustrative" }
+  - <<: *d
+    id: ch01.u3.s3-4.device.process-tank
+    book: { chapter: 1, unit: 3, section: "3.4", page: 26, pageStatus: toc-unverified, figure: null }
+    claim: "The tank level process model drives the float switch: filling raises the level and the float switch actuates at its set level."
+    basis: illustrative
+    body:
+      tag: TANK
+      kind: process
+      title: "Tank level (first-order, illustrative)"
+      params:
+        initial: { qty: 20, unit: pct, tol: "illustrative" }
+        fillTarget: { qty: 100, unit: pct, tol: "illustrative" }
+        drainTarget: { qty: 0, unit: pct, tol: "illustrative" }
+        tau: { qty: 40, unit: s, tol: "illustrative" }
+        actuate: { qty: 60, unit: pct, tol: "illustrative" }
+        release: { qty: 55, unit: pct, tol: "illustrative" }
+  - <<: *d
+    id: ch01.u3.s3-9.device.process-air
+    book: { chapter: 1, unit: 3, section: "3.9", page: 28, pageStatus: toc-unverified, figure: null }
+    claim: "The air-tank pressure process model drives the pressure switch, which has a cut-in and cut-out setting with a differential."
+    basis: illustrative
+    body:
+      tag: AIR
+      kind: process
+      title: "Air receiver pressure (first-order, illustrative)"
+      params:
+        initial: { qty: 60, unit: psi, tol: "illustrative" }
+        fillTarget: { qty: 125, unit: psi, tol: "illustrative" }
+        drainTarget: { qty: 0, unit: psi, tol: "illustrative" }
+        tau: { qty: 60, unit: s, tol: "illustrative" }
+        actuate: { qty: 100, unit: psi, tol: "illustrative" }
+        release: { qty: 80, unit: psi, tol: "illustrative" }
+  - <<: *d
+    id: ch01.u3.s3-13.device.process-heat
+    book: { chapter: 1, unit: 3, section: "3.13", page: 34, pageStatus: toc-unverified, figure: null }
+    claim: "The temperature process model drives the temperature switch, which actuates at its setpoint and resets below it by a differential."
+    basis: illustrative
+    body:
+      tag: HEAT
+      kind: process
+      title: "Process temperature (first-order, illustrative)"
+      params:
+        initial: { qty: 70, unit: degF, tol: "illustrative" }
+        fillTarget: { qty: 220, unit: degF, tol: "illustrative" }
+        drainTarget: { qty: 70, unit: degF, tol: "illustrative" }
+        tau: { qty: 120, unit: s, tol: "illustrative" }
+        actuate: { qty: 180, unit: degF, tol: "illustrative" }
+        release: { qty: 170, unit: degF, tol: "illustrative" }
+  - <<: *d
+    id: ch01.u3.s3-18.device.coupling
+    book: { chapter: 1, unit: 3, section: "3.18", page: 37, pageStatus: toc-unverified, figure: null }
+    claim: "Parallel conductors in the same raceway have a small capacitance between them; a de-energized, open-ended conductor next to a live one can read a ghost voltage on a high-impedance meter that collapses on a low-impedance meter. Magnitudes here are illustrative."
+    basis: illustrative
+    body:
+      tag: COUPLING
+      kind: coupling
+      title: "Conductor-to-conductor coupling (illustrative)"
+      params:
+        pFperFt: { qty: 30, unit: pF/ft, tol: "illustrative" }
+        runFt: { qty: 100, unit: ft, tol: "illustrative" }
+  - <<: *d
+    id: ch01.u1.s1-2.device.meter
+    book: { chapter: 1, unit: 1, section: "1.2", page: 8, pageStatus: toc-unverified, figure: null }
+    claim: "A digital multimeter is part of the circuit it measures: a high-impedance voltage input (about 10 megohm) barely loads the circuit, a low-impedance mode loads it much more, and resistance mode injects a small test current so it must only be used on de-energized circuits."
+    body:
+      tag: METER
+      kind: meter
+      title: "Digital multimeter (generic CAT III 600 V)"
+      params:
+        hiZ: { qty: 10000000, unit: ohm, tol: "typical" }
+        loZ: { qty: 3000, unit: ohm, tol: "typical 2k-5k" }
+        ohmSourceV: { qty: 3, unit: V, tol: "illustrative" }
+        ohmSourceR: { qty: 1000, unit: ohm, tol: "illustrative" }
+        contBeepOhm: { qty: 50, unit: ohm, tol: "typical" }
+        energizedV: { qty: 5, unit: V, tol: "illustrative" }

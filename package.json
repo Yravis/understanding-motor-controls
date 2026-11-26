@@ -1,0 +1,27 @@
+{
+  "name": "understanding-motor-controls",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173",
+    "test": "vitest run",
+    "test:e2e": "node e2e/phone.mjs",
+    "icons": "node scripts/gen-icons.mjs",
+    "review:seed": "tsx scripts/review-seed.ts",
+    "review:sheets": "tsx scripts/review-sheets.ts",
+    "review:queue": "tsx scripts/review-queue.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.11",
+    "playwright-core": "^1.65.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.4.0",
+    "vitest": "^5.1.2",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
+  }
+}

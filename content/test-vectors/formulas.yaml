@@ -1,0 +1,73 @@
+# Hand-worked formula vectors. Every number is derived step by step; the tests recompute and compare.
+# Coil values are ILLUSTRATIVE (basis: illustrative); no datasheet is available. Source: arithmetic only.
+vectors:
+  - id: sealed-current
+    kind: currentFromVA
+    inputs: { va: 10, volts: 120 }
+    expected: { value: 0.083333, tol: 1e-5, unit: A }
+    steps:
+      - "I = S / V"
+      - "I = 10 VA / 120 V = 0.083333 A"
+  - id: sealed-impedance
+    kind: zMagFromVA
+    inputs: { va: 10, volts: 120 }
+    expected: { value: 1440, tol: 1e-9, unit: ohm }
+    steps:
+      - "|Z| = V^2 / S"
+      - "|Z| = 120^2 / 10 = 14400 / 10 = 1440 ohm"
+  - id: inrush-impedance
+    kind: zMagFromVA
+    inputs: { va: 70, volts: 120 }
+    expected: { value: 205.7143, tol: 1e-3, unit: ohm }
+    steps:
+      - "|Z_inrush| = 120^2 / 70 = 14400 / 70 = 205.714 ohm"
+      - "At PF 0.6 the angle is acos(0.6) = 53.13 degrees, so Z = 123.43 + j164.57 ohm"
+  - id: meter-across-open-contact
+    kind: meterAcrossOpenContact
+    inputs: { volts: 120, zm: 10000000, va: 70, pf: 0.6 }
+    expected: { value: 119.9985, tol: 1e-4, unit: V, display: "120.0", meterCurrentA: 1.2e-5 }
+    steps:
+      - "Coil is dropped out (contact open), so the inrush impedance applies: Z = 205.714 at 53.13 degrees = 123.43 + j164.57 ohm"
+      - "Meter (10 MOhm) in series with the coil: Zt = 10,000,123.43 + j164.57; |Zt| = 10,000,123.43 ohm (the imaginary part adds about 1.4e-6 ohm)"
+      - "Meter reading = 120 * 10,000,000 / 10,000,123.43 = 119.99852 V, shown as 120.0 V"
+      - "Meter current = 120 / 1.00001e7 = 12.0 microamp, far below any pickup current, so the coil stays dropped out"
+  - id: sag-at-inrush
+    kind: coilVoltageBehindSource
+    inputs: { volts: 120, zsR: 5, zsX: 5, va: 70, pf: 0.6 }
+    expected: { value: 116.05, tol: 0.05, unit: V, pct: 96.7 }
+    steps:
+      - "Zs = 5 + j5 ohm. Zc = 123.43 + j164.57 ohm"
+      - "Zs + Zc = 128.43 + j169.57; |Zs+Zc| = sqrt(128.43^2 + 169.57^2) = sqrt(16494.6 + 28753.8) = 212.72 ohm"
+      - "Vcoil = 120 * 205.714 / 212.72 = 116.05 V"
+    note: "At 96.7 percent of rated the coil voltage is above a typical 75 percent simulated pickup; the test also checks at/below/above cases with a weaker source."
+  - id: voltage-divider
+    kind: voltageDivider
+    inputs: { vin: 120, z1: 1000, z2: 3000 }
+    expected: { value: 90, tol: 1e-9, unit: V }
+    steps:
+      - "V2 = Vin * R2 / (R1 + R2) = 120 * 3000 / 4000 = 90 V"
+  - id: series-impedance
+    kind: seriesR
+    inputs: { r: [100, 220, 330] }
+    expected: { value: 650, tol: 1e-9, unit: ohm }
+    steps: ["Rs = 100 + 220 + 330 = 650 ohm"]
+  - id: parallel-impedance
+    kind: parallelR
+    inputs: { r: [100, 100, 50] }
+    expected: { value: 25, tol: 1e-9, unit: ohm }
+    steps: ["1/Rp = 1/100 + 1/100 + 1/50 = 0.01 + 0.01 + 0.02 = 0.04", "Rp = 25 ohm"]
+  - id: coupling-divider-hiz
+    kind: couplingDivider
+    inputs: { cpF: 3000, f: 60, volts: 120, zm: 10000000 }
+    expected: { value: 119.53, tol: 0.05, unit: V }
+    steps:
+      - "Coupling C = 30 pF/ft * 100 ft = 3000 pF = 3.0e-9 F (illustrative)"
+      - "Xc = 1 / (2 pi 60 3.0e-9) = 884,194 ohm"
+      - "Meter 10 MOhm across the floating conductor to ground: V = 120 * 10e6 / |10e6 - j884194| = 120 * 10e6 / 10.0390e6 = 119.53 V (ghost voltage)"
+  - id: coupling-divider-loz
+    kind: couplingDivider
+    inputs: { cpF: 3000, f: 60, volts: 120, zm: 3000 }
+    expected: { value: 0.407, tol: 0.01, unit: V }
+    steps:
+      - "Same Xc = 884,194 ohm; meter 3 kOhm"
+      - "V = 120 * 3000 / |3000 - j884194| = 120 * 3000 / 884199 = 0.407 V: the ghost voltage collapses on LoZ"
