@@ -2,6 +2,7 @@
 // Tap a terminal to place the red probe, then another for the black probe. Pinch-zoom / pan on the wrapper.
 import { s, h } from './dom';
 import type { Bucket } from '../model/bucket';
+import { WARN_TEXT, WARN_X, WARN_Y, WARN_RECT_W, WARN_LINE, warningBannerLayout } from './svgtext';
 
 export interface PhysOpts { red?: string | null; black?: string | null; highlightNet?: string | null; onTerminal: (nodeId: string) => void; onDevice?: (tag: string) => void; doorOpen: boolean }
 // Terminal hit areas are >= 47 x 47 SVG units so they stay >= 44 CSS px at a 360 px wide phone (scale ~0.95).
@@ -15,20 +16,25 @@ export function renderPhysical(b: Bucket, o: PhysOpts): SVGSVGElement {
   for (let i = 0; i < devs.length; i += COLS) rows.push(devs.slice(i, i + COLS));
   const rowH = rows.map((r) => Math.max(...r.map(cellH)) + 12);
   const panelH = rowH.reduce((a, v) => a + v, 0) + 16;
+  const warn = warningBannerLayout();
   const tbRows = Math.ceil(b.layout.tbNets.length / 6);
-  const tbY = 70 + panelH + 20, ch2Y = tbY + tbRows * 54 + 30;
+  const tbY = warn.panelTop + panelH + 20, ch2Y = tbY + tbRows * 54 + 30;
   const H = ch2Y + 70;
   const svg = s('svg', { viewBox: `0 0 360 ${H}`, class: 'phys', role: 'img', 'aria-label': 'Physical bucket' });
   svg.append(s('rect', { x: 4, y: 4, width: 352, height: H - 8, rx: 8, class: 'door-frame' }));
   svg.append(s('text', { x: 14, y: 24, class: 'lbl' }, 'BUCKET 1A · control section · door ' + (o.doorOpen ? 'OPEN' : 'CLOSED')));
-  svg.append(s('rect', { x: 10, y: 34, width: 340, height: 24, rx: 4, class: 'warn' }));
-  svg.append(s('text', { x: 16, y: 50, class: 'tiny' }, 'WARNING: orange wires 91/92 (remote interlock) stay live when this bucket is off'));
+  const banner = s('g', { class: 'warn-banner', 'data-warning': WARN_TEXT });
+  banner.append(s('rect', { x: WARN_X, y: WARN_Y, width: WARN_RECT_W, height: warn.height, rx: 4, class: 'warn' }));
+  const wt = s('text', { x: WARN_X + 6, y: WARN_Y + 14, class: 'warn-label' });
+  warn.lines.forEach((line, i) => wt.append(s('tspan', { x: WARN_X + 6, dy: i === 0 ? 0 : WARN_LINE }, line)));
+  banner.append(wt);
+  svg.append(banner);
   if (!o.doorOpen) {
-    svg.append(s('rect', { x: 10, y: 66, width: 340, height: panelH + 120, rx: 6, class: 'door' }));
-    svg.append(s('text', { x: 180, y: 130, 'text-anchor': 'middle', class: 'lbl' }, 'Door closed. Turn the handle OFF, then open the door.'));
+    svg.append(s('rect', { x: 10, y: warn.panelTop - 4, width: 340, height: panelH + 120, rx: 6, class: 'door' }));
+    svg.append(s('text', { x: 180, y: warn.panelTop + 60, 'text-anchor': 'middle', class: 'lbl' }, 'Door closed. Turn the handle OFF, then open the door.'));
     return svg;
   }
-  let y = 70;
+  let y = warn.panelTop;
   rows.forEach((row, ri) => {
     row.forEach((d, ci) => {
       const x = 12 + ci * (CW + 4);

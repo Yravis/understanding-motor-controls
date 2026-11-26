@@ -43,7 +43,7 @@ svg { width:100%; height:auto; display:block } .schem-wrap { overflow-x:auto; ba
 svg text { fill:var(--fg); font:13px sans-serif } svg .tiny { font-size:10px; fill:var(--mute) } svg .lbl { font-weight:600 } svg .pinlbl { font-size:11px; font-weight:700 }
 svg .rail { stroke:var(--fg); stroke-width:3 } svg .wire, svg .sym { stroke:var(--fg); stroke-width:1.6; fill:none } svg .glow { fill:var(--glow) } svg .wn { font-size:12px; fill:var(--pri); font-weight:700 } svg .hl, svg .hl .pin { stroke:var(--pri); stroke-width:3 } svg .wn.hl { text-decoration:underline }
 svg .devbox { fill:var(--card); stroke:var(--line) } svg .dev.foreign .devbox { stroke:#e87d00; stroke-width:3 } svg .dev.on .devbox { fill:#fff3c4 } svg .pin { fill:#c8d0d8; stroke:var(--fg) } svg .term.red .pin { fill:#d62828 } svg .term.black .pin { fill:#111 }
-svg .tbbox { fill:#d9d2c0; stroke:var(--fg) } svg .tb.foreign .tbbox { fill:#f4a33a } svg .ch2box { fill:#bbb; stroke:#888; opacity:.55 } svg .door, svg .door-frame { fill:none; stroke:var(--line) } svg .warn { fill:#f4a33a } svg .warn + text { fill:#000 }
+svg .tbbox { fill:#d9d2c0; stroke:var(--fg) } svg .tb.foreign .tbbox { fill:#f4a33a } svg .ch2box { fill:#bbb; stroke:#888; opacity:.55 } svg .door, svg .door-frame { fill:none; stroke:var(--line) } svg .warn { fill:#f4a33a } svg .warn-label { fill:#000; font-size:10px; font-weight:700 }
 svg .foreign { fill:#e87d00 } .tap { cursor:pointer }
 .ordered li { margin:6px 0 }
 .bucket-screen { padding-bottom: 16px }

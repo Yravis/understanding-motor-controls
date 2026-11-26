@@ -77,6 +77,17 @@ export function drawSymbol(key: string, x: number, y: number, designation = ''):
 /** Symbol drawings reach about 25 units above/below their centre (mushroom cap, timer arrows, NOTC labels, float)
  *  and 18 units left/right (leads). The figure scale and viewBox leave room for all of it plus padding;
  *  tests/e2e/phone.mjs checks every symbol's real bounding box fits inside the figure. */
+/** How far a symbol extends above its centre, in SVG units (used to place OPEN/CLOSED clear of the drawing). */
+export function symbolTopExtent(key: string): number {
+  if (key === 'pb-nc-mushroom') return 24; // cap arc ry 7 sitting on the stem at y-17
+  if (key.startsWith('pb-')) return 17;
+  if (key.startsWith('timer-')) return 21; // delayed-action arrow
+  if (key === 'contact-no' || key === 'contact-nc') return 9;
+  if (key === 'pilot-light') return 17;
+  if (key === 'relay-coil') return 12;
+  if (key.endsWith('-no')) return 11; // NO sensing blade
+  return 12;
+}
 export const FIG = { w: 120, h: 84, scale: 1.45 } as const;
 /** Stand-alone symbol picture for lesson cards and identify-symbol questions. */
 export function symbolFigure(key: string, designation = ''): SVGSVGElement {

@@ -3,7 +3,9 @@ import { s } from './dom';
 import type { Bucket } from '../model/bucket';
 import { drawSymbol } from './symbols';
 
-const RUNG_H = 74, X1 = 30, X2 = 330, LEFT = 40;
+const RUNG_H = 80, X1 = 30, X2 = 330, LEFT = 40;
+/** Baseline of OPEN/CLOSED, above the symbol centre. Must clear the tallest contact (mushroom cap at y-24). */
+export const STATE_LABEL_DY = 34;
 export interface SchemOpts { highlightNet?: string | null; onTap?: (elementId: string) => void; onNet?: (net: string) => void }
 
 function devOf(b: Bucket, tag: string) { return b.layout.devices.find((d) => d.tag === tag); }
@@ -47,7 +49,7 @@ export function renderSchematic(b: Bucket, opts: SchemOpts = {}): SVGSVGElement 
       const closed = w.contactClosed(e);
       const hl = opts.highlightNet && [netOf(b, e.a), netOf(b, e.b)].includes(opts.highlightNet);
       const g = s('g', { class: 'tap' + (hl ? ' hl' : ''), onclick: () => opts.onTap?.(id) });
-      g.append(s('line', { x1: prevX, y1: y, x2: cx - 18, y2: y, class: 'wire' }), drawSymbol(contactSymbol(b, e), cx, y), s('text', { x: cx, y: y - 24, class: 'tiny', 'text-anchor': 'middle' }, closed ? 'CLOSED' : 'OPEN'));
+      g.append(s('line', { x1: prevX, y1: y, x2: cx - 18, y2: y, class: 'wire' }), drawSymbol(contactSymbol(b, e), cx, y), s('text', { x: cx, y: y - STATE_LABEL_DY, class: 'tiny state-lbl', 'text-anchor': 'middle', 'data-state-for': id }, closed ? 'CLOSED' : 'OPEN'));
       g.append(s('text', { x: cx, y: y + 32, class: 'lbl', 'text-anchor': 'middle' }, label(id)), s('rect', { x: cx - 22, y: y - 22, width: 44, height: 44, fill: 'transparent' }));
       const wn = netOf(b, e.b);
       g.append(s('text', { x: cx + 18, y: y + 14, class: 'wn' + (opts.highlightNet === wn ? ' hl' : ''), onclick: (ev: Event) => { ev.stopPropagation(); opts.onNet?.(wn); } }, wn.slice(1)));
