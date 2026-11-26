@@ -2,11 +2,11 @@
 entries:
   - id: ch01.u3.s3-18.device.control-supply
     hash: 4add40c523bf183c9107ea8e1d315be60d77ff00f5a217875c191a38cdb25c9c
-    status: blocked-on-source
-    severity: null
+    status: needs-fix
+    severity: minor
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). Check: |Zs| = 0.495 ohm; CR1 inrush 0.58 A sags the terminal by about 0.1-0.3 V (sheet shows 119.9 V). Plausible."
+    notes: "NEW FLAG (re-review 2026-11-26), model behavior, claim text fine. When the bucket supply is turned OFF the model removes the whole source element (world.ts: DC/ohms branch only 'if (e.on)'), which also removes the control transformer's secondary winding between X1 and X2. In a real bucket the disconnect opens the CPT primary; the secondary winding (a fraction of an ohm here, zsR 0.35 ohm) stays connected X1-X2 unless F1 is pulled or a lead is lifted. So de-energized ohms readings from any X1-side point to X2/ground should read about the winding resistance (well under 1 ohm), not the load network. The sheets show the effect: 'wire 7 to ground' 146.4 ohm healthy and 59.4 ohm with the high-impedance X1 ground fault (real: both under 1 ohm, so an ohmmeter can't find that fault without isolating the conductor), and 'START contact (released)' 246.4 ohm (real: about 100 ohm, through the winding and CR1 coil). That teaches a wrong expectation for in-circuit resistance checks, a classic apprentice trap. FIX: keep the winding resistance in the DC/ohms solve when the source is off, and model 'pull F1' or 'lift the lead' as the way to isolate a conductor for an ohms or insulation check; regenerate the sheets. General knowledge only, no datasheet opened. Note: this item's hash won't change from a model-only fix, so move it back to pending by hand when fixed."
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u3.s3-18.device.supply-fuse
@@ -38,11 +38,11 @@ entries:
     date: 2026-11-26
   - id: ch01.u3.s3-2.device.cr1
     hash: 527f30592f08523333b1a963c911c7d0ae28067853e8dd17fa0f6096873796df
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "PARAMETER INCONSISTENCY (physics): inrush 70 VA at PF 0.6 on 120 V gives |Z| = 14400/70 = 205.7 ohm and R = 205.7 x 0.6 = 123 ohm. That is smaller than dcR = 350 ohm, which is impossible: the AC resistance of a coil can't be below its DC winding resistance. Check by power: I_inrush = 70/120 = 0.583 A, and copper loss alone I2 x Rdc = 0.34 x 350 = 119 W, more than the 42 W real power and even the 70 VA apparent power. With Rdc = 350 ohm the most a 120 V coil can draw is 120/350 = 0.343 A (41 VA). Sealed is fine (|Z| = 1440 ohm, R = 432 ohm >= 350). FIX: set dcR to 120 ohm or less (e.g. 90-100 ohm; then I2R = 0.34 x 100 = 34 W <= 42 W), or reduce inrushVA to about 24 VA (14400 x 0.6 / 350 = 24.7 VA). The sheet's 'CR1 coil resistance 350.0 ohm' reading changes with it. Nothing is graded on it, but learners do see the number. Typical values, so it stays unapproved after the fix too."
+    notes: "Re-review 2026-11-26 (commit 152c8d9). Batch 1 flag RESOLVED: dcR 350 -> 100 ohm. Inrush 70 VA at PF 0.6 gives R_ac = 14400/70 x 0.6 = 123 ohm >= 100 ohm; sealed 10 VA at PF 0.3 gives 432 ohm. Sheet ohms across the coil now 100.0 ohm, consistent. Checked: R_dc <= |Z| x PF for inrush and sealed (new content test covers every coil). Device library entry, typical/illustrative values (datasheet:TBD); no datasheet opened. No source opened for this review covers the claim (textbook not available; no NEMA/IEEE/manufacturer text), so it stays unapproved (blocked-on-source, general knowledge)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -54,11 +54,11 @@ entries:
         staledOn: 2026-11-26
   - id: ch01.u3.s3-14.device.tr1
     hash: 3d4e96798ab41e2cea7d93084c19c998679a71f112e6f76f58ee4f25229c44d2
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "PARAMETER INCONSISTENCY (physics, same as CR1): inrush 30 VA at PF 0.6 gives |Z| = 480 ohm and R = 288 ohm, below dcR = 500 ohm (I = 0.25 A, so I2Rdc = 31 W, more than 30 VA). Impossible. FIX: dcR 250 ohm or less, or inrushVA 17 VA or less (14400 x 0.6 / 500 = 17.3 VA). Sealed (7 VA: R = 617 ohm) is fine."
+    notes: "Re-review 2026-11-26 (commit 152c8d9). Batch 1 flag RESOLVED: dcR 500 -> 250 ohm. Inrush 30 VA at PF 0.6 gives 288 ohm >= 250; sealed 617 ohm. Checked: R_dc <= |Z| x PF for inrush and sealed (new content test covers every coil). Device library entry, typical/illustrative values (datasheet:TBD); no datasheet opened. No source opened for this review covers the claim (textbook not available; no NEMA/IEEE/manufacturer text), so it stays unapproved (blocked-on-source, general knowledge)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -70,11 +70,11 @@ entries:
         staledOn: 2026-11-26
   - id: ch01.u3.s3-14.device.tr2
     hash: defc6ed3f1659c820ff32caf4aefea3258b81170953fc95be691d5df30ad8ec2
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "PARAMETER INCONSISTENCY (physics, same values as TR1): inrush 30 VA at PF 0.6 gives R = 288 ohm, below dcR = 500 ohm. Impossible. FIX: dcR 250 ohm or less, or inrushVA 17 VA or less."
+    notes: "Re-review 2026-11-26 (commit 152c8d9). Batch 1 flag RESOLVED: dcR 500 -> 250 ohm (same values as TR1: 288 ohm inrush, 617 ohm sealed). Checked: R_dc <= |Z| x PF for inrush and sealed (new content test covers every coil). Device library entry, typical/illustrative values (datasheet:TBD); no datasheet opened. No source opened for this review covers the claim (textbook not available; no NEMA/IEEE/manufacturer text), so it stays unapproved (blocked-on-source, general knowledge)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -86,11 +86,11 @@ entries:
         staledOn: 2026-11-26
   - id: ch01.u3.s3-16.device.td3
     hash: 45cefd286da77b392f861dcbebd31c880fabcc8afcffd7b36ac1dd60fa070713
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Device library entry, typical/illustrative values (datasheet:TBD). Simulation only; nothing graded on these numbers. No datasheet opened, so it stays unapproved (blocked-on-source). Electronic input: dcR vs inrush VA isn't a physical constraint here."
+    notes: "Re-review 2026-11-26 (commit 152c8d9). Cody's catch, missed in my batch 1 pass: 1.5 VA at PF 0.7 gives R_ac = 6720 ohm, below the old dcR 12 kohm. Now dcR 6000 ohm <= 6720 ohm (inrush = sealed). Claim (on-delay with no trigger starts timing when supply is applied) is fine. Checked: R_dc <= |Z| x PF for inrush and sealed (new content test covers every coil). Device library entry, typical/illustrative values (datasheet:TBD); no datasheet opened. No source opened for this review covers the claim (textbook not available; no NEMA/IEEE/manufacturer text), so it stays unapproved (blocked-on-source, general knowledge)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -102,11 +102,11 @@ entries:
         staledOn: 2026-11-26
   - id: ch01.u3.s3-16.device.td4
     hash: 378d563d2fc6a18fba327e91af96219f9e932240d852a3874fbb35e42503a2d9
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Claim overgeneralizes: 'A solid-state off-delay timer needs a constant supply plus a separate trigger input'. Scope it to this device: 'TD4 is a trigger-type solid-state off-delay timer: it needs...'. True off-delay solid-state timers exist that time after power removal with no trigger (see ch01.u3.s3-16.card.solid-state-timer). Typical values otherwise unremarkable for simulation (an electronic input isn't a coil, so dcR vs inrush VA isn't a physical constraint here)."
+    notes: "Re-review 2026-11-26 (commit 152c8d9). Batch 1 flag RESOLVED: claim now scoped to the trigger-type (control-signal) solid-state off-delay and mentions true off-delay models. dcR 12000 -> 6000 ohm <= 6720 ohm, same as TD3. No error found. Checked: R_dc <= |Z| x PF for inrush and sealed (new content test covers every coil). Device library entry, typical/illustrative values (datasheet:TBD); no datasheet opened. No source opened for this review covers the claim (textbook not available; no NEMA/IEEE/manufacturer text), so it stays unapproved (blocked-on-source, general knowledge)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -118,11 +118,11 @@ entries:
         staledOn: 2026-11-26
   - id: ch01.u3.s3-11.device.sol1
     hash: d91638b2e437c3a21411e4d006f1de3ee729e7854a7e306bbdc07e66f0fb9c0b
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "PARAMETER INCONSISTENCY (physics): inrush 40 VA at PF 0.5 gives |Z| = 360 ohm and R = 180 ohm, below dcR = 400 ohm (I = 0.333 A, so I2Rdc = 44 W, more than 40 VA). Impossible. FIX: dcR 170 ohm or less, or inrushVA 18 VA or less (14400 x 0.5 / 400 = 18 VA). Sealed (8 VA: R = 540 ohm) is fine. This also changes the healthy wire7-to-ground ohms reading (387 ohm today is mostly SOL1's 400 ohm in parallel with TD4's 12 kohm)."
+    notes: "Re-review 2026-11-26 (commit 152c8d9). Batch 1 flag RESOLVED: dcR 400 -> 150 ohm. Inrush 40 VA at PF 0.5 gives 180 ohm >= 150; sealed 8 VA at PF 0.3 gives 540 ohm. Healthy wire-7-to-ground ohms now 146.4 ohm (but see the control-supply note: with the supply off the model also drops the CPT secondary winding, so that ohms value is itself unrealistic). Checked: R_dc <= |Z| x PF for inrush and sealed (new content test covers every coil). Device library entry, typical/illustrative values (datasheet:TBD); no datasheet opened. No source opened for this review covers the claim (textbook not available; no NEMA/IEEE/manufacturer text), so it stays unapproved (blocked-on-source, general knowledge)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -134,11 +134,11 @@ entries:
         staledOn: 2026-11-26
   - id: ch01.u3.s3-10.device.led-pilot
     hash: 35b9f07d0c0c53e2f7e94b9ff884d387a0e6db7028de73912a05115c171f7a67
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "MODEL ERROR (major): the engine treats an LED pilot that is off as a perfect open circuit (world.ts acBranches only adds the LED branch while ledOn). So on the default 10 Mohm VAC range, an open contact in series with an LED pilot reads 0.0 V 'floating' instead of about source voltage. Model output: idle CR1:1-CR1:2 (CR1 NO1 feeding PL1) = 0.0 (floating) and FS1:1-FS1:2 = 0.0 (floating); LoZ reads 24.0 V on the same points. The same points read 119.9 V with incandescent lamps (led:false), which is correct. A real 120 V LED pilot (series resistor/rectifier/driver) still conducts a little through a 10 Mohm meter, so the meter reads close to line voltage across the open contact. This contradicts what Day 3 teaches (ch01.u3.s3-1.card.voltage-across-contacts / question.voltage-across-open-contact) and the device-bench and relay-bench activities, and it shows up in every fault sheet (e.g. open-coil, high-resistance-contact and open-wire all show 'across CR1 NO contact 0.0 (floating)'). FIX: give the off-state LED a high but finite impedance (e.g. a few hundred kohm to a few Mohm, or the off-branch of a diode+resistor model) so a 10 Mohm meter reads near source voltage and LoZ (3 kohm) collapses it, then regenerate the sheets. Also fix these minor inconsistencies in this entry: (1) note says 'About 10 mA at 120 V' (120 V / 12 kohm = 10 mA) but the claim says 'only a few milliamps' and litI = 2 mA; make them agree (10 mA and up is typical of many 22 mm 120 V LED units; check a datasheet). (2) 'LED pilot lights are the default in new installations' overreaches; say 'are now the most common choice'. (3) 'read differently with the ohmmeter probes reversed' is stated as fact, but many 120 V LED units have bridge rectifiers or drivers and read OL both ways (the note itself says so). Hedge the claim to match: 'may read differently, or OL both ways, depending on the internal circuit'."
+    notes: "Re-review 2026-11-26 (commit 152c8d9). Batch 1 MAJOR flag RESOLVED. The off LED is now a finite 470 kohm (world.ts acBranches). I re-ran the model: idle CR1:1-CR1:2 and FS1:1-FS1:2 read 114.6 V on 10 Mohm (hand divider 120 x 10M/10.47M = 114.6 V; a real unit would read a little higher, about 115-119 V, either way 'near line') and 24.0 V on LoZ. Current figures now agree (10 mA lit = 120 V/12 kohm; litI 2 mA labelled as the visibly-lit threshold); 'most common choice' and the hedged ohmmeter wording are fine. LoZ PUSHBACK ACCEPTED: my batch 1 wording 'LoZ collapses it' implied near 0 V. Cody is right: with 3 kohm in series the module sees about 96 V, conducts about 8 mA (above litI) and lights, and the meter reads about 120 x 3k/15k = 24 V. That is physically reasonable: a real 120 V LED pilot (series resistor, capacitive dropper or driver with an LED that conducts above 2-3 V) behaves like roughly 10-15 kohm once lit, so a 3 kohm LoZ meter reads tens of volts (about 20-40 V depending on the module; constant-current drivers read toward the high end) and the lamp glows during the test. Tooling notes (not content errors): (1) the meter restores lamp state after every reading, so the UI never shows PL1 glowing while LoZ probes are on, though the note says the meter current lights it; consider showing it lit during a LoZ reading. (2) On the 10 Mohm range the LED solve does not converge: the off state puts 5.4 V across the 470 kohm (above vOnRms 3 V) so it flips on, the on state drops it to 0.14 V so it flips off; the anti-ping-pong guard forces it off after 5 flips and the loop runs all 40 iterations. The answer is right but only via the guard; base the off->on decision on the on-state solution (or on current) instead of the off-state voltage. Device library entry, typical/illustrative values (datasheet:TBD); no datasheet opened. No source opened for this review covers the claim (textbook not available; no NEMA/IEEE/manufacturer text), so it stays unapproved (blocked-on-source, general knowledge)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -276,12 +276,12 @@ entries:
     date: 2026-11-26
   - id: ch01.u3.s3-18.fault.contact-on-x2-side
     hash: e6944a06112f34550a64f78faea3c1a4f70c41505e6a7a7c923790e99a636f55
-    status: pending
-    severity: null
+    status: needs-fix
+    severity: minor
     checkedAgainst:
       - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
     basis: source
-    notes: "Physics is right: with CR1 NO1 moved to the X2 side of PL1, the PL1 terminals and the contact's line side sit at X1 potential while the contact is open, and behavior is unchanged (behaviorSame true). CITATION ISSUE: this item cites NEC 430.74 as the reason it's a defect, but 430.74 is about a ground fault starting the motor or bypassing shutdown devices. Here the load is an indicating lamp, so a ground fault between PL1 and the contact would only light PL1 falsely. That's a wiring-practice and false-indication problem, not a 430.74 violation as written. SUGGESTED FIX: either (a) keep the lamp fault but describe it as breaking the shop's contacts-on-X1 practice (false 'CR1 PICKED UP' indication on a ground fault) and drop or soften the 430.74 cite, or (b) put the miswire on a coil rung (for example a timer coil or CR1 coil with its switching on the X2 leg) so it really is a 430.74 hazard. Also: the KEY_POINTS table in the sheet shows no differences for this fault, so add a probe (PL1:1 to G: 0 V healthy vs 120 V faulted) so the reviewer can see the expected finding."
+    notes: "Re-review 2026-11-26. Batch 1 citation issue largely RESOLVED: the miswire is now on a coil rung (LS1, the safety stop for SOL1, between the SOL1 coil and X2), so a ground fault on wire 11 with LS1 open energizes SOL1 and bypasses LS1, which is the hazard 430.74 clause (2) describes. Sheet checks: idle LS1:2-G 120 -> 0 V; LS1 open SOL1:C1-G and C2-G 0 -> 120 V; SOL1 stays de-energized; behavior unchanged. TWO WORDING FIXES (claim and cause): (1) 'the SOL1 coil terminals now sit at X1 potential' is only true while LS1 is open; with LS1 closed (idle) the sheet shows SOL1:C2-G = 0 V, so a learner measuring would contradict the text. FIX: 'while LS1 is open, both SOL1 coil terminals sit at X1 potential'. (2) 430.74 is written for motor control circuits ('will not start the motor'), and SOL1 is a valve, not a motor. FIX: 'the arrangement NEC 2026 430.74 prohibits in a motor control circuit: a ground fault must not bypass a safety shutdown device' (or move the miswire to the CR1 or TR1 coil rung if you want a literal 430.74 case)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -367,13 +367,13 @@ entries:
     date: 2026-11-26
   - id: ch01.u1.s1-2.activity.loto-drill
     hash: 10627509bfb54ceb0b48622d83e7257f9ab22bb4a8c20a3f6b34ac9a4740c779
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst:
       - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
       - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
     basis: general-knowledge
-    notes: "Still blocked-on-source: needs the NFPA 70E 2024 text (test for absence of voltage, 120.6 per the process doc; confirm the number against the text). Checked what I could against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(B) (both opened 2026-11-26): no error found. OSHA requires checking the meter before and after only over 600 V; the app follows 70E (all voltages), which is the stricter and correct choice for this course. Suggestion (not an error): 1910.333(b)(2)(iv)(A) also requires a qualified person to operate the equipment controls or otherwise verify the equipment cannot be restarted (the 'try' step). Consider adding it to the verification step of the example sequence in a later revision. Sequence and the absence-of-voltage combinations (X1-X2, X1-G, X2-G, 91-92, 91-G, 92-G, meter re-verified) are right; continuity only on the de-energized bench is right."
+    notes: "Re-review 2026-11-26. Still blocked-on-source: needs the NFPA 70E 2024 text (absence-of-voltage test). Checked again against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(A)/(B) (osha.gov, opened 2026-11-26): the new step 6 'Try START to verify the bucket cannot restart' matches (iv)(A) ('operate the equipment operating controls or otherwise verify that the equipment cannot be restarted') and sits correctly after lock/tag and stored energy and before the meter test ((iv)(B)). No error found. The rest of my batch 1 note still applies (70E all-voltage live-dead-live is the stricter, correct choice; continuity only on the de-energized bench)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -553,13 +553,13 @@ entries:
     date: 2026-11-26
   - id: ch01.u1.s1-2.card.loto-live-dead-live
     hash: d5bbdba149172f888c80a7b996ef4c21e411939a1c42098ec94ad5da3b76a1cc
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst:
-      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
       - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
+      - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
     basis: general-knowledge
-    notes: "Still blocked-on-source: needs the NFPA 70E 2024 text (test for absence of voltage, 120.6 per the process doc; confirm the number against the text). Checked what I could against OSHA 1910.147(d) and 1910.333(b)(2)(iv)(B) (both opened 2026-11-26): no error found. OSHA requires checking the meter before and after only over 600 V; the app follows 70E (all voltages), which is the stricter and correct choice for this course. Suggestion (not an error): 1910.333(b)(2)(iv)(A) also requires a qualified person to operate the equipment controls or otherwise verify the equipment cannot be restarted (the 'try' step). Consider adding it to the verification step of the example sequence in a later revision. 1910.333(b)(2)(iv)(B) also requires the test to look for induced voltage or unrelated backfeed. Consistent with testing the foreign-circuit terminals."
+    notes: "Re-review 2026-11-26. Still blocked-on-source: needs the NFPA 70E 2024 text for live-dead-live. The new opening sentence matches OSHA 1910.333(b)(2)(iv)(A) word for word in substance (qualified person operates the controls or otherwise verifies the equipment cannot be restarted), checked on osha.gov 2026-11-26. 1910.333(b)(2)(iv)(B) also covers testing for induced voltage or backfeed, consistent with testing the foreign-circuit terminals. No error found."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -682,13 +682,13 @@ entries:
     date: 2026-11-26
   - id: ch01.u1.s1-2.question.loto-order
     hash: 56fdd0429ca65c829bace7e4b17fcfc45deeac5d9922706e655c9a6545776e81
-    status: pending
+    status: approved-pending-book
     severity: null
     checkedAgainst:
       - "OSHA 29 CFR 1910.147 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147"
       - "OSHA 29 CFR 1910.333 (osha.gov page opened 2026-11-26): https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"
     basis: source
-    notes: "Verified: 1910.147(d) says the procedure 'shall be done in the following sequence': (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout device application, (d)(5) stored energy, (d)(6) verification of isolation. The six steps match that order exactly. The last step's label names live-dead-live (a 70E method whose text I have not opened), but the graded thing here is the order, which OSHA fully supports. Suggestion (not an error): 1910.333(b)(2)(iv)(A) also requires a qualified person to operate the equipment controls or otherwise verify the equipment cannot be restarted (the 'try' step). Consider adding it to the verification step of the example sequence in a later revision. Book page/section alignment unverified (textbook not yet available), so approved-pending-book, not approved."
+    notes: "Re-review 2026-11-26: verified on osha.gov. 1910.147(d) gives the order (d)(1) preparation, (d)(2) shutdown, (d)(3) isolation, (d)(4) lockout/tagout devices, (d)(5) stored energy, (d)(6) verification of isolation. The new step 6 (operate the start controls to verify the equipment cannot restart) is 1910.333(b)(2)(iv)(A), and step 7 (test for absence of voltage) is (iv)(B), in that order. The seven steps and explanation match. The step 7 label names live-dead-live (70E method, text not opened), but the graded content is the order, which is verified. Pending the book page."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -805,11 +805,11 @@ entries:
     date: 2026-11-26
   - id: ch01.u2.s2-1.card.pilot-device-intro
     hash: ac309fcf60319b754703595c8497ae6ddee379daa3b5b0aed44592a2207eda39
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "OVERREACH / internal contradiction: 'it carries only the small control current needed to operate a coil, not the load current'. In this same bucket PB2 feeds PL3 directly and FS1/PS1/TS1/FLS1 feed lamps directly, so the pilot device carries the full current of that load. Pilot-duty float and pressure switches also commonly switch small loads directly (two-wire control). Day 1's card (ch01.u1.s1-1.card.pilot-devices-and-loads) correctly says 'pilot devices sit in the path and the load ends the path'. SUGGESTED FIX: 'The pilot device is a messenger: it carries only control-circuit current, such as a coil or a pilot lamp, never the motor's power-circuit current.' Same overreach in the claim of ch01.u2.s2-1.question.pilot-device-meaning (its answers are fine)."
+    notes: "Re-review 2026-11-26 (commit 152c8d9). Batch 1 flag RESOLVED: now 'carries only control-circuit current, such as the current for a coil or a pilot lamp, never the motor's power-circuit current', which is consistent with PB2 feeding PL3 directly in the bucket. No error found. No source opened for this review covers the claim (textbook not available; no NEMA/IEEE/manufacturer text), so it stays unapproved (blocked-on-source, general knowledge)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -960,7 +960,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. Shape is right (terminal circles with the bridging bar above, not touching). RENDER BUG (cosmetic here): in the card figure (symbolFigure, viewBox 120x60, scale 1.9) the operator's top cap line at y-17 is clipped off the top. See pb-nc-mushroom for the serious case."
+    notes: "Re-review 2026-11-26: batch 1 clipping flag RESOLVED. Content unchanged (status unchanged). Rendered the live #symbols page (bundle has the 120x84, 1.45x figure) and symbolFigure() locally from commit 152c8d9 with this item's exact arguments; measured the drawn group's bounding box against the SVG frame: fully inside, with margins on every side. Operator bar and plunger visible; reads as an NO spring-return pushbutton. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available, so the symbol convention itself (including timer-arrow direction: up = timed closing, down = timed opening in this renderer) is unconfirmed."
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.pb-nc
@@ -969,7 +969,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. Shape is right (bridging bar under the terminals, touching). Same clipping of the operator top in the card figure as pb-no (cosmetic)."
+    notes: "Re-review 2026-11-26: batch 1 clipping flag RESOLVED. Content unchanged (status unchanged). Rendered the live #symbols page (bundle has the 120x84, 1.45x figure) and symbolFigure() locally from commit 152c8d9 with this item's exact arguments; measured the drawn group's bounding box against the SVG frame: fully inside, with margins on every side. Operator plunger and bridging bar visible; reads as an NC pushbutton. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available, so the symbol convention itself (including timer-arrow direction: up = timed closing, down = timed opening in this renderer) is unconfirmed."
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.pb-nc-mushroom
@@ -978,7 +978,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. RENDER BUG (flag, major for learning): in the card figure and in identify-symbol questions (symbolFigure scales 1.9x about the centre of a 120x60 viewBox), the mushroom cap arc drawn above y-17 falls outside the viewBox and is clipped completely. The picture is then identical to the plain NC pushbutton, so the card's 'wide cap' description and the identify questions can't be answered from what is shown. Fix: enlarge or offset the viewBox (e.g. viewBox '0 -10 120 80') or reduce the scale, then re-check every symbol. Text content: no error found."
+    notes: "Re-review 2026-11-26: batch 1 clipping flag RESOLVED. Content unchanged (status unchanged). Rendered the live #symbols page (bundle has the 120x84, 1.45x figure) and symbolFigure() locally from commit 152c8d9 with this item's exact arguments; measured the drawn group's bounding box against the SVG frame: fully inside, with margins on every side. Mushroom cap now fully visible above the plunger, so the figure is distinct from the plain NC pushbutton. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available, so the symbol convention itself (including timer-arrow direction: up = timed closing, down = timed opening in this renderer) is unconfirmed."
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.relay-coil
@@ -992,11 +992,11 @@ entries:
     date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.pilot-light
     hash: 51cb878d0ecc4c0b32d53195d817cde2289577c890479bdefc522dab4b8ac9d5
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. FLAG (misleading): the card says the color letter is what tells a lamp from a coil ('a plain circle with a tag could be a coil, while a circle with a color letter is a lamp'). The app's own renderer correctly draws the common NEMA/US pilot-light symbol with radiating lines (sunburst) around the circle, and that is the distinguishing mark. Several bucket lamps (PL4-PL11) have no color letter at all in the schematic. Also, the card figure passes designation 'PL1', so the circle shows 'PL1' inside it, not 'G', which contradicts the card text. FIX: mention the rays, and render the card figure with 'G'. IEC note: H is the older IEC letter for indicator lamps; current IEC 81346-2 practice uses P. 'You may also see' is acceptable but consider 'H (or P)'. Confirm against ICS 19 / IEEE 315."
+    notes: "Re-review 2026-11-26. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available. Batch 1 flag RESOLVED: the card now says the rays are the tell and the color letter is optional; the figure renders with 'G' inside and all eight rays inside the frame (checked live on #symbols and with symbolFigure('pilot-light','G') rendered locally from commit 152c8d9). Remaining suggestion (not an error): the IEC note still says only 'H'; current IEC 81346-2 practice uses P-class codes (e.g. PF), so 'H (older) or P' would be more current."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -1012,7 +1012,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. RENDER BUG (minor): the float circle below the blade is cut in half by the viewBox in the card figure. Shape otherwise follows common NEMA liquid-level practice. Text: no error found."
+    notes: "Re-review 2026-11-26: batch 1 clipping flag RESOLVED. Content unchanged (status unchanged). Rendered the live #symbols page (bundle has the 120x84, 1.45x figure) and symbolFigure() locally from commit 152c8d9 with this item's exact arguments; measured the drawn group's bounding box against the SVG frame: fully inside, with margins on every side. Float circle now fully visible below the operator. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available, so the symbol convention itself (including timer-arrow direction: up = timed closing, down = timed opening in this renderer) is unconfirmed."
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.limit-nc
@@ -1026,11 +1026,11 @@ entries:
     date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.solenoid
     hash: 9562ad2b45a1b1a9887f3fc7095d8cf706ec9224e428bb0081ece14e76923e0f
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. No technical error. IEC note 'Y for valves': Y is older DIN/IEC practice; current IEC 81346-2 tends to use M-class letters (e.g. MB) for solenoids/actuators. Keep it as 'you may also see' or drop the letter."
+    notes: "Re-review 2026-11-26. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available. My IEC note was applied correctly (Y older IEC/DIN; M-class such as MB in 81346-2). Figure with SOL1 renders fully. No error found."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -1046,7 +1046,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. RENDER BUG (flag, major for learning): for NOTC (and NCTC) the renderer draws an UP arrow above the contact at y-21, which is outside the card viewBox after the 1.9x scale. Only a small stub shows, and the NOTC text label under the contact is clipped too. The figure then reads as a plain NO contact, so the card and ch01.u2.s2-3.question.identify-notc can't be answered from the picture. Arrow-direction convention in symbols.ts (up = timed closing, down = timed opening) is one common textbook convention. I can't confirm it without ICS 19 / IEEE 315, so keep it pending. Text content: no error found."
+    notes: "Re-review 2026-11-26: batch 1 clipping flag RESOLVED. Content unchanged (status unchanged). Rendered the live #symbols page (bundle has the 120x84, 1.45x figure) and symbolFigure() locally from commit 152c8d9 with this item's exact arguments; measured the drawn group's bounding box against the SVG frame: fully inside, with margins on every side. Up arrow and 'NOTC' label now fully visible; no longer looks like a plain NO contact. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available, so the symbol convention itself (including timer-arrow direction: up = timed closing, down = timed opening in this renderer) is unconfirmed."
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u2.s2-3.symbol.timer-off-noto
@@ -1055,7 +1055,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. Down arrow renders. The 'NOTO' text label under the contact is clipped in the card figure (minor). Arrow convention unverified (see timer-on-notc). Text content: no error found."
+    notes: "Re-review 2026-11-26: batch 1 clipping flag RESOLVED. Content unchanged (status unchanged). Rendered the live #symbols page (bundle has the 120x84, 1.45x figure) and symbolFigure() locally from commit 152c8d9 with this item's exact arguments; measured the drawn group's bounding box against the SVG frame: fully inside, with margins on every side. Down arrow and 'NOTO' label fully visible. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available, so the symbol convention itself (including timer-arrow direction: up = timed closing, down = timed opening in this renderer) is unconfirmed."
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u2.s2-1.question.normally-closed-meaning
@@ -1096,11 +1096,11 @@ entries:
     date: 2026-11-26
   - id: ch01.u2.s2-1.question.pilot-device-meaning
     hash: fae220cbeabb80f6d310c30bc7be2dfe850e1e3b465271d632a520c72a55b6f8
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Reviewed 2026-11-26 from general knowledge only; no source opened for this review covers the claim (textbook not yet available; no NEMA/IEEE/manufacturer text). No technical error found. Stays unapproved (blocked-on-source) until an opened source or the book supports it. Answers are fine. The claim text repeats the overreach 'does not carry the load current'; align it with the fix on ch01.u2.s2-1.card.pilot-device-intro."
+    notes: "Re-review 2026-11-26 (commit 152c8d9). Claim aligned with the pilot-device-intro fix; answers unchanged and fine. No error found. No source opened for this review covers the claim (textbook not available; no NEMA/IEEE/manufacturer text), so it stays unapproved (blocked-on-source, general knowledge)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -1157,11 +1157,11 @@ entries:
     date: 2026-11-26
   - id: ch01.u2.s2-3.question.identify-nc-contact
     hash: 18aa3927faf7e115487417aa5c8754259b02357ec6289e86ab613583de24849c
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. No error found; symbol renders fully; one defensible answer."
+    notes: "Re-review 2026-11-26. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available. New distractor 'A pilot light that shows its lens color' matches the rays fix; one defensible answer; contact-nc figure renders fully (checked live, viewBox 120x84). No error found. Tooling nit: the re-review queue prints this item's figure as 'undefined labelled \"undefined\"' because identify-symbol questions store the symbol as a plain key string; the app renders it correctly."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -1177,7 +1177,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. FLAG: as rendered, the mushroom cap is clipped off (see ch01.u2.s2-3.symbol.pb-nc-mushroom). The learner sees a plain NC pushbutton, so the correct answer can't be told from the picture. Fix the viewBox. Wording: no error."
+    notes: "Re-review 2026-11-26: batch 1 clipping flag RESOLVED. Content unchanged (status unchanged). Rendered the live #symbols page (bundle has the 120x84, 1.45x figure) and symbolFigure() locally from commit 152c8d9 with this item's exact arguments; measured the drawn group's bounding box against the SVG frame: fully inside, with margins on every side. Question figure (no designation) shows the full mushroom cap; the correct answer is now identifiable from the picture. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available, so the symbol convention itself (including timer-arrow direction: up = timed closing, down = timed opening in this renderer) is unconfirmed."
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u2.s2-3.question.identify-notc
@@ -1186,7 +1186,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. FLAG: as rendered, the NOTC timing arrow and label are clipped (see ch01.u2.s2-3.symbol.timer-on-notc). The figure is indistinguishable from a plain NO contact, which is one of the distractors. Fix the viewBox. Wording: no error."
+    notes: "Re-review 2026-11-26: batch 1 clipping flag RESOLVED. Content unchanged (status unchanged). Rendered the live #symbols page (bundle has the 120x84, 1.45x figure) and symbolFigure() locally from commit 152c8d9 with this item's exact arguments; measured the drawn group's bounding box against the SVG frame: fully inside, with margins on every side. Question figure shows the up arrow and NOTC label; distinguishable from the 'plain NO contact' distractor. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available, so the symbol convention itself (including timer-arrow direction: up = timed closing, down = timed opening in this renderer) is unconfirmed."
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u2.s2-3.question.tap-start-button
@@ -1650,11 +1650,11 @@ entries:
     date: 2026-11-26
   - id: ch01.u3.s3-16.card.solid-state-timer
     hash: 7043374871078de81bf58f01ea958ad8f2e8838974811283ebcad5d66ce12e9d
-    status: pending
+    status: blocked-on-source
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "OVERGENERALIZATION: 'An off-delay solid-state timer ... needs constant supply power ... plus a separate trigger input' and 'If the constant supply is lost, the output drops at once'. That's true of the common trigger (control-signal) type modeled as TD4, but 'true off-delay' solid-state timers also exist. They need no separate trigger or constant supply: they time out after their input power is removed, using stored internal energy. SUGGESTED FIX: 'The common solid-state off-delay timer (the trigger or control-signal type, like TD4) needs...'. Add one sentence: 'Some models, sold as true off-delay timers, time out after power is removed with no separate trigger; check the wiring diagram on the timer.' ch01.u3.s3-16.question.ss-offdelay-supply-loss is fine because its stem fixes the type (output transferred by a trigger, constant supply)."
+    notes: "Re-review 2026-11-26 (commit 152c8d9). Batch 1 flag RESOLVED: claim, text and fieldNote now scoped to the trigger-type (control-signal) off-delay like TD4, and true off-delay models are mentioned with 'check the wiring diagram'. No error found. No source opened for this review covers the claim (textbook not available; no NEMA/IEEE/manufacturer text), so it stays unapproved (blocked-on-source, general knowledge)."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -1693,12 +1693,12 @@ entries:
     date: 2026-11-26
   - id: ch01.u3.s3-18.card.contacts-left-loads-right
     hash: 47227daccce41280f04e1ba60137740d48fc19bc83002f2d35e53b61d66bb99d
-    status: pending
+    status: approved-pending-book
     severity: null
     checkedAgainst:
       - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
     basis: source
-    notes: "Checked against the 430.74 photo. The core physics and the 430.74 rationale are correct (with X2 grounded and switching on X1, a ground fault downstream of a contact can't energize the load, and an X1-side ground fault opens the fuse instead of bypassing the stop). OVERREACH to fix: 'Never place a contact between a coil and X2' and the fieldNote 'treat that wiring as a defect'. As the builder's own note says, 430.74 is a performance requirement about ground faults in the control circuit remote from the controller; it doesn't prescribe the layout. In standard NEMA starter wiring (Chapter 2) the overload-relay contact is commonly wired between the M coil and X2 inside the controller, and a learner taught 'never' will call that a defect. SUGGESTED FIX: 'Keep stop, start and other switching devices on the X1 side, and connect the coil directly to X2. (The overload-relay contact inside a starter is a common exception you'll meet in Chapter 2.)' Change the fieldNote to: 'A coil whose switching contacts are on its X2 leg in field wiring can be energized, or have its stop bypassed, by a ground fault. Treat that as a defect.' Otherwise ready to approve (pending book) once the wording is fixed."
+    notes: "Re-review 2026-11-26: batch 1 overreach RESOLVED. The rule now reads 'keep stop, start and other switching devices on the X1 side, and connect the coil directly to X2', with the starter overload contact named as the Chapter 2 exception, and the fieldNote is limited to field wiring. That is consistent with 430.74, which addresses a ground fault remote from the controller (an OL contact is inside the controller). The physics (a ground downstream of a contact can't energize a load whose other side is grounded; it can't bypass an X1-side stop) is right. Pending the book page."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -1710,12 +1710,12 @@ entries:
         staledOn: 2026-11-26
   - id: ch01.u3.s3-18.card.nec-430-74-ground-fault-arrangement
     hash: 12c10f9f0420ca40f84cc710fa6066cb526f34b2f7793fe5256b6712763de76d
-    status: pending
+    status: approved-pending-book
     severity: null
     checkedAgainst:
       - "NEC2026 430.74 (user photo review/source-photos/nec2026-p70-400-430.72-430.75.jpg, p. 70-400; 430.74 not marked as revised)"
     basis: source
-    notes: "Checked against the photo. Claim and body paraphrase 430.74 correctly: grounded conductor, ground fault remote from the controller must (1) not start the motor and (2) not bypass manually operated or automatic safety shutdown devices. Section number unchanged in 2026 (not marked revised), so 'older editions used the same number' is consistent. The bucket explanation also checks: a bolted X1-to-enclosure fault draws about 207 A and clears the 5 A model fuse in about 23 ms. ONLY ISSUE: fieldNote 'look for any contact between a coil and the grounded conductor. That's a 430.74 problem waiting to happen.' That will misfire in Chapter 2, where starter overload contacts sit between the coil and X2 inside the controller (not 'remote'). SUGGESTED FIX: 'When you inspect a control circuit, look for stop, start or safety contacts wired between a coil and the grounded conductor in the remote wiring. That's the arrangement 430.74 is written to prevent.' Approve (pending book) after this wording change."
+    notes: "Re-review 2026-11-26: verified against the 430.74 photo. Claim and body paraphrase 430.74 correctly (grounded conductor; a ground fault remote from the controller must not start the motor and must not bypass manual or automatic safety shutdown devices); the bucket explanation (solid X1-to-enclosure fault returns via the bond and opens the fuse; coil never energized) checks against the model (sheet: F1 blown, rails 0 V). Batch 1 fieldNote overreach RESOLVED ('stop, start or safety contacts wired between a coil and the grounded conductor in the remote wiring'). Pending the book page."
     reviewer: Eli
     date: 2026-11-26
     history:
@@ -1768,7 +1768,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. FLAG: same clipped mushroom cap as identify-mushroom, so 'mushroom-head' can't be seen in the figure. Fix the viewBox. Wording: no error."
+    notes: "Re-review 2026-11-26: batch 1 clipping flag RESOLVED. Content unchanged (status unchanged). Rendered the live #symbols page (bundle has the 120x84, 1.45x figure) and symbolFigure() locally from commit 152c8d9 with this item's exact arguments; measured the drawn group's bounding box against the SVG frame: fully inside, with margins on every side. Question figure shows the full mushroom cap. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available, so the symbol convention itself (including timer-arrow direction: up = timed closing, down = timed opening in this renderer) is unconfirmed."
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u3.s3-10.question.momentary-vs-maintained
@@ -1867,7 +1867,7 @@ entries:
     severity: null
     checkedAgainst: []
     basis: general-knowledge
-    notes: "Still blocked-on-source: NEMA ICS 19 / IEEE 315 symbol pages not available. Rendered gallery checked live 2026-11-26 (https://yravis.github.io/understanding-motor-controls/#symbols) and src/ui/symbols.ts read. Arrow renders (down); NOTO label clipped (minor). Arrow convention unverified. Wording: no error."
+    notes: "Re-review 2026-11-26: batch 1 clipping flag RESOLVED. Content unchanged (status unchanged). Rendered the live #symbols page (bundle has the 120x84, 1.45x figure) and symbolFigure() locally from commit 152c8d9 with this item's exact arguments; measured the drawn group's bounding box against the SVG frame: fully inside, with margins on every side. Question figure shows the down arrow and NOTO label. Still blocked-on-source: NEMA ICS 19 / IEEE 315 not available, so the symbol convention itself (including timer-arrow direction: up = timed closing, down = timed opening in this renderer) is unconfirmed."
     reviewer: Eli
     date: 2026-11-26
   - id: ch01.u3.s3-17.question.delay-starts-when
