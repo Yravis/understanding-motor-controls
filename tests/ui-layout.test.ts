@@ -1,3 +1,5 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { wrapLines, lineWidth, WARN_TEXT, WARN_MAX_WIDTH, WARN_FONT, warningBannerLayout } from '../src/ui/svgtext';
 import { STATE_LABEL_DY } from '../src/ui/schematic';
@@ -80,6 +82,20 @@ describe('physical view layout (open-door elevation)', () => {
 
   it('places the photo file at a public path the overlay can request', () => {
     expect(PHOTO_FILE).toBe('img/bucket-1a-photo.jpg');
+    expect(existsSync(join('public', PHOTO_FILE))).toBe(true);
+  });
+
+  it('defaults photo opacity to 80 and keeps labels visible in photo mode CSS', () => {
+    const panel = readFileSync('src/ui/bucketpanel.ts', 'utf8');
+    expect(panel).toMatch(/photoOpacity = 80/);
+    const css = readFileSync('src/style.css', 'utf8');
+    const start = css.indexOf('/* Photo mode');
+    expect(start).toBeGreaterThan(-1);
+    const rules = css.slice(start).split('}').filter((r) => r.includes('photo-mode'));
+    for (const r of rules) {
+      if (/display\s*:\s*none/.test(r)) expect(r).not.toMatch(/legend|text|warn|pin|\.term|\.tb-strip/);
+    }
+    expect(css).toMatch(/--photo-scale:\s*1/);
   });
 });
 

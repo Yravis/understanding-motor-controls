@@ -31,7 +31,7 @@ function precachePlugin() {
     configResolved(c: { build: { outDir: string } }) { outDir = c.build.outDir; },
     writeBundle(_: unknown, bundle: Record<string, unknown>) {
       const files = Object.keys(bundle).filter((f) => !f.endsWith('.map'));
-      const extra = ['manifest.webmanifest', 'favicon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
+      const extra = ['manifest.webmanifest', 'favicon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'img/bucket-1a-photo.jpg'];
       const list = ['./', ...new Set([...files, ...extra])];
       const p = join(outDir, 'sw.js');
       const src = readFileSync(p, 'utf8');

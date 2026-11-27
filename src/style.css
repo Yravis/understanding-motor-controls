@@ -82,7 +82,9 @@ svg .foreign { fill:#e87d00 } .tap { cursor:pointer }
 
 .phys-stage { position:relative; }
 .phys-stage svg.phys { position:relative; z-index:1; width:100%; height:auto; display:block; }
-.phys-photo { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:fill; pointer-events:none; z-index:0; user-select:none; }
+.phys-stage { --photo-x:0px; --photo-y:0px; --photo-scale:1; }
+.phys-photo { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:fill; pointer-events:none; z-index:0; user-select:none; transform:translate(var(--photo-x), var(--photo-y)) scale(var(--photo-scale)); transform-origin:50% 50%; }
+.photo-caption { margin:2px 0 6px; }
 .photo-opacity { width:180px; min-height:44px; }
 
 /* Physical bucket elevation (viewBox 1000×750). Font px here are SVG user units. */
@@ -138,32 +140,35 @@ svg.phys .wire-run { stroke:#3a3f45; stroke-width:1.4; fill:none; opacity:.7; }
 svg.phys .wire-orange { stroke:#e87d00; stroke-width:2.2; fill:none; }
 svg.phys .tb.foreign .tbbox { fill:#f4a33a; }
 
-/* Photo mode: hide the drawn chrome; leave terminal markers and hit targets. */
+/* Photo mode: the photo is a backdrop only. Drop opaque chrome, keep every label,
+   terminal marker, hit target, warning banner and lit lamp readable on top of it. */
 svg.phys.photo-mode .shop,
-svg.phys.photo-mode .nameplate,
-svg.phys.photo-mode .nameplate-text,
+svg.phys.photo-mode .encl-shell,
+svg.phys.photo-mode .encl-face,
 svg.phys.photo-mode .encl-skin,
+svg.phys.photo-mode .backplate,
+svg.phys.photo-mode .door-edge,
+svg.phys.photo-mode .door-inside,
+svg.phys.photo-mode .door-front,
 svg.phys.photo-mode .door-skin,
 svg.phys.photo-mode .door-frame,
 svg.phys.photo-mode .door-closed,
-svg.phys.photo-mode .warn-banner,
+svg.phys.photo-mode .hinge,
+svg.phys.photo-mode .nameplate,
 svg.phys.photo-mode .devbox,
+svg.phys.photo-mode .powerbox,
 svg.phys.photo-mode .op-cell,
 svg.phys.photo-mode .ch2box,
 svg.phys.photo-mode .ch2-area,
-svg.phys.photo-mode .ch2-section,
-svg.phys.photo-mode .door,
-svg.phys.photo-mode .harness,
-svg.phys.photo-mode .din-rail,
 svg.phys.photo-mode .tb-area,
 svg.phys.photo-mode .field-area,
+svg.phys.photo-mode .field-dev,
 svg.phys.photo-mode .op-ring,
-svg.phys.photo-mode .op-lens,
+svg.phys.photo-mode .op-lens:not(.lit),
 svg.phys.photo-mode .op-mush,
 svg.phys.photo-mode .op-mush-base,
 svg.phys.photo-mode .op-start,
 svg.phys.photo-mode .op-stop,
-svg.phys.photo-mode .op-glow,
 svg.phys.photo-mode .contact-block,
 svg.phys.photo-mode .relay-body,
 svg.phys.photo-mode .relay-top,
@@ -177,13 +182,20 @@ svg.phys.photo-mode .cpt-coil,
 svg.phys.photo-mode .fuse-holder,
 svg.phys.photo-mode .fuse-cart,
 svg.phys.photo-mode .term-block,
-svg.phys.photo-mode .ch2-glyph,
-svg.phys.photo-mode > text,
-svg.phys.photo-mode .dev > text,
-svg.phys.photo-mode .ch2 text,
-svg.phys.photo-mode .term text,
+svg.phys.photo-mode .din-rail,
+svg.phys.photo-mode .harness,
+svg.phys.photo-mode .wire-run { fill:none; stroke:none; }
+svg.phys.photo-mode .op-lens.lit, svg.phys.photo-mode .op-glow { visibility:visible; }
+/* Terminal boxes stay as translucent markers. */
+svg.phys.photo-mode .tbbox { fill:rgba(255,253,245,.55); stroke:#222; }
+svg.phys.photo-mode .tb.foreign .tbbox { fill:rgba(244,163,58,.7); }
+/* All drawing text: dark fill with a light halo, full strength (not the muted .tiny colour). */
+svg.phys.photo-mode text,
+svg.phys.photo-mode text.tiny,
 svg.phys.photo-mode .legend,
-svg.phys.photo-mode .cpt-block > text,
-svg.phys.photo-mode .f1-block > text,
-svg.phys.photo-mode .tb-strip > text,
-svg.phys.photo-mode .field-inset > text { display:none; }
+svg.phys.photo-mode .pin-role,
+svg.phys.photo-mode .pinlbl,
+svg.phys.photo-mode .warn-label {
+  fill:#111; opacity:1; stroke:#fffbee; stroke-width:3px; stroke-linejoin:round; paint-order:stroke fill;
+}
+svg.phys.photo-mode .term text, svg.phys.photo-mode .tb text { font-weight:700; }

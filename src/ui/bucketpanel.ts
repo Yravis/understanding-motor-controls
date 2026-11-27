@@ -23,7 +23,7 @@ export function mountBucket(root: HTMLElement, o: PanelOpts): void {
   let b: Bucket = o.fault ? buildFaulted(params, o.fault) : buildBucket(params);
   const undo: Bucket[] = [];
   let view: 'physical' | 'schematic' = 'physical';
-  let photoOn = false, photoOpacity = 100, photoAvailable = false, photoProbed = false;
+  let photoOn = false, photoOpacity = 80, photoAvailable = false, photoProbed = false;
   const photoSrc = BASE + PHOTO_FILE;
   const probePhoto = () => {
     if (photoProbed) return;
@@ -175,6 +175,7 @@ export function mountBucket(root: HTMLElement, o: PanelOpts): void {
         if (img) img.style.opacity = String(photoOpacity / 100);
       });
       wrap.append(h('div', { class: 'row photo-opacity-row' }, h('span', { class: 'small' }, 'Photo opacity'), sl, pct));
+      wrap.append(h('div', { class: 'small photo-caption' }, 'Photo is illustrative; labels and terminal numbers come from the drawing.'));
     }
     if (msg) wrap.append(h('div', { class: 'msg', role: 'status' }, msg));
     const phys = renderPhysical(b, { red, black, highlightNet: hl, onTerminal: terminal, doorOpen: door, onDevice: (t) => { msg = t.startsWith('ch2:') ? 'Coming in Chapter 2' : `${t}: ${b.layout.devices.find((d) => d.tag === t)?.title ?? ''}`; render(); } });
