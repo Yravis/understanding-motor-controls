@@ -29,7 +29,7 @@ describe('save version and old saves', () => {
     expect(parseSave(base).session!.ui).toBeUndefined();
     const s = parseSave({ version: 3, session: { day: 2, phase: 'lesson', ui: { tab: 'bogus', doorOpen: 'yes', inspected: [1, 'CPT', 'CPT'], meter: { mode: 'XYZ', red: 5 }, view: { x: 'a' }, coach: { x: Infinity }, log: [{ t: 1, text: 'ok', kind: 'zzz' }, null, { t: 'x' }] } } });
     const ui = s.session!.ui!;
-    expect(ui.tab).toBe('work');                       // default for day 2 (bogus tab rejected)
+    expect(ui.tab).toBe('lesson');                     // the default tab (bogus tab rejected)
     expect(ui.doorOpen).toBe(true);                    // default for non-day-1
     expect(ui.inspected).toEqual(['CPT']);
     expect(ui.meter).toMatchObject({ mode: 'VAC', red: null, black: null });

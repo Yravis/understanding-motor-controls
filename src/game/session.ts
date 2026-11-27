@@ -37,7 +37,7 @@ export const LOG_MAX = 200;
 
 export function defaultUi(day: number): DayUi {
   return {
-    step: '', done: [], tab: day === 1 ? 'lesson' : 'work',
+    step: '', done: [], tab: 'lesson',
     doorOpen: day !== 1, doorOpened: false, handleOn: true, locked: false, fusePulled: false,
     inspected: [], found: [], proved: false, tool: 'probe',
     meter: { mode: 'VAC', red: null, black: null, x: null, y: null, min: false },

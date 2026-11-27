@@ -18,6 +18,10 @@ in your trouble-ticket log. Vite + vanilla TypeScript PWA, works offline, no bac
 5. Schedule: pick your 5 days in Settings (default Mon-Fri). Streaks count only scheduled days. Progress exports/imports as a JSON file or a pasted code.
 Day 10 is the commissioning check (3 random faults; pass 2 safely) and completes Act 1.
 
+## The one-screen day
+
+A day is one screen: top bar, a step strip (with Next), the redrawn bucket, a coach card, a floating meter, a right-hand tab dock (Work order, Lesson, Schematic, LOTO, Log) and a status bar. Day 1 runs Read, Tour, Find sources and Prove meter on the bucket. Days 2-10 map their old flow to Read, Practice and Work order (the work order uses the classic bench panel). Everything the screen shows is saved in the session (`save.session.ui`), so tab switches, view switches and reloads resume in place. Code: `src/ui/dayscreen.ts`, `bucket2.ts`, `dock.ts`, `coach.ts`, `src/game/steps.ts`, `flow.ts`. Design reference: `mock/day-screen.html`. `node scripts/check-physical-overflow.mjs` checks both the classic Physical view and the redrawn bucket for text overflow and overlaps.
+
 ## How content review works
 Content lives in `content/` (YAML, compiled at build time) and is reviewed item by item; nothing graded should ship until the reviewer approves that exact version. See `/workspace/understanding-motor-controls-notes/content-review-process.md` and `design.md`.
 * `review/ch01.review.yaml` is the **ledger** (one entry per item: `{id, hash, status, severity, checkedAgainst, basis, notes, reviewer, date}`). Only the reviewer edits verdicts. `npm run review:seed` adds missing entries as `pending` (or `blocked-on-source` for items citing NEC/NEMA/IEEE/OSHA/NFPA 70E, or awaiting sign-off) and sends any entry whose item changed (hash mismatch) back to `pending`, keeping the reviewer's notes and appending the old verdict to `history`. Unchanged entries are left byte-for-byte as the reviewer wrote them. `npm run review:rereview` lists only the changed items for re-review.

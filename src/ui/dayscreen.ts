@@ -223,6 +223,8 @@ export function mountDayScreen(root: HTMLElement, o: DayScreenOpts): DayScreen {
     const seg = (items: [string, string, boolean, () => void][], label: string) => h('div', { class: 'ds-seg', role: 'group', 'aria-label': label }, ...items.map(([id, t, on, f]) => h('button', { type: 'button', class: on ? 'on' : '', 'data-seg': id, 'aria-pressed': String(on), onclick: f }, t)));
     const photoBtn = photoAvailable ? h('button', { type: 'button', class: 'ds-tbtn' + (ui.photo.on ? ' on' : ''), 'aria-pressed': String(ui.photo.on), onclick: () => { ui.photo.on = !ui.photo.on; commit(); drawPhoto(); drawTools(); } }, 'Photo') : null;
     const slider = photoAvailable && ui.photo.on ? h('input', { type: 'range', min: '0', max: '100', value: String(ui.photo.opacity), class: 'ds-range', 'aria-label': 'Photo opacity', oninput: (e: any) => { ui.photo.opacity = Number(e.target.value); photoImg.style.opacity = String(ui.photo.opacity / 100); clearTimeout(viewTimer); viewTimer = setTimeout(commit, 150); } }) : null;
+    const benchBtn = h('button', { type: 'button', class: 'ds-tbtn' + (classicOn() ? ' on' : ''), 'aria-pressed': String(classicOn()), disabled: classicForced(), title: 'The classic bench: process controls, lockout sheet, repair sheet', onclick: () => { classicManual = !classicManual; syncClassic(); drawTools(); } }, 'Bench');
+    if (classicOn()) { toolbar.replaceChildren(h('span', { class: 'ds-badge off' }, classicForced() ? 'Work order bench' : 'Classic bench'), h('span', { class: 'ds-sp' }), benchBtn); return; }
     toolbar.replaceChildren(
       h('span', { class: 'ds-badge ' + badgeCls, 'data-state': badgeCls }, ui.locked ? '🔒 Locked out' : ui.handleOn ? '● Live' : '○ Handle OFF'),
       seg([['live', 'Live', !ui.locked && ui.handleOn, () => setPower('live')], ['locked', 'Locked out', ui.locked, () => setPower('locked')]], 'Bucket state'),
@@ -230,7 +232,7 @@ export function mountDayScreen(root: HTMLElement, o: DayScreenOpts): DayScreen {
       sel,
       h('span', { class: 'ds-sp' }),
       ...(photoBtn ? [photoBtn] : []), ...(slider ? [slider] : []),
-      h('button', { type: 'button', class: 'ds-tbtn' + (classicOn() ? ' on' : ''), 'aria-pressed': String(classicOn()), disabled: classicForced(), title: 'The classic bench: process controls, lockout sheet, repair sheet', onclick: () => { classicManual = !classicManual; syncClassic(); drawTools(); } }, 'Bench'),
+      benchBtn,
       h('div', { class: 'ds-zoom', role: 'group', 'aria-label': 'Zoom' }, h('button', { type: 'button', 'aria-label': 'Zoom out', onclick: () => vp.zoomBy(1 / 1.3) }, '−'), pctLabel, h('button', { type: 'button', 'aria-label': 'Zoom in', onclick: () => vp.zoomBy(1.3) }, '+'), h('button', { type: 'button', 'data-zoom': 'fit', onclick: () => vp.fit() }, 'Fit'), h('button', { type: 'button', 'data-zoom': '100', onclick: () => vp.actual() }, '100%')));
     pctLabel.textContent = vp.pct() + '%';
   }
