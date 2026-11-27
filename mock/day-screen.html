@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>MOCK · Day screen · Understanding Motor Controls</title>
+<meta name="viewport" content="width=1440" />
+<!--
+  Phase 0 static mock (branch cod-6-day-mock). Layout and look only: NOT wired to the game model.
+  All art is our own SVG. Meter readings shown are copied from the real model (src/model) runs:
+    locked out:  TB1 X1 -> TB1 2 (X2)  = 0.0 V   (VAC, 10 Mohm)
+    live, idle:  CR1 1 -> CR1 2         = 114.6 V (VAC, 10 Mohm), 24.0 V on LoZ;  X1 -> X2 = 120.0 V
+  URL options:  ?state=live  (Day 1 tour state: handle ON, no lock, 114.6 V across CR1 1-2)
+                ?tab=work|lesson|schem|loto|log   ?zoom=1   ?compare=before (schematic before lockout)
+-->
+<style>
+  :root{
+    --bg:#f4f5f2; --panel:#ffffff; --ink:#1d2730; --ink2:#4a5866; --ink3:#7b8794; --line:#dde2e6;
+    --accent:#1f6f5c; --accent-soft:#e3f1ec; --blue:#1d5fbf; --amber:#b86a00; --amber-soft:#fff4e0;
+    --red:#c62828; --orange:#e07a1f;
+    font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);overflow:hidden}
+  body{width:1440px;height:900px;display:grid;grid-template-rows:46px 70px 1fr 28px}
+  button{font:inherit;cursor:pointer}
+  /* ---------- top bar ---------- */
+  .top{display:flex;align-items:center;gap:14px;padding:0 16px;background:#fff;border-bottom:1px solid var(--line)}
+  .top .back{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 10px;font-size:13px;color:var(--ink2)}
+  .top .app{font-weight:700;font-size:15px}
+  .top .crumb{font-size:13px;color:var(--ink2)}
+  .top .crumb b{color:var(--ink)}
+  .top .sp{flex:1}
+  .pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink2)}
+  .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+  .mockflag{background:#fff7d6;border-color:#ecd98a;color:#6b5500}
+  /* ---------- step strip ---------- */
+  .strip{display:flex;align-items:center;gap:18px;padding:0 16px;background:var(--accent-soft);border-bottom:1px solid #cfe5dc}
+  .steps{display:flex;align-items:center;gap:4px}
+  .st{display:flex;flex-direction:column;align-items:center;gap:3px;width:74px}
+  .st .n{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;border:2px solid #9fbfb3;color:#5d7f73;background:#fff}
+  .st.done .n{background:var(--accent);border-color:var(--accent);color:#fff}
+  .st.cur .n{background:#fff;border-color:var(--blue);color:var(--blue);box-shadow:0 0 0 3px #cfe0fb}
+  .st .l{font-size:11px;color:#5d7f73;white-space:nowrap}
+  .st.cur .l{color:var(--blue);font-weight:700}
+  .st.done .l{color:var(--accent)}
+  .bar{width:16px;height:2px;background:#9fbfb3;margin-bottom:16px}
+  .bar.done{background:var(--accent)}
+  .task{flex:1;min-width:0;font-size:13.5px;line-height:1.35;color:var(--ink)}
+  .task b{color:var(--ink)}
+  .task .u{border-bottom:1px dotted var(--ink3)}
+  .linkbtn{background:none;border:none;color:var(--accent);font-size:13px;font-weight:600;padding:4px 6px;white-space:nowrap}
+  .count{font-size:12px;color:var(--ink2);white-space:nowrap;text-align:right;line-height:1.3}
+  .count b{font-size:14px;color:var(--ink)}
+  .next{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:12px 22px;font-size:15px;font-weight:700;white-space:nowrap;box-shadow:0 2px 0 #134a99}
+  .next small{display:block;font-weight:500;font-size:11px;opacity:.85}
+  /* ---------- main ---------- */
+  .main{display:grid;grid-template-columns:900px 540px;min-height:0}
+  .left{position:relative;display:grid;grid-template-rows:44px 1fr;border-right:1px solid var(--line);min-height:0}
+  .tools{display:flex;align-items:center;gap:8px;padding:0 12px;background:#fff;border-bottom:1px solid var(--line)}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .seg button{border:none;background:#fff;padding:5px 10px;font-size:12px;color:var(--ink2);border-right:1px solid var(--line)}
+  .seg button:last-child{border-right:none}
+  .seg button.on{background:var(--ink);color:#fff}
+  .tools select{font:inherit;font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink2)}
+  .tools .sp{flex:1}
+  .zoom{display:inline-flex;align-items:center;gap:4px}
+  .zoom button{border:1px solid var(--line);background:#fff;border-radius:7px;min-width:28px;height:28px;font-size:12px;color:var(--ink2);padding:0 8px}
+  .zoom .pct{font-size:12px;color:var(--ink2);width:42px;text-align:center}
+  .badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+  .badge.locked{background:#fde8e8;color:#9b1c1c;border:1px solid #f3b9b9}
+  .badge.live{background:#fff1e0;color:#8a4b00;border:1px solid #f1c58a}
+  .canvas{position:relative;background:#e9ecee;overflow:hidden;min-height:0}
+  #bucket{position:absolute;inset:0;width:100%;height:100%}
+  #leads{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .hint{position:absolute;right:36px;top:8px;width:430px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 6px 20px rgba(20,30,40,.12);padding:12px 14px;font-size:12.5px;line-height:1.4}
+  .hint .k{font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+  .hint .t{font-weight:700;margin-bottom:4px}
+  .hint .why{color:var(--ink2);font-size:12px;margin-top:4px}
+  .hint.mini{width:auto;padding:7px 12px;font-weight:700;color:var(--blue)}
+  .hint .row{display:flex;gap:8px;margin-top:8px}
+  .hint .row button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 10px;font-size:12px;color:var(--ink2)}
+  .hint .row button.p{background:var(--accent);border-color:var(--accent);color:#fff}
+  /* floating meter */
+  .meter{position:absolute;right:12px;bottom:8px;width:322px;background:#fff;border:1px solid #c9d0d6;border-radius:12px;box-shadow:0 10px 28px rgba(20,30,40,.18);overflow:hidden}
+  .meter .hd{display:flex;align-items:center;gap:6px;padding:6px 10px;background:#f1f3f5;border-bottom:1px solid var(--line);font-size:12px;font-weight:700;color:var(--ink2)}
+  .meter .hd .sp{flex:1}
+  .meter .hd span.x{font-weight:400;color:var(--ink3)}
+  .meter .ft{padding:6px 10px 8px;font-size:11px;color:var(--ink2);line-height:1.35;border-top:1px solid var(--line)}
+  .meter .ft b.r{color:var(--red)} .meter .ft b.k{color:#111}
+  /* ---------- right dock ---------- */
+  .right{display:grid;grid-template-rows:44px 1fr;background:#fff;min-height:0}
+  .tabs{display:flex;align-items:flex-end;gap:2px;padding:0 10px;border-bottom:1px solid var(--line);background:#fafbfa}
+  .tab{border:none;background:none;padding:10px 12px 9px;font-size:13px;color:var(--ink2);border-bottom:2px solid transparent;white-space:nowrap}
+  .tab.on{color:var(--ink);font-weight:700;border-bottom-color:var(--accent)}
+  .tab .dotc{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue);margin-left:5px;vertical-align:1px}
+  .pane{overflow:auto;padding:16px 18px 20px;min-height:0;font-size:14px;line-height:1.5}
+  .pane[hidden]{display:none}
+  .pane h2{font-size:17px;margin:0 0 4px}
+  .pane h3{font-size:13px;margin:16px 0 6px;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em}
+  .sub{font-size:12px;color:var(--ink3);margin-bottom:10px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;background:#fff}
+  .card.cur{border-color:#9cbcf0;background:#f6f9ff}
+  .note{font-size:12.5px;color:var(--ink2);background:#f6f7f8;border-radius:8px;padding:8px 10px;margin-top:8px}
+  .note b{color:var(--ink)}
+  .chk{display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:3px 0}
+  .chk i{flex:none;width:16px;height:16px;border-radius:4px;border:1.5px solid #b7c1ca;margin-top:2px;display:grid;place-items:center;font-style:normal;font-size:11px;color:#fff}
+  .chk.ok i{background:var(--accent);border-color:var(--accent)}
+  .chk.now{font-weight:700;color:var(--blue)}
+  .chk.now i{border-color:var(--blue);box-shadow:0 0 0 2px #d6e4fb}
+  .chk .v{margin-left:auto;font-family:"DejaVu Sans Mono",Menlo,monospace;font-size:12px;color:var(--ink2);white-space:nowrap}
+  .lstep{display:grid;grid-template-columns:24px 1fr;gap:8px;padding:8px 0;border-top:1px solid #f0f2f4}
+  .lstep:first-of-type{border-top:none}
+  .lstep .num{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+  .lstep.cur .num{background:var(--blue)}
+  .lstep .tt{font-weight:700;font-size:13.5px}
+  .lstep .dd{font-size:12.5px;color:var(--ink2)}
+  .cite{display:inline-block;font-size:11px;color:var(--ink2);background:#f1f3f5;border-radius:6px;padding:1px 7px;margin:4px 4px 0 0}
+  .cite.pend{background:#fff4e0;color:#8a5a00}
+  .q .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 10px;margin:6px 0;font-size:13px;color:var(--ink)}
+  .lessonlist{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+  .lessonlist span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--ink2)}
+  .lessonlist span.ok{background:var(--accent-soft);border-color:#bcdccf;color:var(--accent)}
+  .lessonlist span.on{border-color:var(--blue);color:var(--blue);font-weight:700}
+  .log{font-size:12.5px}
+  .log .e{display:grid;grid-template-columns:64px 1fr;gap:8px;padding:6px 0;border-top:1px solid #f0f2f4}
+  .log .e .tm{color:var(--ink3);font-family:"DejaVu Sans Mono",Menlo,monospace;font-size:11.5px}
+  .log .e .tag{font-size:10.5px;font-weight:700;letter-spacing:.04em;color:var(--ink3);margin-right:6px}
+  .log .e.ok .tag{color:var(--accent)} .log .e.warn .tag{color:var(--amber)}
+  .legend{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:12px;color:var(--ink2);margin:6px 0 10px}
+  .legend i{display:inline-block;width:22px;height:4px;border-radius:2px;vertical-align:3px;margin-right:6px}
+  .wo-dl{display:grid;grid-template-columns:110px 1fr;gap:4px 10px;font-size:13px}
+  .wo-dl dt{color:var(--ink3)} .wo-dl dd{margin:0}
+  /* ---------- status bar ---------- */
+  .status{display:flex;align-items:center;gap:18px;padding:0 14px;background:#fff;border-top:1px solid var(--line);font-size:12px;color:var(--ink2);white-space:nowrap}
+  .status .s{display:inline-flex;align-items:center;gap:6px}
+  .status .s i{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .status .sp{flex:1}
+</style>
+</head>
+<body>
+
+<!-- ======================= TOP BAR ======================= -->
+<header class="top">
+  <button class="back">← Home</button>
+  <span class="app">Understanding Motor Controls</span>
+  <span class="crumb">Chapter 1 · <b>Day 1</b> · Bucket 1A, control section</span>
+  <span class="sp"></span>
+  <span class="pill mockflag">MOCK: layout only, not wired to the game</span>
+  <span class="pill"><span class="dot"></span>Saved</span>
+  <button class="back">Help</button>
+</header>
+
+<!-- ======================= STEP STRIP ======================= -->
+<section class="strip">
+  <div class="steps" id="steps"></div>
+  <div class="task" id="task"></div>
+  <button class="linkbtn">Why?</button>
+  <button class="linkbtn">I'm stuck</button>
+  <div class="count" id="count"></div>
+  <button class="next" id="next"></button>
+</section>
+
+<!-- ======================= MAIN ======================= -->
+<main class="main">
+  <section class="left">
+    <div class="tools">
+      <span class="badge" id="badge"></span>
+      <div class="seg"><button class="on">Probe</button><button>Trace</button><button>Operate</button></div>
+      <select aria-label="Go to"><option>Go to…</option><option>Whole bucket</option><option>Door (front)</option><option>CPT · control power</option><option>F1 · control fuse</option><option>CR1 · control relay</option><option>Timers TR1–TD4 (Day 8)</option><option>TB1 · terminal strip</option><option>EGC bar</option><option>Field devices (via TB1)</option></select>
+      <span class="sp"></span>
+      <div class="zoom"><button>−</button><span class="pct" id="pct">100%</span><button>+</button><button>Fit</button><button>100%</button></div>
+    </div>
+    <div class="canvas" id="canvas">
+      <svg id="bucket" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bucket 1A, door open"></svg>
+      <svg id="leads" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="hint" id="hint"></div>
+      <div class="meter" id="meter">
+        <div class="hd">Multimeter <span class="x">· floating, drag to move</span><span class="sp"></span><span class="x">⤢ ✕</span></div>
+        <svg id="dmm" viewBox="0 0 320 112" width="320" height="112" style="display:block"></svg>
+        <div class="ft" id="meterft"></div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="right">
+    <nav class="tabs" id="tabs">
+      <button class="tab" data-t="work">Work order</button>
+      <button class="tab" data-t="lesson">Lesson &amp; questions</button>
+      <button class="tab" data-t="schem">Schematic</button>
+      <button class="tab" data-t="loto">Lockout card<span class="dotc"></span></button>
+      <button class="tab" data-t="log">Log</button>
+    </nav>
+
+    <!-- Work order -->
+    <div class="pane" data-p="work" hidden>
+      <h2>Bucket tour: find every energy source</h2>
+      <div class="sub">Work order WO-1A-01 · Bucket 1A (generic MCC bucket, control section) · Chapter 1, Day 1</div>
+      <p style="margin:0 0 8px">Open the door (it only opens with the handle OFF). Identify the parts. Find the control source X1/X2, the terminal strip, and the orange foreign-voltage interlock circuit with its door warning label. Set the meter to VAC and prove it on the known source.</p>
+      <h3>Steps</h3>
+      <div class="chk ok"><i>✓</i>Tap the handle and open the door</div>
+      <div class="chk ok"><i>✓</i>Tap each device and read its nameplate</div>
+      <div class="chk ok"><i>✓</i>Find wires 91/92 (orange) and the warning label</div>
+      <div class="chk ok"><i>✓</i>Set the meter to VAC and read X1–X2 on the live bucket</div>
+      <h3>The bucket</h3>
+      <dl class="wo-dl">
+        <dt>Control source</dt><dd>120 V, 60 Hz between X1 and X2; X2 grounded (bonded to the enclosure)</dd>
+        <dt>Protection</dt><dd>F1, control supply fuse, in the X1 conductor</dd>
+        <dt>Second source</dt><dd>Remote interlock circuit, wires 91/92, orange. Stays live with the bucket handle OFF.</dd>
+        <dt>Power section</dt><dd>Shown greyed. Taught in Chapter 2.</dd>
+      </dl>
+      <div class="note"><b>Always follow your employer's procedure.</b> The lockout steps in this app are an example procedure (OSHA 1910.147(d) and NFPA 70E 2024).</div>
+    </div>
+
+    <!-- Lesson & questions -->
+    <div class="pane" data-p="lesson" hidden>
+      <div class="lessonlist">
+        <span class="ok">What motor control means</span><span class="ok">Control circuit vs power circuit</span><span class="ok">Pilot devices and loads</span><span class="ok">Contact, coil and the word normal</span><span class="on">Identify every energy source</span><span>Meter basics: VAC and a known source</span>
+      </div>
+      <div class="card">
+        <div class="sub" style="margin:0 0 2px">Section 1.1 · card 5 of 6</div>
+        <h2>Identify every energy source</h2>
+        <p style="margin:6px 0 0">Opening a bucket door and seeing one supply is not enough. Some control enclosures also contain an interlock circuit that is fed from a different source, such as a remote panel. It often has its own warning label on the door, and some sites use orange conductors for such circuits, though that is a local convention and not a universal rule. Because its source is elsewhere, it stays live even when the bucket's own control supply is turned off. Use the drawings, the labels and the conductor colors to find every source before you decide the equipment is safe.</p>
+        <div class="note"><b>Field note.</b> A label that says more than one source feeds this enclosure is an instruction to go find that other source.</div>
+      </div>
+      <h3>Practice · question 1 of 8</h3>
+      <div class="card q">
+        <div style="font-weight:700;margin-bottom:4px">Which statement best describes the control circuit of a motor installation?</div>
+        <button class="opt">It carries the signals that decide when the load is switched on or off.</button>
+        <button class="opt">It carries the large current that turns the motor shaft under load.</button>
+        <button class="opt">It is the section that stays dead because it only holds the wire labels.</button>
+        <button class="opt">It is the metal enclosure and bonding path around the equipment.</button>
+        <div class="sub" style="margin:6px 0 0">Answering here never leaves the bucket. Your place is saved.</div>
+      </div>
+    </div>
+
+    <!-- Schematic -->
+    <div class="pane" data-p="schem" hidden>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <h2 style="margin:0">Schematic · live colours</h2>
+        <span class="sp" style="flex:1"></span>
+        <div class="seg" id="cmp"><button data-c="now">Now</button><button data-c="before">Before lockout</button></div>
+      </div>
+      <div class="sub" id="schemsub"></div>
+      <div class="legend">
+        <span><i style="background:#d32f2f"></i>X1 potential (live, 120 V)</span>
+        <span><i style="background:#fff;border:1px solid #8a959f"></i>Grounded conductor (X2, wire 2)</span>
+        <span><i style="background:#1d2730"></i>Dead (0 V)</span>
+        <span><i style="background:#e07a1f"></i>Remote-source circuit</span>
+      </div>
+      <svg id="schem" viewBox="0 0 500 600" width="500" height="600"></svg>
+    </div>
+
+    <!-- Lockout card -->
+    <div class="pane" data-p="loto" hidden>
+      <h2>Lockout / tagout · Bucket 1A</h2>
+      <div class="sub">Example procedure · always follow your employer's procedure</div>
+      <div id="lotosteps"></div>
+      <div style="margin-top:8px"><span class="cite">OSHA 29 CFR 1910.147(d)</span><span class="cite">OSHA 1910.333(b)(2)(iv)</span><span class="cite pend">NFPA 70E 2024 120.6 · pending review</span></div>
+    </div>
+
+    <!-- Log -->
+    <div class="pane log" data-p="log" hidden id="logpane"></div>
+  </aside>
+</main>
+
+<!-- ======================= STATUS BAR ======================= -->
+<footer class="status" id="status"></footer>
+
+<script>
+/* ================= state ================= */
+const Q = new URLSearchParams(location.search);
+const LIVE = Q.get('state') === 'live';
+const S = LIVE ? {
+  cur: 0, // brief/tour
+  task: '<b>Brief · bucket tour.</b> Find every energy source. Set the meter to <span class="u">VAC</span> and read across an open contact on the live, idle bucket.',
+  count: '<b>4 / 4</b><br>tour checks',
+  next: 'Next: Lockout', nextSub: 'Day 2 starts the lockout drill',
+  badge: ['live', '● Live · door open for the tour'],
+  red: 'CR1_1', black: 'CR1_2', reading: '114.6', target: null,
+  ft: '<b class="r">Red</b> CR1 1 · <b class="k">Black</b> CR1 2 · hi-Z (10 MΩ)<br>Open CR1 contact: the off PL1 lamp ties terminal 2 to X2.',
+  hint: ['Bucket tour · 4 of 4', 'Read across the open CR1 contact', 'You read 114.6 V across contact 1–2. That is near line voltage: the contact is open, and the meter sees X1 on one side and X2 (through the off PL1 lamp) on the other.', 'Try LoZ next: the meter loads the circuit and the reading drops to about 24 V.'],
+  lit: ['PL2', 'PL3', 'PLF'], locked: false, handleOn: true,
+} : {
+  cur: 2, // prove dead
+  task: '<b>Prove dead.</b> Test for absence of voltage on <span class="u">every combination</span> (X1–X2, X1–G, X2–G, 91–92, 91–G, 92–G), then prove the meter again on the known source.',
+  count: '<b>4 / 9</b><br>checks done',
+  next: 'Next: Troubleshoot', nextSub: 'unlocks at 9 / 9',
+  badge: ['locked', '🔒 Locked out · L-01 and L-02'],
+  red: 'TB_X1b', black: 'TB_2b', reading: '0.0', target: 'TB_G',
+  ft: '<b class="r">Red</b> TB1 X1 · <b class="k">Black</b> TB1 2 (X2) · hi-Z (10 MΩ)<br>X1–X2 reads 0.0 V. Checked ✓',
+  hint: ['Prove dead · check 5 of 9', 'Move the black probe to G', 'Keep the red probe on X1. Land the black probe on terminal G (the EGC) and read X1–G.', 'Why: a fault from X1 to the enclosure only shows up when you test each conductor to ground.'],
+  lit: [], locked: true, handleOn: false,
+};
+const TAB = Q.get('tab') || (LIVE ? 'lesson' : 'loto');
+const COMPARE = Q.get('compare') || 'now';
+
+/* ================= step strip ================= */
+const STEPS = ['Brief', 'Lockout', 'Prove dead', 'Troubleshoot', 'Repair', 'Restore'];
+document.getElementById('steps').innerHTML = STEPS.map((s, i) => {
+  const cls = i < S.cur ? 'done' : i === S.cur ? 'cur' : '';
+  const bar = i ? `<div class="bar ${i <= S.cur ? 'done' : ''}"></div>` : '';
+  return `${bar}<div class="st ${cls}"><div class="n">${i < S.cur ? '✓' : i + 1}</div><div class="l">${s}</div></div>`;
+}).join('');
+document.getElementById('task').innerHTML = S.task;
+document.getElementById('count').innerHTML = S.count;
+document.getElementById('next').innerHTML = `${S.next} →<small>${S.nextSub}</small>`;
+const badge = document.getElementById('badge'); badge.className = 'badge ' + S.badge[0]; badge.textContent = S.badge[1];
+
+/* ================= bucket SVG ================= */
+const NS = 'http://www.w3.org/2000/svg';
+const T = {}; // terminal id -> [x, y]
+let svg = '';
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const text = (x, y, s, o = {}) => `<text x="${x}" y="${y}" font-size="${o.fs || 10}" font-weight="${o.fw || 400}" fill="${o.fill || '#26313b'}" text-anchor="${o.a || 'middle'}" ${o.ls ? `letter-spacing="${o.ls}"` : ''} font-family="Inter,Segoe UI,Roboto,Arial,sans-serif">${esc(s)}</text>`;
+const screw = (id, x, y, o = {}) => { T[id] = [x, y]; return `<g class="term" data-id="${id}" role="button" aria-label="Terminal ${id}"><circle cx="${x}" cy="${y}" r="${o.r || 6}" fill="url(#gScrew)" stroke="#59626b" stroke-width="0.8"/><path d="M${x - 3.2} ${y - 1.4} L${x + 3.2} ${y + 1.4}" stroke="#4b535b" stroke-width="1.2"/><path d="M${x - 1.4} ${y + 3.2} L${x + 1.4} ${y - 3.2}" stroke="#4b535b" stroke-width="1.2"/></g>`; };
+const wire = (d, col, w = 2.6) => {
+  const map = { red: ['#c62828', '#7f1a1a'], white: ['#fbfbfb', '#9aa3ab'], green: ['#2e8b3e', '#1d5a28'], orange: ['#ef8a2c', '#a85512'] }[col];
+  return `<path d="${d}" fill="none" stroke="${map[1]}" stroke-width="${w + 1.4}" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="${map[0]}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+};
+const marker = (x, y, s) => `<rect x="${x - 8}" y="${y - 5}" width="16" height="10" rx="2" fill="#fff" stroke="#b8c0c7" stroke-width="0.6"/>${text(x, y + 3, s, { fs: 7, fw: 700 })}`;
+
+svg += `<defs>
+  <pattern id="gGalv" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#e7eaec"/><circle cx="2" cy="3" r="0.7" fill="#d6dbdf"/><circle cx="7" cy="8" r="0.6" fill="#dde1e4"/></pattern>
+  <pattern id="gHatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="transparent"/><line x1="0" y1="0" x2="0" y2="8" stroke="#9aa3ab" stroke-width="1.2" opacity=".5"/></pattern>
+  <radialGradient id="gScrew" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#f4f6f7"/><stop offset="1" stop-color="#a7afb6"/></radialGradient>
+  <linearGradient id="gDoor" x1="0" x2="1"><stop offset="0" stop-color="#d9dde1"/><stop offset="1" stop-color="#cdd2d7"/></linearGradient>
+  <linearGradient id="gRail" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7dbde"/><stop offset=".5" stop-color="#b3bac0"/><stop offset="1" stop-color="#9aa2a9"/></linearGradient>
+  <linearGradient id="gCore" x1="0" x2="1"><stop offset="0" stop-color="#4b525a"/><stop offset=".5" stop-color="#666e76"/><stop offset="1" stop-color="#454c53"/></linearGradient>
+  <linearGradient id="gCopper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c98a4b"/><stop offset="1" stop-color="#9a6232"/></linearGradient>
+  <filter id="fGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5"/></filter>
+  <filter id="fShadow" x="-10%" y="-10%" width="130%" height="130%"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-opacity=".18"/></filter>
+</defs>`;
+
+/* ---------- door (front face, swung open to the left) ---------- */
+svg += `<g id="door">
+  <rect x="18" y="18" width="284" height="764" rx="8" fill="url(#gDoor)" stroke="#9aa2aa" stroke-width="2" filter="url(#fShadow)"/>
+  <rect x="30" y="30" width="260" height="740" rx="5" fill="none" stroke="#b9c0c6" stroke-width="1"/>
+  <rect x="300" y="110" width="12" height="40" rx="3" fill="#8f979e"/><rect x="300" y="650" width="12" height="40" rx="3" fill="#8f979e"/>
+  <rect x="56" y="42" width="208" height="30" rx="3" fill="#fff" stroke="#9aa3ab"/>
+  ${text(160, 61, 'BUCKET 1A · CONTROL 120 V', { fs: 11, fw: 700, ls: 0.4 })}
+  ${text(160, 86, 'front face · door swung open', { fs: 8, fill: '#6b7680' })}
+</g>`;
+
+/* handle with hasp, padlock, tag */
+const hx = 104, hy = 162;
+svg += `<g id="handle" role="button" aria-label="Bucket handle, ${S.handleOn ? 'ON' : 'OFF, locked'}">
+  <rect x="46" y="92" width="118" height="146" rx="8" fill="#b7bec5" stroke="#8a939b"/>
+  <rect x="54" y="100" width="102" height="130" rx="6" fill="#c7cdd2"/>
+  ${text(146, 116, 'ON', { fs: 10, fw: 700, a: 'end', fill: S.handleOn ? '#1d2730' : '#7b8794' })}
+  ${text(146, 224, 'OFF', { fs: 10, fw: 700, a: 'end', fill: S.handleOn ? '#7b8794' : '#1d2730' })}
+  <circle cx="${hx}" cy="${hy}" r="22" fill="#2b2f33" stroke="#15181a" stroke-width="1.5"/>
+  <g transform="rotate(${S.handleOn ? 0 : 180} ${hx} ${hy})"><rect x="${hx - 9}" y="${hy - 64}" width="18" height="66" rx="8" fill="#c62828" stroke="#7f1a1a" stroke-width="1.2"/><rect x="${hx - 4}" y="${hy - 58}" width="8" height="26" rx="4" fill="#e45656" opacity=".6"/></g>
+  <circle cx="${hx}" cy="${hy}" r="7" fill="#9aa2a9"/>
+  <rect x="160" y="146" width="20" height="14" rx="2" fill="#9aa2a9" stroke="#6f777e"/>
+  <circle cx="172" cy="153" r="3" fill="#59626b"/>
+</g>`;
+if (S.locked) {
+  svg += `<g id="lock" filter="url(#fShadow)">
+    <path d="M166 170 v-12 a6 6 0 0 1 12 0 v12" fill="none" stroke="#b9c0c6" stroke-width="3.5"/>
+    <rect x="159" y="168" width="26" height="30" rx="4" fill="#c62828" stroke="#7f1a1a"/>
+    ${text(172, 187, 'L-01', { fs: 7.5, fw: 700, fill: '#fff' })}
+    <path d="M172 198 C 176 204, 186 206, 196 206" fill="none" stroke="#555" stroke-width="1.2"/>
+    <g transform="rotate(3 236 254)">
+      <rect x="192" y="200" width="86" height="100" rx="5" fill="#fff" stroke="#9aa3ab"/>
+      <circle cx="199" cy="208" r="3.5" fill="#fff" stroke="#9aa3ab"/>
+      <rect x="192" y="215" width="86" height="22" fill="#c62828"/>
+      ${text(235, 230, 'DANGER', { fs: 11, fw: 800, fill: '#fff', ls: 1 })}
+      ${text(235, 250, 'DO NOT', { fs: 9.5, fw: 800 })}
+      ${text(235, 265, 'OPERATE', { fs: 9.5, fw: 800 })}
+      ${text(235, 280, 'Locked out by: you', { fs: 7 })}
+      ${text(235, 291, 'Lock L-01', { fs: 7 })}
+    </g>
+  </g>`;
+}
+/* orange caution label (remote source), bottom of the door */
+svg += `<g id="caution">
+  <rect x="44" y="722" width="232" height="40" rx="4" fill="#f59a3a" stroke="#a85512"/>
+  <rect x="44" y="722" width="62" height="40" rx="4" fill="#1d2730"/>
+  ${text(75, 746, '⚠ CAUTION', { fs: 8.5, fw: 800, fill: '#f8b562' })}
+  ${text(191, 739, 'Wires 91/92 are fed from panel RP-2.', { fs: 8, fw: 700 })}
+  ${text(191, 752, 'Live with this handle OFF.', { fs: 8, fw: 700 })}
+</g>`;
+/* pilot lights 3 x 4 */
+const PL = [
+  ['PL1', 'CR1 PICKED UP', '#3aa35a'], ['PL2', 'CR1 DROPPED OUT', '#d84040'], ['PL3', 'PB2 CLOSED', '#e9a321'],
+  ['PL4', 'TANK HIGH', '#f2f2f2'], ['PL5', 'AIR PRESSURE OK', '#3aa35a'], ['PL6', 'HIGH TEMP', '#d84040'],
+  ['PL7', 'FLOW', '#4a8ad8'], ['PLF', 'REMOTE INTERLOCK', '#ef8a2c'], ['PL8', 'TR1 TIMED', '#e9a321'],
+  ['PL9', 'TR2 TIMED', '#e9a321'], ['PL10', 'TD3 TIMED', '#e9a321'], ['PL11', 'TD4 TIMED', '#e9a321'],
+];
+const GREY_DAY8 = new Set(['PL8', 'PL9', 'PL10', 'PL11']);
+PL.forEach(([tag, leg, col], i) => {
+  const c = i % 3, r = Math.floor(i / 3);
+  const x = 72 + c * 88, y = 344 + r * 72; // rows at 344, 416, 488, 560
+  const lit = S.lit.includes(tag);
+  const grey = GREY_DAY8.has(tag);
+  svg += `<g class="pilot" opacity="${grey ? 0.4 : 1}" role="button" aria-label="${tag} ${leg}${grey ? ', taught Day 8' : ''}">
+    ${lit ? `<circle cx="${x}" cy="${y}" r="17" fill="${col}" opacity=".75" filter="url(#fGlow)"/>` : ''}
+    <circle cx="${x}" cy="${y}" r="16" fill="#9aa2a9" stroke="#6f777e"/>
+    <circle cx="${x}" cy="${y}" r="11.5" fill="${col}" opacity="${lit ? 1 : 0.38}" stroke="#00000033"/>
+    ${lit ? `<circle cx="${x - 3.5}" cy="${y - 4}" r="3.5" fill="#fff" opacity=".7"/>` : `<circle cx="${x - 3.5}" cy="${y - 4}" r="2.5" fill="#fff" opacity=".35"/>`}
+    <rect x="${x - 40}" y="${y + 20}" width="80" height="30" rx="3" fill="${tag === 'PLF' ? '#ffe2c4' : '#fff'}" stroke="#a9b1b8" stroke-width="0.8"/>
+    ${text(x, y + 32, tag, { fs: 9, fw: 800 })}
+    ${text(x, y + 44, leg, { fs: 7.6, fw: 600, fill: '#3b4651' })}
+  </g>`;
+});
+svg += text(160, 624, 'PL8–PL11 are timer lights, taught Day 8', { fs: 8, fill: '#7b8794' });
+/* pushbuttons */
+const PB = [['PB1', 'START', 'NO, momentary', '#2e8b3e'], ['PB2', 'STOP', 'NC, momentary', '#c62828'], ['PB3', 'STOP', 'NC, maintained', '#c62828']];
+PB.forEach(([tag, leg, sub, col], i) => {
+  const x = 72 + i * 88, y = 664;
+  const mush = tag === 'PB3';
+  svg += `<g class="pb" role="button" aria-label="${tag} ${leg}">
+    <rect x="${x - 26}" y="${y - 26}" width="52" height="52" rx="6" fill="#aab2b9" stroke="#7c858d"/>
+    ${mush ? `<circle cx="${x}" cy="${y}" r="24" fill="#f3c623" stroke="#9c7d0c"/><circle cx="${x}" cy="${y}" r="19" fill="${col}" stroke="#7f1a1a"/><circle cx="${x - 6}" cy="${y - 7}" r="6" fill="#fff" opacity=".25"/>`
+            : `<circle cx="${x}" cy="${y}" r="17" fill="#3c4248"/><circle cx="${x}" cy="${y}" r="13.5" fill="${col}" stroke="#00000044"/><circle cx="${x - 4}" cy="${y - 5}" r="4" fill="#fff" opacity=".25"/>`}
+    <rect x="${x - 40}" y="${y + 30}" width="80" height="30" rx="3" fill="#fff" stroke="#a9b1b8" stroke-width="0.8"/>
+    ${text(x, y + 42, `${tag} ${leg}`, { fs: 9, fw: 800 })}
+    ${text(x, y + 54, sub, { fs: 7.6, fw: 600, fill: '#3b4651' })}
+  </g>`;
+});
+
+/* ---------- interior ---------- */
+svg += `<g id="interior">
+  <rect x="322" y="18" width="664" height="764" rx="6" fill="#8e969d" stroke="#6f777e" stroke-width="2"/>
+  <rect x="336" y="32" width="636" height="736" rx="3" fill="url(#gGalv)" stroke="#b3bac0"/>
+  ${text(348, 776, 'BACKPLATE · Bucket 1A', { fs: 8, a: 'start', fill: '#e8ebee', fw: 700, ls: 0.5 })}
+</g>`;
+/* power section greyed (Ch 2) */
+svg += `<g id="power" opacity=".42">
+  <rect x="348" y="44" width="612" height="150" rx="4" fill="#dfe3e6" stroke="#b5bcc2" stroke-dasharray="5 4"/>
+  <rect x="372" y="62" width="92" height="116" rx="5" fill="#a5adb4" stroke="#7d868e"/>${text(418, 125, 'DISC', { fs: 11, fw: 800 })}
+  ${[0, 1, 2].map(k => `<rect x="${486 + k * 30}" y="70" width="20" height="100" rx="9" fill="#c9cfd4" stroke="#7d868e"/>`).join('')}${text(516, 188, 'PF', { fs: 9, fw: 700 })}
+  <rect x="598" y="66" width="110" height="108" rx="6" fill="#a5adb4" stroke="#7d868e"/>${text(653, 125, 'M', { fs: 14, fw: 800 })}
+  <rect x="722" y="96" width="96" height="78" rx="5" fill="#b5bcc2" stroke="#7d868e"/>${text(770, 140, 'OL', { fs: 12, fw: 800 })}
+  <rect x="348" y="44" width="612" height="150" rx="4" fill="url(#gHatch)"/>
+</g>
+<g><rect x="806" y="52" width="146" height="24" rx="12" fill="#fff" stroke="#b5bcc2"/>${text(879, 68, 'Power section · Chapter 2', { fs: 9.5, fw: 700, fill: '#5b6670' })}</g>`;
+/* ducts and rails */
+const duct = (y, h = 28) => { let s = `<rect x="344" y="${y}" width="620" height="${h}" rx="2" fill="#c3c9ce" stroke="#9aa2a9"/>`; for (let x = 352; x < 960; x += 12) s += `<rect x="${x}" y="${y + 3}" width="5" height="${h - 6}" fill="#aeb5bb"/>`; return s + `<rect x="344" y="${y}" width="620" height="4" fill="#d3d8dc"/>`; };
+const rail = (y) => { let s = `<rect x="344" y="${y - 7}" width="620" height="14" fill="url(#gRail)" stroke="#8a939a" stroke-width=".8"/>`; for (let x = 356; x < 960; x += 25) s += `<rect x="${x}" y="${y - 2}" width="12" height="4" rx="2" fill="#7f878e"/>`; return s; };
+svg += duct(202) + rail(306) + duct(404) + rail(520);
+
+/* CPT */
+svg += `<g id="cpt" role="button" aria-label="CPT, control power transformer">
+  <rect x="356" y="236" width="128" height="150" rx="5" fill="#d1d6da" stroke="#8a939a" filter="url(#fShadow)"/>
+  <rect x="366" y="244" width="108" height="22" rx="3" fill="#30363c"/>
+  <rect x="372" y="274" width="96" height="64" rx="3" fill="url(#gCore)"/>
+  <rect x="386" y="282" width="68" height="48" rx="6" fill="url(#gCopper)" stroke="#7a4a22"/>
+  <rect x="398" y="296" width="44" height="20" rx="2" fill="#f7f7f2" stroke="#b8b49b"/>${text(420, 309, 'CPT', { fs: 9, fw: 800 })}
+  <rect x="366" y="346" width="108" height="30" rx="3" fill="#30363c"/>
+</g>`;
+let cpt = '';
+['H1', 'H3', 'H2', 'H4'].forEach((h, k) => { const x = 378 + k * 28; cpt += `<g opacity=".45">${screw('CPT_' + h, x, 255, { r: 5.5 })}</g>` + text(x, 272, h, { fs: 6.5, fill: '#cfd5da', fw: 700 }); });
+[['X1', 394], ['X2', 446]].forEach(([h, x]) => { cpt += screw('CPT_' + h, x, 361) + text(x - 10, 343, h, { fs: 8, fw: 800, a: 'end', fill: h === 'X1' ? '#9b1c1c' : '#26313b' }); });
+svg += cpt + text(420, 232 - 0, 'CPT · 120 V secondary', { fs: 8.5, fw: 700, fill: '#3b4651' });
+
+/* F1 */
+svg += `<g id="f1" role="button" aria-label="F1, control supply fuse">
+  <rect x="500" y="244" width="40" height="132" rx="4" fill="#2f353b" stroke="#15181a" filter="url(#fShadow)"/>
+  <rect x="506" y="276" width="28" height="68" rx="4" fill="#41484f"/>
+  <rect x="512" y="286" width="16" height="48" rx="7" fill="#e9e4d3" stroke="#a49f88"/>
+  <rect x="504" y="300" width="32" height="10" rx="2" fill="#f5f6f7"/>${text(520, 308, 'F1', { fs: 8, fw: 800 })}
+</g>` + screw('F1_T', 520, 256) + screw('F1_B', 520, 364) + text(520, 232, 'F1 · 5 A', { fs: 8.5, fw: 700, fill: '#3b4651' });
+
+/* CR1 */
+svg += `<g id="cr1" role="button" aria-label="CR1, control relay, 2 NO plus 2 NC">
+  <rect x="560" y="236" width="118" height="150" rx="6" fill="#3a4148" stroke="#1d2226" filter="url(#fShadow)"/>
+  <rect x="566" y="244" width="106" height="24" rx="3" fill="#4a525a"/>
+  <rect x="566" y="352" width="106" height="24" rx="3" fill="#4a525a"/>
+  <rect x="574" y="278" width="90" height="64" rx="4" fill="#5b646c"/>
+  <rect x="582" y="283" width="74" height="30" rx="3" fill="#f5f6f7" stroke="#aab2b9"/>
+  ${text(619, 296, 'CR1', { fs: 10, fw: 800 })}${text(619, 308, '120 V coil · 2NO+2NC', { fs: 6.3, fw: 600, fill: '#3b4651' })}
+  <rect x="590" y="318" width="58" height="18" rx="3" fill="#7f8a94"/><rect x="596" y="322" width="18" height="10" rx="2" fill="#c8d0d6"/><rect x="624" y="322" width="18" height="10" rx="2" fill="#c8d0d6"/>
+</g>`;
+const CRT = ['C1', '1', '3', '5', '7'], CRB = ['C2', '2', '4', '6', '8'];
+CRT.forEach((p, k) => { const x = 578 + k * 20.5; svg += screw('CR1_' + p, x, 256, { r: 5.5 }) + text(x, 275, p, { fs: 6.5, fw: 700, fill: '#d5dbe0' }); });
+CRB.forEach((p, k) => { const x = 578 + k * 20.5; svg += screw('CR1_' + p, x, 364, { r: 5.5 }) + text(x, 350.5, p, { fs: 6.5, fw: 700, fill: '#d5dbe0' }); });
+/* timers greyed (Day 8) */
+svg += `<g id="timers" opacity=".4">
+  ${[['TR1', 696], ['TR2', 768]].map(([t, x]) => `<rect x="${x}" y="240" width="62" height="142" rx="5" fill="#3a4148"/><rect x="${x + 6}" y="250" width="50" height="50" rx="25" fill="#c9cfd4"/><line x1="${x + 31}" y1="275" x2="${x + 44}" y2="262" stroke="#26313b" stroke-width="2"/><rect x="${x + 8}" y="312" width="46" height="18" rx="2" fill="#f5f6f7"/>${text(x + 31, 325, t, { fs: 8.5, fw: 800 })}`).join('')}
+  ${[['TD3', 842], ['TD4', 900]].map(([t, x]) => `<rect x="${x}" y="246" width="50" height="130" rx="4" fill="#e8ebee" stroke="#8a939a"/><circle cx="${x + 25}" cy="290" r="13" fill="#3a4148"/><line x1="${x + 25}" y1="290" x2="${x + 31}" y2="280" stroke="#fff" stroke-width="2"/><rect x="${x + 6}" y="316" width="38" height="16" rx="2" fill="#fff" stroke="#aab2b9"/>${text(x + 25, 327, t, { fs: 8, fw: 800 })}`).join('')}
+</g>
+<g><rect x="770" y="388" width="116" height="20" rx="10" fill="#fff" stroke="#b5bcc2"/>${text(828, 402, 'Timers · taught Day 8', { fs: 8.5, fw: 700, fill: '#5b6670' })}</g>`;
+
+/* device-to-duct jumpers (short, numbered) */
+svg += wire('M394 366 L394 412', 'red') + wire('M446 366 L446 412', 'white') + marker(394, 392, 'X1') + marker(446, 392, '2');
+svg += wire('M520 251 L520 222', 'red') + marker(520, 244, 'X1');
+svg += wire('M520 369 L520 412', 'red') + marker(520, 392, '1');
+svg += wire('M578 251 L578 230', 'red') + wire('M598.5 251 L598.5 230', 'red') + wire('M619 251 L619 230', 'red') + wire('M639.5 251 L639.5 230', 'red');
+svg += wire('M578 369 L578 412', 'white') + wire('M598.5 369 L598.5 412', 'red') + wire('M619 369 L619 412', 'red') + wire('M639.5 369 L639.5 412', 'red');
+svg += marker(578, 392, '2') + marker(598.5, 392, '5') + marker(619, 392, '13') + marker(639.5, 392, '6');
+
+/* terminal strip TB1 */
+const TBN = ['X1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '91', '92', 'G'];
+const bw = 28, bx0 = 366;
+
+TBN.forEach((n, k) => {
+  const x = bx0 + k * bw, cx = x + bw / 2;
+  const isF = n === '91' || n === '92', isG = n === 'G';
+  const body = isF ? '#ee8a35' : isG ? '#3e9a4c' : '#a7b0b8';
+  const col = isF ? 'orange' : isG ? 'green' : n === '2' ? 'white' : 'red';
+  const grey = ['14', '15', '16', '17'].includes(n);
+  svg += `<g opacity="${grey ? 0.45 : 1}">` + wire(`M${cx} 468 L${cx} 432`, col, 2.4) + wire(`M${cx} 582 L${cx} 600`, col, 2.4) +
+    `<rect x="${x + 1.5}" y="462" width="${bw - 3}" height="126" rx="3" fill="${body}" stroke="#5f6870" stroke-width=".8"/>` +
+    (isG ? `<rect x="${x + 1.5}" y="508" width="${bw - 3}" height="9" fill="#f1d21c"/>` : '') +
+    `<rect x="${x + 4}" y="500" width="${bw - 8}" height="38" rx="2" fill="#fbfbfa" stroke="#b8c0c7" stroke-width=".6"/>` +
+    text(cx, n.length > 2 ? 523 : 524, n, { fs: n.length > 1 ? 9 : 10, fw: 800, fill: isF ? '#8a3c00' : '#1d2730' }) +
+    screw('TB_' + n, cx, 478, { r: 7 }) + screw('TB_' + n + 'b', cx, 572, { r: 7 }) + `</g>`;
+});
+svg += `<g transform="rotate(-90 352 525)">${text(352, 528, 'TB1 · TERMINAL STRIP', { fs: 8.5, fw: 800, fill: '#3b4651', ls: 0.6 })}</g>`;
+
+/* EGC bar */
+svg += `<g id="egc"><rect x="366" y="680" width="232" height="26" rx="4" fill="#cbb98f" stroke="#8a7a50"/>`;
+for (let k = 0; k < 7; k++) svg += screw('EGC_' + k, 384 + k * 32, 693, { r: 6.5 });
+svg += `</g>` + text(366, 724, 'EGC bar · bonded to X2 at the source', { fs: 9, fw: 700, a: 'start', fill: '#3b4651' }) + wire('M606 693 L 640 693 Q650 693 650 683 L650 662 Q650 654 658 654 L932 654 Q940 654 940 646 L940 600', 'green', 2.2);
+
+/* next-terminal highlight */
+if (S.target) {
+  const [tx, ty] = T[S.target];
+  svg += `<g id="target"><circle cx="${tx}" cy="${ty}" r="15" fill="none" stroke="#1d5fbf" stroke-width="2.5" opacity=".35"/><circle cx="${tx}" cy="${ty}" r="11" fill="none" stroke="#1d5fbf" stroke-width="2.5"/>
+    <rect x="${tx - 140}" y="${ty - 52}" width="120" height="24" rx="6" fill="#1d5fbf"/><path d="M${tx - 30} ${ty - 28} L${tx - 12} ${ty - 14} L${tx - 20} ${ty - 28} Z" fill="#1d5fbf"/>
+    ${text(tx - 80, ty - 36, 'Next: black probe → G', { fs: 9.5, fw: 700, fill: '#fff' })}</g>`;
+}
+/* probes (drawn in the board so they zoom with it) */
+const probe = (id, col, ang) => {
+  const [x, y] = T[id];
+  return `<g transform="translate(${x} ${y}) rotate(${ang})" filter="url(#fShadow)">
+    <path d="M0 0 L2.2 -12 L-2.2 -12 Z" fill="#c8ced3" stroke="#6f777e" stroke-width=".6"/>
+    <rect x="-4" y="-46" width="8" height="34" rx="2" fill="${col}" stroke="#00000055"/>
+    <rect x="-6.5" y="-52" width="13" height="8" rx="2" fill="${col}" stroke="#00000055"/>
+    <rect x="-4.5" y="-86" width="9" height="34" rx="3" fill="${col}" stroke="#00000055"/>
+  </g>`;
+};
+const ANG = { red: LIVE ? 40 : 150, black: LIVE ? 140 : 128 };
+svg += probe(S.red, '#c62828', ANG.red) + probe(S.black, '#25292d', ANG.black);
+document.getElementById('bucket').innerHTML = svg;
+
+/* probe tails in board coordinates (for the leads overlay) */
+const tail = (id, ang) => { const [x, y] = T[id]; const a = ang * Math.PI / 180; return [x + Math.sin(a) * 86, y - Math.cos(a) * 86]; };
+/* ================= zoom ================= */
+const bsvg = document.getElementById('bucket');
+if (Q.get('zoom')) {
+  bsvg.setAttribute('viewBox', LIVE ? '500 200 360 285' : '338 300 420 332');
+  document.getElementById('pct').textContent = LIVE ? '250%' : '212%';
+} else document.getElementById('pct').textContent = '89%';
+
+/* ================= meter ================= */
+const dmm = document.getElementById('dmm');
+const pos = [['OFF', -135], ['V~', -90], ['LoZ', -45], ['V⎓', 0], ['mV', 45], ['Ω', 90], ['·))', 135]];
+let m = `<rect x="4" y="4" width="312" height="104" rx="14" fill="#f2c230" stroke="#a3800f"/><rect x="11" y="11" width="298" height="90" rx="10" fill="#2b2f33"/>
+<rect x="20" y="18" width="122" height="52" rx="5" fill="#bfcab0" stroke="#7d8a6c"/>
+<text x="26" y="30" font-size="7.5" font-weight="700" fill="#3b4430" font-family="Inter,Arial">AC  AUTO  hi-Z</text>
+<text x="136" y="30" font-size="8" font-weight="700" fill="#3b4430" text-anchor="end" font-family="Inter,Arial">V AC</text>
+<text x="136" y="64" font-size="30" font-weight="700" fill="#1d2418" text-anchor="end" font-family="DejaVu Sans Mono,Menlo,monospace">${S.reading}</text>
+<g font-family="Inter,Arial" font-size="7" font-weight="700" fill="#e8ebee" text-anchor="middle">
+<rect x="20" y="78" width="36" height="14" rx="3" fill="#41474d"/><text x="38" y="88">HOLD</text>
+<rect x="63" y="78" width="36" height="14" rx="3" fill="#41474d"/><text x="81" y="88">RANGE</text>
+<rect x="106" y="78" width="36" height="14" rx="3" fill="#41474d"/><text x="124" y="88">LIGHT</text></g>`;
+const cx0 = 200, cy0 = 58;
+m += `<circle cx="${cx0}" cy="${cy0}" r="26" fill="#1f2326" stroke="#555c62"/>`;
+pos.forEach(([l, a]) => { const r = a * Math.PI / 180; const x = cx0 + Math.sin(r) * 38, y = cy0 - Math.cos(r) * 38 + 3; const on = l === 'V~'; m += `<text x="${x}" y="${y}" font-size="7.5" font-weight="700" fill="${on ? '#f2c230' : '#c9cfd4'}" text-anchor="middle" font-family="Inter,Arial">${l}</text>`; });
+m += `<circle cx="${cx0}" cy="${cy0}" r="19" fill="#3a4047" stroke="#15181a"/><g transform="rotate(-90 ${cx0} ${cy0})"><rect x="${cx0 - 5}" y="${cy0 - 22}" width="10" height="30" rx="5" fill="#4c535a" stroke="#15181a"/><rect x="${cx0 - 1.5}" y="${cy0 - 21}" width="3" height="10" rx="1.5" fill="#f2c230"/></g>`;
+m += `<g font-family="Inter,Arial" font-size="7" font-weight="700" fill="#c9cfd4" text-anchor="middle"><text x="268" y="40">COM</text><circle cx="268" cy="54" r="8" fill="#111" stroke="#777"/><text x="294" y="40">VΩ</text><circle cx="294" cy="54" r="8" fill="#111" stroke="#c62828"/><text x="281" y="86" fill="#8e979f">CAT III 600 V</text></g>`;
+dmm.innerHTML = m;
+document.getElementById('meterft').innerHTML = S.ft;
+
+/* ================= leads overlay ================= */
+function drawLeads() {
+  const leads = document.getElementById('leads');
+  const can = document.getElementById('canvas').getBoundingClientRect();
+  const ctm = bsvg.getScreenCTM();
+  const toScr = ([x, y]) => { const p = bsvg.createSVGPoint(); p.x = x; p.y = y; const q = p.matrixTransform(ctm); return [q.x - can.left, q.y - can.top]; };
+  const dr = dmm.getBoundingClientRect();
+  const jack = (jx, jy) => [dr.left - can.left + jx * dr.width / 320, dr.top - can.top + jy * dr.height / 112];
+  const R = toScr(tail(S.red, ANG.red)), B = toScr(tail(S.black, ANG.black));
+  const jr = jack(294, 54), jb = jack(268, 54);
+  const path = (a, b) => `M${a[0]} ${a[1]} C ${a[0] + 70} ${a[1] + 70}, ${b[0] - 90} ${b[1] + 10}, ${b[0]} ${b[1]}`;
+  leads.innerHTML = `<path d="${path(B, jb)}" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round" opacity=".9"/><path d="${path(B, jb)}" fill="none" stroke="#3a3f44" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="${path(R, jr)}" fill="none" stroke="#7f1a1a" stroke-width="5" stroke-linecap="round"/><path d="${path(R, jr)}" fill="none" stroke="#d63a3a" stroke-width="2.5" stroke-linecap="round"/>`;
+}
+
+/* ================= coach hint ================= */
+if (Q.get('zoom')) document.getElementById('hint').classList.add('mini');
+document.getElementById('hint').innerHTML = Q.get('zoom') ? `Coach · ${S.hint[0]} · ${S.hint[1]} ▸` : `<div class="k">${S.hint[0]}</div><div class="t">${S.hint[1]}</div><div>${S.hint[2]}</div><div class="why">${S.hint[3]}</div><div class="row"><button class="p">Show me</button><button>Hint</button><button>Hide</button></div>`;
+
+/* ================= lockout card ================= */
+const L = S.locked;
+const lsteps = [
+  ['Prepare', 'Identify every source: bucket control supply (X1/X2) and the remote interlock circuit (91/92 from RP-2). Notify affected people.', true],
+  ['Shut down', 'Stop the equipment the normal way first.', true],
+  ['Isolate', 'Bucket handle OFF. Remote feed for 91/92 OFF at panel RP-2.', true],
+  ['Lock and tag', 'Lock L-01 and tag on the bucket handle. Lock L-02 and tag at RP-2.', true],
+  ['Stored energy', 'Relieve, disconnect or restrain stored energy.', true],
+];
+let lh = '';
+lsteps.forEach(([t, d, ok], i) => { lh += `<div class="lstep ${L ? '' : 'cur'}"><div class="num">${L && ok ? '✓' : i + 1}</div><div><div class="tt">${t}</div><div class="dd">${d}</div></div></div>`; });
+const checks = [
+  ['Try START: nothing operates', '', true], ['Prove the meter on the known source', '120.0 V', true],
+  ['X1 – X2', '0.0 V', true], ['X2 – G', '0.0 V', true], ['X1 – G', '', false, true], ['91 – 92', ''], ['91 – G', ''], ['92 – G', ''], ['Prove the meter again on the known source', ''],
+];
+lh += `<div class="lstep cur"><div class="num">6</div><div><div class="tt">Verify: live, dead, live</div><div class="dd">Test for absence on every combination, with the meter proved before and after.</div>`;
+if (L) checks.forEach(([t, v, ok, now]) => { lh += `<div class="chk ${ok ? 'ok' : ''} ${now ? 'now' : ''}"><i>${ok ? '✓' : ''}</i>${t}${now ? ' ← next' : ''}<span class="v">${v}</span></div>`; });
+else lh += `<div class="note">Lockout starts on Day 2. Today you only find the sources.</div>`;
+lh += `</div></div>`;
+document.getElementById('lotosteps').innerHTML = lh;
+/* the X1-X2 check ticks before X2-G here only in this mock order; count shows 4 / 9 */
+
+/* ================= log ================= */
+const LOG = [
+  ['8:02', 'BRIEF', 'Door opened for the tour. Sources found: X1/X2 control supply, remote interlock 91/92 (orange, label on door).', 'ok'],
+  ['8:04', 'READING', 'V~ hi-Z · X1 → X2 = 120.0 V (bucket live, idle).', ''],
+  ['8:05', 'READING', 'V~ hi-Z · CR1 1 → CR1 2 = 114.6 V. Open contact: X1 on one side, X2 through the off PL1 lamp on the other.', ''],
+  ['8:05', 'READING', 'LoZ V~ · CR1 1 → CR1 2 = 24.0 V. The low-impedance meter loads the circuit and PL1 glows during the test.', ''],
+];
+if (L) LOG.push(
+  ['8:09', 'LOCKOUT', 'Normal stop. Handle OFF. Lock L-01 and tag on the handle.', 'ok'],
+  ['8:10', 'LOCKOUT', 'Remote feed for 91/92 OFF at RP-2. Lock L-02 and tag.', 'ok'],
+  ['8:11', 'VERIFY', 'START pressed: nothing operates.', 'ok'],
+  ['8:12', 'VERIFY', 'Meter proved on the known source: 120.0 V.', 'ok'],
+  ['8:12', 'NOTE', 'X1 → 5 = 0.0 V: that pair is not one of the dead checks. The lockout card lists the pairs.', 'warn'],
+  ['8:12', 'VERIFY', 'X2 → G = 0.0 V ✓', 'ok'],
+  ['8:13', 'VERIFY', 'X1 → X2 = 0.0 V ✓', 'ok'],
+);
+document.getElementById('logpane').innerHTML = `<h2>Log</h2><div class="sub">Everything you did today, newest last</div>` + LOG.map(([t, g, s, c]) => `<div class="e ${c}"><div class="tm">${t} AM</div><div><span class="tag">${g}</span>${s}</div></div>`).join('');
+
+/* ================= schematic ================= */
+function drawSchem(mode) {
+  const live = mode === 'before' || (LIVE && mode === 'now');
+  const hot = new Set(['X1', '1', '3', '6', '7', '11']); // model: nets at 120 V to ground, idle
+  const C = (net) => net === 'F' ? '#e07a1f' : !live ? '#1d2730' : net === '2' ? 'GROUND' : hot.has(net) ? '#d32f2f' : '#1d2730';
+  const seg = (x1, y1, x2, y2, net) => { const c = C(net); return c === 'GROUND' ? `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#8a959f" stroke-width="5"/><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#fff" stroke-width="3"/>` : `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="2.6"/>`; };
+  const tx = (x, y, s, o = {}) => `<text x="${x}" y="${y}" font-size="${o.fs || 10}" font-weight="${o.fw || 600}" fill="${o.fill || '#26313b'}" text-anchor="${o.a || 'middle'}" font-family="Inter,Arial">${esc(s)}</text>`;
+  const L1 = 40, L2 = 460;
+  let h = '';
+  // rails
+  h += seg(L1, 34, L1, 516, '1') + seg(L2, 34, L2, 516, '2');
+  h += tx(L1, 16, 'X1', { fw: 800, fill: '#9b1c1c' }) + tx(L2, 16, 'X2', { fw: 800 });
+  h += `<rect x="${L1 - 7}" y="24" width="14" height="10" fill="#fff" stroke="#26313b"/>` + tx(L1 + 14, 32, 'F1', { a: 'start', fs: 9 });
+  const no = (x, y) => `<line x1="${x}" y1="${y - 8}" x2="${x}" y2="${y + 8}" stroke="#26313b" stroke-width="2"/><line x1="${x + 10}" y1="${y - 8}" x2="${x + 10}" y2="${y + 8}" stroke="#26313b" stroke-width="2"/>`;
+  const nc = (x, y) => no(x, y) + `<line x1="${x - 3}" y1="${y + 9}" x2="${x + 13}" y2="${y - 9}" stroke="#26313b" stroke-width="1.6"/>`;
+  const pbno = (x, y) => `<circle cx="${x}" cy="${y + 4}" r="2.5" fill="none" stroke="#26313b" stroke-width="1.6"/><circle cx="${x + 18}" cy="${y + 4}" r="2.5" fill="none" stroke="#26313b" stroke-width="1.6"/><line x1="${x - 2}" y1="${y - 6}" x2="${x + 20}" y2="${y - 6}" stroke="#26313b" stroke-width="1.8"/><line x1="${x + 9}" y1="${y - 6}" x2="${x + 9}" y2="${y - 13}" stroke="#26313b" stroke-width="1.6"/>`;
+  const pbnc = (x, y, mush) => `<circle cx="${x}" cy="${y - 2}" r="2.5" fill="none" stroke="#26313b" stroke-width="1.6"/><circle cx="${x + 18}" cy="${y - 2}" r="2.5" fill="none" stroke="#26313b" stroke-width="1.6"/><line x1="${x - 2}" y1="${y + 3}" x2="${x + 20}" y2="${y + 3}" stroke="#26313b" stroke-width="1.8"/><line x1="${x + 9}" y1="${y + 3}" x2="${x + 9}" y2="${y - 12}" stroke="#26313b" stroke-width="1.6"/>` + (mush ? `<path d="M${x + 1} ${y - 12} Q ${x + 9} ${y - 22} ${x + 17} ${y - 12} Z" fill="#26313b"/>` : '');
+  const coil = (x, y, t) => `<circle cx="${x}" cy="${y}" r="11" fill="#fff" stroke="#26313b" stroke-width="1.8"/>` + tx(x, y + 3.5, t, { fs: 7.5, fw: 800 });
+  const lamp = (x, y, t, on, col) => `<circle cx="${x}" cy="${y}" r="10" fill="${on ? col : '#fff'}" stroke="#26313b" stroke-width="1.8"/>` + [0, 1, 2, 3].map(k => { const a = Math.PI / 4 + k * Math.PI / 2; return `<line x1="${x + Math.cos(a) * 3}" y1="${y + Math.sin(a) * 3}" x2="${x + Math.cos(a) * 9}" y2="${y + Math.sin(a) * 9}" stroke="#26313b" stroke-width="1.2"/>`; }).join('') + tx(x, y - 14, t, { fs: 8, fw: 800 });
+  const wn = (x, y, n) => `<rect x="${x - 8}" y="${y - 15}" width="16" height="11" rx="2" fill="#fff" stroke="#c2c9cf"/>` + tx(x, y - 6.5, n, { fs: 7.5, fw: 700 });
+  const litNow = live ? ['PL2', 'PL3'] : [];
+  const rows = [
+    // [label, y, parts]
+    ['1', 'START circuit', (y) => seg(L1, y, 90, y, '1') + pbnc(90, y, true) + tx(99, y + 18, 'PB3', { fs: 8 }) + seg(110, y, 160, y, '3') + wn(135, y, '3') + pbno(160, y) + tx(169, y + 18, 'PB1', { fs: 8 }) + seg(180, y, 389, y, '4') + wn(290, y, '4') + coil(400, y, 'CR1') + seg(411, y, L2, y, '2')],
+    ['2', 'CR1 NO contact', (y) => seg(L1, y, 160, y, '1') + no(160, y) + tx(165, y + 18, 'CR1 1-2', { fs: 7.5 }) + seg(170, y, 390, y, '5') + wn(290, y, '5') + lamp(400, y, 'PL1', litNow.includes('PL1'), '#3aa35a') + seg(410, y, L2, y, '2')],
+    ['3', 'CR1 NC contact', (y) => seg(L1, y, 160, y, '1') + nc(160, y) + tx(165, y + 18, 'CR1 5-6', { fs: 7.5 }) + seg(170, y, 390, y, '6') + wn(290, y, '6') + lamp(400, y, 'PL2', litNow.includes('PL2'), '#ef6b6b') + seg(410, y, L2, y, '2')],
+    ['4', 'NC pushbutton', (y) => seg(L1, y, 160, y, '1') + pbnc(160, y) + tx(169, y + 18, 'PB2', { fs: 8 }) + seg(180, y, 390, y, '7') + wn(290, y, '7') + lamp(400, y, 'PL3', litNow.includes('PL3'), '#f2c14e') + seg(410, y, L2, y, '2')],
+    ['5', 'Float switch', (y) => seg(L1, y, 160, y, '1') + no(160, y) + tx(165, y + 18, 'FS1', { fs: 8 }) + seg(170, y, 390, y, '8') + wn(290, y, '8') + lamp(400, y, 'PL4', false) + seg(410, y, L2, y, '2')],
+    ['6', 'Pressure switch', (y) => seg(L1, y, 160, y, '1') + no(160, y) + tx(165, y + 18, 'PS1', { fs: 8 }) + seg(170, y, 390, y, '9') + wn(290, y, '9') + lamp(400, y, 'PL5', false) + seg(410, y, L2, y, '2')],
+    ['7', 'Temperature switch', (y) => seg(L1, y, 160, y, '1') + no(160, y) + tx(165, y + 18, 'TS1', { fs: 8 }) + seg(170, y, 390, y, '10') + wn(290, y, '10') + lamp(400, y, 'PL6', false) + seg(410, y, L2, y, '2')],
+    ['8', 'Limit switch + solenoid', (y) => seg(L1, y, 160, y, '1') + nc(160, y) + tx(165, y + 18, 'LS1', { fs: 8 }) + seg(170, y, 389, y, '11') + wn(290, y, '11') + coil(400, y, 'SOL1') + seg(411, y, L2, y, '2')],
+    ['9', 'Flow switch', (y) => seg(L1, y, 160, y, '1') + no(160, y) + tx(165, y + 18, 'FLS1', { fs: 8 }) + seg(170, y, 390, y, '12') + wn(290, y, '12') + lamp(400, y, 'PL7', false) + seg(410, y, L2, y, '2')],
+  ];
+  rows.forEach(([n, lab, f], i) => { const y = 62 + i * 46; h += tx(14, y + 4, n, { fs: 9, fill: '#7b8794' }) + f(y) + tx(250, y + 30 - 4, '', {}); });
+  // greyed timer rungs
+  const yt = 62 + 9 * 46;
+  h += `<g opacity=".38">${seg(L1, yt, L2, yt, '13')}<rect x="120" y="${yt - 12}" width="260" height="24" rx="5" fill="#eef1f3" stroke="#b5bcc2"/>${tx(250, yt + 4, 'Rungs 10–15 · CR1 3-4 and timers TR1–TD4 · Day 8', { fs: 9 })}</g>` + tx(14, yt + 4, '10', { fs: 9, fill: '#7b8794' });
+  // foreign rung
+  const yf = yt + 58;
+  h += `<rect x="24" y="${yf - 24}" width="452" height="52" rx="6" fill="#fff6ec" stroke="#f1c58a" stroke-dasharray="4 3"/>`;
+  h += tx(30, yf - 12, 'Remote interlock · fed from panel RP-2 · stays live with the bucket handle OFF', { a: 'start', fs: 8.5, fill: '#8a4b00' });
+  const fOn = live; // remote source on before lockout; off when L-02 applied
+  const fc = fOn ? '#e07a1f' : '#1d2730';
+  h += `<line x1="60" y1="${yf + 8}" x2="390" y2="${yf + 8}" stroke="${fc}" stroke-width="2.6"/><line x1="410" y1="${yf + 8}" x2="440" y2="${yf + 8}" stroke="${fc}" stroke-width="2.6" stroke-dasharray="${fOn ? '0' : '0'}"/>`;
+  h += tx(52, yf + 12, 'RS1', { a: 'end', fs: 8 }) + tx(448, yf + 12, 'RS2', { a: 'start', fs: 8 }) + wn(220, yf + 8, '91') + wn(428, yf + 8, '92') + lamp(400, yf + 8, 'PLF', fOn, '#ef8a2c');
+  document.getElementById('schem').innerHTML = h;
+  document.getElementById('schemsub').textContent = live
+    ? (LIVE ? 'Now: bucket live, idle (nothing pressed). Colours come from the circuit model.' : 'Before lockout: bucket live, idle. Snapshot from the model at 8:05 AM.')
+    : 'Now: locked out at the handle and at RP-2. Every conductor is dead.';
+  document.querySelectorAll('#cmp button').forEach(b => b.classList.toggle('on', b.dataset.c === mode));
+}
+drawSchem(COMPARE);
+document.querySelectorAll('#cmp button').forEach(b => b.onclick = () => drawSchem(b.dataset.c));
+
+/* ================= tabs ================= */
+function showTab(t) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b.dataset.t === t));
+  document.querySelectorAll('.pane').forEach(p => p.hidden = p.dataset.p !== t);
+}
+document.querySelectorAll('.tab').forEach(b => b.onclick = () => showTab(b.dataset.t));
+showTab(TAB);
+
+/* ================= status bar ================= */
+document.getElementById('status').innerHTML = (L
+  ? `<span class="s"><i style="background:#c62828"></i>Locked out · handle L-01 · RP-2 L-02</span><span class="s">Prove dead · 4 of 9 checks</span>`
+  : `<span class="s"><i style="background:#e07a1f"></i>Bucket live · door open for the tour</span><span class="s">Tour · 4 of 4</span>`)
+  + `<span class="s">Meter: V~ hi-Z (10 MΩ)</span><span class="s">Bucket 1A · Ch 1 · Day 1</span><span class="sp"></span><span class="s">Working to NFPA 70 2026 · NFPA 70E 2024 · OSHA 1910.147</span><span class="s">Saved 8:14 AM</span>`;
+
+drawLeads();
+window.addEventListener('resize', drawLeads);
+</script>
+</body>
+</html>
