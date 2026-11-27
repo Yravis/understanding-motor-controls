@@ -16,6 +16,18 @@ describe('physical view overflow (browser-measured)', () => {
   }, 90_000);
 });
 
+describe('redrawn bucket overflow (browser-measured)', () => {
+  it.skipIf(!existsSync(CHROME))('keeps text inside device cards and plates, inside the SVG, with no overlapping texts, live / locked out / door closed', async () => {
+    // @ts-expect-error plain .mjs script, no type declarations
+    const { checkBucket2Overflow } = await import('../scripts/check-physical-overflow.mjs');
+    const res = await checkBucket2Overflow();
+    expect(Object.keys(res)).toEqual(['live', 'locked', 'closed']);
+    expect(res.live.groups).toBeGreaterThan(25);
+    expect(res.live.texts).toBeGreaterThan(90);
+    for (const st of Object.keys(res)) expect(res[st].out, st).toEqual([]);
+  }, 120_000);
+});
+
 describe('physical legends are not washed out by the muted .tiny color', () => {
   const css = readFileSync(new URL('../src/style.css', import.meta.url), 'utf8');
   it('forces legend text to the foreground color with a selector stronger than `svg .tiny`', () => {

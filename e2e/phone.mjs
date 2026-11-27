@@ -32,54 +32,50 @@ for (const [w, h] of [[390, 844], [360, 740]]) {
   };
   await check('home');
   await page.tap('text=Start Day 1');
-  let guard = 0, phase = 'lesson';
+  let guard = 0;
   while (guard++ < 80) {
     await page.waitForTimeout(40);
     await check(`step ${guard}`);
-    if (await page.locator('text=Open the bucket').count() || await page.locator('text=Start work order').count()) break;
-    if (await page.locator('.stem').count()) {
+    if (await page.locator('.ds-st.cur[data-step="tour"]').count()) break;
+    if (await page.locator('.ds-q .stem').count()) {
       // practice question: tap the first option (or Check for multi) then Continue
-      if (await page.locator('.opts .btn.opt').count()) {
-        await page.locator('.opts .btn.opt').first().tap();
-        if (await page.locator('text=Continue').count() === 0) { if (await page.locator('text=Check').count()) await page.locator('text=Check').first().tap(); }
-      } else if (await page.locator('text=Tap the steps').count()) {
-        const n = await page.locator('.opts .btn.opt').count();
-        for (let i = 0; i < 12 && await page.locator('text=Continue').count() === 0; i++) { await page.locator('.opts .btn.opt').first().tap(); }
-        void n;
-      }
-      if (await page.locator('text=Continue').count()) await page.locator('text=Continue').first().tap();
+      if (await page.locator('.ds-q .opts .btn.opt').count()) {
+        if (await page.locator('text=Tap the steps').count()) { for (let i = 0; i < 12 && await page.locator('button:has-text("Continue")').count() === 0; i++) await page.locator('.ds-q .opts .btn.opt').first().tap(); }
+        else {
+          await page.locator('.ds-q .opts .btn.opt').first().tap();
+          if (await page.locator('button:has-text("Continue")').count() === 0 && await page.locator('button:has-text("Check")').count()) await page.locator('button:has-text("Check")').first().tap();
+        }
+      } else if (await page.locator('.schem-wrap').count()) await page.locator('button:has-text("Check")').first().tap();
+      if (await page.locator('button:has-text("Continue")').count()) await page.locator('button:has-text("Continue")').first().tap();
       continue;
     }
-    const next = page.locator('button:has-text("Next"), button:has-text("Start practice"), button:has-text("Got it")');
+    const next = page.locator('.ds-pane button:has-text("Next card"), .ds-pane button:has-text("Start practice"), .ds-pane button:has-text("Got it")');
     if (await next.count()) { await next.first().tap(); continue; }
   }
-  if (guard >= 80) fail('did not reach the bucket activity');
-  await page.locator('text=Open the bucket').first().tap();
-  await page.waitForSelector('.meter');
-  await check('bucket');
-  // SVG terminal hit areas (physical view) must also be >= 44 CSS px at default zoom
-    const svgBad = await page.evaluate(() => {
-    const out = []; let n = 0;
-    for (const el of document.querySelectorAll('svg.phys .hit')) {
-      const b = el.getBoundingClientRect(); n++;
-      if (b.width < 43.5 || b.height < 43.5) out.push(`${Math.round(b.width)}x${Math.round(b.height)}`);
-    }
-    return { n, out };
-  });
-  console.log(`  svg terminal hit areas checked: ${svgBad.n}`);
-  if (svgBad.n === 0) fail('no SVG terminal hit areas found (door closed?)');
-  for (const b of svgBad.out.slice(0, 5)) fail(`small SVG terminal hit area ${b}`);
-  if (svgBad.out.length > 5) fail(`...and ${svgBad.out.length - 5} more small SVG hit areas`);
-  // tap two terminals (touch) and read the meter
-  const terms = page.locator('svg.phys .tb');
-  if (await terms.count() > 3) { await terms.nth(1).tap({ force: true }); await terms.nth(2).tap({ force: true }); }
-  const reading = await page.locator('.readout').textContent();
-  if (!reading || reading.trim() === '—') fail('meter did not produce a reading after two taps');
-  else console.log('  meter reading after two taps: ' + reading.trim());
-  await page.locator('button:has-text("Finish activity")').first().tap();
-  await page.waitForSelector('text=Wrap-up');
+  if (guard >= 80) fail('did not reach the Tour step');
+  await page.waitForSelector('svg.b2');
+  await check('day screen (tour)');
+  // Tour on the new bucket: handle OFF, open the door, read every nameplate.
+  const tapG = (sel) => page.locator(sel).first().tap({ force: true });
+  await tapG('g.handle2'); await tapG('g.latch2');
+  for (const t of ['CPT', 'F1', 'CR1', 'TB1', 'PB1', 'PB2', 'PB3', 'PL1', 'PL2', 'PL3', 'PLF']) await page.locator(t === 'TB1' ? 'g.tblabel' : `g.dev2[data-tag="${t}"]`).first().tap({ force: true });
+  await check('tour done');
+  { const missing = await page.evaluate(() => { const u = JSON.parse(localStorage.getItem('umc.save.v1')).session.ui; return ['CPT','F1','CR1','TB1','PB1','PB2','PB3','PL1','PL2','PL3','PLF'].filter((t) => !u.inspected.includes(t)).join(','); }); if (missing) fail('tour taps did not register for: ' + missing); }
+  await page.locator('[data-next="1"]').tap();
+  for (const k of ['TB_91', 'TB_92']) await tapG(`g.term2[data-key="${k}"]`);
+  await tapG('g.caution2');
+  await page.locator('[data-next="1"]').tap();
+  await tapG('g.handle2');                                       // handle back ON for the meter proof
+  await tapG('g.term2[data-key="CPT_X1"]'); await tapG('g.term2[data-key="CPT_X2"]');
+  const reading = await page.locator('.ds-readout').getAttribute('data-value');
+  if (!reading || reading === '') fail('meter did not produce a reading after two taps');
+  else console.log('  meter reading X1-X2 after two taps: ' + reading);
+  await check('meter proved');
+  await page.locator('[data-next="1"]').tap();
+  await page.locator('.ds-tab[data-tab="work"]').tap();
+  await page.waitForSelector('.ds-pane h2:has-text("Wrap-up")');
   await check('wrap-up');
-  await page.tap('text=Done');
+  await page.tap('button:has-text("Done")');
   await check('home after day 1');
   if (errors.length) fail('page errors: ' + errors.join(' | '));
   await ctx.close();

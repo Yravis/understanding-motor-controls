@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Export redrawn bucket</title>
+    <style>html,body{margin:0;padding:0;background:#fff;}</style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      // ?state=live | locked | closed   (Day 1 greying; the same SVG the day screen draws)
+      import { params } from '../src/content';
+      import { buildBucket } from '../src/model/bucket';
+      import { renderBucket2 } from '../src/ui/bucket2';
+      import '../src/style.css';
+      import '../src/ui/dayscreen.css';
+      const state = new URLSearchParams(location.search).get('state') || 'live';
+      const b = buildBucket(params);
+      const handleOn = state !== 'locked';
+      if (!handleOn) b.world.setSource('SRC', false);
+      const noop = () => {};
+      const svg = renderBucket2({
+        b, day: 1, doorOpen: state !== 'closed', handleOn, locked: state === 'locked', fusePulled: false, red: null, black: null, hl: null, target: null, tool: 'probe', inspected: [], found: [],
+      }, { onTerminal: noop, onDevice: noop, onHandle: noop, onDoor: noop, onLabel: noop, onPress: noop, onFuse: noop, onUntaught: noop });
+      svg.style.width = '1000px'; svg.style.height = '800px'; svg.style.display = 'block';
+      document.getElementById('root').append(svg);
+      document.documentElement.dataset.ready = '1';
+    </script>
+  </body>
+</html>
