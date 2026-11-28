@@ -26,7 +26,7 @@ async function ensureServer(pagePath = PAGE_PATH) {
   if (await up(pref)) return { url: pref, stop: () => {} };
   let port = await freePort();
   if (port === PREFERRED) port = await freePort();
-  const child = spawn('npx', ['vite', '--port', String(port), '--strictPort', '--host', '127.0.0.1', '--base', BASE], { cwd: ROOT, stdio: 'ignore' });
+  const child = spawn('npx', ['vite', '--port', String(port), '--strictPort', '--bypass-lock', '--host', '127.0.0.1', '--base', BASE], { cwd: ROOT, stdio: 'ignore' });
   const url = `http://127.0.0.1:${port}${pagePath}`;
   const deadline = Date.now() + 30000;
   while (Date.now() < deadline) { if (await up(url)) return { url, stop: () => child.kill() }; await new Promise((r) => setTimeout(r, 250)); }

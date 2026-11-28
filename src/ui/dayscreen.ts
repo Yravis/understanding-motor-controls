@@ -133,7 +133,7 @@ export function mountDayScreen(root: HTMLElement, o: DayScreenOpts): DayScreen {
     const terms = bucket2Terms(bucket);
     const map: Record<string, string> = { handle: 'handle', door: 'door', label: 'label' };
     if (map[t]) return vp.goTo(map[t]);
-    if (t.startsWith('term:')) { const n = t.slice(5).split('@')[0]; return vp.goTo(n === 'w91' || n === 'w92' ? 'tb91' : n === 'X1' || n === 'X2' ? 'cpt' : 'tb1'); }
+    if (t.startsWith('term:')) { const n = t.slice(5).split('@')[0]; return vp.goTo(n === 'w91' || n === 'w92' ? 'tb91' : n === 'X1' || n === 'X2' ? 'tbx' : 'tb1'); }
     if (t.startsWith('dev:')) { const r = devRect(t.slice(4)); if (r) vp.goRect({ x: r.x - 30, y: r.y - 30, w: r.w + 60, h: r.h + 60 }); }
     void terms;
   }
@@ -243,6 +243,7 @@ export function mountDayScreen(root: HTMLElement, o: DayScreenOpts): DayScreen {
     if (finished()) return { title: 'Day complete', body: 'Open the Work order tab for the wrap-up, then press Done.' };
     if (!c) return { title: 'All steps done', body: 'Press the Next button to finish the day.' };
     const t = target();
+    if (native && c.id === 'meter' && ui.proved) return { title: 'Meter proved', body: 'X1 to X2 reads line voltage on the live bucket. Press Next.' };
     if (native && c.id === 'tour') {
       if (t === 'handle') return { title: 'Turn the handle OFF', body: 'The door interlock holds the door shut while the handle is ON. Tap the red handle on the door.' };
       if (t === 'door') return { title: ui.doorOpen ? 'Open the door' : 'Open the door', body: 'The handle is OFF, so the interlock is released. Tap the latch on the left edge of the door.' };
@@ -260,7 +261,7 @@ export function mountDayScreen(root: HTMLElement, o: DayScreenOpts): DayScreen {
       if (t === 'door') return { title: 'Open the door', body: 'The terminals are behind the door.' };
       if (t === 'handle') return { title: 'Turn the handle ON', body: 'You prove the meter on the live source. The door stays open for this test.' };
       if (t === 'meter-mode') return { title: 'Set the meter to V AC', body: 'Press "V AC" on the meter.' };
-      if (t?.startsWith('term:X')) return { title: ui.meter.red ? 'Touch the black probe to X2' : 'Touch the red probe to X1', body: 'Tap the pulsing terminal on the transformer (TB1 also has X1 and wire 2). The first tap places red, the second places black.' };
+      if (t?.startsWith('term:X')) return { title: ui.meter.red ? 'Touch the black probe to X2' : 'Touch the red probe to X1', body: 'Tap the pulsing terminal on the transformer (TB1 has X1 and X2 screws too; the transformer ones work as well). The first tap places red, the second places black.' };
       return { title: ui.proved ? 'Meter proved' : 'Read the meter', body: ui.proved ? 'X1 to X2 reads line voltage on the live bucket. Press Next.' : 'Tap X1 then X2.' };
     }
     return { title: c.instruction, body: '' };
@@ -277,7 +278,7 @@ export function mountDayScreen(root: HTMLElement, o: DayScreenOpts): DayScreen {
       const done = finished() || isStepDone(s.id, cx), cur = !finished() && c?.id === s.id && !isStepDone(s.id, cx);
       const here = !finished() && c?.id === s.id;
       if (i) items.push(h('div', { class: 'ds-bar' + (done || here ? ' done' : '') }));
-      items.push(h('div', { class: 'ds-st ' + (done ? 'done' : here ? 'cur' : 'locked'), 'data-step': s.id, 'aria-current': here ? 'step' : false, title: s.instruction }, h('div', { class: 'n' }, done ? '✓' : String(i + 1)), h('div', { class: 'l' }, s.label)));
+      items.push(h('div', { class: 'ds-st ' + (done && here ? 'done cur' : done ? 'done' : here ? 'cur' : 'locked'), 'data-step': s.id, 'aria-current': here ? 'step' : false, title: s.instruction }, h('div', { class: 'n' }, done ? '✓' : String(i + 1)), h('div', { class: 'l' }, s.label)));
       void cur;
     });
     const m = microText();

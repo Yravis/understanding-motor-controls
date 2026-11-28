@@ -7,8 +7,8 @@ import { mountDayScreen, type DayScreen } from '../src/ui/dayscreen';
 import { buildBucket } from '../src/model/bucket';
 import { measure, type MeterMode } from '../src/model/meter';
 import { params } from '../src/content';
-import { untaught, TOUR_DEVICES } from '../src/game/steps';
-import { bucket2Terms, B2 } from '../src/ui/bucket2layout';
+import { untaught, TOUR_DEVICES, nextTarget } from '../src/game/steps';
+import { bucket2Terms, B2, TB_COUNT } from '../src/ui/bucket2layout';
 
 const TODAY = '2026-11-27';
 let root: HTMLElement;
@@ -61,6 +61,43 @@ describe('readings through the new bucket', () => {
     boot(live);
     click(term('TB_X1')); click(term('TB_2'));          // TB1 X1 and TB1 2 (the X2 conductor)
     expect(readout().getAttribute('data-value')).toBe(expected('VAC', 'X1', 'w2', true).display);
+  });
+  it('TB1 X1 to TB1 X2: live reads measure() = 120.0, locked out reads 0.0', () => {
+    boot({ ...live, step: 'meter' });
+    expect(buildBucket(params).layout.tbNets.length).toBe(TB_COUNT);
+    click(mode('VAC')); click(term('TB_X1')); click(term('TB_X2'));
+    expect(readout().getAttribute('data-value')).toBe(expected('VAC', 'X1', 'X2', true).display);
+    expect(readout().getAttribute('data-value')).toBe('120.0');
+    click(seg('locked'));
+    expect(readout().getAttribute('data-value')).toBe(expected('VAC', 'X1', 'X2', false).display);
+    expect(readout().getAttribute('data-value')).toBe('0.0');
+  });
+  it('after the meter is proved the coach stays on "Meter proved" whatever the handle/lock does', () => {
+    boot({ ...live, step: 'meter' });
+    click(mode('VAC')); click(term('TB_X1')); click(term('TB_X2'));
+    expect(screen!.debug.ui().proved).toBe(true);
+    const coach = () => root.querySelector('.ds-coach-t')!.textContent! + ' | ' + root.querySelector('.ds-coach-b')!.textContent!;
+    expect(coach()).toContain('Meter proved');
+    click(seg('locked'));
+    expect(coach()).toContain('Meter proved'); expect(coach()).not.toContain('Turn the handle ON');
+    click(seg('live'));
+    expect(coach()).not.toContain('Turn the handle ON');
+    expect(nextTarget('meter', screen!.debug.ui())).toBeNull();
+  });
+  it('a finished current step stays highlighted as current until Next', () => {
+    boot({ step: 'tour', doorOpen: true, doorOpened: true, handleOn: false, inspected: [...TOUR_DEVICES.filter((t) => t !== 'PLF')] } as any);
+    click(root.querySelector('g.dev2[data-tag="PLF"]'));
+    const el = root.querySelector('.ds-st[data-step="tour"]')!;
+    expect(el.className).toContain('done'); expect(el.className).toContain('cur'); expect(el.getAttribute('aria-current')).toBe('step');
+    click(root.querySelector('[data-next="1"]'));
+    expect(root.querySelector('.ds-st[data-step="tour"]')!.className).not.toContain('cur');
+    expect(root.querySelector('.ds-st[data-step="sources"]')!.className).toContain('cur');
+  });
+  it('tour counter is n/11 nameplates once the door is open', () => {
+    boot({ step: 'tour', doorOpen: true, doorOpened: true, handleOn: false });
+    expect(root.querySelector('.ds-count')!.textContent).toContain('0 / 11');
+    expect(root.querySelector('.ds-count')!.textContent).toContain('nameplates');
+    expect(root.querySelector('.ds-count')!.textContent).not.toContain('tour checks');
   });
   it('LOCKED OUT: X1-X2 reads 0.0, but 91-92 and 91-G still read 120.0 (foreign source stays live)', () => {
     boot({ ...live, step: 'meter' });
@@ -249,9 +286,9 @@ describe('persistence across tab switches, view switches and reload', () => {
   });
   it('the next-terminal highlight pulses the terminal the step wants', () => {
     boot({ ...live });
-    expect(root.querySelector('g.target2')!.getAttribute('data-target')).toBe('term:X1@CPT_X1');
-    click(term('CPT_X1'));
-    expect(root.querySelector('g.target2')!.getAttribute('data-target')).toBe('term:X2@CPT_X2');
+    expect(root.querySelector('g.target2')!.getAttribute('data-target')).toBe('term:X1@TB_X1');
+    click(term('TB_X1'));
+    expect(root.querySelector('g.target2')!.getAttribute('data-target')).toBe('term:X2@TB_X2');
   });
   function ui() { return screen!.debug.ui(); }
 });

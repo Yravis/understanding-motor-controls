@@ -117,8 +117,8 @@ describe('steps', () => {
     ui.found = ['w91']; expect(nextTarget('sources', ui)).toBe('term:w92');
     ui.found = ['w91', 'w92']; expect(nextTarget('sources', ui)).toBe('label');
     expect(nextTarget('meter', ui)).toBe('handle');                      // must be live
-    ui.handleOn = true; expect(nextTarget('meter', ui)).toBe('term:X1@CPT_X1');
-    ui.meter.red = 'X1'; expect(nextTarget('meter', ui)).toBe('term:X2@CPT_X2');
+    ui.handleOn = true; expect(nextTarget('meter', ui)).toBe('term:X1@TB_X1');
+    ui.meter.red = 'X1'; expect(nextTarget('meter', ui)).toBe('term:X2@TB_X2');
     ui.meter.black = 'X2'; expect(nextTarget('meter', ui)).toBeNull();
     ui.meter.mode = 'OHMS'; ui.meter.red = null; ui.meter.black = null; expect(nextTarget('meter', ui)).toBe('meter-mode');
   });

@@ -249,12 +249,12 @@ export function renderBucket2(p: B2Props, hk: B2Hooks): SVGSVGElement {
 
     // terminal strip TB1
     const tb = grp('dev2 tb1' + seenC('TB1'), { 'data-tag': 'TB1', role: 'group', 'aria-label': 'TB1 terminal strip' });
-    tb.append(rect(TB.x0 - 2, TB.top - 2, 21 * TB.bw + 4, TB.h + 4, { class: 'card2', rx: 3, fill: 'transparent' }));
+    tb.append(rect(TB.x0 - 2, TB.top - 2, p.b.layout.tbNets.length * TB.bw + 4, TB.h + 4, { class: 'card2', rx: 3, fill: 'transparent' }));
     p.b.layout.tbNets.forEach((n, i) => {
       const { x, cx } = tbCol(i);
       const isF = n === '91' || n === '92', isG = n === 'G';
       const body = isF ? '#ee8a35' : isG ? '#3e9a4c' : '#a7b0b8';
-      const col = isF ? 'orange' : isG ? 'green' : n === '2' ? 'white' : 'red';
+      const col = isF ? 'orange' : isG ? 'green' : n === '2' || n === 'X2' ? 'white' : 'red';
       const colG = grp('tbcol' + (isF ? ' f2' : '') + (isF && p.found.includes('w' + n) ? ' seen' : ''), { 'data-net': n });
       colG.append(wire(`M${cx} 468 L${cx} 432`, col, 2.4), wire(`M${cx} 582 L${cx} 600`, col, 2.4),
         rect(x + 1.5, 462, TB.bw - 3, TB.h, { rx: 3, fill: body, stroke: '#5f6870', 'stroke-width': 0.8 }),

@@ -187,7 +187,7 @@ export function buildBucket(p: Params, opt: BucketOptions = {}): Bucket {
       { tag: 'DISC', title: 'Disconnect' }, { tag: 'PF', title: 'Power fuses' }, { tag: 'M', title: 'Contactor / starter' },
       { tag: 'OL', title: 'Overload relay' }, { tag: 'MTR', title: 'Motor' },
     ],
-    tbNets: ['X1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '91', '92', 'G'],
+    tbNets: ['X1', 'X2', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '91', '92', 'G'],
     tags: {},
   };
   use('');

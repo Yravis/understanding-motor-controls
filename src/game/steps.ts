@@ -64,7 +64,10 @@ export function latchDone(steps: StepDef[], c: StepCtx): boolean {
 export function stepCounts(id: StepId, c: StepCtx): { done: number; total: number; noun: string } {
   const { ui } = c;
   switch (id) {
-    case 'tour': return { done: TOUR_DEVICES.filter((t) => ui.inspected.includes(t)).length + (ui.doorOpened ? 1 : 0), total: TOUR_DEVICES.length + 1, noun: 'tour checks' };
+    // the door is a prerequisite, not a twelfth nameplate: before it is open the count is hidden behind a door prompt
+    case 'tour': return ui.doorOpened
+      ? { done: TOUR_DEVICES.filter((t) => ui.inspected.includes(t)).length, total: TOUR_DEVICES.length, noun: 'nameplates' }
+      : { done: 0, total: TOUR_DEVICES.length, noun: 'nameplates, door first' };
     case 'sources': return { done: SOURCE_FINDS.filter((f) => ui.found.includes(f)).length, total: SOURCE_FINDS.length, noun: 'sources found' };
     case 'meter': return { done: ui.proved ? 1 : 0, total: 1, noun: 'meter proved' };
     case 'read': case 'practice': return { done: Math.min(c.session.index, c.session.questionIds.length), total: c.session.questionIds.length, noun: 'questions' };
@@ -88,11 +91,12 @@ export function nextTarget(id: StepId | null, ui: DayUi): string | null {
     return null;
   }
   if (id === 'meter') {
+    if (ui.proved) return null;
     if (!ui.doorOpen) return 'door';
     if (!ui.handleOn) return 'handle';
     if (ui.meter.mode !== 'VAC') return 'meter-mode';
-    if (!ui.meter.red) return 'term:X1@CPT_X1';
-    if (!ui.meter.black) return ui.meter.red === 'X1' ? 'term:X2@CPT_X2' : 'term:X1@CPT_X1';
+    if (!ui.meter.red) return 'term:X1@TB_X1';
+    if (!ui.meter.black) return ui.meter.red === 'X1' ? 'term:X2@TB_X2' : 'term:X1@TB_X1';
     return null;
   }
   return null;

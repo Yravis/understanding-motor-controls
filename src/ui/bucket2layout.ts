@@ -46,6 +46,8 @@ export const CH2: { tag: string; title: string; box: Rect }[] = [
   { tag: 'MTR', title: 'Motor', box: { x: 832, y: 84, w: 110, h: 90 } },
 ];
 export const TB = { x0: 366, bw: 28, top: 462, h: 126, yTop: 478, yBot: 572 };
+/** Number of TB1 blocks (equals buildBucket().layout.tbNets.length; asserted in tests). */
+export const TB_COUNT = 22;
 export const EGC: Rect = { x: 366, y: 680, w: 232, h: 26 };
 
 export const nodeOfNet = (n: string): string => (n === 'X1' || n === 'X2' || n === 'G' ? n : 'w' + n);
@@ -87,9 +89,9 @@ export const GOTOS: GoTo[] = [
   { id: 'f1', label: 'F1, control fuse', rect: { x: 470, y: 215, w: 100, h: 190 } },
   { id: 'cr1', label: 'CR1, control relay', rect: { x: 540, y: 215, w: 160, h: 190 } },
   { id: 'timers', label: 'Timers TR1-TD4 (Day 8)', rect: { x: 680, y: 215, w: 290, h: 190 } },
-  { id: 'tb1', label: 'TB1, terminal strip', rect: { x: 340, y: 420, w: 640, h: 200 } },
+  { id: 'tb1', label: 'TB1, terminal strip', rect: { x: 340, y: 420, w: 650, h: 200 } },
   { id: 'tb91', label: 'Wires 91/92 on TB1', rect: { x: 790, y: 430, w: 190, h: 170 } },
-  { id: 'tbx', label: 'X1 / X2 on TB1', rect: { x: 350, y: 430, w: 130, h: 170 } },
+  { id: 'tbx', label: 'X1 / X2 on TB1', rect: { x: 350, y: 430, w: 90, h: 170 } },
   { id: 'egc', label: 'EGC bar', rect: { x: 350, y: 640, w: 280, h: 110 } },
   { id: 'power', label: 'Power section (Chapter 2)', rect: { x: 340, y: 30, w: 640, h: 180 } },
 ];
@@ -109,7 +111,7 @@ export function targetSpot(terms: Term[], target: string): { x: number; y: numbe
 }
 export function devRect(tag: string): Rect | null {
   if (tag === 'CPT') return CPT; if (tag === 'F1') return F1; if (tag === 'CR1') return CR1;
-  if (tag === 'TB1') return { x: TB.x0, y: TB.top, w: 21 * TB.bw, h: TB.h };
+  if (tag === 'TB1') return { x: TB.x0, y: TB.top, w: TB_COUNT * TB.bw, h: TB.h };
   const i = PILOTS.findIndex((p) => p.tag === tag);
   if (i >= 0) { const p = pilotPos(i); return { x: p.x - 42, y: p.y - 20, w: 84, h: 70 }; }
   const pb = PUSHBUTTONS.find((p) => p.tag === tag);

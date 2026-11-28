@@ -66,7 +66,7 @@ for (const [w, h] of [[390, 844], [360, 740]]) {
   await tapG('g.caution2');
   await page.locator('[data-next="1"]').tap();
   await tapG('g.handle2');                                       // handle back ON for the meter proof
-  await tapG('g.term2[data-key="CPT_X1"]'); await tapG('g.term2[data-key="CPT_X2"]');
+  await tapG('g.term2[data-key="TB_X1"]'); await tapG('g.term2[data-key="TB_X2"]');
   const reading = await page.locator('.ds-readout').getAttribute('data-value');
   if (!reading || reading === '') fail('meter did not produce a reading after two taps');
   else console.log('  meter reading X1-X2 after two taps: ' + reading);
