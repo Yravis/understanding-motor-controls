@@ -3,13 +3,44 @@ import { s } from './dom';
 import type { Bucket } from '../model/bucket';
 import { drawSymbol } from './symbols';
 
-const RUNG_H = 80, X1 = 30, X2 = 330, LEFT = 40;
-/** Baseline of OPEN/CLOSED, above the symbol centre. Must clear the tallest contact (mushroom cap at y-24). */
-export const STATE_LABEL_DY = 34;
+export const RUNG_H = 96, X1 = 30, X2 = 330, LEFT = 40;
+/** Contact designation baseline (below the symbol centre). */
+export const NAME_DY = 32;
+/** Live-state lines sit BELOW the symbol, directly under that contact's own designation, so they can never read as the
+ *  previous contact's label. First line baseline, then the second. The next rung's tallest symbol (mushroom cap) starts at
+ *  RUNG_H - 24 below this rung's centre, which these clear. */
+export const STATE_LINE_DY = [43, 53] as const;
+export interface ContactStateText { form: 'NO' | 'NC'; closed: boolean; reason: string; fault?: string }
+const CTL = new Set(['relay', 'solenoid']);
+/** Live state of a series contact, worded so the shelf (drawn) state cannot be mistaken for it. Uses World.contactClosed. */
+export function contactState(b: Bucket, e: any): ContactStateText {
+  const w = b.world;
+  const closed = w.contactClosed(e);
+  const act = w.devActuated(e.dev, e.pole);
+  const d = w.devs[e.dev];
+  let reason: string;
+  if (d?.kind === 'pb') reason = act ? 'pressed' : 'released';
+  else if (d?.kind === 'switch') reason = act ? 'actuated' : 'not actuated';
+  else if (d?.kind === 'timer' && e.pole === 'timed') reason = act ? 'timed' : 'not timed';
+  else if (d && CTL.has(d.kind)) reason = `${e.dev} ${act ? 'energized' : 'off'}`;
+  else reason = act ? 'actuated' : 'not actuated';
+  const fault = e.welded ? 'welded' : e.stuckOpen ? 'stuck open' : undefined;
+  return { form: e.nc ? 'NC' : 'NO', closed, reason, fault };
+}
+/** Two short lines for the schematic: "NO · now open" / "CR1 off". */
+export function contactStateLines(st: ContactStateText): [string, string] {
+  return [`${st.form} · now ${st.closed ? 'closed' : 'open'}`, st.fault ? `${st.reason}, ${st.fault}` : st.reason];
+}
+/** One sentence for tap-info: "NO contact, now open (CR1 off)". */
+export function contactStateSentence(b: Bucket, e: any): string {
+  const st = contactState(b, e);
+  return `${st.form} contact, now ${st.closed ? 'closed' : 'open'} (${st.reason}${st.fault ? ', ' + st.fault : ''})`;
+}
 export interface SchemOpts { highlightNet?: string | null; onTap?: (elementId: string) => void; onNet?: (net: string) => void }
 
 function devOf(b: Bucket, tag: string) { return b.layout.devices.find((d) => d.tag === tag); }
 /** Symbol for a series contact: the owning device's own symbol (pushbutton, sensing switch, timed contact), else a relay contact. */
+export function contactSymbolKey(b: Bucket, e: any): string { return contactSymbol(b, e); }
 function contactSymbol(b: Bucket, e: any): string {
   const d = devOf(b, e.dev);
   if (d && e.id === `${d.tag}.T`) return d.symbol;                                  // timed contact
@@ -41,16 +72,18 @@ export function renderSchematic(b: Bucket, opts: SchemOpts = {}): SVGSVGElement 
     if (foreign) svg.append(s('text', { x: LEFT + 10, y: y - 22, class: 'tiny foreign' }, 'ORANGE · foreign source · live with bucket off'));
     // series devices from left rail
     const cells = r.series.length;
-    const stepX = (X2 - X1 - 60) / (cells + 1);
+    const stepX = (X2 - X1 - 40) / (cells + 1);
     let prevX = X1;
     r.series.forEach((id, i) => {
       const e = w.el(id) as any;
       const cx = X1 + stepX * (i + 1) + 10;
-      const closed = w.contactClosed(e);
+      const [l1, l2] = contactStateLines(contactState(b, e));
       const hl = opts.highlightNet && [netOf(b, e.a), netOf(b, e.b)].includes(opts.highlightNet);
       const g = s('g', { class: 'tap' + (hl ? ' hl' : ''), onclick: () => opts.onTap?.(id) });
-      g.append(s('line', { x1: prevX, y1: y, x2: cx - 18, y2: y, class: 'wire' }), drawSymbol(contactSymbol(b, e), cx, y), s('text', { x: cx, y: y - STATE_LABEL_DY, class: 'tiny state-lbl', 'text-anchor': 'middle', 'data-state-for': id }, closed ? 'CLOSED' : 'OPEN'));
-      g.append(s('text', { x: cx, y: y + 32, class: 'lbl', 'text-anchor': 'middle' }, label(id)), s('rect', { x: cx - 22, y: y - 22, width: 44, height: 44, fill: 'transparent' }));
+      g.append(s('line', { x1: prevX, y1: y, x2: cx - 18, y2: y, class: 'wire' }), drawSymbol(contactSymbol(b, e), cx, y));
+      const st = s('text', { class: 'tiny state-lbl', 'text-anchor': 'middle', 'data-state-for': id });
+      st.append(s('tspan', { x: cx, y: y + STATE_LINE_DY[0] }, l1 + ' '), s('tspan', { x: cx, y: y + STATE_LINE_DY[1] }, l2));
+      g.append(s('text', { x: cx, y: y + NAME_DY, class: 'lbl', 'text-anchor': 'middle', 'data-name-for': id }, label(id)), st, s('rect', { x: cx - 22, y: y - 22, width: 44, height: 44, fill: 'transparent' }));
       const wn = netOf(b, e.b);
       g.append(s('text', { x: cx + 18, y: y + 14, class: 'wn' + (opts.highlightNet === wn ? ' hl' : ''), onclick: (ev: Event) => { ev.stopPropagation(); opts.onNet?.(wn); } }, wn.slice(1)));
       svg.append(g);

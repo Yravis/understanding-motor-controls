@@ -1,6 +1,6 @@
 // The interactive bucket: physical/schematic toggle, docked meter, controls, LOTO sheet, diagnosis + repair.
 import { h, btn } from './dom';
-import { renderSchematic } from './schematic';
+import { renderSchematic, contactStateSentence } from './schematic';
 import { renderPhysical, zoomable } from './bucketview';
 import { buildBucket, Bucket, setProcessMode, LAMP_IDS } from '../model/bucket';
 import { measure, Reading, MeterMode } from '../model/meter';
@@ -179,7 +179,7 @@ export function mountBucket(root: HTMLElement, o: PanelOpts): void {
     }
     if (msg) wrap.append(h('div', { class: 'msg', role: 'status' }, msg));
     const phys = renderPhysical(b, { red, black, highlightNet: hl, onTerminal: terminal, doorOpen: door, onDevice: (t) => { msg = t.startsWith('ch2:') ? 'Coming in Chapter 2' : `${t}: ${b.layout.devices.find((d) => d.tag === t)?.title ?? ''}`; render(); } });
-    const sch = renderSchematic(b, { highlightNet: hl, onNet: (n) => { hl = hl === n ? null : n; render(); }, onTap: (id) => { const e = b.world.el<any>(id); msg = `${id}: ${e.kind}${e.kind === 'contact' ? ' is ' + (b.world.contactClosed(e) ? 'CLOSED' : 'OPEN') : ''}. Tap a wire number to highlight it in both views.`; render(); } });
+    const sch = renderSchematic(b, { highlightNet: hl, onNet: (n) => { hl = hl === n ? null : n; render(); }, onTap: (id) => { const e = b.world.el<any>(id); msg = `${id}: ${e.kind === 'contact' ? contactStateSentence(b, e) : e.kind}. Tap a wire number to highlight it in both views.`; render(); } });
     if (view === 'physical') {
       const stage = h('div', { class: 'phys-stage' + (photoOn && photoAvailable ? ' photo-on' : '') });
       if (photoOn && photoAvailable) {

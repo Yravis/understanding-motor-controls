@@ -1,9 +1,11 @@
+// @vitest-environment jsdom
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { wrapLines, lineWidth, WARN_TEXT, WARN_MAX_WIDTH, WARN_FONT, warningBannerLayout } from '../src/ui/svgtext';
-import { STATE_LABEL_DY } from '../src/ui/schematic';
-import { SYMBOL_KEYS, symbolTopExtent } from '../src/ui/symbols';
+import { renderSchematic, contactStateSentence, contactSymbolKey, STATE_LINE_DY, RUNG_H } from '../src/ui/schematic';
+import type { Contact } from '../src/model/types';
+import { symbolTopExtent } from '../src/ui/symbols';
 import { physicalLayout, PHYS, PHOTO_FILE, deviceTitleLines, LEGENDS } from '../src/ui/physicallayout';
 import { bucket } from './helpers';
 
@@ -30,16 +32,104 @@ describe('physical-view warning banner wraps instead of clipping', () => {
   });
 });
 
-describe('schematic OPEN/CLOSED labels sit clear of the symbol, including the mushroom cap', () => {
-  // Contacts drawn on a rung (not coils or lights, which are loads and have no OPEN/CLOSED label).
-  const contactKeys = SYMBOL_KEYS.filter((k) => !['relay-coil', 'pilot-light', 'solenoid'].includes(k));
+describe('schematic live-state labels', () => {
+  const textOf = (svg: Element, id: string) => svg.querySelector(`[data-state-for="${id}"]`)!.textContent!;
+  const SERIES = ['PB3.c', 'PB1.c', 'CR1.NO1', 'CR1.NC1', 'PB2.c', 'FS1.c', 'PS1.c', 'TS1.c', 'LS1.c', 'FLS1.c', 'CR1.NO2', 'TR1.T', 'TR2.T', 'TD3.T', 'TD4.T'];
+  const claimsClosed = (s: string) => /now closed/.test(s);
+  const claimsOpen = (s: string) => /now open/.test(s);
+  const render = (b = bucket()) => { b.world.settle(); return renderSchematic(b); };
 
-  it('places the state-label baseline above every contact symbol with a gap', () => {
-    const gap = 8; // SVG units between the top of the drawing and the typographic baseline (OPEN/CLOSED have no descenders)
-    expect(symbolTopExtent('pb-nc-mushroom')).toBe(24);
-    for (const key of contactKeys) {
-      expect(STATE_LABEL_DY, key).toBeGreaterThanOrEqual(symbolTopExtent(key) + gap);
+  it('every contact label matches contactClosed() and names NO/NC', () => {
+    const b = bucket(); b.world.settle();
+    const svg = renderSchematic(b);
+    for (const id of SERIES) {
+      const e = b.world.el<Contact>(id), txt = textOf(svg, id);
+      expect(claimsClosed(txt), id + ' ' + txt).toBe(b.world.contactClosed(e));
+      expect(claimsOpen(txt), id + ' ' + txt).toBe(!b.world.contactClosed(e));
+      expect(txt, id).toMatch(e.nc ? /^NC · / : /^NO · /);
     }
+  });
+
+  it('default Day 1: CR1.NO1 is now open, CR1.NC1 is now closed', () => {
+    const svg = render();
+    expect(textOf(svg, 'CR1.NO1')).toContain('NO · now open');
+    expect(textOf(svg, 'CR1.NO1')).not.toContain('now closed');
+    expect(textOf(svg, 'CR1.NO1')).toContain('CR1 off');
+    expect(textOf(svg, 'CR1.NC1')).toContain('NC · now closed');
+  });
+
+  it('same with the source off (handle off / locked out)', () => {
+    const b = bucket(); b.world.setSource('SRC', false);
+    const svg = render(b);
+    expect(textOf(svg, 'CR1.NO1')).toContain('NO · now open');
+    expect(textOf(svg, 'CR1.NC1')).toContain('NC · now closed');
+  });
+
+  it('energized CR1 flips both, and drops out on release (no seal-in)', () => {
+    const b = bucket(); b.world.settle(); b.world.press('PB1');
+    let svg = renderSchematic(b);
+    expect(textOf(svg, 'CR1.NO1')).toContain('NO · now closed');
+    expect(textOf(svg, 'CR1.NO1')).toContain('CR1 energized');
+    expect(textOf(svg, 'CR1.NC1')).toContain('NC · now open');
+    expect(textOf(svg, 'PB1.c')).toContain('pressed');
+    b.world.release('PB1');
+    svg = renderSchematic(b);
+    expect(textOf(svg, 'CR1.NO1')).toContain('NO · now open');
+    expect(textOf(svg, 'CR1.NC1')).toContain('NC · now closed');
+  });
+
+  it('shelf-vs-live: the drawn symbol is untouched and sentences are unambiguous', () => {
+    const b = bucket(); b.world.settle();
+    const e = b.world.el<Contact>('CR1.NO1');
+    expect(contactStateSentence(b, e)).toBe('NO contact, now open (CR1 off)');
+    expect(contactStateSentence(b, b.world.el<Contact>('PB2.c'))).toBe('NC contact, now closed (released)');
+    expect(contactStateSentence(b, b.world.el<Contact>('TR1.T'))).toMatch(/not timed/);
+  });
+
+  it('faults are mentioned but still follow contactClosed()', () => {
+    const b = bucket(); b.world.el<Contact>('CR1.NO1').welded = true; b.world.settle();
+    const txt = textOf(renderSchematic(b), 'CR1.NO1');
+    expect(txt).toContain('now closed'); expect(txt).toContain('welded');
+  });
+
+  describe('placement', () => {
+    const b = bucket(); b.world.settle();
+    const svg = renderSchematic(b);
+    const num = (el: Element, a: string) => Number(el.getAttribute(a));
+    // symbol bounds: centre y from the state label's first tspan baseline minus its offset
+    const centreY = (id: string) => num(svg.querySelector(`[data-state-for="${id}"] tspan`)!, 'y') - STATE_LINE_DY[0];
+    const stateLines = (id: string) => [...svg.querySelectorAll(`[data-state-for="${id}"] tspan`)].map((n) => ({ x: num(n, 'x'), y: num(n, 'y'), t: n.textContent! }));
+    const nameOf = (id: string) => { const n = svg.querySelector(`[data-name-for="${id}"]`)!; return { x: num(n, 'x'), y: num(n, 'y') }; };
+    const topExtent = (id: string) => symbolTopExtent(contactSymbolKey(b, b.world.el(id)));
+
+    it('labels sit below the symbol (never on the cap or the previous rung)', () => {
+      expect(symbolTopExtent('pb-nc-mushroom')).toBe(24);
+      const bottomExtent = 25; // symbols reach ~25 below centre (see symbols.ts)
+      for (const id of SERIES) {
+        const cy = centreY(id), lines = stateLines(id);
+        expect(nameOf(id).y - cy, id).toBeGreaterThanOrEqual(bottomExtent - 1);
+        for (const l of lines) expect(l.y - cy, id).toBeGreaterThan(nameOf(id).y - cy);
+        // the next rung's tallest symbol starts at RUNG_H - topExtent below this centre; text must stay clear of it
+        expect(lines[lines.length - 1].y + 3 /* descender */, id).toBeLessThan(cy + RUNG_H - 24);
+        expect(topExtent(id)).toBeLessThanOrEqual(24);
+      }
+    });
+
+    it("each state label is nearer its own designation than any other contact's", () => {
+      const dist = (a: { x: number; y: number }, c: { x: number; y: number }) => Math.hypot(a.x - c.x, a.y - c.y);
+      for (const id of SERIES) {
+        const first = stateLines(id)[0];
+        const own = dist(first, nameOf(id));
+        for (const other of SERIES) if (other !== id) expect(own, `${id} vs ${other}`).toBeLessThan(dist(first, nameOf(other)));
+      }
+    });
+
+    it('lines are no wider than the spacing between neighbours on the same rung', () => {
+      for (const [a, c] of [['PB3.c', 'PB1.c']]) {
+        const gapX = Math.abs(stateLines(a)[0].x - stateLines(c)[0].x);
+        for (const id of [a, c]) for (const l of stateLines(id)) expect(lineWidth(l.t.trim(), 10, 0.52), l.t).toBeLessThan(gapX - 4);
+      }
+    });
   });
 });
 

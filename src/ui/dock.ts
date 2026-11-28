@@ -2,7 +2,7 @@
 // so switching tabs (or views, or reloading) cannot lose anything.
 import { h, btn } from './dom';
 import { symbolFigure } from './symbols';
-import { renderSchematic } from './schematic';
+import { renderSchematic, contactStateSentence } from './schematic';
 import { renderQuestion } from './questionview';
 import { badgeOf, byId } from '../content';
 import { DOCK_TABS, setDraft, type DockTab } from '../game/session';
@@ -167,7 +167,7 @@ export function createDock(api: DockApi): Dock {
     const svg = renderSchematic(b, {
       highlightNet: api.hl(),
       onNet: (n) => { api.setHl(api.hl() === n ? null : n); },
-      onTap: (id) => { const e = b.world.el<any>(id); api.tapInfo(`${id}: ${e.kind}${e.kind === 'contact' ? ' is ' + (b.world.contactClosed(e) ? 'CLOSED' : 'OPEN') : ''}`); },
+      onTap: (id) => { const e = b.world.el<any>(id); api.tapInfo(`${id}: ${e.kind === 'contact' ? contactStateSentence(b, e) : e.kind}`); },
     });
     return h('div', {}, h('h2', {}, 'Schematic · live state'),
       h('div', { class: 'ds-sub' }, `Same circuit as the bucket. ${live ? 'Bucket is live: lit lamps and closed contacts follow the model.' : 'Handle OFF: only the orange 91/92 lamp stays lit.'} Tap a wire number to highlight it on the bucket.`),
