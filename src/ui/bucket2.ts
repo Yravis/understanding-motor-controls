@@ -163,18 +163,23 @@ export function renderBucket2(p: B2Props, hk: B2Hooks): SVGSVGElement {
     const pressed = !!d?.pressed;
     const seen = p.inspected.includes(pb.tag);
     const g = grp('dev2 pb' + (pressed ? ' pressed' : '') + (seen ? ' seen' : ''), { 'data-tag': pb.tag, role: 'button', 'aria-label': `${pb.tag} ${pb.legend}, ${pb.sub}${pressed ? ', pressed' : ''}` });
-    g.append(rect(pb.x - 42, pb.y - 28, 84, 92, { class: 'card2', rx: 4, fill: 'transparent' }), rect(pb.x - 26, pb.y - 26, 52, 52, { rx: 6, fill: '#aab2b9', stroke: '#7c858d' }));
-    if (pb.mush) g.append(circ(pb.x, pb.y, 24, { fill: '#f3c623', stroke: '#9c7d0c' }), circ(pb.x, pb.y, pressed ? 16 : 19, { fill: pb.color, stroke: '#7f1a1a' }), circ(pb.x - 6, pb.y - 7, 6, { fill: '#fff', opacity: 0.25 }));
-    else g.append(circ(pb.x, pb.y, 17, { fill: '#3c4248' }), circ(pb.x, pb.y, pressed ? 11 : 13.5, { fill: pb.color, stroke: '#00000044' }), circ(pb.x - 4, pb.y - 5, 4, { fill: '#fff', opacity: 0.25 }));
-    g.append(rect(pb.x - 40, pb.y + 30, 80, 30, { rx: 3, fill: '#fff', stroke: '#a9b1b8', 'stroke-width': 0.8 }), txt(pb.x, pb.y + 42, `${pb.tag} ${pb.legend}`, { fs: 9, fw: 800 }), txt(pb.x, pb.y + 54, pb.sub, { fs: 7.1, fw: 600, fill: '#3b4651' }));
-    if (p.tool === 'operate') {
-      const d2 = w.devs[pb.tag] as any;
-      if (d2?.maintained) g.addEventListener('click', () => hk.onPress(pb.tag, !d2.pressed));
-      else {
-        g.addEventListener('pointerdown', (e: Event) => { e.preventDefault(); hk.onPress(pb.tag, true); });
-        for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) g.addEventListener(ev, () => { if ((w.devs[pb.tag] as any).pressed) hk.onPress(pb.tag, false); });
-      }
-    } else g.addEventListener('click', () => hk.onDevice(pb.tag));
+    // The card, cap and legend plate always read the nameplate; only the coloured cap operates the button, and only in Operate.
+    g.append(rect(pb.x - 42, pb.y - 28, 84, 92, { class: 'card2', rx: 4, fill: 'transparent' }));
+    const cap = grp('pbcap', { 'data-part': 'cap' }, rect(pb.x - 26, pb.y - 26, 52, 52, { rx: 6, fill: '#aab2b9', stroke: '#7c858d' }));
+    if (pb.mush) cap.append(circ(pb.x, pb.y, 24, { fill: '#f3c623', stroke: '#9c7d0c' }), circ(pb.x, pb.y, pressed ? 16 : 19, { fill: pb.color, stroke: '#7f1a1a' }), circ(pb.x - 6, pb.y - 7, 6, { fill: '#fff', opacity: 0.25 }));
+    else cap.append(circ(pb.x, pb.y, 17, { fill: '#3c4248' }), circ(pb.x, pb.y, pressed ? 11 : 13.5, { fill: pb.color, stroke: '#00000044' }), circ(pb.x - 4, pb.y - 5, 4, { fill: '#fff', opacity: 0.25 }));
+    const legend = grp('pblegend', { 'data-part': 'legend' }, rect(pb.x - 40, pb.y + 30, 80, 30, { rx: 3, fill: '#fff', stroke: '#a9b1b8', 'stroke-width': 0.8 }), txt(pb.x, pb.y + 42, `${pb.tag} ${pb.legend}`, { fs: 9, fw: 800 }), txt(pb.x, pb.y + 54, pb.sub, { fs: 7.1, fw: 600, fill: '#3b4651' }));
+    g.append(cap, legend);
+    // Operate-mode actuation: the cap only (or the group itself); never the legend plate or the card padding.
+    const onCap = (e: Event) => { const t = e.target as Element; return t === (g as Element) || !!t.closest?.('.pbcap'); };
+    const d2 = w.devs[pb.tag] as any;
+    g.addEventListener('click', (e: Event) => {
+      if (p.tool === 'operate' && onCap(e)) { if (d2?.maintained) hk.onPress(pb.tag, !d2.pressed); } else hk.onDevice(pb.tag);
+    });
+    if (p.tool === 'operate' && !d2?.maintained) {
+      g.addEventListener('pointerdown', (e: Event) => { if (!onCap(e)) return; e.preventDefault(); hk.onPress(pb.tag, true); });
+      for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) g.addEventListener(ev, () => { if ((w.devs[pb.tag] as any).pressed) hk.onPress(pb.tag, false); });
+    }
     door.append(g);
   }
 
@@ -212,9 +217,17 @@ export function renderBucket2(p: B2Props, hk: B2Hooks): SVGSVGElement {
     const f1 = grp('dev2 f1' + (p.fusePulled ? ' pulled' : '') + seenC('F1'), { 'data-tag': 'F1', role: 'button', 'aria-label': `F1, control supply fuse${p.fusePulled ? ', pulled' : ''}` });
     f1.append(rect(F1.x, F1.y, F1.w, F1.h, { class: 'card2', rx: 4, fill: '#2f353b', stroke: '#15181a', filter: 'url(#b2Shadow)' }), rect(506, 276, 28, 68, { rx: 4, fill: '#41484f' }),
       ...(p.fusePulled ? [] : [rect(512, 286, 16, 48, { rx: 7, fill: '#e9e4d3', stroke: '#a49f88' }), rect(504, 300, 32, 10, { rx: 2, fill: '#f5f6f7' }), txt(520, 308, 'F1', { fs: 8, fw: 800 })]));
-    f1.addEventListener('click', () => (p.tool === 'operate' ? hk.onFuse() : hk.onDevice('F1')));
+    // The holder, the title and the rating badge always read the nameplate. Pulling the fuse is its own labelled button.
     const f1rating = p.b.params.F1?.rating;
-    inner.append(f1, txt(520, 230, `F1 · ${f1rating ?? '?'} A${p.fusePulled ? ' (pulled)' : ''}`, { fs: 8.5, fw: 700, fill: '#3b4651' }), illustrative(520, 196, 'middle', 'F1 rating: illustrative · pending review'));
+    const f1lab = grp('f1label', { 'data-tag': 'F1', role: 'button', 'aria-label': 'F1 nameplate' }, txt(520, 230, `F1 · ${f1rating ?? '?'} A${p.fusePulled ? ' (pulled)' : ''}`, { fs: 8.5, fw: 700, fill: '#3b4651' }), illustrative(520, 196, 'middle', 'F1 rating: illustrative · pending review'));
+    f1.addEventListener('click', () => hk.onDevice('F1'));
+    f1lab.addEventListener('click', () => hk.onDevice('F1'));
+    const fb = grp('fusebtn', { 'data-action': 'fuse', role: 'button', tabindex: '0', 'aria-label': p.fusePulled ? 'Install fuse F1' : 'Pull fuse F1' },
+      rect(480, 160, 80, 18, { rx: 9, fill: p.fusePulled ? '#fff4e0' : '#fff', stroke: p.fusePulled ? '#c77a00' : '#5b6670', 'stroke-width': 1 }),
+      txt(520, 172.5, p.fusePulled ? 'Install fuse' : 'Pull fuse', { fs: 8.5, fw: 800, fill: '#1d2730' }));
+    fb.addEventListener('click', (e: Event) => { e.stopPropagation(); hk.onFuse(); });
+    fb.addEventListener('keydown', (e: Event) => { const k = (e as KeyboardEvent).key; if (k === 'Enter' || k === ' ') { e.preventDefault(); hk.onFuse(); } });
+    inner.append(f1, f1lab, fb);
     // CR1
     const cr = grp('dev2 cr1' + seenC('CR1'), { 'data-tag': 'CR1', role: 'button', 'aria-label': 'CR1, control relay, 2 NO plus 2 NC' });
     cr.append(rect(CR1.x, CR1.y, CR1.w, CR1.h, { class: 'card2', rx: 6, fill: '#3a4148', stroke: '#1d2226', filter: 'url(#b2Shadow)' }), rect(566, 244, 106, 24, { rx: 3, fill: '#4a525a' }), rect(566, 352, 106, 24, { rx: 3, fill: '#4a525a' }),

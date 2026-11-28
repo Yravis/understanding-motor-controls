@@ -332,3 +332,70 @@ describe('bucket layout', () => {
     }
   });
 });
+
+describe('nameplates never share a click target with an action', () => {
+  const tour = (tool: 'probe' | 'operate') => boot({ step: 'tour', doorOpen: true, doorOpened: true, handleOn: false, tool } as any);
+  const f1Title = () => [...root.querySelectorAll('g.f1label[data-tag="F1"] text')].find((t) => /^F1 · .* A/.test(t.textContent ?? ''))!;
+  const fuseBtn = () => root.querySelector('[data-action="fuse"]');
+  const f1Pulled = () => (screen!.debug.bucket().world.el<any>('F1')).pulled;
+
+  it('Operate: clicking the F1 title reads the nameplate and leaves the fuse installed', () => {
+    tour('operate');
+    click(f1Title());
+    expect(screen!.debug.ui().inspected).toContain('F1');
+    expect(screen!.debug.ui().fusePulled).toBe(false);
+    expect(f1Pulled()).toBe(false);
+    expect(root.querySelector('.ds-np-hd')?.textContent ?? '').toMatch(/F1/);
+  });
+  it('Probe: clicking the F1 body reads the nameplate', () => {
+    tour('probe');
+    click(root.querySelector('g.dev2[data-tag="F1"]'));
+    expect(screen!.debug.ui().inspected).toContain('F1');
+    expect(screen!.debug.ui().fusePulled).toBe(false);
+  });
+  it('the Tour completes in Operate with the fuse installed and nothing operated', () => {
+    tour('operate');
+    const next = () => root.querySelector('[data-next="1"]') as HTMLButtonElement;
+    expect(next().disabled).toBe(true);
+    for (const t of TOUR_DEVICES) {
+      const el = t === 'F1' ? f1Title() : root.querySelector(`g.dev2[data-tag="${t}"] .pblegend`) ?? root.querySelector(`g.dev2[data-tag="${t}"]`);
+      click(el);
+    }
+    expect(screen!.debug.ui().fusePulled).toBe(false);
+    for (const t of ['PB1', 'PB2', 'PB3']) expect((screen!.debug.bucket().world.devs[t] as any).pressed, t).toBeFalsy();
+    expect(next().disabled).toBe(false);
+  });
+  it('Pull / Install fuse is its own control; the body and title never toggle it', () => {
+    tour('operate');
+    expect(fuseBtn()!.textContent).toMatch(/Pull fuse/);
+    click(fuseBtn());
+    expect(screen!.debug.ui().fusePulled).toBe(true); expect(f1Pulled()).toBe(true);
+    expect(fuseBtn()!.textContent).toMatch(/Install fuse/);
+    click(root.querySelector('g.dev2[data-tag="F1"]')); click(f1Title());
+    expect(screen!.debug.ui().inspected).toContain('F1');
+    expect(f1Pulled()).toBe(true);
+    click(fuseBtn());
+    expect(screen!.debug.ui().fusePulled).toBe(false); expect(f1Pulled()).toBe(false);
+  });
+  it('F1 screws stay probe-able and do not pull the fuse', () => {
+    boot({ doorOpen: true, doorOpened: true, handleOn: true, step: 'meter', tool: 'operate' } as any);
+    click(term('F1_T'));
+    expect(screen!.debug.ui().fusePulled).toBe(false);
+  });
+  it('Operate: the PB legend plate reads the nameplate without latching the button', () => {
+    tour('operate');
+    for (const t of ['PB1', 'PB2', 'PB3']) {
+      click(root.querySelector(`g.dev2[data-tag="${t}"] .pblegend`));
+      expect(screen!.debug.ui().inspected, t).toContain(t);
+      expect((screen!.debug.bucket().world.devs[t] as any).pressed, t).toBeFalsy();
+    }
+  });
+  it('Operate: the cap still operates the button (momentary press and release)', () => {
+    tour('operate');
+    const cap = root.querySelector('g.dev2[data-tag="PB1"] .pbcap')!;
+    cap.dispatchEvent(new Event('pointerdown', { bubbles: true, cancelable: true }));
+    expect((screen!.debug.bucket().world.devs['PB1'] as any).pressed).toBe(true);
+    root.querySelector('g.dev2[data-tag="PB1"] .pbcap')!.dispatchEvent(new Event('pointerup', { bubbles: true }));
+    expect((screen!.debug.bucket().world.devs['PB1'] as any).pressed).toBeFalsy();
+  });
+});
